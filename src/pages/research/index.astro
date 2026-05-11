@@ -1,0 +1,165 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ResearchCard from '../../components/ResearchCard.astro';
+import KickerLabel from '../../components/KickerLabel.astro';
+
+const entries = (await getCollection('research')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+const pad2 = (n: number) => String(n).padStart(2, '0');
+
+// Two additional research surfaces that are pages, not content entries.
+// They are listed alongside the regulation report so the /research/ index
+// is the canonical entry point to the public data product surface.
+const dataProducts = [
+  {
+    href: '/necessity-index/',
+    title: 'The Necessity Index',
+    summary: 'Live data product. 22,217 APAC technology companies classified against the T1 / T2 thesis. Updated quarterly. Embeddable.',
+    type: 'Data product',
+    version: 'v1.0',
+    refresh: 'Quarterly'
+  },
+  {
+    href: '/calendar/',
+    title: 'The Crystallisation Window Calendar',
+    summary: 'Thirty-six in-flight regulations across Australia, Japan, New Zealand, and Singapore dated 2024 to 2030. Filter by market and necessity.',
+    type: 'Live tracker',
+    version: 'v1.0',
+    refresh: 'Monthly'
+  }
+];
+---
+<Base
+  title="Research"
+  description="Public research from hmm Ventures. The regulatory landscape, the company universe, and the crystallisation window."
+>
+  <section class="rh container">
+    <header class="rh__head">
+      <KickerLabel index="00" label="Research" accent />
+      <h1 class="rh__title">Public research.</h1>
+      <p class="rh__lede">
+        The map that defines the four-market mandate. The dataset that anchors the thesis. The calendar that times the deployment. Cited primary sources throughout.
+      </p>
+    </header>
+
+    <div class="rh__list">
+      {entries.map((entry, i) => (
+        <ResearchCard
+          href={`/research/${entry.slug}/`}
+          title={entry.data.title}
+          summary={entry.data.summary}
+          date={entry.data.date.toISOString()}
+          version={entry.data.version}
+          markets={entry.data.markets}
+          pages={entry.data.pages}
+          pdfUrl={entry.data.pdf_url}
+          index={pad2(i + 1)}
+        />
+      ))}
+
+      {dataProducts.map((dp, i) => (
+        <article class="dp">
+          <a class="dp__link" href={dp.href}>
+            <header class="dp__head">
+              <span class="dp__idx">[{pad2(entries.length + i + 1)}]</span>
+              <span class="dp__type">{dp.type}</span>
+              <span class="dp__version">{dp.version}</span>
+            </header>
+            <h3 class="dp__title">{dp.title}</h3>
+            <p class="dp__summary">{dp.summary}</p>
+            <footer class="dp__foot">
+              <span>Refresh: {dp.refresh}</span>
+            </footer>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .rh { padding-block: var(--s-8) var(--s-9); max-width: 64rem; }
+  .rh__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-block-end: var(--s-7);
+    padding-block-end: var(--s-5);
+    border-bottom: 1px solid var(--rule);
+  }
+  .rh__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .rh__lede {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  .rh__list {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .dp {
+    border-top: 1px solid var(--rule);
+    transition: background var(--dur-1) var(--ease);
+  }
+  .dp:hover { background: var(--bg-warm); }
+  .dp__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    padding: var(--s-6) var(--s-5);
+    text-decoration: none;
+    color: var(--fg);
+  }
+  .dp__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .dp__idx { color: var(--c-tomato); font-weight: 600; }
+  .dp__type { color: var(--fg-soft); }
+  .dp__version { margin-inline-start: auto; color: var(--c-tomato); }
+  .dp__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+    transition: color var(--dur-1) var(--ease);
+  }
+  .dp__link:hover .dp__title { color: var(--c-tomato); }
+  .dp__summary {
+    font-size: var(--fs-md);
+    color: var(--fg-soft);
+    max-width: 64ch;
+    margin: 0;
+    line-height: 1.55;
+  }
+  .dp__foot {
+    margin-block-start: var(--s-3);
+    padding-block-start: var(--s-3);
+    border-top: 1px dashed var(--rule);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+</style>

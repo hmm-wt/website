@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import KickerLabel from '../components/KickerLabel.astro';
+---
+<Base
+  title="Author"
+  description="Wahid Tashkandi. Founding GP and author of The Necessity Doctrine."
+>
+  <article class="gp container">
+    <header class="gp__head">
+      <KickerLabel index="00" label="Author" />
+      <h1 class="gp__title">Wahid Tashkandi.</h1>
+      <p class="gp__sub">
+        Founding GP, hmm Ventures. Author of The Necessity Doctrine. Based in DIFC, Dubai.
+      </p>
+    </header>
+
+    <section class="gp__section">
+      <h2>The work that built the thesis</h2>
+      <div class="prose">
+        <p>
+          A decade of cross-border operating exposed the seams the rest of the market treats as separate problems. Critical minerals mined in Western Australia, assembled into a handset in Shenzhen, sold to a hospital in Tokyo. Three regulators, one compliance question, no margin for translation error. Medical-device pathways in Sydney (TGA) and Tokyo (PMDA); grid-connection regimes in Singapore (EMA) and New Zealand (Electricity Authority). Different statutes, same gap. The vocabulary changes; the underlying problem does not.
+        </p>
+        <p>
+          This is the underwriting lens for the four-market thesis. APAC is not one market. It is four markets that look heterogeneous from outside and gradient from the borders: Japan's CVC dominance, Australia's super-backed Series A, New Zealand's regulator-as-partner pathway, Singapore's regulatory architecture.
+        </p>
+      </div>
+    </section>
+
+    <section class="gp__section">
+      <h2>The operator: Paddle</h2>
+      <div class="prose">
+        <p>
+          Joined Paddle ahead of the Series B in December 2017, when the company was under 30 people. Stayed four years through to the $1.4B Series D. Team-of-one on whichever zero-to-one initiative the company needed: product validation, revenue building, post-sales function design, and the APAC market build. By exit, APAC was around 20% of company revenue with China the primary contributor.
+        </p>
+        <p>
+          China expansion was the proof point. Conventional advice was clear: do not expand into China without local presence, a Chinese-speaking team, or an existing playbook. The business had a single Chinese speaker, no local entity, and no playbook. Wahid built the market anyway. Inside twelve months, China was the third-largest revenue contributor to the entire company, and the result persisted long after he left.
+        </p>
+      </div>
+    </section>
+
+    <section class="gp__section">
+      <h2>The investor: Skalata Ventures</h2>
+      <div class="prose">
+        <p>
+          Hired to take Skalata from non-profit accelerator to seed fund and build its outbound sourcing capability and national footprint. Inside one year, proprietary deal-flow networks built across universities, accelerators, and co-working spaces in every Australian state. The portfolio that emerged included founders who, when first met, did not realise the problem they were solving was global. Twelve months later, those same founders were hiring in Colorado after closing their largest contract.
+        </p>
+        <p>
+          This is the period where the founding observation of hmm became unignorable: regulated-industry companies in developed APAC were systematically capital-scarce at seed relative to their eventual defensibility. Same pattern, every market, every Necessity.
+        </p>
+      </div>
+    </section>
+
+    <section class="gp__section">
+      <h2>The machinery: GoodFit</h2>
+      <div class="prose">
+        <p>
+          As VP Revenue at GoodFit, built the commercial function from a founder-led, high-churn starting point through to Series A readiness: 5x revenue growth, first enterprise agreements, operations, marketing, customer success, and sales built from scratch. GoodFit closed a $13M Series A led by Notion Capital in September 2025.
+        </p>
+        <p>
+          The infrastructure that came with the outcome is the substance for hmm. The classifier methodology powering Layers 1 and 2 of hmm's sourcing engine, the domain-index validator, the LinkedIn-index pipeline, and the two-stage classification on top, was built and validated over four years inside GoodFit. The architectural pattern was rebuilt for hmm against a regulated-T1/T2 ICP rather than a SaaS-revenue ICP. Provenance and IP ownership in Appendix F.
+        </p>
+      </div>
+    </section>
+
+    <section class="gp__section">
+      <h2>How hmm wins deals</h2>
+      <div class="prose">
+        <p>
+          A regulated founder in Sydney, Tokyo, Auckland, or Singapore at seed will field multiple term sheets. hmm does not need every founder. It needs the right 25, and it will win those 25 on three mechanisms.
+        </p>
+        <p>
+          <strong>One.</strong> Regulatory-map sourcing surfaces in-thesis companies before they pitch any investor. The trigger is usually a regulator filing, a licence application, or a compliance hire, often pre-Crunchbase and sometimes pre-deck. The first conversation a founder has with hmm is often the first conversation they have had with any investor.
+        </p>
+        <p>
+          <strong>Two.</strong> The operator across the table has run the playbook the founder is about to run. Pricing architecture, first commercial hire, enterprise sales motion, the bootstrapped-to-VC-backed decision set, cross-border market entry without local presence or language. Paddle and GoodFit are the operator credential.
+        </p>
+        <p>
+          <strong>Three.</strong> The exit pathway is the GTM playbook, not a pitch. Cross-border-strategics acquisitions for developed-APAC regulated companies entering NA and EMEA buyer markets do not materialise on their own. They materialise because the founder runs the GTM motion that produces them, starting at seed.
+        </p>
+      </div>
+    </section>
+
+    <section class="gp__section gp__contact-section">
+      <h2>Direct</h2>
+      <div class="prose">
+        <p>
+          Most direct path: <a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a>. Forty-eight-hour personal reply.
+        </p>
+      </div>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .gp { padding-block: var(--s-8) var(--s-9); max-width: 56rem; }
+  .gp__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-block-end: var(--s-7);
+    padding-block-end: var(--s-5);
+    border-bottom: 1px solid var(--rule);
+  }
+  .gp__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .gp__sub {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    margin: 0;
+    max-width: 48ch;
+  }
+  .gp__section {
+    padding-block: var(--s-6);
+    border-bottom: 1px solid var(--rule);
+  }
+  .gp__section:last-of-type { border-bottom: 0; }
+  .gp__section h2 {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0 0 var(--s-4);
+  }
+  .gp__contact-section { padding-block-end: 0; }
+</style>

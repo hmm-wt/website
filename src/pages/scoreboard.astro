@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Scoreboard from '../components/Scoreboard.astro';
+import BettingWindow from '../components/BettingWindow.astro';
+---
+<Base
+  title="Scoreboard"
+  description="Five falsifiable claims with charity-bound bets. Adversarial collaboration as scholarly commitment."
+>
+  <section class="sb-page container">
+    <header class="sb-page__head">
+      <p class="kicker">Scoreboard</p>
+      <h1 class="sb-page__title">Five claims. Dated. Sourced. Bettable.</h1>
+      <p class="sb-page__lede">
+        Each prediction in The Necessity Doctrine is falsifiable, dated, and traceable to a public source. The scoreboard is where the claims live in the open.
+      </p>
+      <div class="sb-page__window">
+        <BettingWindow />
+      </div>
+    </header>
+
+    <Scoreboard />
+  </section>
+</Base>
+
+<style>
+  .sb-page { padding-block: var(--s-8) var(--s-9); }
+  .sb-page__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    margin-block-end: var(--s-7);
+    max-width: 72ch;
+  }
+  .sb-page__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+  .sb-page__lede {
+    font-size: var(--fs-lg);
+    font-family: var(--f-display);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    max-width: 48ch;
+  }
+  .sb-page__window { margin-block-start: var(--s-4); max-width: 36rem; }
+</style>

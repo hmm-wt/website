@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import Doctrine from '../../layouts/Doctrine.astro';
+import DoctrineHeader from '../../components/DoctrineHeader.astro';
+import ChapterNav from '../../components/ChapterNav.astro';
+import Chapter from '../../components/Chapter.astro';
+import MarginWidget from '../../components/MarginWidget.astro';
+import CrystallisationRail from '../../components/CrystallisationRail.astro';
+import FoundingCounter from '../../components/FoundingCounter.astro';
+
+const entries = (await getCollection('doctrine')).sort(
+  (a, b) => a.data.chapter - b.data.chapter
+);
+
+const pad2 = (n: number) => String(n).padStart(2, '0');
+
+const chapters = entries.map((e) => ({
+  id: `chapter-${pad2(e.data.chapter)}`,
+  index: pad2(e.data.chapter),
+  title: e.data.title,
+}));
+
+const railRows = [
+  { label: 'AI-related laws since 2016', value: '900+', source: 'OECD AI Policy Observatory, 2025' },
+  { label: 'AI enforcement actions (2025)', value: '156', source: 'Stanford HAI AI Index, 2026' },
+  { label: 'RegTech market (2025)', value: '$24.3B', source: 'Grand View Research, 2025' },
+  { label: 'Federal AI regulations (US, 2024)', value: '59', source: 'Stanford HAI AI Index, 2025' },
+  { label: 'Compliance officers reporting more complexity', value: '85%', source: 'PwC Global Compliance Survey, 2025' },
+];
+---
+<Doctrine
+  title="The Necessity Doctrine"
+  description="Necessity is the thesis. A doctrine for seed-stage capital in developed APAC, 2026 to 2030."
+>
+  <Fragment slot="header">
+    <DoctrineHeader version="v1.0" published="2026-05-01" author="Wahid Tashkandi" />
+  </Fragment>
+
+  <Fragment slot="toc">
+    <ChapterNav chapters={chapters} />
+  </Fragment>
+
+  <Fragment slot="rail">
+    <MarginWidget
+      title="Regulatory State of Play"
+      market="Global"
+      dateStamp="2026-05-11"
+      rows={railRows}
+      index="01"
+    />
+  </Fragment>
+
+  {entries.map(async (entry) => {
+    const { Content } = await entry.render();
+    const idx = pad2(entry.data.chapter);
+    const market = entry.data.rail_market;
+    return (
+      <Chapter id={`chapter-${idx}`} index={idx} title={entry.data.title}>
+        <Content />
+        {market && (
+          <div class="chapter__rail-inline">
+            <CrystallisationRail market={market} limit={5} />
+          </div>
+        )}
+      </Chapter>
+    );
+  })}
+
+  <Fragment slot="footer">
+    <FoundingCounter />
+  </Fragment>
+</Doctrine>
+
+<style>
+  .chapter__rail-inline {
+    margin-block-start: var(--s-6);
+    padding-block-start: var(--s-5);
+    border-top: 1px solid var(--rule);
+    max-width: 36rem;
+  }
+</style>

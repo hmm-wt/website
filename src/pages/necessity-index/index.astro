@@ -1,0 +1,235 @@
+---
+import Index from '../../layouts/Index.astro';
+import IndexCard from '../../components/IndexCard.astro';
+import IndexFunnel from '../../components/IndexFunnel.astro';
+import IndexMatrix from '../../components/IndexMatrix.astro';
+import StatusIndicator from '../../components/StatusIndicator.astro';
+import data from '../../data/necessity-index.json';
+
+const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+<Index
+  title="The Necessity Index"
+  description="The classified APAC technology universe. Quarterly. Embeddable. The citation engine for the four-market regulated thesis."
+>
+  <section class="ip container">
+    <header class="ip__head">
+      <div class="ip__meta">
+        <span class="ip__reg" aria-hidden="true"></span>
+        <span class="ip__kicker">Necessity Index · {data.version}</span>
+        <StatusIndicator status="live" />
+      </div>
+      <h1 class="ip__title">The classified universe.</h1>
+      <p class="ip__lede">
+        Twenty-two thousand APAC technology companies, classified against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations. Refreshed {data.refresh_cadence}.
+      </p>
+      <p class="ip__as-of">As of {asOfLabel}</p>
+    </header>
+
+    <section class="ip__section">
+      <h2 class="ip__h2">Universe</h2>
+      <div class="ip__grid ip__grid--4">
+        <IndexCard label="Total companies classified" value={data.universe.total_companies} accent />
+        <IndexCard label="Four-market subset" value={data.universe.four_market_companies} />
+        <IndexCard label="Regulations mapped (global)" value={data.universe.regulations_global} />
+        <IndexCard label="Four-market regulations" value={data.universe.regulations_four_market} accent />
+      </div>
+    </section>
+
+    <section class="ip__section">
+      <h2 class="ip__h2">T1 / T2 screen</h2>
+      <div class="ip__grid ip__grid--3">
+        <IndexCard
+          label="Conservative classifier share"
+          value={data.tier_shares.conservative_classifier_pct}
+          unit="%"
+          accent
+          source="Pass the T1 or T2 screen"
+        />
+        <IndexCard label="In-thesis companies" value={data.tier_shares.conservative_classifier_count} />
+        <IndexCard label="T1 (licence-as-barrier)" value={data.tier_shares.t1_count} />
+      </div>
+    </section>
+
+    <section class="ip__section">
+      <h2 class="ip__h2">Stage funnel</h2>
+      <IndexFunnel stages={data.stage_funnel} />
+    </section>
+
+    <section class="ip__section">
+      <h2 class="ip__h2">Per market and per Necessity</h2>
+      <IndexMatrix perMarket={data.per_market} perNecessity={data.per_necessity} />
+    </section>
+
+    <section class="ip__section">
+      <h2 class="ip__h2">Round-size premiums</h2>
+      <p class="ip__note">T1 round-size premium relative to unregulated peers at each stage.</p>
+      <div class="ip__grid ip__grid--4">
+        <IndexCard label="Seed" value={data.premiums.round_size_seed} unit="x" />
+        <IndexCard label="Series A" value={data.premiums.round_size_series_a} unit="x" />
+        <IndexCard label="Series C" value={data.premiums.round_size_series_c} unit="x" accent />
+        <IndexCard label="Series D+" value={data.premiums.round_size_series_d_plus} unit="x" />
+      </div>
+      <div class="ip__grid ip__grid--3 ip__grid--top-gap">
+        <IndexCard label="Cumulative pre-seed" value={data.premiums.cumulative_pre_seed} unit="x" />
+        <IndexCard label="Cumulative Series D+" value={data.premiums.cumulative_series_d_plus} unit="x" accent />
+        <IndexCard
+          label="Exit-rate multiple"
+          value={data.premiums.exit_rate_multiple}
+          unit="x"
+          accent
+          source={`${data.premiums.regulated_exit_rate_pct}% vs ${data.premiums.unregulated_exit_rate_pct}%`}
+        />
+      </div>
+    </section>
+
+    <section class="ip__section">
+      <h2 class="ip__h2">The Crystallisation Window</h2>
+      <div class="ip__grid ip__grid--3">
+        <IndexCard label="In-flight regulations 2024 to 2030" value={data.crystallisation_window.in_flight_2024_2030} accent />
+        <IndexCard label="Peak year" value={data.crystallisation_window.peak_year} />
+        <IndexCard label="Regulations in peak year" value={data.crystallisation_window.peak_year_count} accent />
+      </div>
+      <p class="ip__note ip__note--cta">
+        <a href="/calendar/">View the full calendar →</a>
+      </p>
+    </section>
+
+    <footer class="ip__foot">
+      <p class="ip__sources-label">Source datasets</p>
+      <ul class="ip__sources" role="list">
+        {data.source_datasets.map((s) => <li>{s}</li>)}
+      </ul>
+      <p class="ip__methodology">
+        <a href="/necessity-index/methodology/">Methodology →</a>
+        <span class="ip__embed-note"> · <a href="/necessity-index/embed/">Embed this index</a></span>
+      </p>
+    </footer>
+  </section>
+</Index>
+
+<style>
+  .ip { max-width: 72rem; }
+
+  .ip__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-block-end: var(--s-8);
+    padding-block-end: var(--s-5);
+    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
+  }
+  .ip__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .ip__reg {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--c-tomato);
+    align-self: center;
+  }
+  .ip__kicker { color: color-mix(in srgb, var(--c-pearl) 70%, transparent); }
+  .ip__meta :global(.status) { margin-inline-start: auto; }
+
+  .ip__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: var(--s-3) 0 0;
+    color: var(--c-pearl);
+  }
+  .ip__lede {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: color-mix(in srgb, var(--c-pearl) 78%, transparent);
+    max-width: 56ch;
+    margin: 0;
+  }
+  .ip__as-of {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
+    margin: 0;
+  }
+
+  .ip__section {
+    padding-block: var(--s-6);
+    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 12%, transparent);
+  }
+  .ip__section:last-of-type { border-bottom: 0; }
+  .ip__h2 {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0 0 var(--s-5);
+    color: var(--c-pearl);
+  }
+  .ip__note {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+    margin: 0 0 var(--s-4);
+  }
+  .ip__note--cta { margin-block-start: var(--s-5); margin-block-end: 0; }
+  .ip__note--cta a { color: var(--c-tomato); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+
+  .ip__grid {
+    display: grid;
+    gap: var(--s-3);
+  }
+  .ip__grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .ip__grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .ip__grid--top-gap { margin-block-start: var(--s-3); }
+  @media (max-width: 900px) {
+    .ip__grid--3, .ip__grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .ip__grid--3, .ip__grid--4 { grid-template-columns: 1fr; }
+  }
+
+  .ip__foot {
+    padding-block-start: var(--s-7);
+    border-top: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
+    margin-block-start: var(--s-5);
+    font-family: var(--f-mono);
+  }
+  .ip__sources-label {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+    margin: 0 0 var(--s-3);
+  }
+  .ip__sources {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    font-size: var(--fs-xs);
+    color: color-mix(in srgb, var(--c-pearl) 75%, transparent);
+  }
+  .ip__methodology {
+    margin-block-start: var(--s-5);
+    font-size: var(--fs-sm);
+  }
+  .ip__methodology a { color: var(--c-tomato); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+  .ip__embed-note { color: color-mix(in srgb, var(--c-pearl) 60%, transparent); }
+</style>

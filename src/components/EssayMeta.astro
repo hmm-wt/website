@@ -1,0 +1,73 @@
+---
+interface Props {
+  title: string;
+  date: string;            // ISO date string
+  readingTime?: number;    // minutes
+  market?: string;         // AU / JP / NZ / SG / cross
+  necessity?: string;      // Food Security / Biomedical / Power / Autonomous / Critical Materials
+  chapterRef?: string;     // e.g. "Doctrine Chapter 31"
+}
+
+const { title, date, readingTime, market, necessity, chapterRef } = Astro.props;
+const dateLabel = new Date(date).toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+<header class="essay-meta">
+  {chapterRef && <p class="essay-meta__chapter kicker">{chapterRef}</p>}
+  <h1 class="essay-meta__title">{title}</h1>
+  <div class="essay-meta__row">
+    <time class="essay-meta__date kicker" datetime={date}>{dateLabel}</time>
+    {readingTime && (
+      <>
+        <span class="essay-meta__sep" aria-hidden="true">·</span>
+        <span class="kicker">{readingTime} min read</span>
+      </>
+    )}
+    {market && (
+      <>
+        <span class="essay-meta__sep" aria-hidden="true">·</span>
+        <span class="kicker essay-meta__tag">{market}</span>
+      </>
+    )}
+    {necessity && (
+      <>
+        <span class="essay-meta__sep" aria-hidden="true">·</span>
+        <span class="kicker essay-meta__tag">{necessity}</span>
+      </>
+    )}
+  </div>
+</header>
+
+<style>
+  .essay-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    padding-block-end: var(--s-6);
+    border-bottom: 1px solid var(--rule);
+    margin-block-end: var(--s-7);
+  }
+  .essay-meta__chapter {
+    color: var(--c-tomato);
+    margin-block-end: var(--s-2);
+  }
+  .essay-meta__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+  .essay-meta__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-2);
+  }
+  .essay-meta__sep {
+    color: var(--rule);
+  }
+  .essay-meta__tag {
+    color: var(--c-tomato);
+  }
+</style>

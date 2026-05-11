@@ -1,0 +1,71 @@
+---
+interface Props {
+  spotify?: string;
+  apple?: string;
+  youtube?: string;
+  rss?: string;
+  /** Compact variant: smaller, inline. */
+  compact?: boolean;
+}
+
+const { spotify, apple, youtube, rss, compact = false } = Astro.props;
+
+const links = [
+  { key: 'spotify', label: 'Spotify',    href: spotify },
+  { key: 'apple',   label: 'Apple',      href: apple },
+  { key: 'youtube', label: 'YouTube',    href: youtube },
+  { key: 'rss',     label: 'RSS',        href: rss }
+].filter((l) => l.href);
+---
+<ul class={`pl ${compact ? 'pl--compact' : ''}`} role="list">
+  {links.map((l) => (
+    <li class="pl__item">
+      <a class="pl__link" href={l.href} target="_blank" rel="noopener">
+        <span class="pl__dot" aria-hidden="true"></span>
+        <span class="pl__label">{l.label}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .pl {
+    display: flex;
+    gap: var(--s-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+
+  .pl__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: var(--fg-soft);
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--rule);
+    transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+  .pl__link:hover {
+    color: var(--c-tomato);
+    border-color: var(--c-tomato);
+  }
+
+  .pl__dot {
+    width: 6px;
+    height: 6px;
+    background: var(--c-tomato);
+    border-radius: 50%;
+  }
+
+  .pl--compact .pl__link {
+    padding: 0.3rem 0.6rem;
+    font-size: calc(var(--fs-xs) * 0.9);
+  }
+</style>

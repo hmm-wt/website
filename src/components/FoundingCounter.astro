@@ -1,0 +1,167 @@
+---
+import founding from '../data/founding.json';
+
+interface Props {
+  /** Visual variant: full (default) or compact (single line, no progress). */
+  variant?: 'full' | 'compact';
+  /** When true, render with light bg instead of inverse Evergreen. */
+  light?: boolean;
+}
+
+const { variant = 'full', light = false } = Astro.props;
+
+const remaining = Math.max(0, founding.cap - founding.count);
+const pct = Math.min(100, Math.round((founding.count / founding.cap) * 100));
+const asOf = new Date(founding.as_of).toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'short', day: '2-digit'
+});
+
+const label = founding.count === 1 ? founding.label_singular : founding.label_plural;
+const closed = founding.closed || remaining === 0;
+---
+<aside class={`fc fc--${variant} ${light ? 'fc--light' : 'fc--inverse'} ${closed ? 'is-closed' : ''}`}>
+  <header class="fc__head">
+    <span class="fc__reg" aria-hidden="true"></span>
+    <span class="fc__label">
+      {closed ? 'Founding cohort · closed' : 'Founding cohort · open'}
+    </span>
+    <time class="fc__date" datetime={founding.as_of}>{asOf}</time>
+  </header>
+
+  <div class="fc__body">
+    <p class="fc__count">
+      <span class="fc__num">{founding.count}</span>
+      <span class="fc__sep">/</span>
+      <span class="fc__cap">{founding.cap}</span>
+      <span class="fc__noun">{label.toLowerCase()}</span>
+    </p>
+
+    {variant === 'full' && (
+      <div class="fc__progress" role="progressbar" aria-valuenow={founding.count} aria-valuemin="0" aria-valuemax={founding.cap}>
+        <div class="fc__progress-fill" style={`width: ${pct}%`}></div>
+      </div>
+    )}
+
+    {variant === 'full' && !closed && (
+      <p class="fc__remaining">
+        {remaining} {remaining === 1 ? 'place' : 'places'} remaining. Subscribers in this cohort receive the hardcover Doctrine and standing salon invitation.
+      </p>
+    )}
+
+    {closed && (
+      <p class="fc__remaining">
+        The founding cohort closed at 100. Subscribers from here onwards receive the Memo only.
+      </p>
+    )}
+  </div>
+</aside>
+
+<style>
+  .fc {
+    font-family: var(--f-mono);
+    border: 1px solid var(--c-tomato);
+    padding: var(--s-5) var(--s-5);
+  }
+  .fc--inverse {
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+  }
+  .fc--light {
+    background: var(--bg);
+    color: var(--fg);
+  }
+  .fc--compact { padding: var(--s-3) var(--s-4); }
+
+  .fc__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2);
+    margin-block-end: var(--s-3);
+  }
+  .fc--compact .fc__head { margin-block-end: 0; }
+
+  .fc__reg {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--c-tomato);
+    align-self: center;
+  }
+
+  .fc__label {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+
+  .fc__date {
+    margin-inline-start: auto;
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+  }
+
+  .fc__count {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    margin: 0;
+    line-height: 1;
+  }
+  .fc__num {
+    font-family: var(--f-display);
+    font-size: clamp(2.5rem, 1.6rem + 3.2vw, 4rem);
+    color: var(--c-tomato);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .fc__sep {
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+    color: color-mix(in srgb, currentColor 35%, transparent);
+  }
+  .fc__cap {
+    font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+    opacity: 0.7;
+  }
+  .fc__noun {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    margin-inline-start: var(--s-3);
+  }
+
+  .fc--compact .fc__num {
+    font-size: var(--fs-lg);
+    font-family: var(--f-mono);
+    font-weight: 600;
+  }
+  .fc--compact .fc__sep,
+  .fc--compact .fc__cap {
+    font-size: var(--fs-md);
+  }
+
+  .fc__progress {
+    height: 4px;
+    background: color-mix(in srgb, currentColor 12%, transparent);
+    margin-block-start: var(--s-4);
+    overflow: hidden;
+  }
+  .fc__progress-fill {
+    height: 100%;
+    background: var(--c-tomato);
+    transition: width var(--dur-2) var(--ease);
+  }
+
+  .fc__remaining {
+    font-size: var(--fs-sm);
+    margin-block-start: var(--s-3);
+    line-height: 1.5;
+    max-width: 56ch;
+  }
+
+  .fc.is-closed { border-color: color-mix(in srgb, var(--c-tomato) 40%, transparent); }
+  .fc.is-closed .fc__num { color: color-mix(in srgb, var(--c-tomato) 60%, transparent); }
+</style>

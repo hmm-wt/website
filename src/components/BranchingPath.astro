@@ -1,0 +1,152 @@
+---
+interface Props {
+  /** Premise sentence at the fork. */
+  premise?: string;
+  /** Path A label and slug. */
+  pathA: { label: string; slug?: string };
+  /** Path B label and slug. */
+  pathB: { label: string; slug?: string };
+}
+
+const { premise, pathA, pathB } = Astro.props;
+---
+<aside class="branch">
+  {premise && (
+    <p class="branch__premise">
+      <span class="branch__premise-label">The fork</span>
+      <span class="branch__premise-text">{premise}</span>
+    </p>
+  )}
+
+  <div class="branch__fork" aria-hidden="true">
+    <span class="branch__line branch__line--a"></span>
+    <span class="branch__line branch__line--b"></span>
+  </div>
+
+  <div class="branch__paths">
+    <article class="branch__path branch__path--a" id={pathA.slug}>
+      <header class="branch__path-head">
+        <span class="branch__path-label">Path A</span>
+        <h3 class="branch__path-title">{pathA.label}</h3>
+      </header>
+      <div class="branch__path-body prose">
+        <slot name="a" />
+      </div>
+    </article>
+
+    <article class="branch__path branch__path--b" id={pathB.slug}>
+      <header class="branch__path-head">
+        <span class="branch__path-label">Path B</span>
+        <h3 class="branch__path-title">{pathB.label}</h3>
+      </header>
+      <div class="branch__path-body prose">
+        <slot name="b" />
+      </div>
+    </article>
+  </div>
+
+  <footer class="branch__foot">
+    <span class="branch__foot-label">Both paths are taken seriously. The reader picks where to land.</span>
+  </footer>
+</aside>
+
+<style>
+  .branch {
+    margin-block: var(--s-7);
+    padding-block: var(--s-6);
+    border-top: 1px solid var(--c-tomato);
+    border-bottom: 1px solid var(--c-tomato);
+  }
+
+  .branch__premise {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    margin-block-end: var(--s-5);
+    max-width: 56ch;
+  }
+  .branch__premise-label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--c-tomato);
+    font-weight: 600;
+  }
+  .branch__premise-text {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+  }
+
+  .branch__fork {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: var(--s-5);
+    position: relative;
+    margin-block-end: var(--s-5);
+  }
+  .branch__line {
+    background: var(--c-tomato);
+    width: 1px;
+    justify-self: center;
+  }
+
+  .branch__paths {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-6);
+  }
+
+  .branch__path {
+    padding: var(--s-5);
+    background: var(--bg-warm);
+    border-left: 2px solid var(--c-tomato);
+  }
+  .branch__path--b {
+    border-left-color: color-mix(in srgb, var(--c-tomato) 50%, transparent);
+  }
+
+  .branch__path-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    margin-block-end: var(--s-3);
+  }
+  .branch__path-label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--c-tomato);
+    font-weight: 600;
+  }
+  .branch__path-title {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+
+  .branch__path-body { font-size: var(--fs-sm); line-height: 1.6; }
+  .branch__path-body :global(p + p) { margin-block-start: 0.8em; }
+
+  .branch__foot {
+    margin-block-start: var(--s-5);
+    text-align: center;
+  }
+  .branch__foot-label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-soft);
+  }
+
+  @media (max-width: 720px) {
+    .branch__paths { grid-template-columns: 1fr; }
+    .branch__fork { grid-template-columns: 1fr; height: var(--s-4); }
+  }
+</style>

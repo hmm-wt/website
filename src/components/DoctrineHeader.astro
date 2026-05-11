@@ -1,0 +1,140 @@
+---
+import StatusIndicator from './StatusIndicator.astro';
+
+interface Props {
+  version: string;        // e.g. "v1.0"
+  published: string;      // ISO date
+  author?: string;
+  designer?: string;      // optional designer credit (AI 2027 style)
+}
+
+const {
+  version,
+  published,
+  author = 'Wahid Tashkandi',
+  designer
+} = Astro.props;
+
+const pubLabel = new Date(published).toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'long', day: 'numeric'
+});
+---
+<div class="dh container">
+  <div class="dh__meta">
+    <span class="dh__reg" aria-hidden="true"></span>
+    <span class="dh__kicker">The Necessity Doctrine</span>
+    <span class="dh__version">{version}</span>
+  </div>
+
+  <h1 class="dh__title">
+    <slot name="title">
+      Software Is No Longer Eating the World.
+      <br />
+      Regulation Is Eating Software.
+    </slot>
+  </h1>
+
+  <p class="dh__subtitle">
+    <slot name="subtitle">
+      A doctrine for seed-stage capital in developed APAC, 2026 to 2030.
+    </slot>
+  </p>
+
+  <footer class="dh__credits">
+    <div class="dh__credit">
+      <span class="dh__credit-label">Author</span>
+      <span class="dh__credit-value">{author}</span>
+    </div>
+    {designer && (
+      <div class="dh__credit">
+        <span class="dh__credit-label">Design</span>
+        <span class="dh__credit-value">{designer}</span>
+      </div>
+    )}
+    <div class="dh__credit">
+      <span class="dh__credit-label">Published</span>
+      <time class="dh__credit-value" datetime={published}>{pubLabel}</time>
+    </div>
+    <div class="dh__credit dh__credit--status">
+      <StatusIndicator status="live" />
+    </div>
+  </footer>
+</div>
+
+<style>
+  .dh {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+
+  .dh__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+  }
+  .dh__reg {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--c-tomato);
+    align-self: center;
+  }
+  .dh__version {
+    color: var(--c-tomato);
+    margin-inline-start: auto;
+  }
+
+  .dh__title {
+    font-family: var(--f-display);
+    font-size: clamp(2.5rem, 1.6rem + 4.4vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0;
+    max-width: 22ch;
+  }
+
+  .dh__subtitle {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: color-mix(in srgb, var(--c-pearl) 78%, transparent);
+    max-width: 44ch;
+    margin: 0;
+  }
+
+  .dh__credits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-6);
+    align-items: baseline;
+    padding-block-start: var(--s-5);
+    border-top: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
+    margin-block-start: var(--s-3);
+    font-family: var(--f-mono);
+  }
+
+  .dh__credit {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .dh__credit--status { margin-inline-start: auto; }
+
+  .dh__credit-label {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
+  }
+  .dh__credit-value {
+    font-size: var(--fs-sm);
+    color: var(--c-pearl);
+  }
+</style>

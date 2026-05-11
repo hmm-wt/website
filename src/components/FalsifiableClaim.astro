@@ -1,0 +1,122 @@
+---
+interface Props {
+  /** Scoreboard prediction id, e.g. "P1". Anchors to /scoreboard/#P1. */
+  id: string;
+  /** Date by which the claim is testable, ISO format. */
+  testableBy: string;
+  /** Optional dataset / source label. */
+  source?: string;
+}
+
+const { id, testableBy, source } = Astro.props;
+const testLabel = new Date(testableBy).toLocaleDateString('en-GB', {
+  year: 'numeric', month: 'long'
+});
+---
+<aside class="claim" id={id}>
+  <header class="claim__head">
+    <span class="claim__badge">Falsifiable claim</span>
+    <span class="claim__id">{id}</span>
+  </header>
+  <div class="claim__body prose">
+    <slot />
+  </div>
+  <footer class="claim__foot">
+    <span class="claim__test">
+      <span class="claim__test-label">Testable by</span>
+      <time class="claim__test-value" datetime={testableBy}>{testLabel}</time>
+    </span>
+    {source && (
+      <span class="claim__src">
+        <span class="claim__src-label">Source</span>
+        <span class="claim__src-value">{source}</span>
+      </span>
+    )}
+    <a class="claim__link" href={`/scoreboard/#${id}`}>
+      Watch the scoreboard →
+    </a>
+  </footer>
+</aside>
+
+<style>
+  .claim {
+    margin-block: var(--s-6);
+    padding: var(--s-5) var(--s-5) var(--s-4);
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    border-left: 3px solid var(--c-tomato);
+    font-family: var(--f-body);
+  }
+
+  .claim__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    margin-block-end: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .claim__badge {
+    color: var(--c-tomato);
+    font-weight: 600;
+  }
+  .claim__id {
+    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
+    margin-inline-start: auto;
+  }
+
+  .claim__body {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+    color: var(--c-pearl);
+    max-width: 56ch;
+  }
+  .claim__body :global(p) { margin: 0; }
+  .claim__body :global(p + p) { margin-block-start: 0.6em; }
+
+  .claim__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5);
+    align-items: baseline;
+    margin-block-start: var(--s-5);
+    padding-block-start: var(--s-3);
+    border-top: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+  }
+
+  .claim__test,
+  .claim__src {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .claim__test-label,
+  .claim__src-label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
+  }
+  .claim__test-value,
+  .claim__src-value {
+    color: var(--c-pearl);
+    font-size: var(--fs-sm);
+  }
+
+  .claim__link {
+    margin-inline-start: auto;
+    color: var(--c-tomato);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+  .claim__link:hover { color: var(--c-pearl); }
+</style>

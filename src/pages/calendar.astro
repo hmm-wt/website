@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+import KickerLabel from '../components/KickerLabel.astro';
+import CalendarTimeline from '../components/CalendarTimeline.astro';
+import TagFilter from '../components/TagFilter.astro';
+import calendar from '../data/crystallisation-window.json';
+
+const totalCount = calendar.total_count;
+
+const marketCounts = calendar.regulations.reduce<Record<string, number>>((acc, r) => {
+  acc[r.market] = (acc[r.market] || 0) + 1;
+  return acc;
+}, {});
+
+const necessityList = Array.from(new Set(calendar.regulations.map((r) => r.necessity))).sort();
+
+const filterGroups = [
+  { key: 'market', label: 'Market', options: ['AU', 'JP', 'NZ', 'SG'] },
+  { key: 'necessity', label: 'Necessity', options: necessityList },
+  { key: 'tier', label: 'Tier', options: ['T1', 'T2'] }
+];
+---
+<Base
+  title="The Crystallisation Window"
+  description="Thirty-six in-flight regulations across Australia, Japan, New Zealand, and Singapore dated 2024 to 2030. The four-year investment-period regulatory calendar."
+>
+  <section class="cal container">
+    <header class="cal__head">
+      <KickerLabel index="00" label="Crystallisation Window · live tracker" accent />
+      <h1 class="cal__title">The window opens here.</h1>
+      <p class="cal__lede">
+        Thirty-six in-flight regulations across the four target markets, dated 2024 to 2030. Each one creates a category of work that did not previously exist. The fund's investment period is calibrated to this window.
+      </p>
+
+      <div class="cal__summary">
+        <div class="cal__metric">
+          <span class="cal__metric-label">Total in-flight</span>
+          <span class="cal__metric-value">{totalCount}</span>
+        </div>
+        {Object.entries(marketCounts).sort().map(([m, c]) => (
+          <div class="cal__metric">
+            <span class="cal__metric-label">{m}</span>
+            <span class="cal__metric-value">{c}</span>
+          </div>
+        ))}
+        <div class="cal__metric">
+          <span class="cal__metric-label">Peak year</span>
+          <span class="cal__metric-value">2027</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="cal__filter">
+      <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
+    </div>
+
+    <CalendarTimeline />
+
+    <footer class="cal__foot">
+      <p class="kicker">
+        Source: HMM Ventures Comprehensive Regulatory Dataset, 725 regulations, 64 countries, 13 sectors. Generated 6 April 2026. Rebuilt monthly.
+      </p>
+    </footer>
+  </section>
+</Base>
+
+<style>
+  .cal { padding-block: var(--s-8) var(--s-9); max-width: 64rem; }
+  .cal__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-block-end: var(--s-7);
+    padding-block-end: var(--s-5);
+    border-bottom: 1px solid var(--rule);
+  }
+  .cal__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .cal__lede {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  .cal__summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4) var(--s-6);
+    margin-block-start: var(--s-5);
+    padding: var(--s-4) 0;
+    border-block: 1px solid var(--rule);
+  }
+  .cal__metric { display: flex; flex-direction: column; gap: 2px; }
+  .cal__metric-label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+  }
+  .cal__metric-value {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    color: var(--c-tomato);
+    line-height: 1;
+  }
+
+  .cal__filter { margin-block-end: var(--s-5); }
+
+  .cal__foot {
+    margin-block-start: var(--s-7);
+    padding-block-start: var(--s-5);
+    border-top: 1px solid var(--rule);
+  }
+</style>

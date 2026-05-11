@@ -1,0 +1,129 @@
+---
+interface MarketRow {
+  market: string;
+  code: string;
+  companies: number | null;
+  regulations: number;
+  t1: number;
+  t2: number;
+  enacted: number;
+  projected: number;
+}
+
+interface NecessityRow {
+  name: string;
+  in_thesis_companies: number;
+  regulations_t1: number;
+  regulations_t2: number;
+}
+
+interface Props {
+  perMarket: MarketRow[];
+  perNecessity: NecessityRow[];
+}
+
+const { perMarket, perNecessity } = Astro.props;
+const maxReg = Math.max(...perMarket.map((m) => m.regulations));
+const maxNecCos = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
+---
+<div class="im">
+  <section class="im__section">
+    <p class="im__label">Per market</p>
+    <table class="im__table">
+      <thead>
+        <tr>
+          <th>Market</th>
+          <th class="num">Cos</th>
+          <th class="num">Regs</th>
+          <th class="num">T1</th>
+          <th class="num">T2</th>
+          <th class="num">Enacted</th>
+          <th class="num">Projected</th>
+        </tr>
+      </thead>
+      <tbody>
+        {perMarket.map((m) => {
+          const intensity = m.regulations / maxReg;
+          return (
+            <tr style={`--bg-intensity: ${intensity}`}>
+              <td><span class="im__market-code">{m.market}</span> <span class="im__market-name">{m.code}</span></td>
+              <td class="num">{m.companies ? m.companies.toLocaleString('en-US') : 'n/a'}</td>
+              <td class="num tomato">{m.regulations}</td>
+              <td class="num">{m.t1}</td>
+              <td class="num">{m.t2}</td>
+              <td class="num">{m.enacted}</td>
+              <td class="num">{m.projected}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="im__section">
+    <p class="im__label">Per Necessity</p>
+    <table class="im__table">
+      <thead>
+        <tr>
+          <th>Necessity</th>
+          <th class="num">In-thesis cos</th>
+          <th class="num">Regs T1</th>
+          <th class="num">Regs T2</th>
+        </tr>
+      </thead>
+      <tbody>
+        {perNecessity.map((n) => {
+          const intensity = n.in_thesis_companies / maxNecCos;
+          return (
+            <tr style={`--bg-intensity: ${intensity}`}>
+              <td>{n.name}</td>
+              <td class="num tomato">{n.in_thesis_companies.toLocaleString('en-US')}</td>
+              <td class="num">{n.regulations_t1}</td>
+              <td class="num">{n.regulations_t2}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<style>
+  .im { display: flex; flex-direction: column; gap: var(--s-6); }
+  .im__section { display: flex; flex-direction: column; gap: var(--s-3); }
+  .im__label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+    margin: 0;
+  }
+  .im__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    color: var(--c-pearl);
+  }
+  .im__table th, .im__table td {
+    padding: var(--s-3) var(--s-4);
+    text-align: left;
+    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 12%, transparent);
+  }
+  .im__table th {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
+    font-weight: 500;
+    border-bottom-color: color-mix(in srgb, var(--c-pearl) 25%, transparent);
+  }
+  .im__table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .im__table .tomato { color: var(--c-tomato); font-weight: 600; }
+  .im__table tbody tr {
+    background: color-mix(in srgb, var(--c-tomato) calc(var(--bg-intensity, 0) * 12%), transparent);
+  }
+  .im__market-code { color: var(--c-tomato); font-weight: 600; }
+  .im__market-name { color: color-mix(in srgb, var(--c-pearl) 70%, transparent); }
+</style>

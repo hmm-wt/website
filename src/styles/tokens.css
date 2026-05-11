@@ -1,0 +1,79 @@
+/* hmm Ventures. Design System v2.0 tokens
+   Source: Design System Files/hmm Ventures. Design System v1.0/tokens/hmm-tokens.json
+   Do not edit hex values directly. Update via the token system. */
+
+:root {
+  /* ── Six brand colours (canonical) ──────────── */
+  --c-evergreen:   #042F2A;
+  --c-dark-teal:   #0A4A40;
+  --c-pearl:       #F2ECC9;
+  --c-tomato:      #C44539;
+  --c-mahogany:    #250001;
+  --c-light-tint:  #F7F5F0;
+
+  /* ── Semantic roles ─────────────────────────── */
+  --bg:            var(--c-light-tint);
+  --bg-deep:       var(--c-evergreen);
+  --bg-warm:       var(--c-pearl);
+  --fg:            var(--c-mahogany);
+  --fg-soft:       color-mix(in srgb, var(--c-mahogany) 70%, transparent);
+  --fg-on-deep:    var(--c-pearl);
+  --rule:          color-mix(in srgb, var(--c-mahogany) 14%, transparent);
+  --accent:        var(--c-tomato);
+  --link:          var(--c-evergreen);
+  --link-hover:    var(--c-tomato);
+
+  /* ── Type stack ─────────────────────────────── */
+  --f-display: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  --f-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --f-body:    'DM Sans', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  /* ── Type scale (mobile-first, fluid) ──────── */
+  --fs-xs:   0.78rem;
+  --fs-sm:   0.875rem;
+  --fs-base: 1rem;
+  --fs-md:   1.125rem;
+  --fs-lg:   1.375rem;
+  --fs-xl:   clamp(1.625rem, 1.3rem + 1.6vw, 2.25rem);
+  --fs-2xl:  clamp(2rem, 1.4rem + 3.2vw, 3.25rem);
+  --fs-3xl:  clamp(2.75rem, 1.8rem + 4.8vw, 5rem);
+
+  --lh-tight: 1.08;
+  --lh-snug:  1.25;
+  --lh-body:  1.55;
+  --lh-loose: 1.7;
+
+  /* ── Space scale ─────────────────────────── */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 6.5rem;
+  --s-10: 9rem;
+
+  /* ── Layout ──────────────────────────────── */
+  --measure: 64ch;
+  --measure-narrow: 52ch;
+  --container: 72rem;
+  --container-narrow: 44rem;
+  --radius: 0;
+  --radius-sm: 2px;
+
+  /* ── Motion (160ms beat) ─────────────────── */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-1: 160ms;
+  --dur-2: 320ms;
+  --dur-3: 480ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+  }
+}

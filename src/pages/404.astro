@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+import KickerLabel from '../components/KickerLabel.astro';
+---
+<Base
+  title="Not found"
+  description="That page does not exist on hmm.ventures."
+>
+  <section class="nf container">
+    <KickerLabel index="404" label="Not found" accent />
+    <h1 class="nf__title">That page does not exist.</h1>
+    <p class="nf__sub">
+      The URL you followed does not resolve to a page on this site. The link may be stale, mistyped, or pointing at a page that has been moved.
+    </p>
+    <ul class="nf__list" role="list">
+      <li><a href="/">Home</a></li>
+      <li><a href="/doctrine/">The Necessity Doctrine</a></li>
+      <li><a href="/thesis/">Thesis</a></li>
+      <li><a href="/research/">Research</a></li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    padding-block: var(--s-9);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    max-width: 48rem;
+  }
+  .nf__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .nf__sub {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    margin: 0;
+    max-width: 52ch;
+  }
+  .nf__list {
+    list-style: none;
+    padding: 0;
+    margin: var(--s-5) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .nf__list a {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-block-end: 2px;
+  }
+  .nf__list a:hover {
+    color: var(--c-tomato);
+    border-bottom-color: currentColor;
+  }
+</style>

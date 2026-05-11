@@ -1,0 +1,72 @@
+---
+import calendar from '../data/crystallisation-window.json';
+import CalendarEntry from './CalendarEntry.astro';
+
+type Reg = (typeof calendar.regulations)[number];
+
+// Group by year
+const byYear = calendar.regulations.reduce<Record<number, Reg[]>>((acc, r) => {
+  if (!acc[r.effective_year]) acc[r.effective_year] = [];
+  acc[r.effective_year].push(r as Reg);
+  return acc;
+}, {});
+
+const years = Object.keys(byYear).map(Number).sort((a, b) => a - b);
+---
+<div class="cal-timeline">
+  {years.map((year) => (
+    <section class="cal-year" id={`year-${year}`}>
+      <header class="cal-year__head">
+        <h2 class="cal-year__num">{year}</h2>
+        <span class="cal-year__count kicker">{byYear[year].length} {byYear[year].length === 1 ? 'regulation' : 'regulations'}</span>
+      </header>
+      <ol class="cal-year__list" role="list">
+        {byYear[year].sort((a, b) => a.market.localeCompare(b.market)).map((r) => (
+          <CalendarEntry
+            id={r.id}
+            market={r.market as 'AU' | 'JP' | 'NZ' | 'SG'}
+            necessity={r.necessity}
+            tier={r.tier as 'T1' | 'T2'}
+            effective_year={r.effective_year}
+            status={r.status}
+            title={r.title}
+          />
+        ))}
+      </ol>
+    </section>
+  ))}
+</div>
+
+<style>
+  .cal-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-7);
+  }
+  .cal-year {
+    padding-block: var(--s-5);
+    border-top: 2px solid var(--c-tomato);
+  }
+  .cal-year__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-4);
+    margin-block-end: var(--s-4);
+  }
+  .cal-year__num {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .cal-year__count {
+    margin: 0;
+    color: var(--c-tomato);
+  }
+  .cal-year__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

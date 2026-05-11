@@ -1,0 +1,149 @@
+---
+import Base from './Base.astro';
+
+interface HeadlineMetric {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  /** Optional headline metrics rendered in the right rail. */
+  headlineMetrics?: HeadlineMetric[];
+  /** Optional date label, ISO format. */
+  date?: string;
+  /** Optional version label, e.g. "v1.0". */
+  version?: string;
+}
+
+const { title, description, ogImage, headlineMetrics, date, version } = Astro.props;
+const dateLabel = date
+  ? new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
+  : null;
+---
+<Base title={title} description={description} ogImage={ogImage}>
+  <article class="research container">
+    <div class="research__body">
+      <header class="research__head">
+        <p class="kicker research__kicker">
+          <span class="research__reg" aria-hidden="true"></span>
+          Research · hmm Ventures
+          {version && <span class="research__version">{version}</span>}
+        </p>
+        {dateLabel && <p class="research__date kicker">{dateLabel}</p>}
+      </header>
+      <div class="research__prose prose">
+        <slot />
+      </div>
+    </div>
+
+    {headlineMetrics && headlineMetrics.length > 0 && (
+      <aside class="research__rail" aria-label="Headline metrics">
+        <p class="research__rail-label kicker">Headline metrics</p>
+        <dl class="research__metrics">
+          {headlineMetrics.map((m) => (
+            <div class="research__metric">
+              <dt>{m.label}</dt>
+              <dd>{m.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </aside>
+    )}
+  </article>
+</Base>
+
+<style>
+  .research {
+    padding-block: var(--s-8) var(--s-9);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: var(--s-7);
+    align-items: start;
+  }
+  .research__body { max-width: 72ch; }
+  .research__head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    align-items: baseline;
+    padding-block-end: var(--s-5);
+    border-bottom: 1px solid var(--rule);
+    margin-block-end: var(--s-6);
+  }
+  .research__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0;
+  }
+  .research__reg {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--c-tomato);
+  }
+  .research__version {
+    margin-inline-start: var(--s-2);
+    color: var(--c-tomato);
+  }
+  .research__date {
+    margin-inline-start: auto;
+  }
+
+  .research__prose {
+    font-family: var(--f-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-loose);
+    max-width: 72ch;
+  }
+
+  .research__rail {
+    position: sticky;
+    top: calc(var(--s-7) + 1rem);
+    align-self: start;
+    padding: var(--s-5);
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    border-left: 2px solid var(--c-tomato);
+    font-family: var(--f-mono);
+  }
+  .research__rail-label {
+    color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+    margin: 0 0 var(--s-3);
+  }
+  .research__metrics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin: 0;
+  }
+  .research__metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-block-end: var(--s-2);
+    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 15%, transparent);
+  }
+  .research__metric:last-child { border-bottom: 0; }
+  .research__metric dt {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+  }
+  .research__metric dd {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    margin: 0;
+    color: var(--c-pearl);
+    line-height: 1.1;
+  }
+
+  @media (max-width: 900px) {
+    .research { grid-template-columns: minmax(0, 1fr); }
+    .research__rail { position: static; }
+  }
+</style>

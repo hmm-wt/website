@@ -1,0 +1,56 @@
+{
+  "as_of": "2026-04-08",
+  "version": "v1.0",
+  "refresh_cadence": "quarterly",
+  "source_datasets": [
+    "reference_dataset_classified_2026-04-08.csv (19,416 four-market companies)",
+    "regulations_comprehensive.json (725 regulations, 64 countries, 13 sectors)",
+    "four_market_sector_tier_breakdown_2026-04-07.csv (174 four-market regulations)"
+  ],
+  "universe": {
+    "total_companies": 22217,
+    "four_market_companies": 19416,
+    "regulations_global": 725,
+    "regulations_four_market": 174
+  },
+  "tier_shares": {
+    "conservative_classifier_pct": 33.5,
+    "conservative_classifier_count": 6505,
+    "t1_count": 5556,
+    "t2_count": 949
+  },
+  "per_market": [
+    { "market": "AU", "code": "Australia", "companies": 9389, "regulations": 56, "t1": 41, "t2": 15, "enacted": 43, "projected": 13 },
+    { "market": "JP", "code": "Japan", "companies": null, "regulations": 49, "t1": 36, "t2": 13, "enacted": 38, "projected": 11 },
+    { "market": "NZ", "code": "New Zealand", "companies": 2130, "regulations": 28, "t1": 25, "t2": 3, "enacted": 26, "projected": 2 },
+    { "market": "SG", "code": "Singapore", "companies": 4902, "regulations": 41, "t1": 35, "t2": 6, "enacted": 31, "projected": 10 }
+  ],
+  "per_necessity": [
+    { "name": "Biomedical Systems", "in_thesis_companies": 1269, "regulations_t1": 19, "regulations_t2": 1 },
+    { "name": "Autonomous Systems", "in_thesis_companies": 561, "regulations_t1": 58, "regulations_t2": 10 },
+    { "name": "Power Systems", "in_thesis_companies": 581, "regulations_t1": 22, "regulations_t2": 8 },
+    { "name": "Food Security Systems", "in_thesis_companies": 395, "regulations_t1": 16, "regulations_t2": 2 },
+    { "name": "Critical Materials and Supply Integrity", "in_thesis_companies": 505, "regulations_t1": 2, "regulations_t2": 6 }
+  ],
+  "stage_funnel": [
+    { "stage": "Classified universe (four-market)", "count": 19416 },
+    { "stage": "In thesis (T1 or T2)", "count": 6505, "share_pct": 33.5 },
+    { "stage": "In thesis, seed-stage", "count": 2625, "share_pct": 13.5 }
+  ],
+  "premiums": {
+    "round_size_seed": 1.12,
+    "round_size_series_a": 1.19,
+    "round_size_series_c": 1.53,
+    "round_size_series_d_plus": 1.42,
+    "cumulative_pre_seed": 1.09,
+    "cumulative_series_d_plus": 2.12,
+    "exit_rate_multiple": 2.22,
+    "regulated_exit_rate_pct": 13.41,
+    "unregulated_exit_rate_pct": 6.03
+  },
+  "crystallisation_window": {
+    "in_flight_2024_2030": 36,
+    "peak_year": 2027,
+    "peak_year_count": 19
+  }
+}

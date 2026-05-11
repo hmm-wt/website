@@ -1,0 +1,82 @@
+---
+type Status = 'live' | 'open' | 'closed' | 'pending' | 'embargoed' | 'confirmed' | 'refuted';
+
+interface Props {
+  status: Status;
+  /** Override the displayed label. */
+  label?: string;
+  /** Optional date stamp. */
+  dateStamp?: string;
+}
+
+const { status, label, dateStamp } = Astro.props;
+
+const palette: Record<Status, { dot: string; text: string; defaultLabel: string }> = {
+  live:       { dot: 'live',     text: 'tomato', defaultLabel: 'live' },
+  open:       { dot: 'open',     text: 'tomato', defaultLabel: 'open' },
+  closed:     { dot: 'closed',   text: 'muted',  defaultLabel: 'closed' },
+  pending:    { dot: 'pending',  text: 'muted',  defaultLabel: 'pending' },
+  embargoed:  { dot: 'pending',  text: 'tomato', defaultLabel: 'embargoed' },
+  confirmed:  { dot: 'live',     text: 'tomato', defaultLabel: 'confirmed' },
+  refuted:    { dot: 'closed',   text: 'muted',  defaultLabel: 'refuted' }
+};
+
+const cfg = palette[status];
+const displayLabel = (label ?? cfg.defaultLabel).toUpperCase();
+---
+<span class={`status status--${cfg.text} status--${cfg.dot}`} data-status={status}>
+  <span class={`status__dot status__dot--${cfg.dot}`} aria-hidden="true"></span>
+  <span class="status__label">status: {displayLabel}</span>
+  {dateStamp && (
+    <time class="status__date" datetime={dateStamp}>
+      {new Date(dateStamp).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' })}
+    </time>
+  )}
+</span>
+
+<style>
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+  .status--tomato { color: var(--c-tomato); }
+  .status--muted  { color: color-mix(in srgb, currentColor 55%, transparent); }
+
+  .status__dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .status__dot--live,
+  .status__dot--open {
+    background: var(--c-tomato);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-tomato) 55%, transparent);
+    animation: status-pulse 2.4s ease-out infinite;
+  }
+  .status__dot--closed,
+  .status__dot--pending {
+    background: color-mix(in srgb, currentColor 50%, transparent);
+  }
+
+  .status__date {
+    margin-inline-start: var(--s-3);
+    opacity: 0.55;
+  }
+
+  @keyframes status-pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-tomato) 55%, transparent); }
+    70% { box-shadow: 0 0 0 8px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .status__dot--live, .status__dot--open { animation: none; }
+  }
+</style>

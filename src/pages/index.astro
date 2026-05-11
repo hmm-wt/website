@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import Door from '../components/Door.astro';
+import FoundingCounter from '../components/FoundingCounter.astro';
+import StatusIndicator from '../components/StatusIndicator.astro';
+---
+<Base
+  title="hmm Ventures"
+  description="Necessity is the thesis. A doctrine for seed-stage capital in developed APAC, 2026 to 2030."
+>
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__meta">
+        <span class="hero__reg" aria-hidden="true"></span>
+        <span class="hero__kicker">The Necessity Doctrine · v1.0</span>
+        <StatusIndicator status="live" />
+      </div>
+
+      <h1 class="hero__sentence">Necessity is the thesis.</h1>
+
+      <div class="hero__multiling">
+        <span lang="ar" dir="rtl">الضرورة هي الأساس</span>
+        <span lang="zh">刚需即论点</span>
+        <span lang="ja">必要性こそ論拠</span>
+        <span lang="mi">Ko te hiahia, ko te kaupapa</span>
+      </div>
+
+      <p class="hero__sub">
+        Five Necessities. Four markets. Seed-stage capital deployed where regulation defines the floor and the compliance layer has not yet been built.
+      </p>
+
+      <p class="hero__body">
+        Eat, heal, move, power, supply. The five regulated Necessities are being rebuilt on a regulatory clock, and hmm seeds the operators rebuilding them across Australia, Japan, New Zealand, and Singapore.
+      </p>
+    </div>
+  </section>
+
+  <section class="doors container" aria-label="Three doors">
+    <Door
+      kicker="Read"
+      title="The Necessity Doctrine"
+      body="Ten chapters on the five Necessities, the four markets, and the window in which the operational layer of regulated industries will be built."
+      href="/doctrine/"
+      cta="Read the doctrine"
+    />
+    <Door
+      kicker="Skim"
+      title="The Thesis"
+      body="Five Necessities. Five structural certainties. The T1 / T2 filter. Twelve minutes."
+      href="/thesis/"
+      cta="Read the thesis"
+    />
+    <Door
+      kicker="Watch"
+      title="The Scoreboard"
+      body="Five falsifiable claims. Dated. Sourced. Bettable through the open window."
+      href="/scoreboard/"
+      cta="See the claims"
+    />
+  </section>
+
+  <section class="cohort container" id="subscribe">
+    <FoundingCounter />
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    padding-block: var(--s-9) var(--s-8);
+  }
+  .hero__inner { display: flex; flex-direction: column; gap: var(--s-5); }
+
+  .hero__meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .hero__reg {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: var(--c-tomato);
+    align-self: center;
+  }
+  .hero__kicker { color: color-mix(in srgb, var(--c-pearl) 70%, transparent); }
+  .hero__meta :global(.status) { margin-inline-start: auto; }
+
+  .hero__sentence {
+    font-family: var(--f-display);
+    font-size: clamp(3rem, 1.8rem + 5.6vw, 6.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: var(--s-4) 0 var(--s-3);
+    max-width: 18ch;
+  }
+
+  .hero__multiling {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5);
+    font-family: var(--f-display);
+    font-size: var(--fs-md);
+    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
+    padding-block-end: var(--s-3);
+  }
+
+  .hero__sub {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: color-mix(in srgb, var(--c-pearl) 80%, transparent);
+    max-width: 44ch;
+    margin: var(--s-3) 0 0;
+  }
+
+  .hero__body {
+    font-family: var(--f-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-body);
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  .doors {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-block: var(--s-8);
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 820px) {
+    .doors { grid-template-columns: 1fr; }
+  }
+
+  .cohort {
+    padding-block: var(--s-7) var(--s-8);
+    max-width: 48rem;
+  }
+</style>

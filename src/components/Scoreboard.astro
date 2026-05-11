@@ -1,0 +1,191 @@
+---
+import scoreboard from '../data/scoreboard.json';
+import StatusIndicator from './StatusIndicator.astro';
+
+type Status = 'open' | 'confirmed' | 'refuted' | 'pending';
+
+interface Bet {
+  bettor: string;
+  direction: 'for' | 'against';
+  charity: string;
+  amount_usd: number;
+  staked_at: string;
+}
+
+const predictions = scoreboard.predictions as Array<{
+  id: string;
+  claim: string;
+  testable_by: string;
+  status: Status;
+  source?: string;
+  bets: Bet[];
+}>;
+---
+<section class="sb">
+  <header class="sb__head">
+    <p class="kicker sb__kicker">Scoreboard · adversarial collaboration</p>
+    <h2 class="sb__title">Five falsifiable claims.</h2>
+    <p class="sb__lede">
+      Each prediction is dated and sourced from public datasets. Charity-bound bets accepted within the open window. After the window closes, predictions stand and are scored annually.
+    </p>
+  </header>
+
+  <ol class="sb__list" role="list">
+    {predictions.map((p) => {
+      const testLabel = new Date(p.testable_by).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
+      return (
+        <li class="sb__item" id={p.id}>
+          <header class="sb__item-head">
+            <span class="sb__item-id">{p.id}</span>
+            <StatusIndicator status={p.status} />
+            <time class="sb__item-test" datetime={p.testable_by}>
+              <span class="sb__item-test-label">Testable by</span>
+              <span class="sb__item-test-value">{testLabel}</span>
+            </time>
+          </header>
+
+          <p class="sb__item-claim">{p.claim}</p>
+
+          {p.source && (
+            <p class="sb__item-source">
+              <span class="sb__item-source-label">Source:</span> {p.source}
+            </p>
+          )}
+
+          {p.bets.length > 0 ? (
+            <div class="sb__bets">
+              <p class="sb__bets-label">Standing bets ({p.bets.length})</p>
+              <ul role="list" class="sb__bets-list">
+                {p.bets.map((b) => (
+                  <li class="sb__bet">
+                    <span class={`sb__bet-dir sb__bet-dir--${b.direction}`}>{b.direction.toUpperCase()}</span>
+                    <span class="sb__bet-name">{b.bettor}</span>
+                    <span class="sb__bet-amount">${b.amount_usd.toLocaleString('en-US')} → {b.charity}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p class="sb__bets-empty">No bets yet recorded.</p>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</section>
+
+<style>
+  .sb { padding-block: var(--s-7); }
+
+  .sb__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-block-end: var(--s-7);
+    max-width: 64ch;
+  }
+  .sb__kicker { color: var(--c-tomato); }
+  .sb__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+  .sb__lede { font-size: var(--fs-md); color: var(--fg-soft); }
+
+  .sb__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-6);
+  }
+
+  .sb__item {
+    padding: var(--s-5);
+    background: var(--bg-warm);
+    border-left: 3px solid var(--c-tomato);
+    scroll-margin-top: var(--s-7);
+  }
+
+  .sb__item-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-4);
+    margin-block-end: var(--s-4);
+    padding-block-end: var(--s-3);
+    border-bottom: 1px solid var(--rule);
+  }
+  .sb__item-id {
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--c-tomato);
+    letter-spacing: 0.08em;
+  }
+
+  .sb__item-test {
+    margin-inline-start: auto;
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+  }
+  .sb__item-test-label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+  }
+  .sb__item-test-value {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .sb__item-claim {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  .sb__item-source {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-soft);
+    margin-block-start: var(--s-3);
+  }
+  .sb__item-source-label { text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .sb__bets,
+  .sb__bets-empty {
+    margin-block-start: var(--s-4);
+    padding-block-start: var(--s-3);
+    border-top: 1px dashed var(--rule);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+  }
+  .sb__bets-label,
+  .sb__bets-empty {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    margin: 0 0 var(--s-2);
+  }
+  .sb__bets-empty { font-style: italic; }
+
+  .sb__bets-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s-2); }
+  .sb__bet { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: baseline; }
+  .sb__bet-dir {
+    font-weight: 600;
+    padding: 0.15em 0.45em;
+    font-size: calc(var(--fs-xs) * 0.85);
+  }
+  .sb__bet-dir--for { color: var(--c-tomato); background: color-mix(in srgb, var(--c-tomato) 12%, transparent); }
+  .sb__bet-dir--against { color: var(--fg); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+  .sb__bet-name { font-weight: 600; }
+  .sb__bet-amount { color: var(--fg-soft); }
+</style>

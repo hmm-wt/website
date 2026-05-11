@@ -1,0 +1,48 @@
+{
+  "window_opens": "2026-11-01T06:00:00+08:00",
+  "window_closes": "2026-12-01T06:00:00+08:00",
+  "window_open": true,
+  "scored_at": null,
+  "predictions": [
+    {
+      "id": "P1",
+      "claim": "By end-2028, T1-classified seed companies in the four markets will show a Series A graduation rate at least 1.5x the unregulated cohort, observable from public Crunchbase and Dealroom data.",
+      "testable_by": "2028-12-31",
+      "status": "open",
+      "source": "hmm proprietary 22,217-company dataset, four-market cohort",
+      "bets": []
+    },
+    {
+      "id": "P2",
+      "claim": "By end-2028, at least three of the five regulator-anchored compliance frameworks (TGA digital health, FSANZ food traceability, MAS AI risk, PMDA digital-therapeutic pathway, Medsafe WAND) will publish operational compliance frameworks materially in their final form.",
+      "testable_by": "2028-12-31",
+      "status": "open",
+      "source": "Public regulator publications across AU, JP, NZ, SG",
+      "bets": []
+    },
+    {
+      "id": "P3",
+      "claim": "By end-2027, the cumulative T1-to-unregulated funding premium will widen from 2.12x (2026) to at least 2.30x at Series D+ in the four target markets.",
+      "testable_by": "2027-12-31",
+      "status": "open",
+      "source": "hmm dataset re-query (annual)",
+      "bets": []
+    },
+    {
+      "id": "P4",
+      "claim": "By end-2028, at least two additional named acquisitions of developed-APAC regulated-technology companies by NA or EMEA strategic acquirers will close at EV at or above $100M.",
+      "testable_by": "2028-12-31",
+      "status": "open",
+      "source": "Primary-source verified exit dataset; ASX, TSE, NZX, SGX filings",
+      "bets": []
+    },
+    {
+      "id": "P5",
+      "claim": "By end-2027, at least one of MAS, PMDA, or AEMO will publish a mandatory operational AI risk framework that creates direct compliance-software demand observable in public procurement notices.",
+      "testable_by": "2027-12-31",
+      "status": "open",
+      "source": "Public regulator publications and procurement notices",
+      "bets": []
+    }
+  ]
+}

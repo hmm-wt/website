@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import PDFCapture from '../../components/PDFCapture.astro';
+import FoundingCounter from '../../components/FoundingCounter.astro';
+---
+<Base
+  title="Download The Necessity Doctrine"
+  description="Subscribe to receive the Doctrine PDF and fortnightly chapters extending the artefact."
+>
+  <section class="dl container">
+    <header class="dl__head">
+      <p class="kicker">The Necessity Doctrine · PDF</p>
+      <h1 class="dl__title">
+        The artefact, in print.
+      </h1>
+      <p class="dl__lede">
+        The web Doctrine reads the same as the PDF. The PDF is for forwarding, printing, and reading offline. Subscribe to the Necessity Memo to receive the link.
+      </p>
+    </header>
+
+    <PDFCapture
+      pdfUrl="/doctrine/the-necessity-doctrine-v1.pdf"
+      pdfLabel="The Necessity Doctrine, v1.0 · 8.4 MB PDF"
+    />
+
+    <div class="dl__counter">
+      <FoundingCounter />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .dl { padding-block: var(--s-8) var(--s-9); display: flex; flex-direction: column; gap: var(--s-7); }
+  .dl__head { display: flex; flex-direction: column; gap: var(--s-3); max-width: 64ch; }
+  .dl__title { font-family: var(--f-display); font-size: var(--fs-3xl); line-height: var(--lh-tight); margin: 0; }
+  .dl__lede { font-size: var(--fs-lg); font-family: var(--f-display); line-height: var(--lh-snug); color: var(--fg-soft); max-width: 52ch; }
+  .dl__counter { max-width: 36rem; }
+</style>

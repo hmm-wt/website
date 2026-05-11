@@ -1,0 +1,130 @@
+---
+interface Chapter {
+  id: string;       // anchor id, e.g. "chapter-01"
+  index: string;    // e.g. "01"
+  title: string;
+}
+
+interface Props {
+  chapters: Chapter[];
+}
+
+const { chapters } = Astro.props;
+---
+<nav class="chapter-nav" aria-label="Chapter navigation">
+  <p class="chapter-nav__label kicker">Chapters</p>
+  <ol class="chapter-nav__list" role="list">
+    {chapters.map((c) => (
+      <li class="chapter-nav__item" data-target={c.id}>
+        <a href={`#${c.id}`} class="chapter-nav__link">
+          <span class="chapter-nav__idx">{c.index}</span>
+          <span class="chapter-nav__title">{c.title}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script>
+  /**
+   * Highlight the current chapter as the reader scrolls through the doctrine.
+   * Uses IntersectionObserver to mark the closest visible chapter heading.
+   */
+  function initChapterNav() {
+    const items = document.querySelectorAll<HTMLLIElement>('.chapter-nav__item');
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (!visible.length) return;
+        // Pick the topmost visible
+        visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        const targetId = visible[0].target.id;
+
+        items.forEach((item) => {
+          const isCurrent = item.dataset.target === targetId;
+          item.classList.toggle('is-current', isCurrent);
+        });
+      },
+      { rootMargin: '-15% 0px -65% 0px', threshold: 0 }
+    );
+
+    items.forEach((item) => {
+      const id = item.dataset.target;
+      if (!id) return;
+      const target = document.getElementById(id);
+      if (target) observer.observe(target);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChapterNav);
+  } else {
+    initChapterNav();
+  }
+</script>
+
+<style>
+  .chapter-nav {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+  }
+
+  .chapter-nav__label {
+    margin-block-end: var(--s-3);
+    color: var(--fg-soft);
+  }
+
+  .chapter-nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 1px solid var(--rule);
+  }
+
+  .chapter-nav__item {
+    position: relative;
+  }
+
+  .chapter-nav__link {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-3);
+    align-items: baseline;
+    padding: var(--s-2) var(--s-3);
+    text-decoration: none;
+    color: var(--fg-soft);
+    border-left: 2px solid transparent;
+    margin-inline-start: -1px;
+    transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  }
+  .chapter-nav__link:hover {
+    color: var(--fg);
+    border-left-color: color-mix(in srgb, var(--c-tomato) 50%, transparent);
+  }
+
+  .chapter-nav__item.is-current .chapter-nav__link {
+    color: var(--c-tomato);
+    border-left-color: var(--c-tomato);
+  }
+  .chapter-nav__item.is-current .chapter-nav__idx {
+    color: var(--c-tomato);
+  }
+
+  .chapter-nav__idx {
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--fg-soft);
+  }
+
+  .chapter-nav__title {
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.4;
+    font-size: calc(var(--fs-xs) * 1.05);
+  }
+</style>
