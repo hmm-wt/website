@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # Optional npm cache directory
 .npm
+
+# Netlify CLI local state
+.netlify/
