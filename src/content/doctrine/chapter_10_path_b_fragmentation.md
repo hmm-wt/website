@@ -90,7 +90,7 @@ A portfolio construction designed for path A but executed under path B underperf
 
 ## Closing position of this paper
 
-The doctrine is testable. The conservative classifier — 33.5% of the 19,416 four-market universe (6,505 companies) passes the T1 / T2 screen — is the headline empirical anchor. Everything else either rests on documented regulatory record or is flagged as inference. The four-market construction is specific enough to be wrong. The Five Necessities are specific enough to be reframed. The 2024-2028 window is dated enough to be falsified.
+The doctrine is testable. The conservative classifier is the headline empirical anchor: 33.5% of the 19,416 four-market universe (6,505 companies) passes the T1 / T2 screen. Everything else either rests on documented regulatory record or is flagged as inference. The four-market construction is specific enough to be wrong. The Five Necessities are specific enough to be reframed. The 2024-2028 window is dated enough to be falsified.
 
 What it claims: regulatory architecture produces durable barriers, the four markets have built deeper architecture than the alternatives, the seed-stage entry into that architecture is mispriced, and the period for capturing the mispricing is closing.
 

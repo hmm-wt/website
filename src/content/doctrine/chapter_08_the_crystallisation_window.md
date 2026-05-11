@@ -35,6 +35,9 @@ The crystallisation period is short and asymmetric. Companies that build during 
 
 In each of the four target markets, the crystallisation period sits inside the 2024-2028 window. The mechanisms differ by market. Japan crystallises through the AI Strategy Headquarters' coordination and METI guideline iteration. Australia crystallises through APRA's CPS 230 and AEMO transmission build-out. New Zealand crystallises through the MBIE Innovation Services transition. Singapore crystallises through the MAS AI guidelines transition and the stablecoin framework enforcement.
 
+![Compliance cycle. Draft, consultation, enactment, enforcement. The 2024-2028 window sits at the transition from enactment to enforcement.](/charts/compliance_cycle.png)
+<small>Source: hmm Ventures Comprehensive Regulatory Dataset; 34 in-flight regulations dated 2024 to 2030.</small>
+
 ---
 
 ## The structural-advantage mechanism

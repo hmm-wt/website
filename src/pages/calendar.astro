@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import KickerLabel from '../components/KickerLabel.astro';
 import CalendarTimeline from '../components/CalendarTimeline.astro';
+import CalendarHorizon from '../components/CalendarHorizon.astro';
 import TagFilter from '../components/TagFilter.astro';
 import calendar from '../data/crystallisation-window.json';
 
@@ -49,6 +50,10 @@ const filterGroups = [
         </div>
       </div>
     </header>
+
+    <div class="cal__horizon">
+      <CalendarHorizon />
+    </div>
 
     <div class="cal__filter">
       <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
@@ -114,6 +119,7 @@ const filterGroups = [
     line-height: 1;
   }
 
+  .cal__horizon { margin-block-end: var(--s-7); }
   .cal__filter { margin-block-end: var(--s-5); }
 
   .cal__foot {

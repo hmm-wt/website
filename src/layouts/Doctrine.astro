@@ -68,6 +68,25 @@ const { title, description, ogImage } = Astro.props;
     max-width: 60ch;
   }
 
+  /* Footnotes live on /doctrine/references/. Hide the auto-rendered
+     footnote sections inside each chapter so the doctrine reads as a clean
+     artefact. Inline [^N] markers still render and link to the references page. */
+  .doctrine__body :global(section[data-footnotes]),
+  .doctrine__body :global(aside.footnotes),
+  .doctrine__body :global(.footnotes) {
+    display: none;
+  }
+  .doctrine__body :global(a[data-footnote-ref]),
+  .doctrine__body :global(sup.footnote-ref a),
+  .doctrine__body :global(a.data-footnote-ref) {
+    color: var(--c-tomato);
+    font-family: var(--f-mono);
+    font-size: 0.78em;
+    text-decoration: none;
+    border-bottom: none;
+    padding: 0 0.1em;
+  }
+
   .doctrine__rail {
     grid-area: rail;
     position: sticky;

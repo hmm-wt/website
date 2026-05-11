@@ -47,13 +47,13 @@ const maxCount = Math.max(...necTotals.map((n) => n.in_thesis_companies));
             <span class="ng__cell-name">{n.short}</span>
           </header>
           <p class="ng__cell-count">
-            <span class="ng__cell-num">{necData?.in_thesis_companies.toLocaleString('en-US') ?? '—'}</span>
+            <span class="ng__cell-num">{necData?.in_thesis_companies.toLocaleString('en-US') ?? 'n/a'}</span>
             <span class="ng__cell-label">in-thesis companies</span>
           </p>
           <footer class="ng__cell-foot">
-            <span>T1: {necData?.regulations_t1 ?? '—'}</span>
+            <span>T1: {necData?.regulations_t1 ?? 'n/a'}</span>
             <span class="ng__cell-sep">·</span>
-            <span>T2: {necData?.regulations_t2 ?? '—'}</span>
+            <span>T2: {necData?.regulations_t2 ?? 'n/a'}</span>
             <span class="ng__cell-sep">·</span>
             <span>regs</span>
           </footer>

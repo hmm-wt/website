@@ -133,6 +133,27 @@ h4 {
 }
 .prose strong { color: var(--c-pearl); font-weight: 600; }
 
+.prose img {
+  margin-block: 2em 0.5em;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  background: var(--c-pearl);
+}
+.prose small {
+  display: block;
+  font-family: var(--f-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-soft);
+  margin-block-end: 1.5em;
+  line-height: 1.5;
+}
+.surface-light .prose strong { color: var(--fg-light); }
+.surface-light .prose img { background: var(--c-pearl); border-color: var(--rule-light); }
+.surface-light .prose small { color: var(--fg-light-soft); }
+
 .prose table {
   width: 100%;
   border-collapse: collapse;
@@ -239,7 +260,7 @@ h4 {
 .reveal-group.is-visible > *:nth-child(5) { transition-delay: 240ms; }
 .reveal-group.is-visible > *:nth-child(6) { transition-delay: 300ms; }
 
-/* Tomato pulse — for live status dots and accent points */
+/* Tomato pulse. For live status dots and accent points. */
 @keyframes pulse-tomato {
   0%   { box-shadow: 0 0 0 0 rgba(196, 69, 57, 0.55); }
   70%  { box-shadow: 0 0 0 10px rgba(196, 69, 57, 0); }

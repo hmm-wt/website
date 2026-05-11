@@ -59,7 +59,7 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
   </footer>
 
   <p class="dh__confidential">
-    Public artefact. Subsequent material is delivered separately to qualified investors under the appropriate confidentiality framework.
+    Public artefact. Subsequent material is delivered separately to qualified investors under the appropriate confidentiality framework. Source citations on <a class="dh__ref-link" href="/doctrine/references/">the references page</a>.
   </p>
 </div>
 
@@ -150,4 +150,11 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
     max-width: 64ch;
     line-height: 1.5;
   }
+  .dh__ref-link {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+  .dh__ref-link:hover { color: var(--c-pearl); border-bottom-color: var(--c-pearl); }
 </style>

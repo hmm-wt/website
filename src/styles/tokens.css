@@ -1,4 +1,4 @@
-/* hmm Ventures. Design System v1.0 — canonical tokens.
+/* hmm Ventures. Design System v1.0. Canonical tokens.
    Source: project/tokens/hmm-tokens.json (HMM Ventures Design System).
    Dark-first product per canon. Light register is opt-in via .surface-light. */
 
@@ -71,7 +71,7 @@
   --fs-xs:   clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);  /* 11–13 */
   --fs-sm:   clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);  /* 13–15 */
   --fs-base: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);   /* 15–17 */
-  --fs-md:   clamp(1.0625rem, 0.97rem + 0.4vw, 1.1875rem);  /* 17–19 — canonical body */
+  --fs-md:   clamp(1.0625rem, 0.97rem + 0.4vw, 1.1875rem);  /* 17 to 19, canonical body */
   --fs-lg:   clamp(1.25rem,   1.1rem  + 0.7vw, 1.625rem);   /* 20–26 */
   --fs-xl:   clamp(1.5rem,    1.2rem  + 1.2vw, 2rem);       /* 24–32 */
   --fs-2xl:  clamp(1.875rem,  1.3rem  + 2vw,   2.875rem);   /* 30–46 */

@@ -32,6 +32,9 @@ The Five Necessities sit in the second category. Each is a domain where private 
 
 Adjacent verticals fail at least one of the criteria. Education technology has regulatory architecture but no geopolitical anchor. Real estate technology has capital signal but minimal cross-border coordination. Retail technology has neither. Most of what venture capital calls "regulated" is actually consumer-protected, which is a different kind of barrier and a thinner one.
 
+![Regulatory direction of travel. The build is structural, not cyclical.](/charts/regulatory_direction.png)
+<small>Source: hmm Ventures Comprehensive Regulatory Dataset. 725 regulations across 64 countries; 174 in the four target markets.</small>
+
 ---
 
 ## Food security systems
@@ -54,7 +57,7 @@ The FDA issued final guidance on AI/ML-enabled medical devices in late 2024, for
 
 Japan's PMDA opened a fast-track pathway for AI-enabled diagnostic devices in 2025. Singapore's HSA tightened licensing for medical device software classified above Class A. Australia's TGA introduced a new framework for software-as-medical-device incorporating post-market AI surveillance.[^6]
 
-Biomedical systems carry the highest in-thesis company count in the four-market universe — 1,269 classified companies, 19 T1 regulations and 1 T2 regulation in scope.[^7] The proportion flowing into companies that ship inside a regulatory framework rather than around it has been rising for three consecutive years.
+Biomedical systems carry the highest in-thesis company count in the four-market universe. 1,269 classified companies, 19 T1 regulations and 1 T2 regulation in scope.[^7] The proportion flowing into companies that ship inside a regulatory framework rather than around it has been rising for three consecutive years.
 
 ---
 
