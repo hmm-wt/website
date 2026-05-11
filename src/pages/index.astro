@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Door from '../components/Door.astro';
-import FoundingCounter from '../components/FoundingCounter.astro';
 import StatusIndicator from '../components/StatusIndicator.astro';
 ---
 <Base
@@ -34,7 +33,7 @@ import StatusIndicator from '../components/StatusIndicator.astro';
     </div>
   </section>
 
-  <section class="doors container" aria-label="Three doors">
+  <section class="doors container reveal-group" aria-label="Three doors">
     <Door
       kicker="Read"
       title="The Necessity Doctrine"
@@ -58,9 +57,6 @@ import StatusIndicator from '../components/StatusIndicator.astro';
     />
   </section>
 
-  <section class="cohort container" id="subscribe">
-    <FoundingCounter />
-  </section>
 </Base>
 
 <style>

@@ -6,7 +6,8 @@ const year = new Date().getFullYear();
  * Order: EN (master), AR (GCC), ZH (SG/APAC), JA (JP), Māori (NZ).
  * No Bahasa per voice memory.
  */
-const taglines = [
+interface Tagline { lang: string; text: string; dir?: 'ltr' | 'rtl'; }
+const taglines: Tagline[] = [
   { lang: 'en', text: 'Necessity is the thesis.' },
   { lang: 'zh', text: '刚需即论点' },
   { lang: 'ja', text: '必要性こそ論拠' },

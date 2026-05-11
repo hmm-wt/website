@@ -6,7 +6,6 @@ import ChapterNav from '../../components/ChapterNav.astro';
 import Chapter from '../../components/Chapter.astro';
 import MarginWidget from '../../components/MarginWidget.astro';
 import CrystallisationRail from '../../components/CrystallisationRail.astro';
-import FoundingCounter from '../../components/FoundingCounter.astro';
 
 const entries = (await getCollection('doctrine')).sort(
   (a, b) => a.data.chapter - b.data.chapter
@@ -66,9 +65,6 @@ const railRows = [
     );
   })}
 
-  <Fragment slot="footer">
-    <FoundingCounter />
-  </Fragment>
 </Doctrine>
 
 <style>

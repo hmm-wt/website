@@ -17,17 +17,18 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01" 1, "tnum" 1, "lnum" 1;
 }
 
 a {
   color: var(--link);
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
-  transition: color var(--dur-1) var(--ease);
+  transition: color var(--transition);
 }
 a:hover { color: var(--link-hover); }
 
-::selection { background: var(--accent); color: var(--c-light-tint); }
+::selection { background: var(--accent); color: var(--c-pearl); }
 
 h1, h2, h3 {
   font-family: var(--f-display);
@@ -63,13 +64,15 @@ h4 {
 
 .rule { height: 1px; background: var(--rule); border: 0; }
 
-.inverse {
-  background: var(--bg-deep);
-  color: var(--fg-on-deep);
+/* Light surface: inverse of the dark-first default. Used for prose-heavy
+   blocks (research bodies, brief detail). Drop inside any page. */
+.surface-light {
+  background: var(--bg-light);
+  color: var(--fg-light);
 }
-.inverse a { color: var(--c-pearl); }
-.inverse a:hover { color: var(--c-tomato); }
-.inverse .kicker { color: color-mix(in srgb, var(--c-pearl) 70%, transparent); }
+.surface-light a { color: var(--c-evergreen); border-bottom: 1px solid currentColor; padding-bottom: 1px; text-decoration: none; }
+.surface-light a:hover { color: var(--c-tomato); }
+.surface-light .kicker { color: var(--fg-light-soft); }
 
 .btn {
   display: inline-block;
@@ -82,29 +85,30 @@ h4 {
   text-decoration: none;
   background: transparent;
   cursor: pointer;
-  transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
-.btn:hover { background: var(--accent); color: var(--c-light-tint); border-color: var(--accent); }
+.btn:hover { background: var(--accent); color: var(--c-pearl); border-color: var(--accent); }
 
 .btn-primary {
-  background: var(--c-evergreen);
+  background: var(--c-tomato);
   color: var(--c-pearl);
-  border-color: var(--c-evergreen);
+  border-color: var(--c-tomato);
 }
-.btn-primary:hover { background: var(--accent); border-color: var(--accent); color: var(--c-light-tint); }
+.btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
-.prose { max-width: var(--measure); font-size: var(--fs-md); line-height: var(--lh-loose); }
+.prose {
+  max-width: var(--measure);
+  font-size: var(--fs-md);
+  line-height: var(--lh-loose);
+  color: var(--fg);
+}
 .prose > * + * { margin-block-start: 1.1em; }
-.prose h2 { margin-block-start: 2em; font-size: var(--fs-xl); }
-.prose h3 { margin-block-start: 1.6em; font-size: var(--fs-lg); }
-.prose blockquote {
-  border-left: 2px solid var(--accent);
-  padding-left: var(--s-4);
-  font-style: italic;
-  color: var(--fg-soft);
+.prose h2 {
+  margin-block-start: 2em;
+  font-size: var(--fs-xl);
+  color: var(--fg);
 }
-.prose code { font-family: var(--f-mono); font-size: 0.9em; background: var(--bg-warm); padding: 0.1em 0.35em; }
-
+.prose h3 { margin-block-start: 1.6em; font-size: var(--fs-lg); color: var(--fg); }
 .prose h4 {
   font-family: var(--f-mono);
   font-size: var(--fs-sm);
@@ -114,6 +118,20 @@ h4 {
   color: var(--c-tomato);
   margin-block-start: 2em;
 }
+.prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: var(--s-4);
+  font-style: italic;
+  color: var(--fg-soft);
+}
+.prose code {
+  font-family: var(--f-mono);
+  font-size: 0.9em;
+  background: var(--surface);
+  color: var(--c-tomato);
+  padding: 0.1em 0.35em;
+}
+.prose strong { color: var(--c-pearl); font-weight: 600; }
 
 .prose table {
   width: 100%;
@@ -124,8 +142,12 @@ h4 {
   margin-block: 1.4em;
   display: block;
   overflow-x: auto;
+  color: var(--fg);
 }
-.prose table thead { background: var(--c-evergreen); color: var(--c-pearl); }
+.prose table thead {
+  background: var(--surface-2);
+  color: var(--c-pearl);
+}
 .prose table th {
   text-align: left;
   font-weight: 600;
@@ -135,17 +157,27 @@ h4 {
   padding: var(--s-3) var(--s-4);
   border-bottom: 1px solid var(--c-tomato);
   white-space: nowrap;
+  color: var(--c-tomato);
 }
 .prose table td {
   padding: var(--s-2) var(--s-4);
   border-bottom: 1px solid var(--rule);
   vertical-align: top;
 }
-.prose table tbody tr:nth-child(even) { background: var(--bg-warm); }
-.prose table tbody tr:hover { background: color-mix(in srgb, var(--c-tomato) 6%, var(--bg)); }
+.prose table tbody tr:nth-child(even) { background: var(--surface); }
+.prose table tbody tr:hover { background: color-mix(in srgb, var(--c-tomato) 10%, transparent); }
 
-/* Tier badges inside table cells. Authored as plain text "T1" / "T2"; styled via :where. */
-.prose table td:has(> :nth-child(0)) { /* fallback selector */ }
+/* Surface-light scoped prose overrides */
+.surface-light .prose { color: var(--fg-light); }
+.surface-light .prose h2, .surface-light .prose h3 { color: var(--fg-light); }
+.surface-light .prose strong { color: var(--fg-light); }
+.surface-light .prose code { background: rgba(4, 47, 42, 0.06); color: var(--c-tomato); }
+.surface-light .prose table { color: var(--fg-light); }
+.surface-light .prose table thead { background: var(--c-evergreen); color: var(--c-pearl); }
+.surface-light .prose table th { color: var(--c-pearl); }
+.surface-light .prose table td { border-bottom-color: var(--rule-light); }
+.surface-light .prose table tbody tr:nth-child(even) { background: var(--c-light-tint); }
+.surface-light .prose blockquote { color: var(--fg-light-soft); }
 
 .tag {
   display: inline-block;
@@ -175,11 +207,48 @@ h4 {
   width: auto;
   height: auto;
   padding: 0.5rem 0.75rem;
-  background: var(--c-evergreen);
-  color: var(--c-pearl);
+  background: var(--c-pearl);
+  color: var(--c-evergreen);
   z-index: 1000;
 }
 
+/* ───────── Animation utilities ─────────
+   Canonical motion: 180ms golden ease (cubic-bezier(0.16, 1, 0.3, 1)).
+   Reveal on scroll: add .reveal to any element, then JS toggles
+   .is-visible when the element enters viewport. Initial state is
+   opacity 0, translateY 16px. */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--dur-2) var(--ease-golden), transform var(--dur-2) var(--ease-golden);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered children inside .reveal-group */
+.reveal-group > * { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-2) var(--ease-golden), transform var(--dur-2) var(--ease-golden); }
+.reveal-group.is-visible > * { opacity: 1; transform: none; }
+.reveal-group.is-visible > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-group.is-visible > *:nth-child(2) { transition-delay: 60ms; }
+.reveal-group.is-visible > *:nth-child(3) { transition-delay: 120ms; }
+.reveal-group.is-visible > *:nth-child(4) { transition-delay: 180ms; }
+.reveal-group.is-visible > *:nth-child(5) { transition-delay: 240ms; }
+.reveal-group.is-visible > *:nth-child(6) { transition-delay: 300ms; }
+
+/* Tomato pulse — for live status dots and accent points */
+@keyframes pulse-tomato {
+  0%   { box-shadow: 0 0 0 0 rgba(196, 69, 57, 0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(196, 69, 57, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(196, 69, 57, 0); }
+}
+.pulse-tomato { animation: pulse-tomato 2.4s var(--ease-golden) infinite; }
+
 @media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-group > * { opacity: 1 !important; transform: none !important; }
+  .pulse-tomato { animation: none !important; }
   * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }

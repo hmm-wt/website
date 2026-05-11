@@ -1,9 +1,9 @@
-/* hmm Ventures. Design System v2.0 tokens
-   Source: Design System Files/hmm Ventures. Design System v1.0/tokens/hmm-tokens.json
-   Do not edit hex values directly. Update via the token system. */
+/* hmm Ventures. Design System v1.0 — canonical tokens.
+   Source: project/tokens/hmm-tokens.json (HMM Ventures Design System).
+   Dark-first product per canon. Light register is opt-in via .surface-light. */
 
 :root {
-  /* ── Six brand colours (canonical) ──────────── */
+  /* ---------- Six brand colours ---------- */
   --c-evergreen:   #042F2A;
   --c-dark-teal:   #0A4A40;
   --c-pearl:       #F2ECC9;
@@ -11,70 +11,111 @@
   --c-mahogany:    #250001;
   --c-light-tint:  #F7F5F0;
 
-  /* ── Semantic roles ─────────────────────────── */
-  /* Paper / surface tokens follow the IM design language.
-     Body is Light Tint (pearl is reserved for full-bleed accent surfaces:
-     section openers, card backgrounds, pull-outs, footer). */
-  --bg:            var(--c-light-tint);
-  --bg-deep:       var(--c-evergreen);
+  /* ---------- Semantic colour mapping. Dark-first ---------- */
+  --bg:            var(--c-evergreen);
+  --bg-alt:        var(--c-dark-teal);
+  --bg-deep:       var(--c-mahogany);
   --bg-warm:       var(--c-pearl);
-  --bg-tomato-tint:    color-mix(in srgb, var(--c-tomato) 8%, transparent);
-  --bg-mahogany-tint:  color-mix(in srgb, var(--c-mahogany) 6%, transparent);
-  --fg:            var(--c-mahogany);
-  --fg-soft:       color-mix(in srgb, var(--c-mahogany) 66%, transparent);
-  --fg-faint:      color-mix(in srgb, var(--c-mahogany) 45%, transparent);
-  --fg-on-deep:    var(--c-pearl);
-  --rule:          color-mix(in srgb, var(--c-evergreen) 18%, transparent);
-  --rule-strong:   color-mix(in srgb, var(--c-evergreen) 32%, transparent);
+  --bg-soft:       var(--c-light-tint);
+  --surface:       rgba(242, 236, 201, 0.04);
+  --surface-2:     rgba(242, 236, 201, 0.08);
+  --fg:            var(--c-pearl);
+  --fg-soft:       rgba(242, 236, 201, 0.66);
+  --fg-faint:      rgba(242, 236, 201, 0.38);
+  --fg-on-light:   var(--c-mahogany);
+  --rule:          rgba(242, 236, 201, 0.14);
+  --rule-strong:   rgba(242, 236, 201, 0.28);
   --accent:        var(--c-tomato);
-  --link:          var(--c-evergreen);
+  --accent-hover:  #D45546;
+  --link:          var(--c-pearl);
   --link-hover:    var(--c-tomato);
 
-  /* ── Type stack ─────────────────────────────── */
+  /* Light register (used inside .surface-light blocks) */
+  --bg-light:           var(--c-pearl);
+  --fg-light:           var(--c-mahogany);
+  --fg-light-soft:      rgba(37, 0, 1, 0.66);
+  --fg-light-faint:     rgba(37, 0, 1, 0.42);
+  --rule-light:         rgba(4, 47, 42, 0.14);
+  --rule-light-strong:  rgba(4, 47, 42, 0.28);
+
+  /* ---------- Content-role colours (canonical v1.1) ---------- */
+  --role-thesis:        #B8863A;   /* Ochre */
+  --role-thesis-ink:    #8A6426;
+  --role-thesis-tint:   rgba(184, 134, 58, 0.10);
+  --role-decision:      var(--c-mahogany);
+  --role-decision-on-dark: var(--c-pearl);
+  --role-opinion:       #2D6B5F;   /* Teal-mid */
+  --role-opinion-on-dark: #7FB8A8;
+  --role-callout:       var(--c-tomato);
+  --role-callout-tint:  rgba(196, 69, 57, 0.10);
+
+  /* ---------- Chart palette C01..C08 ---------- */
+  --c01: #C44539;
+  --c02: #0A4A40;
+  --c03: #F2ECC9;
+  --c04: #8B5A3C;
+  --c05: #2E5F5A;
+  --c06: #D48C6A;
+  --c07: #5A7A6E;
+  --c08: #A83B2E;
+
+  /* ---------- Type stack ---------- */
   --f-display: 'Instrument Serif', 'Times New Roman', Georgia, serif;
   --f-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --f-body:    'DM Sans', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --f-print:   'Inter', 'Arial', sans-serif;
 
-  /* ── Type scale (mobile-first, fluid) ──────── */
-  --fs-xs:   0.78rem;
-  --fs-sm:   0.875rem;
-  --fs-base: 1rem;
-  --fs-md:   1.125rem;
-  --fs-lg:   1.375rem;
-  --fs-xl:   clamp(1.625rem, 1.3rem + 1.6vw, 2.25rem);
-  --fs-2xl:  clamp(2rem, 1.4rem + 3.2vw, 3.25rem);
-  --fs-3xl:  clamp(2.75rem, 1.8rem + 4.8vw, 5rem);
+  /* ---------- Type scale (fluid) ---------- */
+  --fs-xs:   clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);
+  --fs-sm:   clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);
+  --fs-base: clamp(0.9375rem, 0.85rem + 0.45vw, 1.0625rem);
+  --fs-md:   clamp(1.125rem,  0.95rem + 0.85vw, 1.5rem);
+  --fs-lg:   clamp(1.375rem,  1.1rem  + 1.1vw,  2rem);
+  --fs-xl:   clamp(1.5rem,    1rem    + 1.5vw,  2.25rem);
+  --fs-2xl:  clamp(2rem,      1.2rem  + 2.5vw,  3.5rem);
+  --fs-3xl:  clamp(2.5rem,    1rem    + 4vw,    5rem);
+  --fs-hero: clamp(3rem,      0.5rem  + 7vw,    8rem);
 
-  --lh-tight: 1.08;
-  --lh-snug:  1.25;
+  --lh-tight: 1.04;
+  --lh-snug:  1.22;
   --lh-body:  1.55;
-  --lh-loose: 1.7;
+  --lh-loose: 1.72;
 
-  /* ── Space scale ─────────────────────────── */
+  /* ---------- Space scale (4-based) ---------- */
   --s-1: 0.25rem;
   --s-2: 0.5rem;
   --s-3: 0.75rem;
   --s-4: 1rem;
-  --s-5: 1.5rem;
-  --s-6: 2rem;
+  --s-5: 1.25rem;
+  --s-6: 1.5rem;
   --s-7: 3rem;
   --s-8: 4.5rem;
   --s-9: 6.5rem;
   --s-10: 9rem;
 
-  /* ── Layout ──────────────────────────────── */
+  /* ---------- Layout ---------- */
   --measure: 64ch;
   --measure-narrow: 52ch;
   --container: 72rem;
   --container-narrow: 44rem;
+  --content-narrow: 680px;
+  --content-default: 960px;
+  --content-wide: 1200px;
   --radius: 0;
   --radius-sm: 2px;
 
-  /* ── Motion (160ms beat) ─────────────────── */
-  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
-  --dur-1: 160ms;
-  --dur-2: 320ms;
-  --dur-3: 480ms;
+  /* ---------- Motion (canonical) ---------- */
+  --ease-golden:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit:    cubic-bezier(0.4, 0, 1, 1);
+  --dur-1: 180ms;
+  --dur-2: 360ms;
+  --dur-3: 540ms;
+  --transition: var(--dur-1) var(--ease-golden);
+
+  /* ---------- Shadows (for use inside light blocks) ---------- */
+  --shadow-sm: 0 1px 3px rgba(4, 47, 42, 0.06), 0 1px 2px rgba(4, 47, 42, 0.04);
+  --shadow-md: 0 4px 12px rgba(4, 47, 42, 0.08), 0 2px 4px rgba(4, 47, 42, 0.04);
+  --shadow-lg: 0 12px 32px rgba(4, 47, 42, 0.12), 0 4px 8px rgba(4, 47, 42, 0.06);
 }
 
 @media (prefers-reduced-motion: reduce) {

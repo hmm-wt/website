@@ -24,16 +24,20 @@ const { kicker, title, body, href, cta } = Astro.props;
     text-decoration: none;
     color: var(--fg);
     border-top: 1px solid var(--rule);
-    background: var(--bg);
-    transition: background var(--dur-2) var(--ease), color var(--dur-2) var(--ease);
+    background: transparent;
+    transition: background var(--dur-1) var(--ease-golden), border-color var(--dur-1) var(--ease-golden);
     min-height: 18rem;
+    position: relative;
   }
   .door:hover {
-    background: var(--c-evergreen);
-    color: var(--c-pearl);
+    background: var(--surface);
+    border-top-color: var(--c-tomato);
   }
-  .door:hover .kicker,
+  .door:hover .door__title { color: var(--c-tomato); }
+  .door:hover .kicker { color: var(--c-tomato); }
   .door:hover .door__cta { color: var(--c-pearl); }
+  .door__title { transition: color var(--dur-1) var(--ease-golden); }
+  .door__cta { transition: color var(--dur-1) var(--ease-golden); }
   .door__title {
     font-family: var(--f-display);
     font-size: var(--fs-xl);
