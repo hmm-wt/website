@@ -42,7 +42,7 @@ In each of the four target markets, the crystallisation period sits inside the 2
 
 ## The structural-advantage mechanism
 
-A T1 company that holds a licence by 2026 has different optionality from a T1 company that applies for the same licence in 2029. Three differences are material.
+A T1 company that holds a licence by 2026 has different optionality from a T1 company that applies for the same licence in 2029.<span class="pause" aria-label="pause"></span> Three differences are material.
 
 First, regulator familiarity. A T1 entity that has cleared an inspection cycle has a working relationship with the regulator. The next licence application, the next jurisdiction expansion, the next product variant inside the existing perimeter all face lower friction because the regulator has prior knowledge. This is the compounding mechanism that turns a one-time licence into a multi-product platform.
 

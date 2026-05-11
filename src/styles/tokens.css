@@ -106,9 +106,17 @@
   --radius: 0;
   --radius-sm: 2px;
 
-  /* ---------- Motion (canonical) ---------- */
+  /* ---------- Motion (canonical) ----------
+     Design System v1.0 section Q: two short beats + one held beat.
+     --mo-tick:  beat 1/2 (linear).
+     --mo-hold:  beat 3 (ease-out).
+     --mo-total: full transition cap.
+     Legacy --dur-1..3 names retained for existing component references. */
   --ease-golden:  cubic-bezier(0.16, 1, 0.3, 1);
   --ease-exit:    cubic-bezier(0.4, 0, 1, 1);
+  --mo-tick:  160ms;
+  --mo-hold:  480ms;
+  --mo-total: 800ms;
   --dur-1: 180ms;
   --dur-2: 360ms;
   --dur-3: 540ms;
@@ -125,5 +133,8 @@
     --dur-1: 0ms;
     --dur-2: 0ms;
     --dur-3: 0ms;
+    --mo-tick: 0ms;
+    --mo-hold: 0ms;
+    --mo-total: 0ms;
   }
 }

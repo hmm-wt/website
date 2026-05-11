@@ -1,4 +1,5 @@
 ---
+import JurisdictionMark from './JurisdictionMark.astro';
 const year = new Date().getFullYear();
 
 /**
@@ -11,6 +12,13 @@ const taglines: Tagline[] = [
   { lang: 'zh', text: '刚需即论点' },
   { lang: 'ja', text: '必要性こそ論拠' },
   { lang: 'mi', text: 'Ko te hiahia, ko te kaupapa' }
+];
+
+const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string }[] = [
+  { market: 'SG', name: 'Singapore' },
+  { market: 'JP', name: 'Tōkyō' },
+  { market: 'AU', name: 'Sydney' },
+  { market: 'NZ', name: 'Auckland' }
 ];
 ---
 <footer class="footer">
@@ -44,7 +52,16 @@ const taglines: Tagline[] = [
       <p class="kicker">Direct</p>
       <ul role="list" class="footer__contact-list">
         <li><a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a></li>
-        <li class="footer__contact-meta">Singapore · Tōkyō · Sydney · Auckland</li>
+        <li class="footer__contact-meta">
+          <ul role="list" class="footer__locations">
+            {locations.map((loc) => (
+              <li class="footer__location">
+                <span class="footer__location-mark"><JurisdictionMark market={loc.market} size={20} /></span>
+                <span class="footer__location-name">{loc.name}</span>
+              </li>
+            ))}
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
@@ -123,6 +140,22 @@ const taglines: Tagline[] = [
     letter-spacing: 0.1em;
     color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
   }
+  .footer__locations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .footer__location {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+  }
+  .footer__location-mark { color: var(--c-tomato); display: inline-flex; flex-shrink: 0; }
+  .footer__location-name { font-size: calc(var(--fs-xs) * 0.96); }
 
   .footer__base {
     margin-block-start: var(--s-7);

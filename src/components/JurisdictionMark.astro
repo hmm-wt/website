@@ -1,0 +1,105 @@
+---
+/**
+ * Jurisdictional flower. Per Design System v1.0 section P.06.
+ * One flower per target market, drawn at 1px stroke, currentColor.
+ * AU: Golden Wattle (Acacia pycnantha)
+ * JP: Chrysanthemum (Kiku, 16-petal imperial seal)
+ * NZ: Koru (unfurling fern)
+ * SG: Vanda Miss Joaquim (hybrid orchid)
+ */
+interface Props {
+  market: 'AU' | 'JP' | 'NZ' | 'SG';
+  size?: number;
+  ariaLabel?: string;
+}
+
+const { market, size = 32, ariaLabel } = Astro.props;
+
+const labels: Record<Props['market'], string> = {
+  AU: 'Australia',
+  JP: 'Japan',
+  NZ: 'New Zealand',
+  SG: 'Singapore',
+};
+const label = ariaLabel ?? labels[market];
+---
+<svg
+  class={`jmark jmark--${market.toLowerCase()}`}
+  data-market={market}
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  role="img"
+  aria-label={label}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  {market === 'AU' && (
+    <g>
+      {/* Golden Wattle. Stem, leaf, cluster of small spherical blossoms. */}
+      <path d="M 28 80 Q 40 60, 52 42 Q 60 32, 68 22" />
+      <path d="M 38 66 Q 30 60, 22 56" />
+      <path d="M 48 50 Q 56 48, 64 50" />
+      <circle cx="56" cy="30" r="3" />
+      <circle cx="64" cy="26" r="3" />
+      <circle cx="62" cy="36" r="3" />
+      <circle cx="70" cy="32" r="3" />
+      <circle cx="58" cy="22" r="3" />
+      <circle cx="68" cy="20" r="3" />
+      <circle cx="74" cy="26" r="3" />
+    </g>
+  )}
+
+  {market === 'JP' && (
+    <g>
+      {/* Chrysanthemum. 16 petals radiating from a centre disc. */}
+      <circle cx="50" cy="50" r="8" />
+      {Array.from({ length: 16 }).map((_, i) => {
+        const angle = (i * 22.5 * Math.PI) / 180;
+        const x1 = 50 + Math.cos(angle) * 14;
+        const y1 = 50 + Math.sin(angle) * 14;
+        const x2 = 50 + Math.cos(angle) * 36;
+        const y2 = 50 + Math.sin(angle) * 36;
+        const cx = 50 + Math.cos(angle) * 36;
+        const cy = 50 + Math.sin(angle) * 36;
+        return (
+          <>
+            <line x1={x1} y1={y1} x2={x2} y2={y2} />
+            <circle cx={cx} cy={cy} r="3" />
+          </>
+        );
+      })}
+    </g>
+  )}
+
+  {market === 'NZ' && (
+    <g>
+      {/* Koru. Unfurling fern spiral. */}
+      <path d="M 20 80 Q 30 50, 50 40 Q 72 30, 78 50 Q 82 70, 62 72 Q 46 73, 46 60 Q 46 50, 56 50 Q 64 50, 64 58" />
+      <circle cx="64" cy="58" r="2" fill="currentColor" stroke="none" />
+    </g>
+  )}
+
+  {market === 'SG' && (
+    <g>
+      {/* Vanda Miss Joaquim. Hybrid orchid: 5 petals + central column. */}
+      <ellipse cx="50" cy="26" rx="8" ry="14" />
+      <ellipse cx="28" cy="42" rx="14" ry="8" transform="rotate(-30 28 42)" />
+      <ellipse cx="72" cy="42" rx="14" ry="8" transform="rotate(30 72 42)" />
+      <path d="M 36 58 Q 50 92, 64 58 Q 60 70, 50 76 Q 40 70, 36 58 Z" />
+      <line x1="50" y1="40" x2="50" y2="70" stroke-width="2" />
+      <circle cx="50" cy="46" r="2" fill="currentColor" stroke="none" />
+    </g>
+  )}
+</svg>
+
+<style>
+  .jmark {
+    display: inline-block;
+    vertical-align: middle;
+    color: currentColor;
+  }
+</style>

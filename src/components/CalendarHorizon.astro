@@ -7,6 +7,7 @@
  * Pure server-rendered HTML+CSS. No JS, no chart library.
  */
 import calendar from '../data/crystallisation-window.json';
+import JurisdictionMark from './JurisdictionMark.astro';
 
 type Market = 'AU' | 'JP' | 'NZ' | 'SG';
 const markets: Market[] = ['AU', 'JP', 'NZ', 'SG'];
@@ -73,6 +74,7 @@ const totalsByMarket: Record<Market, number> = {
     {markets.map((m) => (
       <>
         <span class="ch__cell ch__cell--mhead">
+          <span class="ch__mhead-flower"><JurisdictionMark market={m} size={22} /></span>
           <span class="ch__mhead-code">{m}</span>
           <span class="ch__mhead-name">{marketName[m]}</span>
           <span class="ch__mhead-total">{totalsByMarket[m]}</span>
@@ -165,10 +167,16 @@ const totalsByMarket: Record<Market, number> = {
     font-weight: 600;
   }
   .ch__cell--mhead {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px var(--s-2);
     padding-inline: var(--s-3);
+  }
+  .ch__mhead-flower {
+    color: var(--c-tomato);
+    display: inline-flex;
+    flex-shrink: 0;
   }
   .ch__mhead-code { color: var(--c-tomato); font-weight: 600; }
   .ch__mhead-name {

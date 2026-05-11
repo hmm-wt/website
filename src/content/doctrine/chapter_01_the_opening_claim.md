@@ -72,7 +72,7 @@ Seed-stage deployment into markets where the barrier is regulatory has a specifi
 
 After the regulatory barrier is cleared, the structural value is priced in. Growth-stage investors compete for these companies at materially higher valuations. The markup from seed to Series A in regulated technology reflects the barrier crossed, not just revenue growth.
 
-The capital-efficient window is the period before approval. That window is where this thesis underwrites.
+The capital-efficient window is the period before approval. That window is where this thesis underwrites.<span class="pause" aria-label="pause"></span>
 
 Five domains meet the test across the four target markets: Food Security Systems, Biomedical Systems, Power Systems, Autonomous Systems, Critical Materials and Supply Integrity. Each carries non-discretionary demand, a binding regulatory or statutory trigger, and a compliance layer that has not yet been built. Chapter 2 walks the Five Necessities and the empirical anchors behind them.
 

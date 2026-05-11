@@ -250,15 +250,32 @@ h4 {
   transform: none;
 }
 
-/* Staggered children inside .reveal-group */
-.reveal-group > * { opacity: 0; transform: translateY(12px); transition: opacity var(--dur-2) var(--ease-golden), transform var(--dur-2) var(--ease-golden); }
+/* Reveal group. Per Design System v1.0 section Q ("no staggered reveal per
+   item"). The parent fades as a single 480ms beat-3; children inherit the
+   visible state. No per-child stagger. */
+.reveal-group > * { opacity: 0; transform: translateY(12px); transition: opacity var(--mo-hold) var(--ease-golden), transform var(--mo-hold) var(--ease-golden); }
 .reveal-group.is-visible > * { opacity: 1; transform: none; }
-.reveal-group.is-visible > *:nth-child(1) { transition-delay: 0ms; }
-.reveal-group.is-visible > *:nth-child(2) { transition-delay: 60ms; }
-.reveal-group.is-visible > *:nth-child(3) { transition-delay: 120ms; }
-.reveal-group.is-visible > *:nth-child(4) { transition-delay: 180ms; }
-.reveal-group.is-visible > *:nth-child(5) { transition-delay: 240ms; }
-.reveal-group.is-visible > *:nth-child(6) { transition-delay: 300ms; }
+
+/* Pause mark. Per Design System v1.0 section X.
+   Inline ellipsis with the third dot hollow. Use in long-form prose at
+   considered pauses (max one per paragraph). Embed in markdown as
+   <span class="pause" aria-label="pause"></span>. Pure CSS, no children. */
+.pause {
+  display: inline-block;
+  width: 23px;
+  height: 5px;
+  vertical-align: middle;
+  margin-inline: 0.22em;
+  margin-bottom: 0.18em;
+  background-image:
+    radial-gradient(circle at center, currentColor 0 2px, transparent 2.5px),
+    radial-gradient(circle at center, currentColor 0 2px, transparent 2.5px),
+    radial-gradient(circle at center, transparent 0 1px, currentColor 1.2px 2px, transparent 2.5px);
+  background-size: 5px 5px;
+  background-position: 0 50%, 9px 50%, 18px 50%;
+  background-repeat: no-repeat;
+  color: currentColor;
+}
 
 /* Tomato pulse. For live status dots and accent points. */
 @keyframes pulse-tomato {

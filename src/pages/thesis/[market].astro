@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import Essay from '../../layouts/Essay.astro';
 import EssayMeta from '../../components/EssayMeta.astro';
-import KickerLabel from '../../components/KickerLabel.astro';
 import CrystallisationRail from '../../components/CrystallisationRail.astro';
+import JurisdictionMark from '../../components/JurisdictionMark.astro';
 
 const marketSlugs: Record<string, string> = {
   JP: 'japan',
@@ -50,13 +50,16 @@ const { Content } = await entry.render();
   description={`Why ${fullName} is one of the four target markets for hmm Ventures. The regulatory architecture, the company universe, the exit pathway.`}
 >
   <Fragment slot="meta">
-    <EssayMeta
-      chapterRef={`Thesis · Markets · ${fullName}`}
-      title={`Why ${fullName}.`}
-      date={entry.data.date.toISOString()}
-      readingTime={Math.ceil((entry.data.word_count ?? 1200) / 250)}
-      market={market}
-    />
+    <div class="market-hero">
+      <span class="market-hero__mark"><JurisdictionMark market={market} size={56} /></span>
+      <EssayMeta
+        chapterRef={`Thesis · Markets · ${fullName}`}
+        title={`Why ${fullName}.`}
+        date={entry.data.date.toISOString()}
+        readingTime={Math.ceil((entry.data.word_count ?? 1200) / 250)}
+        market={market}
+      />
+    </div>
   </Fragment>
 
   <Content />
@@ -81,6 +84,10 @@ const { Content } = await entry.render();
 </Essay>
 
 <style>
+  .market-hero { display: flex; gap: var(--s-5); align-items: flex-start; padding-block-end: var(--s-3); }
+  .market-hero__mark { color: var(--c-tomato); flex-shrink: 0; margin-block-start: var(--s-2); }
+  .market-hero :global(.essay-meta) { padding-block-end: 0; border-bottom: 0; margin-block-end: 0; flex: 1; }
+
   .market-foot { display: flex; flex-direction: column; gap: var(--s-3); }
   .market-foot__label { margin: 0; color: var(--c-tomato); }
   .market-foot__list {

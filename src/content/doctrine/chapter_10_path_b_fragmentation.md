@@ -94,7 +94,7 @@ The doctrine is testable. The conservative classifier is the headline empirical 
 
 What it claims: regulatory architecture produces durable barriers, the four markets have built deeper architecture than the alternatives, the seed-stage entry into that architecture is mispriced, and the period for capturing the mispricing is closing.
 
-What it does not claim: that other markets cannot produce returns. That other theses are wrong. That this thesis is the only correct one. The claim is narrower. Inside the regulated-sector seed thesis, executed in these four markets, during this window, the structural advantage is observable.
+What it does not claim: that other markets cannot produce returns. That other theses are wrong. That this thesis is the only correct one. The claim is narrower. Inside the regulated-sector seed thesis, executed in these four markets, during this window, the structural advantage is observable.<span class="pause" aria-label="pause"></span>
 
 ---
 

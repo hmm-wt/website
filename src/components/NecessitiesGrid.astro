@@ -5,13 +5,16 @@
  * Public-safe: no fund returns; sources from the canonical 19,416-company dataset.
  */
 import data from '../data/necessity-index.json';
+import NecessityMark from './NecessityMark.astro';
 
-const NECESSITIES = [
-  { name: 'Food Security Systems', short: 'Food Security', icon: '01' },
-  { name: 'Biomedical Systems', short: 'Biomedical', icon: '02' },
-  { name: 'Power Systems', short: 'Power', icon: '03' },
-  { name: 'Autonomous Systems', short: 'Autonomous', icon: '04' },
-  { name: 'Critical Materials and Supply Integrity', short: 'Critical Materials', icon: '05' }
+type NecKind = 'food' | 'biomedical' | 'power' | 'autonomous' | 'materials';
+
+const NECESSITIES: { name: string; short: string; icon: string; kind: NecKind }[] = [
+  { name: 'Food Security Systems', short: 'Food Security', icon: '01', kind: 'food' },
+  { name: 'Biomedical Systems', short: 'Biomedical', icon: '02', kind: 'biomedical' },
+  { name: 'Power Systems', short: 'Power', icon: '03', kind: 'power' },
+  { name: 'Autonomous Systems', short: 'Autonomous', icon: '04', kind: 'autonomous' },
+  { name: 'Critical Materials and Supply Integrity', short: 'Critical Materials', icon: '05', kind: 'materials' }
 ];
 
 const MARKETS = data.per_market.map((m) => ({
@@ -43,6 +46,7 @@ const maxCount = Math.max(...necTotals.map((n) => n.in_thesis_companies));
           style={`--cell-intensity: ${intensity}`}
         >
           <header class="ng__cell-head">
+            <span class="ng__cell-mark"><NecessityMark kind={n.kind} size={28} /></span>
             <span class="ng__cell-idx">[{n.icon}]</span>
             <span class="ng__cell-name">{n.short}</span>
           </header>
@@ -142,6 +146,7 @@ const maxCount = Math.max(...necTotals.map((n) => n.in_thesis_companies));
     text-transform: uppercase;
     letter-spacing: 0.1em;
   }
+  .ng__cell-mark { color: var(--c-tomato); display: inline-flex; margin-block-end: var(--s-1); }
   .ng__cell-idx { color: var(--c-tomato); font-weight: 600; }
   .ng__cell-name { color: var(--c-pearl); }
 
