@@ -99,7 +99,7 @@ h4 {
 .prose {
   max-width: var(--measure);
   font-size: var(--fs-md);
-  line-height: var(--lh-loose);
+  line-height: var(--lh-body);
   color: var(--fg);
 }
 .prose > * + * { margin-block-start: 1.1em; }

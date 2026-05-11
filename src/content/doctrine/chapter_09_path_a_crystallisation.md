@@ -1,11 +1,9 @@
 ---
 chapter: 9
-title: "Path A: Crystallisation"
+title: "Path A: crystallisation."
 date: 2026-05-02
 word_count: 1135
 ---
-
-# Path A: Crystallisation
 
 **The Necessity Doctrine, Chapter 9**
 *2 May 2026*
@@ -32,7 +30,7 @@ Regulatory convergence in Asia-Pacific has historically failed when attempted th
 
 The mechanism is recognition rather than harmonisation. Singapore's HSA recognises FDA approvals as a basis for expedited review. Australia's TGA accepts certain CE Mark approvals. New Zealand's Medsafe defers to TGA decisions. Japan's PMDA has signed bilateral cooperation agreements with the FDA and EMA. Each is a one-sided recognition that compounds with others until the regional standard exists in operational fact even if not in formal text.
 
-The financial-services parallel is the same. MAS-FCA, MAS-CSSF, MAS-DFSA, and APRA-MAS bilateral financial-services regulatory bridges allow regulated entities in one jurisdiction to apply for licensing in another with reduced friction.[^1] The bilateral count has roughly doubled since 2020. By 2028, on current trajectory, the bilateral network is dense enough to constitute a regional regulatory passport.
+The financial-services parallel is the same. MAS-FCA, MAS-CSSF, and APRA-MAS bilateral financial-services regulatory bridges allow regulated entities in one jurisdiction to apply for licensing in another with reduced friction.[^1] The bilateral count has roughly doubled since 2020. By 2028, on current trajectory, the bilateral network is dense enough to constitute a regional regulatory passport.
 
 ---
 

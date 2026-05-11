@@ -13,18 +13,28 @@ const entries = (await getCollection('doctrine')).sort(
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
-const chapters = entries.map((e) => ({
-  id: `chapter-${pad2(e.data.chapter)}`,
-  index: pad2(e.data.chapter),
-  title: e.data.title,
-}));
+type NavItem = { id?: string; index?: string; title: string; kind?: 'chapter' | 'gap' };
+
+const chapters: NavItem[] = [];
+for (let i = 0; i < entries.length; i++) {
+  const e = entries[i];
+  chapters.push({
+    id: `chapter-${pad2(e.data.chapter)}`,
+    index: pad2(e.data.chapter),
+    title: e.data.title,
+  });
+  // Insert gap between chapter 03 and chapter 08 (the four-markets chapters live on /thesis/[market])
+  if (e.data.chapter === 3 && entries[i + 1]?.data.chapter === 8) {
+    chapters.push({ kind: 'gap', title: '04–07 · The four markets · private' });
+  }
+}
 
 const railRows = [
-  { label: 'AI-related laws since 2016', value: '900+', source: 'OECD AI Policy Observatory, 2025' },
-  { label: 'AI enforcement actions (2025)', value: '156', source: 'Stanford HAI AI Index, 2026' },
-  { label: 'RegTech market (2025)', value: '$24.3B', source: 'Grand View Research, 2025' },
-  { label: 'Federal AI regulations (US, 2024)', value: '59', source: 'Stanford HAI AI Index, 2025' },
-  { label: 'Compliance officers reporting more complexity', value: '85%', source: 'PwC Global Compliance Survey, 2025' },
+  { label: 'Four-market classified universe', value: '19,416', source: 'hmm Ventures dataset, 2026-04-08' },
+  { label: 'Passes T1 / T2 conservative classifier', value: '33.5%', source: '6,505 of 19,416 companies' },
+  { label: 'Seed-stage in scope', value: '2,625', source: 'hmm Ventures dataset, 2026-04-08' },
+  { label: 'Four-market regulations', value: '174', source: '117 T1 in the Five Necessities' },
+  { label: 'In-flight 2024 to 2030', value: '34', source: 'AU 11 · JP 11 · SG 10 · NZ 2' },
 ];
 ---
 <Doctrine
@@ -41,9 +51,9 @@ const railRows = [
 
   <Fragment slot="rail">
     <MarginWidget
-      title="Regulatory State of Play"
-      market="Global"
-      dateStamp="2026-05-11"
+      title="The four-market universe"
+      market="AU · JP · NZ · SG"
+      dateStamp="2026-04-08"
       rows={railRows}
       index="01"
     />

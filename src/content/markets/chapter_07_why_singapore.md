@@ -22,13 +22,13 @@ The country's regulatory posture has tightened in 2025-2026 in two specific dire
 > - **MAS AI Risk Management Guidelines:** consultation paper published November 2025; consultation period closed January 2026; twelve-month transition period after finalisation.[^1]
 > - **Stablecoin and digital asset framework:** single-currency stablecoin regulations require S$1M minimum capital; expanded enforcement on unlicensed crypto activity.[^2]
 > - **MAS FinTech Regulatory Sandbox:** active since 2016; refined Sandbox Express variant for low-risk experiments; sector-specific sandboxes added 2024-2025.[^3]
-> - **Cross-border passporting:** ASEAN Banking Integration Framework, ASEAN+3 financial cooperation, and bilateral fintech bridges with the UK, Switzerland, and the UAE.
+> - **Cross-border passporting:** ASEAN Banking Integration Framework, ASEAN+3 financial cooperation, and bilateral fintech bridges with the UK and Switzerland.
 
 ---
 
 ## What "regional foothold" means
 
-Singapore's economic policy is built on the proposition that the country is the institutional gateway between Asia and the rest of the world. The regulatory architecture is the manifestation of that policy. MAS, IMDA, EDB, and the Singapore Courts operate as a coordinated stack that produces a single decision: a regulated entity domiciled in Singapore can sell into ASEAN, Greater China, India, the GCC, and the West with one compliance posture.
+Singapore's economic policy is built on the proposition that the country is the institutional gateway between Asia and the rest of the world. The regulatory architecture is the manifestation of that policy. MAS, IMDA, EDB, and the Singapore Courts operate as a coordinated stack that produces a single decision: a regulated entity domiciled in Singapore can sell into ASEAN, Greater China, India, and the West with one compliance posture.
 
 For T1 and T2 companies, that single-posture property is the asset. A fintech that holds an MAS Major Payment Institution licence can passport its compliance work into multiple downstream markets. A medtech that holds an HSA licence has an Asia-Pacific approval foundation. A regtech vendor that has been deployed inside a Singapore bank has a procurement reference that travels.
 

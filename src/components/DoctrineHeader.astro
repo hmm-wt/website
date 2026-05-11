@@ -57,6 +57,10 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
       <StatusIndicator status="live" />
     </div>
   </footer>
+
+  <p class="dh__confidential">
+    Public artefact. Subsequent material is delivered separately to qualified investors under the appropriate confidentiality framework.
+  </p>
 </div>
 
 <style>
@@ -135,5 +139,15 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
   .dh__credit-value {
     font-size: var(--fs-sm);
     color: var(--c-pearl);
+  }
+
+  .dh__confidential {
+    font-family: var(--f-mono);
+    font-style: italic;
+    font-size: var(--fs-xs);
+    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
+    margin: 0;
+    max-width: 64ch;
+    line-height: 1.5;
   }
 </style>

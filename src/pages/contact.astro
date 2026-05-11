@@ -1,106 +1,81 @@
 ---
 import Base from '../layouts/Base.astro';
-import KickerLabel from '../components/KickerLabel.astro';
 ---
 <Base
   title="Contact"
-  description="Direct email. Forty-eight-hour personal reply."
+  description="hmm Ventures."
 >
   <section class="contact container">
-    <header class="contact__head">
-      <KickerLabel index="00" label="Contact" />
-      <h1 class="contact__title">Three lines.</h1>
-    </header>
-
-    <ul class="contact__list" role="list">
-      <li class="contact__line">
-        <p class="contact__line-label kicker">LPs and allocators</p>
-        <p class="contact__line-value">
-          <a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a>
-        </p>
-        <p class="contact__line-meta">Forty-eight-hour personal reply, weekends included for institutional senders.</p>
-      </li>
-
-      <li class="contact__line">
-        <p class="contact__line-label kicker">Founders</p>
-        <p class="contact__line-value">
-          <a href="mailto:wt@hmm.ventures?subject=Founder%20intro">wt@hmm.ventures</a>
-        </p>
-        <p class="contact__line-meta">Send a one-pager or a deck. Tell us which regulator your demand curve depends on and the published timeline you are tracking.</p>
-      </li>
-
-      <li class="contact__line">
-        <p class="contact__line-label kicker">Media</p>
-        <p class="contact__line-value">
-          <a href="mailto:wt@hmm.ventures?subject=Media%20enquiry">wt@hmm.ventures</a>
-        </p>
-        <p class="contact__line-meta">Bio and photo on request.</p>
-      </li>
-    </ul>
-
-    <footer class="contact__foot">
-      <p class="kicker">UAE · Australia · Japan · New Zealand · Singapore</p>
-    </footer>
+    <div class="contact__card">
+      <p class="contact__mark" aria-hidden="true">hmm<span class="contact__dots"><span></span><span></span><span class="hollow"></span></span></p>
+      <p class="contact__wordmark">hmm Ventures</p>
+      <p class="contact__email">
+        <a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a>
+      </p>
+    </div>
   </section>
 </Base>
 
 <style>
-  .contact { padding-block: var(--s-8) var(--s-9); max-width: 48rem; }
-  .contact__head {
+  .contact {
+    padding-block: var(--s-9);
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+  }
+  .contact__card {
     display: flex;
     flex-direction: column;
-    gap: var(--s-3);
-    margin-block-end: var(--s-7);
-    padding-block-end: var(--s-5);
-    border-bottom: 1px solid var(--rule);
+    align-items: center;
+    gap: var(--s-5);
+    text-align: center;
   }
-  .contact__title {
+  .contact__mark {
     font-family: var(--f-display);
-    font-size: var(--fs-3xl);
-    line-height: var(--lh-tight);
-    letter-spacing: -0.02em;
+    font-size: clamp(3rem, 1.5rem + 6vw, 6rem);
+    line-height: 1;
     margin: 0;
-  }
-  .contact__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-  .contact__line {
-    padding-block: var(--s-6);
-    border-bottom: 1px solid var(--rule);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-  }
-  .contact__line:last-of-type { border-bottom: 0; }
-  .contact__line-label { margin: 0; color: var(--c-tomato); }
-  .contact__line-value {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    margin: 0;
-  }
-  .contact__line-value a {
-    text-decoration: none;
     color: var(--fg);
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 0.08em;
+  }
+  .contact__dots {
+    display: inline-flex;
+    gap: 0.06em;
+    align-items: flex-end;
+    margin-bottom: 0.18em;
+  }
+  .contact__dots span {
+    width: 0.18em;
+    height: 0.18em;
+    background: currentColor;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .contact__dots span.hollow {
+    background: transparent;
+    border: 1px solid currentColor;
+  }
+  .contact__wordmark {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--fg-soft);
+    margin: 0;
+  }
+  .contact__email {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    margin: 0;
+  }
+  .contact__email a {
+    color: var(--c-tomato);
+    text-decoration: none;
     border-bottom: 1px solid var(--c-tomato);
     padding-bottom: 2px;
   }
-  .contact__line-value a:hover { color: var(--c-tomato); }
-  .contact__line-meta {
-    font-size: var(--fs-sm);
-    color: var(--fg-soft);
-    margin: 0;
-    max-width: 60ch;
-    line-height: 1.55;
-  }
-  .contact__foot {
-    margin-block-start: var(--s-7);
-    padding-block-start: var(--s-5);
-    border-top: 1px solid var(--rule);
-  }
+  .contact__email a:hover { color: var(--fg); border-bottom-color: var(--fg); }
 </style>

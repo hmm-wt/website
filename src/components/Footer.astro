@@ -2,9 +2,8 @@
 const year = new Date().getFullYear();
 
 /**
- * Multilingual tagline block. Exact wording per CLAUDE_wahid_voice_memory.md §0.
- * Order: EN (master), AR (GCC), ZH (SG/APAC), JA (JP), Māori (NZ).
- * No Bahasa per voice memory.
+ * Multilingual tagline block. Per Design System v1.0 §C.06.
+ * Order: EN (master), ZH (SG), JA (JP), Māori (NZ).
  */
 interface Tagline { lang: string; text: string; dir?: 'ltr' | 'rtl'; }
 const taglines: Tagline[] = [
@@ -36,9 +35,8 @@ const taglines: Tagline[] = [
       <p class="kicker">Read</p>
       <ul role="list" class="footer__links">
         <li><a href="/doctrine/">The Necessity Doctrine</a></li>
-        <li><a href="/thesis/">Thesis</a></li>
         <li><a href="/scoreboard/">Scoreboard</a></li>
-        <li><a href="/gp/">Author</a></li>
+        <li><a href="/research/">Research</a></li>
       </ul>
     </nav>
 
@@ -46,8 +44,7 @@ const taglines: Tagline[] = [
       <p class="kicker">Direct</p>
       <ul role="list" class="footer__contact-list">
         <li><a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a></li>
-        <li class="footer__contact-meta">UAE · Australia · Japan · New Zealand · Singapore</li>
-        <li><a href="/contact/">Contact</a></li>
+        <li class="footer__contact-meta">Singapore · Tōkyō · Sydney · Auckland</li>
       </ul>
     </div>
   </div>

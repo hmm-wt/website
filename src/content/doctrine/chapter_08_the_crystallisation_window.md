@@ -1,11 +1,9 @@
 ---
 chapter: 8
-title: The Crystallisation Window
+title: The crystallisation window.
 date: 2026-05-02
 word_count: 1193
 ---
-
-# The Crystallisation Window
 
 **The Necessity Doctrine, Chapter 8**
 *2 May 2026*

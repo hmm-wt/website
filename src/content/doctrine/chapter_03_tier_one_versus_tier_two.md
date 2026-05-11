@@ -1,11 +1,9 @@
 ---
 chapter: 3
-title: Tier 1 and Tier 2
+title: Tier 1 and Tier 2.
 date: 2026-05-02
 word_count: 1213
 ---
-
-# Tier 1 and Tier 2
 
 **The Necessity Doctrine, Chapter 3**
 *2 May 2026*
@@ -21,7 +19,7 @@ The distinction matters because the barrier is built differently in each case. F
 > - **T1:** Company is the regulated entity. Examples: licensed lender, payments institution, medical device manufacturer, energy retailer, certified drone operator.
 > - **T2:** Company sells to regulated entities. Examples: KYC software, clinical trial management system, grid management platform, pharma quality assurance tooling.
 > - **Conservative classifier:** assigns T1/T2 only where regulatory exposure is structural to the business model, not incidental.
-> - **Public empirical figure:** T1 + T2 combined captured **33.5%** of the $425B 2025 global venture deployment under that conservative classifier.[^1]
+> - **Public empirical figure:** Of the 19,416 four-market classified companies, **33.5% (6,505) pass the T1 / T2 conservative classifier**. Of those, 2,625 are seed-stage in scope.[^1]
 
 ---
 
@@ -31,7 +29,7 @@ Most venture frameworks tier by sector or by stage. The doctrine tiers by regula
 
 A sector tier tells you whether the company is in fintech. A regulatory posture tier tells you whether the company has a UK Financial Conduct Authority licence, an MAS Major Payment Institution licence, or no licence at all. The first two are T1. The third, depending on what it sells and to whom, is either T2 or unregulated. The valuation, the sales motion, the unit economics, and the exit path are different for each.
 
-The binary is also defensible empirically. The conservative classifier applied to 2025 global venture deployment counts only companies where regulatory exposure is structural, not incidental. A company that happens to sell into a regulated industry but does not differentiate on regulatory capability is unregulated. A company whose product cannot ship without a licence or cannot win deals without a compliance certification is T1 or T2.
+The binary is also defensible empirically. The conservative classifier applied to the 19,416-company four-market universe counts only companies where regulatory exposure is structural, not incidental. A company that happens to sell into a regulated industry but does not differentiate on regulatory capability is unregulated. A company whose product cannot ship without a licence or cannot win deals without a compliance certification is T1 or T2.
 
 ---
 
@@ -95,4 +93,4 @@ The next chapter applies the framework to the first market. Japan offers the cle
 
 ---
 
-[^1]: Author's analysis of 2025 global venture dataset (Crunchbase, $425B total). Conservative classifier methodology disclosed in Chapter 1, footnote 16. Methodology requires independent verification against the underlying classification rules.
+[^1]: hmm Ventures classified universe, reference dataset 2026-04-08. Conservative T1 / T2 classifier methodology disclosed in Chapter 1, footnote 1. Methodology details in Appendix F of the Necessity Index.

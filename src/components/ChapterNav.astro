@@ -1,8 +1,9 @@
 ---
 interface Chapter {
-  id: string;       // anchor id, e.g. "chapter-01"
-  index: string;    // e.g. "01"
+  id?: string;
+  index?: string;
   title: string;
+  kind?: 'chapter' | 'gap';
 }
 
 interface Props {
@@ -15,12 +16,18 @@ const { chapters } = Astro.props;
   <p class="chapter-nav__label kicker">Chapters</p>
   <ol class="chapter-nav__list" role="list">
     {chapters.map((c) => (
-      <li class="chapter-nav__item" data-target={c.id}>
-        <a href={`#${c.id}`} class="chapter-nav__link">
-          <span class="chapter-nav__idx">{c.index}</span>
-          <span class="chapter-nav__title">{c.title}</span>
-        </a>
-      </li>
+      c.kind === 'gap' ? (
+        <li class="chapter-nav__gap" aria-hidden="false">
+          <span class="chapter-nav__gap-label">{c.title}</span>
+        </li>
+      ) : (
+        <li class="chapter-nav__item" data-target={c.id}>
+          <a href={`#${c.id}`} class="chapter-nav__link">
+            <span class="chapter-nav__idx">{c.index}</span>
+            <span class="chapter-nav__title">{c.title}</span>
+          </a>
+        </li>
+      )
     ))}
   </ol>
 </nav>
@@ -127,4 +134,15 @@ const { chapters } = Astro.props;
     line-height: 1.4;
     font-size: calc(var(--fs-xs) * 1.05);
   }
+
+  .chapter-nav__gap {
+    padding: var(--s-3) var(--s-3);
+    margin-inline-start: 1px;
+    color: var(--fg-faint);
+    font-style: italic;
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+    border-left: 1px dashed color-mix(in srgb, var(--fg-faint) 50%, transparent);
+  }
+  .chapter-nav__gap-label { display: block; }
 </style>

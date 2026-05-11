@@ -1,11 +1,9 @@
 ---
 chapter: 2
-title: The Five Necessities
+title: The five necessities.
 date: 2026-05-02
 word_count: 1384
 ---
-
-# The Five Necessities
 
 **The Necessity Doctrine, Chapter 2**
 *2 May 2026*
@@ -56,7 +54,7 @@ The FDA issued final guidance on AI/ML-enabled medical devices in late 2024, for
 
 Japan's PMDA opened a fast-track pathway for AI-enabled diagnostic devices in 2025. Singapore's HSA tightened licensing for medical device software classified above Class A. Australia's TGA introduced a new framework for software-as-medical-device incorporating post-market AI surveillance.[^6]
 
-Capital deployment is the highest of the Five Necessities. Healthcare and biotech absorbed $71.7 billion in global venture funding in 2025, the largest single sector category.[^7] The proportion flowing into companies that ship inside a regulatory framework rather than around it has been rising for three consecutive years.
+Biomedical systems carry the highest in-thesis company count in the four-market universe — 1,269 classified companies, 19 T1 regulations and 1 T2 regulation in scope.[^7] The proportion flowing into companies that ship inside a regulatory framework rather than around it has been rising for three consecutive years.
 
 ---
 
@@ -110,7 +108,7 @@ The next chapter introduces the deal-level filter: how to distinguish a company 
 [^4]: AgFunder, "AgFunder AgriFoodTech Investment Report 2025." Range reflects different inclusion criteria across food and agriculture verticals.
 [^5]: U.S. Food and Drug Administration, "Marketing Submission Recommendations for a Predetermined Change Control Plan for AI/ML-Enabled Device Software Functions," final guidance December 2024.
 [^6]: Therapeutic Goods Administration, "Software-based Medical Devices including AI/ML," updated framework 2025.
-[^7]: Crunchbase, "Global Venture Funding In 2025," January 2026. Healthcare and biotech category total.
+[^7]: hmm Ventures classified universe, reference dataset 2026-04-08. Biomedical systems in-thesis company count: 1,269. T1 / T2 regulations counted from `regulations_comprehensive.json`.
 [^8]: European Union, Regulation (EU) 2023/956 (Carbon Border Adjustment Mechanism). Definitive period began 1 January 2026.
 [^9]: U.S. Department of Energy, Inflation Reduction Act capital deployment tracker, Q4 2025 update.
 [^10]: U.S. Federal Aviation Administration, 14 CFR Part 108 final rule, "Operation of Unmanned Aircraft Systems Beyond Visual Line of Sight," 2025.
