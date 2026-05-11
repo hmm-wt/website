@@ -49,8 +49,8 @@
     "unregulated_exit_rate_pct": 6.03
   },
   "crystallisation_window": {
-    "in_flight_2024_2030": 36,
+    "in_flight_2024_2030": 34,
     "peak_year": 2027,
-    "peak_year_count": 19
+    "peak_year_count": 17
   }
 }

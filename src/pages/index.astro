@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Door from '../components/Door.astro';
 import StatusIndicator from '../components/StatusIndicator.astro';
+import NecessitiesGrid from '../components/NecessitiesGrid.astro';
 ---
 <Base
   title="hmm Ventures"
@@ -57,6 +58,9 @@ import StatusIndicator from '../components/StatusIndicator.astro';
     />
   </section>
 
+  <div class="container">
+    <NecessitiesGrid />
+  </div>
 </Base>
 
 <style>

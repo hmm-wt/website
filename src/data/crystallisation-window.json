@@ -1,9 +1,9 @@
 {
   "as_of": "2026-04-06",
   "source": "HMM Ventures Comprehensive Regulatory Dataset, regulations_comprehensive.json",
-  "total_count": 36,
-  "im_canonical_count_note": "IM v3.8.3 cites 34 in-flight regulations. The source landscape report shows 36 entries 2024 to 2030. Reconciliation pending GP review.",
-  "year_counts": { "2024": 1, "2025": 1, "2026": 3, "2027": 19, "2028": 11, "2030": 1 },
+  "total_count": 34,
+  "scope_note": "34 in-flight regulations across the Five Necessities in the four target markets: AU 11, JP 11, SG 10, NZ 2. Source: IM v3.8.3 §1.3.",
+  "year_counts": { "2024": 1, "2025": 1, "2026": 3, "2027": 17, "2028": 11, "2030": 1 },
   "regulations": [
     { "id": "au-2024-ai-consultation", "market": "AU", "necessity": "AI Governance", "tier": "T2", "effective_year": 2024, "status": "in_parliament", "title": "Safe and Responsible AI consultation" },
     { "id": "au-2025-casa-uas-remoteid", "market": "AU", "necessity": "Autonomous Systems", "tier": "T1", "effective_year": 2025, "status": "expected", "title": "CASA Remote ID for UAS (proposed)" },
@@ -14,9 +14,7 @@
     { "id": "au-2027-fsanz-3-2-2a-smb", "market": "AU", "necessity": "Food Security Systems", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "FSANZ Standard 3.2.2A. Full Enforcement for Small Business" },
     { "id": "au-2027-av-national-deploy", "market": "AU", "necessity": "Autonomous Systems", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "Automated Vehicle Safety Law. National Deployment Phase" },
     { "id": "au-2027-critical-minerals-phase2", "market": "AU", "necessity": "Critical Materials and Supply Integrity", "tier": "T2", "effective_year": 2027, "status": "expected", "title": "Critical Minerals Processing Incentive (phase 2)" },
-    { "id": "au-2027-aukus-pillar-2", "market": "AU", "necessity": "Cross-cutting", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "AUKUS Pillar 2. Advanced Capabilities Sharing" },
     { "id": "au-2027-capacity-investment-scheme", "market": "AU", "necessity": "Power Systems", "tier": "T2", "effective_year": 2027, "status": "expected", "title": "Capacity Investment Scheme. Renewable Targets" },
-    { "id": "au-2027-issb-group-2", "market": "AU", "necessity": "Cross-cutting", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "ISSB-Aligned Disclosure. Group 2 Reporters" },
     { "id": "au-2027-modern-slavery-review", "market": "AU", "necessity": "Critical Materials and Supply Integrity", "tier": "T2", "effective_year": 2027, "status": "expected", "title": "Modern Slavery Act Review. Enhanced Due Diligence" },
     { "id": "au-2027-ncc-2025-state-adopt", "market": "AU", "necessity": "Power Systems", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "NCC 2025. State Adoption Completion" },
     { "id": "au-2027-tga-samd-reform", "market": "AU", "necessity": "Biomedical Systems", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "TGA SaMD Regulation Reform" },
