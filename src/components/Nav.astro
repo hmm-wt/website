@@ -20,9 +20,7 @@ const isCurrent = (href: string) =>
 <header class="nav">
   <div class="container nav__inner">
     <a href="/" class="nav__brand" aria-label="hmm Ventures home">
-      <span class="nav__reg" aria-hidden="true"></span>
-      <span class="nav__mark">hmm</span>
-      <span class="nav__dot" aria-hidden="true">.</span>
+      <img src="/hmm-logo.svg" alt="" class="nav__logo" width="208" height="119" />
       <span class="nav__tld">ventures</span>
     </a>
     <nav aria-label="Primary">
@@ -64,30 +62,27 @@ const isCurrent = (href: string) =>
 
   .nav__brand {
     display: inline-flex;
-    align-items: baseline;
-    gap: 0.4em;
-    font-family: var(--f-display);
-    font-size: var(--fs-lg);
+    align-items: center;
+    gap: 0.6rem;
     text-decoration: none;
     color: var(--fg);
-    letter-spacing: -0.01em;
     line-height: 1;
+    transition: color var(--transition);
   }
-  .nav__brand:hover { color: var(--accent); }
-  .nav__reg {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: var(--c-tomato);
-    align-self: center;
-    margin-inline-end: 0.1em;
+  .nav__brand:hover { color: var(--c-tomato); }
+  .nav__logo {
+    height: 28px;
+    width: auto;
+    display: block;
+    color: currentColor;
   }
-  .nav__dot { color: var(--accent); }
   .nav__tld {
     font-family: var(--f-mono);
-    font-size: 0.65em;
+    font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
+    color: var(--fg-soft);
+    padding-block-start: 4px;
   }
 
   .nav__list {
