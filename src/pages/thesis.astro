@@ -9,7 +9,7 @@ import KickerLabel from '../components/KickerLabel.astro';
   <article class="thesis container">
     <header class="thesis__head">
       <KickerLabel index="00" label="The thesis · concise" />
-      <h1 class="thesis__title">Necessity is the thesis.</h1>
+      <h1 class="thesis__title">Necessity is <span class="thesis__title-accent">the&nbsp;thesis.</span></h1>
       <p class="thesis__lede">
         Seed-stage capital deployed where regulation defines the floor of operation and the compliance layer has not yet been built. Four markets. Five Necessities. Twelve minutes.
       </p>
@@ -113,6 +113,37 @@ import KickerLabel from '../components/KickerLabel.astro';
           The four markets contain 174 of 725 mapped regulations globally and 117 Tier 1 regulations across the Five Necessities. Allocation: Australia 35%, Japan 30%, New Zealand 20%, Singapore 15%.
         </p>
       </div>
+
+      <ul class="markets-list" role="list">
+        <li>
+          <a href="/thesis/australia/">
+            <span class="markets-list__pct">35%</span>
+            <span class="markets-list__name">Australia</span>
+            <span class="markets-list__note">R&amp;D tax incentive, super-backed Series A, AU/NZ Trans-Tasman</span>
+          </a>
+        </li>
+        <li>
+          <a href="/thesis/japan/">
+            <span class="markets-list__pct">30%</span>
+            <span class="markets-list__name">Japan</span>
+            <span class="markets-list__note">CVC dominance, TSE governance reforms, PMDA/MLIT pathways</span>
+          </a>
+        </li>
+        <li>
+          <a href="/thesis/new-zealand/">
+            <span class="markets-list__pct">20%</span>
+            <span class="markets-list__name">New Zealand</span>
+            <span class="markets-list__note">Medsafe WAND, Callaghan Innovation, fastest OECD pathway to Class II</span>
+          </a>
+        </li>
+        <li>
+          <a href="/thesis/singapore/">
+            <span class="markets-list__pct">15%</span>
+            <span class="markets-list__name">Singapore</span>
+            <span class="markets-list__note">MAS Sandbox 79% graduation, ASEAN gateway, RCEP enforcement</span>
+          </a>
+        </li>
+      </ul>
     </section>
 
     <section id="window" class="thesis__section">
@@ -166,6 +197,7 @@ import KickerLabel from '../components/KickerLabel.astro';
     letter-spacing: -0.02em;
     margin: 0;
   }
+  .thesis__title-accent { color: var(--c-tomato); font-style: italic; }
   .thesis__lede {
     font-family: var(--f-display);
     font-style: italic;

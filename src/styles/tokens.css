@@ -12,13 +12,20 @@
   --c-light-tint:  #F7F5F0;
 
   /* ── Semantic roles ─────────────────────────── */
+  /* Paper / surface tokens follow the IM design language.
+     Body is Light Tint (pearl is reserved for full-bleed accent surfaces:
+     section openers, card backgrounds, pull-outs, footer). */
   --bg:            var(--c-light-tint);
   --bg-deep:       var(--c-evergreen);
   --bg-warm:       var(--c-pearl);
+  --bg-tomato-tint:    color-mix(in srgb, var(--c-tomato) 8%, transparent);
+  --bg-mahogany-tint:  color-mix(in srgb, var(--c-mahogany) 6%, transparent);
   --fg:            var(--c-mahogany);
-  --fg-soft:       color-mix(in srgb, var(--c-mahogany) 70%, transparent);
+  --fg-soft:       color-mix(in srgb, var(--c-mahogany) 66%, transparent);
+  --fg-faint:      color-mix(in srgb, var(--c-mahogany) 45%, transparent);
   --fg-on-deep:    var(--c-pearl);
-  --rule:          color-mix(in srgb, var(--c-mahogany) 14%, transparent);
+  --rule:          color-mix(in srgb, var(--c-evergreen) 18%, transparent);
+  --rule-strong:   color-mix(in srgb, var(--c-evergreen) 32%, transparent);
   --accent:        var(--c-tomato);
   --link:          var(--c-evergreen);
   --link-hover:    var(--c-tomato);

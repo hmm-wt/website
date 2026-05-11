@@ -11,6 +11,17 @@ const doctrine = defineCollection({
   }),
 });
 
+const markets = defineCollection({
+  type: 'content',
+  schema: z.object({
+    chapter: z.number().optional(),
+    title: z.string(),
+    date: z.coerce.date(),
+    word_count: z.number().optional(),
+    rail_market: z.enum(['AU', 'JP', 'NZ', 'SG']),
+  }),
+});
+
 const research = defineCollection({
   type: 'content',
   schema: z.object({
@@ -27,4 +38,4 @@ const research = defineCollection({
   }),
 });
 
-export const collections = { doctrine, research };
+export const collections = { doctrine, markets, research };

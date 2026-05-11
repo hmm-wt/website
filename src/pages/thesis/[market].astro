@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import Essay from '../../layouts/Essay.astro';
+import EssayMeta from '../../components/EssayMeta.astro';
+import KickerLabel from '../../components/KickerLabel.astro';
+import CrystallisationRail from '../../components/CrystallisationRail.astro';
+
+const marketSlugs: Record<string, string> = {
+  JP: 'japan',
+  AU: 'australia',
+  NZ: 'new-zealand',
+  SG: 'singapore',
+};
+
+const slugToMarket: Record<string, 'AU' | 'JP' | 'NZ' | 'SG'> = {
+  australia: 'AU',
+  japan: 'JP',
+  'new-zealand': 'NZ',
+  singapore: 'SG',
+};
+
+const marketLabel: Record<string, string> = {
+  AU: 'Australia',
+  JP: 'Japan',
+  NZ: 'New Zealand',
+  SG: 'Singapore',
+};
+
+export async function getStaticPaths() {
+  const entries = await getCollection('markets');
+  const slugMap: Record<string, string> = {
+    JP: 'japan',
+    AU: 'australia',
+    NZ: 'new-zealand',
+    SG: 'singapore',
+  };
+  return entries.map((entry) => ({
+    params: { market: slugMap[entry.data.rail_market] },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const market = entry.data.rail_market;
+const fullName = marketLabel[market];
+const { Content } = await entry.render();
+---
+<Essay
+  title={`Why ${fullName}`}
+  description={`Why ${fullName} is one of the four target markets for hmm Ventures. The regulatory architecture, the company universe, the exit pathway.`}
+>
+  <Fragment slot="meta">
+    <EssayMeta
+      chapterRef={`Thesis · Markets · ${fullName}`}
+      title={`Why ${fullName}.`}
+      date={entry.data.date.toISOString()}
+      readingTime={Math.ceil((entry.data.word_count ?? 1200) / 250)}
+      market={market}
+    />
+  </Fragment>
+
+  <Content />
+
+  <Fragment slot="widget">
+    <CrystallisationRail market={market} limit={6} title={`${fullName} · upcoming`} />
+  </Fragment>
+
+  <Fragment slot="footer">
+    <nav class="market-foot" aria-label="Other markets">
+      <p class="kicker market-foot__label">The other three markets</p>
+      <ul role="list" class="market-foot__list">
+        {Object.entries(marketSlugs).filter(([code]) => code !== market).map(([code, slug]) => (
+          <li><a href={`/thesis/${slug}/`}>Why {marketLabel[code]} →</a></li>
+        ))}
+      </ul>
+      <p class="market-foot__hub kicker">
+        <a href="/thesis/">Back to the thesis →</a>
+      </p>
+    </nav>
+  </Fragment>
+</Essay>
+
+<style>
+  .market-foot { display: flex; flex-direction: column; gap: var(--s-3); }
+  .market-foot__label { margin: 0; color: var(--c-tomato); }
+  .market-foot__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5);
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+  }
+  .market-foot__list a {
+    text-decoration: none;
+    color: var(--fg);
+    border-bottom: 1px solid var(--rule);
+    padding-block-end: 2px;
+  }
+  .market-foot__list a:hover {
+    color: var(--c-tomato);
+    border-bottom-color: currentColor;
+  }
+  .market-foot__hub { margin-block-start: var(--s-4); }
+  .market-foot__hub a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+</style>

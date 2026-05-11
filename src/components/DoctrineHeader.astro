@@ -28,15 +28,13 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
 
   <h1 class="dh__title">
     <slot name="title">
-      Software Is No Longer Eating the World.
-      <br />
-      Regulation Is Eating Software.
+      Necessity is <span class="dh__title-accent">the&nbsp;thesis.</span>
     </slot>
   </h1>
 
   <p class="dh__subtitle">
     <slot name="subtitle">
-      A doctrine for seed-stage capital in developed APAC, 2026 to 2030.
+      A doctrine for seed-stage capital in developed APAC, 2026 to 2030. Five Necessities, four markets, the regulatory architecture that defines the floor of operation.
     </slot>
   </p>
 
@@ -98,6 +96,7 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
     margin: 0;
     max-width: 22ch;
   }
+  .dh__title-accent { color: var(--c-tomato); font-style: italic; }
 
   .dh__subtitle {
     font-family: var(--f-display);

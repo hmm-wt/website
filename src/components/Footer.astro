@@ -22,7 +22,11 @@ const taglines = [
       <ul role="list" class="footer__taglines">
         {taglines.map((t) => (
           <li lang={t.lang} dir={t.dir ?? 'ltr'} class={`footer__tagline footer__tagline--${t.lang}`}>
-            {t.text}
+            {t.lang === 'en' ? (
+              <>Necessity is <span class="footer__tagline-accent">the&nbsp;thesis.</span></>
+            ) : (
+              t.text
+            )}
           </li>
         ))}
       </ul>
@@ -100,6 +104,10 @@ const taglines = [
   .footer__tagline:not(.footer__tagline--en) {
     font-size: var(--fs-md);
     color: color-mix(in srgb, var(--c-pearl) 78%, transparent);
+  }
+  .footer__tagline-accent {
+    color: var(--c-tomato);
+    font-style: italic;
   }
 
   .footer__links,

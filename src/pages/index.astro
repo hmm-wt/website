@@ -16,7 +16,7 @@ import StatusIndicator from '../components/StatusIndicator.astro';
         <StatusIndicator status="live" />
       </div>
 
-      <h1 class="hero__sentence">Necessity is the thesis.</h1>
+      <h1 class="hero__sentence">Necessity is <span class="hero__accent">the&nbsp;thesis.</span></h1>
 
       <div class="hero__multiling">
         <span lang="ar" dir="rtl">الضرورة هي الأساس</span>
@@ -91,6 +91,10 @@ import StatusIndicator from '../components/StatusIndicator.astro';
   .hero__kicker { color: color-mix(in srgb, var(--c-pearl) 70%, transparent); }
   .hero__meta :global(.status) { margin-inline-start: auto; }
 
+  .hero__accent {
+    color: var(--c-tomato);
+    font-style: italic;
+  }
   .hero__sentence {
     font-family: var(--f-display);
     font-size: clamp(3rem, 1.8rem + 5.6vw, 6.5rem);
