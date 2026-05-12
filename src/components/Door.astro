@@ -22,20 +22,25 @@ const { kicker, title, body, href, cta } = Astro.props;
     gap: var(--s-3);
     padding: var(--s-6) var(--s-5);
     text-decoration: none;
-    color: var(--fg);
+    color: inherit;
     border-top: 1px solid var(--rule);
     background: transparent;
-    transition: background var(--dur-1) var(--ease-golden), border-color var(--dur-1) var(--ease-golden);
+    transition:
+      background var(--dur-1) var(--ease-golden),
+      color var(--dur-1) var(--ease-golden),
+      border-color var(--dur-1) var(--ease-golden);
     min-height: 18rem;
     position: relative;
   }
+  /* Hover: forces evergreen surface + pearl title regardless of light/dark context */
   .door:hover {
-    background: var(--surface);
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
     border-top-color: var(--c-tomato);
   }
-  .door:hover .door__title { color: var(--c-tomato); }
+  .door:hover .door__title { color: var(--c-pearl); }
   .door:hover .kicker { color: var(--c-tomato); }
-  .door:hover .door__cta { color: var(--c-pearl); }
+  .door:hover .door__cta { color: var(--c-tomato); }
   .door__title { transition: color var(--dur-1) var(--ease-golden); }
   .door__cta { transition: color var(--dur-1) var(--ease-golden); }
   .door__title {

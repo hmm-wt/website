@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import ShapeStats from '../components/ShapeStats.astro';
 import NecessitiesGrid from '../components/NecessitiesGrid.astro';
 import MarketBlock from '../components/MarketBlock.astro';
+import ChartFigure from '../components/ChartFigure.astro';
 ---
 <Base
   title="hmm Ventures"
@@ -56,12 +57,14 @@ import MarketBlock from '../components/MarketBlock.astro';
       </p>
     </header>
 
-    <figure class="evidence__fig">
-      <img src="/charts/fig_C-A_premium_wedge.png" alt="The funding-premium wedge. Cumulative premium widens from 1.09x at pre-seed to 2.12x at Series D+." />
-      <figcaption>
-        Source: hmm Ventures funding-premium analysis, 2024 four-market dataset. <a href="/research/t1-graduation-rates/">Read the T1 graduation rates research →</a>
-      </figcaption>
-    </figure>
+    <div class="evidence__fig">
+      <ChartFigure
+        src="/charts/fig_C-A_premium_wedge.png"
+        alt="The funding-premium wedge. Cumulative premium widens from 1.09x at pre-seed to 2.12x at Series D+."
+        caption="Source: hmm Ventures funding-premium analysis, 2024 four-market dataset."
+      />
+      <p class="evidence__readmore"><a href="/research/t1-graduation-rates/">Read the T1 graduation rates research →</a></p>
+    </div>
   </section>
 
   <section class="paths container" aria-label="Three paths forward">
@@ -101,12 +104,6 @@ import MarketBlock from '../components/MarketBlock.astro';
     </ol>
   </section>
 
-  <section class="endline container">
-    <p class="endline__line">
-      <span class="endline__label">Direct.</span>
-      <a class="endline__email" href="mailto:wt@hmm.ventures">wt@hmm.ventures</a>
-    </p>
-  </section>
 </Base>
 
 <style>

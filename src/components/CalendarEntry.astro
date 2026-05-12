@@ -43,6 +43,9 @@ const marketLabel: Record<string, string> = { AU: 'Australia', JP: 'Japan', NZ: 
     list-style: none;
   }
   .ce:last-of-type { border-bottom: 0; }
+  /* Ensure TagFilter's [hidden] attribute actually hides the entry.
+     Without this, .ce's display: grid wins over the UA hidden default. */
+  .ce[hidden] { display: none; }
 
   .ce__year {
     font-family: var(--f-display);

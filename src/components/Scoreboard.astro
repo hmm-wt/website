@@ -181,11 +181,13 @@ const predictions = scoreboard.predictions as Array<{
   .sb__bet { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: baseline; }
   .sb__bet-dir {
     font-weight: 600;
-    padding: 0.15em 0.45em;
+    padding: 0.15em 0.55em;
     font-size: calc(var(--fs-xs) * 0.85);
+    border: 1px solid currentColor;
+    background: transparent;
   }
-  .sb__bet-dir--for { color: var(--c-tomato); background: color-mix(in srgb, var(--c-tomato) 12%, transparent); }
-  .sb__bet-dir--against { color: var(--fg); background: color-mix(in srgb, var(--fg) 8%, transparent); }
+  .sb__bet-dir--for { color: var(--c-tomato); }
+  .sb__bet-dir--against { color: var(--fg); }
   .sb__bet-name { font-weight: 600; }
   .sb__bet-amount { color: var(--fg-soft); }
 </style>

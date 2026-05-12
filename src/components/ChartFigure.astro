@@ -1,0 +1,144 @@
+---
+/**
+ * Chart figure with click-to-zoom lightbox.
+ * Native <dialog>, zero JS framework. Works on any image in /public/charts/.
+ */
+interface Props {
+  src: string;           // /charts/foo.png
+  alt: string;
+  caption?: string;      // small caption below the image
+  source?: string;       // optional "Source: ..." line below caption
+}
+const { src, alt, caption, source } = Astro.props;
+const dialogId = `cf-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
+---
+<figure class="cf">
+  <button type="button" class="cf__trigger" aria-label={`Open ${alt} at full size`} data-cf-open={dialogId}>
+    <img class="cf__img" src={src} alt={alt} loading="lazy" decoding="async" />
+    <span class="cf__zoom" aria-hidden="true">⤢</span>
+  </button>
+  {caption && <figcaption class="cf__caption">{caption}</figcaption>}
+  {source && <p class="cf__source kicker">{source}</p>}
+</figure>
+
+<dialog class="cf__dialog" id={dialogId} aria-label={alt}>
+  <button type="button" class="cf__close" aria-label="Close" data-cf-close>×</button>
+  <img class="cf__dialog-img" src={src} alt={alt} />
+  {caption && <p class="cf__dialog-caption">{caption}</p>}
+</dialog>
+
+<script>
+  function initChartFigures() {
+    document.querySelectorAll<HTMLButtonElement>('[data-cf-open]').forEach((btn) => {
+      const id = btn.dataset.cfOpen;
+      if (!id) return;
+      const dialog = document.getElementById(id) as HTMLDialogElement | null;
+      if (!dialog) return;
+      btn.addEventListener('click', () => dialog.showModal());
+
+      const close = dialog.querySelector<HTMLButtonElement>('[data-cf-close]');
+      close?.addEventListener('click', () => dialog.close());
+
+      // Backdrop click closes
+      dialog.addEventListener('click', (e) => {
+        const r = (e.target as HTMLElement).getBoundingClientRect();
+        if (e.target === dialog) dialog.close();
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initChartFigures);
+  } else {
+    initChartFigures();
+  }
+</script>
+
+<style>
+  .cf { margin: 0; }
+
+  .cf__trigger {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: zoom-in;
+  }
+  .cf__img { width: 100%; height: auto; display: block; }
+  .cf__zoom {
+    position: absolute;
+    top: var(--s-3);
+    right: var(--s-3);
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity var(--dur-1) var(--ease);
+  }
+  .cf__trigger:hover .cf__zoom,
+  .cf__trigger:focus-visible .cf__zoom {
+    opacity: 0.9;
+  }
+
+  .cf__caption {
+    margin: var(--s-3) 0 0;
+    font-size: var(--fs-sm);
+    color: var(--fg-soft);
+    line-height: 1.45;
+  }
+  .cf__source { margin: var(--s-2) 0 0; }
+
+  /* Dialog */
+  .cf__dialog {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    max-width: min(96vw, 1400px);
+    max-height: 94vh;
+    width: auto;
+    color: var(--c-pearl);
+  }
+  .cf__dialog::backdrop {
+    background: rgba(4, 47, 42, 0.92);
+    backdrop-filter: blur(4px);
+  }
+  .cf__dialog-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 86vh;
+    object-fit: contain;
+    background: var(--c-pearl);
+  }
+  .cf__dialog-caption {
+    margin: var(--s-3) 0 0;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-pearl);
+    text-align: center;
+  }
+  .cf__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    border: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1;
+  }
+  .cf__close:hover { background: var(--c-pearl); color: var(--c-evergreen); }
+</style>
