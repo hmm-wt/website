@@ -116,7 +116,14 @@ const dataProducts = [
     border-top: 1px solid var(--rule);
     transition: background var(--dur-1) var(--ease);
   }
-  .dp:hover { background: var(--bg-warm); }
+  .dp:hover {
+    background: var(--bg-warm);
+    --fg: var(--c-mahogany);
+    --fg-soft: rgba(37, 0, 1, 0.7);
+    --fg-faint: rgba(37, 0, 1, 0.5);
+    --rule: rgba(4, 47, 42, 0.18);
+    color: var(--fg);
+  }
   .dp__link {
     display: flex;
     flex-direction: column;
