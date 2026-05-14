@@ -34,6 +34,7 @@ const dateLabel = date
         </p>
         {dateLabel && <p class="research__date kicker">{dateLabel}</p>}
       </header>
+      <h1 class="research__title">{title}.</h1>
       <div class="research__prose prose">
         <slot />
       </div>
@@ -91,6 +92,13 @@ const dateLabel = date
   }
   .research__date {
     margin-inline-start: auto;
+  }
+  .research__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--s-6);
   }
 
   .research__prose {

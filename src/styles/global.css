@@ -187,6 +187,16 @@ h4 {
 }
 .prose table tbody tr:nth-child(even) { background: var(--surface); }
 .prose table tbody tr:hover { background: color-mix(in srgb, var(--c-tomato) 10%, transparent); }
+@media (max-width: 720px) {
+  .prose table {
+    background:
+      linear-gradient(90deg, var(--bg) 30%, transparent) left center / 24px 100% no-repeat,
+      linear-gradient(90deg, transparent, var(--bg) 70%) right center / 24px 100% no-repeat,
+      radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--c-tomato) 25%, transparent), transparent) left center / 14px 100% no-repeat,
+      radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--c-tomato) 25%, transparent), transparent) right center / 14px 100% no-repeat;
+    background-attachment: local, local, scroll, scroll;
+  }
+}
 
 /* Surface-light scoped prose overrides */
 .surface-light .prose { color: var(--fg-light); }

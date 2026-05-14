@@ -12,14 +12,25 @@ interface Bet {
   staked_at: string;
 }
 
+interface EvidenceLink {
+  label: string;
+  href: string;
+}
+
 const predictions = scoreboard.predictions as Array<{
   id: string;
   claim: string;
   testable_by: string;
   status: Status;
   source?: string;
+  last_reviewed?: string;
+  resolution_criteria?: string;
+  evidence?: EvidenceLink[];
   bets: Bet[];
 }>;
+
+const fmtDate = (iso?: string) =>
+  iso ? new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' }) : '';
 ---
 <section class="sb">
   <header class="sb__head">
@@ -49,6 +60,31 @@ const predictions = scoreboard.predictions as Array<{
           {p.source && (
             <p class="sb__item-source">
               <span class="sb__item-source-label">Source:</span> {p.source}
+            </p>
+          )}
+
+          {p.resolution_criteria && (
+            <details class="sb__item-resolve">
+              <summary>Resolution criteria</summary>
+              <p>{p.resolution_criteria}</p>
+            </details>
+          )}
+
+          {p.evidence && p.evidence.length > 0 && (
+            <p class="sb__item-evidence">
+              <span class="sb__item-evidence-label">Evidence:</span>
+              {p.evidence.map((e, i) => (
+                <>
+                  {i > 0 && <span aria-hidden="true"> · </span>}
+                  <a href={e.href}>{e.label}</a>
+                </>
+              ))}
+            </p>
+          )}
+
+          {p.last_reviewed && (
+            <p class="sb__item-reviewed">
+              <span class="sb__item-reviewed-label">Last reviewed:</span> {fmtDate(p.last_reviewed)}
             </p>
           )}
 
@@ -159,6 +195,54 @@ const predictions = scoreboard.predictions as Array<{
     margin-block-start: var(--s-3);
   }
   .sb__item-source-label { text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .sb__item-resolve {
+    margin-block-start: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+  }
+  .sb__item-resolve summary {
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-tomato);
+    list-style: none;
+  }
+  .sb__item-resolve summary::-webkit-details-marker { display: none; }
+  .sb__item-resolve summary::after { content: " ▾"; }
+  .sb__item-resolve[open] summary::after { content: " ▴"; }
+  .sb__item-resolve p {
+    margin-block-start: var(--s-2);
+    color: var(--fg);
+    font-family: var(--f-body);
+    line-height: var(--lh-body);
+  }
+
+  .sb__item-evidence {
+    margin-block-start: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-soft);
+  }
+  .sb__item-evidence-label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-inline-end: var(--s-2);
+  }
+  .sb__item-evidence a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+
+  .sb__item-reviewed {
+    margin-block-start: var(--s-2);
+    font-family: var(--f-mono);
+    font-size: calc(var(--fs-xs) * 0.95);
+    color: var(--fg-faint);
+  }
+  .sb__item-reviewed-label { text-transform: uppercase; letter-spacing: 0.1em; }
 
   .sb__bets,
   .sb__bets-empty {

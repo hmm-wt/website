@@ -14,8 +14,6 @@ headline_metrics:
   - { label: "Tier 2 (compulsion-as-barrier)", value: "37" }
 ---
 
-# The Regulatory Landscape Report
-
 **Generated:** 6 April 2026
 **Markets:** Australia, Japan, New Zealand, Singapore
 **Total regulations in target markets:** 174

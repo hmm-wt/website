@@ -59,12 +59,20 @@ const railRows = [
     />
   </Fragment>
 
-  {entries.map(async (entry) => {
+  {entries.map(async (entry, i) => {
     const { Content } = await entry.render();
     const idx = pad2(entry.data.chapter);
     const market = entry.data.rail_market;
+    const next = entries[i + 1];
+    const nextIdx = next ? pad2(next.data.chapter) : undefined;
     return (
-      <Chapter id={`chapter-${idx}`} index={idx} title={entry.data.title}>
+      <Chapter
+        id={`chapter-${idx}`}
+        index={idx}
+        title={entry.data.title}
+        nextHref={next ? `#chapter-${nextIdx}` : undefined}
+        nextTitle={next ? next.data.title : undefined}
+      >
         <Content />
         {market && (
           <div class="chapter__rail-inline">

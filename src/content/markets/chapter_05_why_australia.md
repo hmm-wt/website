@@ -6,7 +6,6 @@ word_count: 1268
 rail_market: AU
 ---
 
-# Why Australia
 
 **The Necessity Doctrine, Chapter 5**
 *2 May 2026*

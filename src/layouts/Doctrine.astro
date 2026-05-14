@@ -11,9 +11,16 @@ const { title, description, ogImage } = Astro.props;
 ---
 <Base title={title} description={description} ogImage={ogImage} bare>
   <div class="doctrine">
+    <div class="doctrine__progress" aria-hidden="true"><span class="doctrine__progress-bar"></span></div>
+
     <header class="doctrine__masthead">
       <slot name="header" />
     </header>
+
+    <details class="doctrine__toc-mobile">
+      <summary>Chapters</summary>
+      <slot name="toc" />
+    </details>
 
     <div class="doctrine__shell container">
       <aside class="doctrine__toc" aria-label="Chapters">
@@ -22,6 +29,14 @@ const { title, description, ogImage } = Astro.props;
 
       <main class="doctrine__body">
         <slot />
+        <aside class="doctrine__cta" aria-label="Next steps">
+          <p class="kicker doctrine__cta-label">End of doctrine</p>
+          <p class="doctrine__cta-line">Five claims sit on the scoreboard. The full memo expands every chapter with the dataset and the deal pipeline.</p>
+          <p class="doctrine__cta-row">
+            <a href="/scoreboard/" class="doctrine__cta-link">View the scoreboard →</a>
+            <a href="/contact/#lps" class="doctrine__cta-link doctrine__cta-link--accent">Request the memo →</a>
+          </p>
+        </aside>
       </main>
 
       <aside class="doctrine__rail" aria-label="State of play">
@@ -33,10 +48,108 @@ const { title, description, ogImage } = Astro.props;
       <slot name="footer" />
     </footer>
   </div>
+
+  <script>
+    function initDoctrineProgress() {
+      const bar = document.querySelector('.doctrine__progress-bar');
+      if (!(bar instanceof HTMLElement)) return;
+      const update = () => {
+        const h = document.documentElement;
+        const max = (h.scrollHeight - h.clientHeight) || 1;
+        const pct = Math.max(0, Math.min(100, (h.scrollTop / max) * 100));
+        bar.style.width = pct + '%';
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDoctrineProgress);
+    } else {
+      initDoctrineProgress();
+    }
+  </script>
 </Base>
 
 <style>
   .doctrine { padding-block-end: var(--s-9); }
+
+  .doctrine__progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+    z-index: 60;
+    pointer-events: none;
+  }
+  .doctrine__progress-bar {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--c-tomato);
+    transition: width 80ms linear;
+  }
+
+  .doctrine__toc-mobile { display: none; }
+  .doctrine__toc-mobile summary {
+    cursor: pointer;
+    list-style: none;
+    padding: var(--s-4) var(--s-5);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--c-tomato);
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg);
+  }
+  .doctrine__toc-mobile summary::-webkit-details-marker { display: none; }
+  .doctrine__toc-mobile summary::after {
+    content: " +";
+    color: var(--fg-soft);
+  }
+  .doctrine__toc-mobile[open] summary::after { content: " −"; }
+  .doctrine__toc-mobile > nav,
+  .doctrine__toc-mobile > * { padding: var(--s-5); border-bottom: 1px solid var(--rule); }
+
+  .doctrine__cta {
+    margin-block-start: var(--s-8);
+    padding: var(--s-6);
+    border-top: 2px solid var(--c-tomato);
+    background: var(--bg-warm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .doctrine__cta-label { color: var(--c-tomato); margin: 0; }
+  .doctrine__cta-line {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+    margin: 0;
+    max-width: 52ch;
+  }
+  .doctrine__cta-row {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .doctrine__cta-link {
+    color: var(--fg);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 2px;
+  }
+  .doctrine__cta-link:hover { color: var(--c-tomato); border-bottom-color: currentColor; }
+  .doctrine__cta-link--accent { color: var(--c-tomato); border-bottom-color: currentColor; }
+
 
   .doctrine__masthead {
     background: var(--c-evergreen);
@@ -114,11 +227,11 @@ const { title, description, ogImage } = Astro.props;
     .doctrine__shell {
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas:
-        "toc"
         "body"
         "rail";
     }
-    .doctrine__toc { position: static; max-height: none; }
+    .doctrine__toc { display: none; }
     .doctrine__rail { position: static; }
+    .doctrine__toc-mobile { display: block; }
   }
 </style>

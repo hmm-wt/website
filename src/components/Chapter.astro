@@ -3,9 +3,11 @@ interface Props {
   id: string;        // anchor id, e.g. "chapter-01"
   index: string;     // e.g. "01"
   title: string;
+  nextHref?: string;
+  nextTitle?: string;
 }
 
-const { id, index, title } = Astro.props;
+const { id, index, title, nextHref, nextTitle } = Astro.props;
 ---
 <section id={id} class="chapter">
   <header class="chapter__head">
@@ -15,6 +17,14 @@ const { id, index, title } = Astro.props;
   <div class="chapter__body prose">
     <slot />
   </div>
+  {nextHref && nextTitle && (
+    <p class="chapter__next">
+      <a href={nextHref} class="chapter__next-link">
+        <span class="chapter__next-label">Continue →</span>
+        <span class="chapter__next-title">{nextTitle}</span>
+      </a>
+    </p>
+  )}
 </section>
 
 <style>
@@ -51,4 +61,29 @@ const { id, index, title } = Astro.props;
     font-size: var(--fs-md);
     line-height: var(--lh-body);
   }
+  .chapter__next {
+    margin-block-start: var(--s-7);
+    padding-block-start: var(--s-4);
+    border-top: 1px dashed var(--rule);
+  }
+  .chapter__next-link {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    text-decoration: none;
+    color: var(--fg);
+  }
+  .chapter__next-label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--c-tomato);
+  }
+  .chapter__next-title {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+  }
+  .chapter__next-link:hover .chapter__next-title { color: var(--c-tomato); }
 </style>

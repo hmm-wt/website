@@ -6,7 +6,6 @@ word_count: 1314
 rail_market: JP
 ---
 
-# Why Japan
 
 **The Necessity Doctrine, Chapter 4**
 *2 May 2026*

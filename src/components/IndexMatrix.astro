@@ -29,7 +29,7 @@ const maxNecCos = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
 <div class="im">
   <section class="im__section">
     <p class="im__label">Per market</p>
-    <table class="im__table">
+    <div class="im__scroll"><table class="im__table">
       <thead>
         <tr>
           <th>Market</th>
@@ -57,12 +57,12 @@ const maxNecCos = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
           );
         })}
       </tbody>
-    </table>
+    </table></div>
   </section>
 
   <section class="im__section">
     <p class="im__label">Per Necessity</p>
-    <table class="im__table">
+    <div class="im__scroll"><table class="im__table">
       <thead>
         <tr>
           <th>Necessity</th>
@@ -84,7 +84,7 @@ const maxNecCos = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
           );
         })}
       </tbody>
-    </table>
+    </table></div>
   </section>
 </div>
 
@@ -99,8 +99,26 @@ const maxNecCos = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
     color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
     margin: 0;
   }
+  .im__scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-inline: calc(-1 * var(--s-3));
+    padding-inline: var(--s-3);
+  }
+  .im__scroll::after {
+    content: "";
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--c-tomato) 60%, transparent), transparent);
+    margin-block-start: var(--s-2);
+    opacity: 0;
+  }
+  @media (max-width: 720px) {
+    .im__scroll::after { opacity: 1; }
+  }
   .im__table {
     width: 100%;
+    min-width: 36rem;
     border-collapse: collapse;
     font-family: var(--f-mono);
     font-size: var(--fs-sm);

@@ -6,7 +6,6 @@ word_count: 1271
 rail_market: NZ
 ---
 
-# Why New Zealand
 
 **The Necessity Doctrine, Chapter 6**
 *2 May 2026*

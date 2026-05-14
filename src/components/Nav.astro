@@ -1,7 +1,21 @@
 ---
-const items = [
+type NavItem =
+  | { href: string; label: string }
+  | { label: string; children: { href: string; label: string }[] };
+
+const items: NavItem[] = [
   { href: '/doctrine/', label: 'Doctrine' },
   { href: '/research/', label: 'Research' },
+  { href: '/necessity-index/', label: 'Index' },
+  {
+    label: 'Markets',
+    children: [
+      { href: '/thesis/australia/', label: 'Australia' },
+      { href: '/thesis/japan/', label: 'Japan' },
+      { href: '/thesis/new-zealand/', label: 'New Zealand' },
+      { href: '/thesis/singapore/', label: 'Singapore' }
+    ]
+  },
   { href: '/scoreboard/', label: 'Scoreboard' },
   { href: '/contact/', label: 'Contact' }
 ];
@@ -9,6 +23,7 @@ const items = [
 const path = Astro.url.pathname;
 const isCurrent = (href: string) =>
   path === href || (href !== '/' && path.startsWith(href));
+const isMarketsCurrent = path.startsWith('/thesis/');
 ---
 <header class="nav">
   <div class="container nav__inner">
@@ -28,13 +43,32 @@ const isCurrent = (href: string) =>
     <nav aria-label="Primary">
       <ul role="list" class="nav__list">
         {items.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class={`nav__link ${isCurrent(item.href) ? 'is-current' : ''}`}
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
-            >{item.label}</a>
-          </li>
+          'children' in item ? (
+            <li class="nav__group">
+              <button type="button" class={`nav__link nav__link--toggle ${isMarketsCurrent ? 'is-current' : ''}`} aria-haspopup="true" aria-expanded="false">
+                {item.label} <span aria-hidden="true">▾</span>
+              </button>
+              <ul role="list" class="nav__submenu">
+                {item.children.map((c) => (
+                  <li>
+                    <a
+                      href={c.href}
+                      class={`nav__sublink ${isCurrent(c.href) ? 'is-current' : ''}`}
+                      aria-current={isCurrent(c.href) ? 'page' : undefined}
+                    >{c.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                class={`nav__link ${isCurrent(item.href) ? 'is-current' : ''}`}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          )
         ))}
         <li>
           <a href="/#subscribe" class="nav__cta">Subscribe →</a>
@@ -110,6 +144,46 @@ const isCurrent = (href: string) =>
     color: var(--accent);
     border-bottom: 1px solid currentColor;
   }
+  .nav__link--toggle {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    padding-block: 0.25rem;
+  }
+
+  .nav__group { position: relative; }
+  .nav__submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: var(--s-3);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    min-width: 12rem;
+    display: none;
+    flex-direction: column;
+    gap: var(--s-2);
+    z-index: 60;
+  }
+  .nav__group:hover .nav__submenu,
+  .nav__group:focus-within .nav__submenu { display: flex; }
+  .nav__sublink {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    color: var(--fg-soft);
+    padding: 0.25rem 0.4rem;
+    display: block;
+  }
+  .nav__sublink:hover,
+  .nav__sublink.is-current { color: var(--c-tomato); }
 
   .nav__cta {
     font-family: var(--f-mono);
@@ -132,5 +206,13 @@ const isCurrent = (href: string) =>
   @media (max-width: 820px) {
     .nav__inner { flex-direction: column; align-items: flex-start; gap: var(--s-3); }
     .nav__list { gap: var(--s-3); }
+    .nav__submenu {
+      position: static;
+      border: 0;
+      padding: var(--s-2) 0 var(--s-2) var(--s-3);
+      display: flex;
+      background: transparent;
+      gap: var(--s-2);
+    }
   }
 </style>

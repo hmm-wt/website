@@ -10,6 +10,12 @@
       "testable_by": "2028-12-31",
       "status": "open",
       "source": "hmm proprietary 22,217-company dataset, four-market cohort",
+      "last_reviewed": "2026-05-01",
+      "resolution_criteria": "Resolved YES if T1 cohort Series A graduation rate ≥ 1.5× unregulated cohort across the four markets, measured on the 2028-12-31 dataset re-query. Resolved NO if < 1.5×. Pending if data unavailable.",
+      "evidence": [
+        { "label": "Necessity Index v1.0", "href": "/necessity-index/" },
+        { "label": "T1 Graduation Rates", "href": "/research/t1-graduation-rates/" }
+      ],
       "bets": []
     },
     {
@@ -18,6 +24,11 @@
       "testable_by": "2028-12-31",
       "status": "open",
       "source": "Public regulator publications across AU, JP, NZ, SG",
+      "last_reviewed": "2026-05-01",
+      "resolution_criteria": "Resolved YES if 3+ of the five named frameworks have published their final operational compliance documentation by 2028-12-31. Resolved NO if ≤ 2.",
+      "evidence": [
+        { "label": "Regulatory Landscape", "href": "/research/regulatory-landscape/" }
+      ],
       "bets": []
     },
     {
@@ -26,6 +37,11 @@
       "testable_by": "2027-12-31",
       "status": "open",
       "source": "hmm dataset re-query (annual)",
+      "last_reviewed": "2026-05-01",
+      "resolution_criteria": "Resolved YES if Series D+ cumulative funding premium ≥ 2.30× on the 2027 re-query. Resolved NO if < 2.30×.",
+      "evidence": [
+        { "label": "T1 Graduation Rates", "href": "/research/t1-graduation-rates/" }
+      ],
       "bets": []
     },
     {
@@ -34,6 +50,9 @@
       "testable_by": "2028-12-31",
       "status": "open",
       "source": "Primary-source verified exit dataset; ASX, TSE, NZX, SGX filings",
+      "last_reviewed": "2026-05-01",
+      "resolution_criteria": "Resolved YES if 2+ named acquisitions meeting the EV threshold close by 2028-12-31. Each must have a primary-source filing trail (exchange disclosure, 8-K, or equivalent).",
+      "evidence": [],
       "bets": []
     },
     {
@@ -42,6 +61,9 @@
       "testable_by": "2027-12-31",
       "status": "open",
       "source": "Public regulator publications and procurement notices",
+      "last_reviewed": "2026-05-01",
+      "resolution_criteria": "Resolved YES if any of MAS, PMDA, or AEMO publishes a mandatory framework AND a public procurement notice referencing the framework appears within 12 months of publication.",
+      "evidence": [],
       "bets": []
     }
   ]
