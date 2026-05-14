@@ -4,6 +4,7 @@ import ShapeStats from '../components/ShapeStats.astro';
 import NecessitiesGrid from '../components/NecessitiesGrid.astro';
 import MarketBlock from '../components/MarketBlock.astro';
 import ChartFigure from '../components/ChartFigure.astro';
+import PremiumWedge from '../components/charts/PremiumWedge.astro';
 ---
 <Base
   title="hmm Ventures"
@@ -51,18 +52,14 @@ import ChartFigure from '../components/ChartFigure.astro';
   <section class="evidence container surface-light">
     <header class="evidence__head">
       <p class="kicker evidence__kicker">The evidence</p>
-      <h2 class="evidence__title">The premium widens through Series C.</h2>
+      <h2 class="evidence__title">Enter at parity. Exit at premium.</h2>
       <p class="evidence__lede">
-        Round-size, T1 regulated versus unregulated baseline. Near parity at pre-seed (1.09x). Widening through Series C (1.53x). Compounded across stages, the cumulative funding multiple reaches 2.12x by Series D+ and exit incidence runs at 2.22x the unregulated rate.
+        Four-market dataset. The T1 premium widens at every stage from pre-seed parity to a 2.12x cumulative multiple at Series D+. Exit incidence runs at 2.22x the unregulated rate.
       </p>
     </header>
 
     <div class="evidence__fig">
-      <ChartFigure
-        src="/charts/fig_C-A_premium_wedge.png"
-        alt="Round-size premium for T1 regulated vs unregulated baseline. Pre-seed 1.09x, seed 1.12x, series A 1.19x, series C 1.53x, series D+ 1.42x."
-        caption="Source: hmm Ventures funding-premium analysis, 2024 four-market dataset."
-      />
+      <PremiumWedge />
       <p class="evidence__readmore"><a href="/research/t1-graduation-rates/">Read the T1 graduation rates research →</a></p>
     </div>
   </section>

@@ -1,0 +1,131 @@
+---
+/**
+ * Premium wedge. Round-size, T1 vs unregulated baseline by stage.
+ * Ported from CIM/html/charts.py c04_premium_wedge.
+ *
+ * SVG with: parity reference line, area fill below the premium curve,
+ * dot+value labels at every stage, mono axis labels.
+ * Uses inherited token colours from the parent IMFigure card.
+ */
+import IMFigure from '../IMFigure.astro';
+
+const stages: Array<[string, number]> = [
+  ['Pre-Seed', 1.09],
+  ['Seed', 1.12],
+  ['Series A', 1.19],
+  ['Series B', 1.35],
+  ['Series C', 1.53],
+  ['Series D+', 2.12],
+];
+
+const W = 800, H = 240;
+const ml = 50, mr = 50, mt = 25, mb = 50;
+const iw = W - ml - mr;
+const ih = H - mt - mb;
+
+const n = stages.length;
+const sx = (i: number) => ml + (i / (n - 1)) * iw;
+const sy = (v: number) => mt + ih - ((v - 0.8) / 1.5) * ih;
+
+const refY = sy(1.0);
+
+const linePts = stages.map(([, v], i) => `${sx(i).toFixed(1)},${sy(v).toFixed(1)}`).join(' ');
+const areaPts = `${linePts} ${sx(n - 1).toFixed(1)},${refY.toFixed(1)} ${sx(0).toFixed(1)},${refY.toFixed(1)}`;
+---
+<IMFigure
+  fignum="EX-2"
+  label="Cumulative Premium Wedge · T1 vs Unregulated"
+  title='Enter at parity. Exit at <em>2.12x</em> premium.'
+  sub="T1 round-size premium widens at every stage. Full dataset re-query."
+  metrics={[
+    { label: 'Seed premium', value: '1.12x', ci: 'Near parity' },
+    { label: 'Series C', value: '1.53x', ci: 'Median round size', accent: true },
+    { label: 'Series D+', value: '2.12x', ci: 'Cumulative' },
+    { label: 'Exit rate', value: '2.22x', ci: 'T1 vs unregulated' },
+  ]}
+  source="hmm Ventures funding-premium analysis · 22,217-company proprietary dataset"
+  basis="T1 / unregulated · last_funding_amount · four-market universe"
+>
+  <svg
+    viewBox={`0 0 ${W} ${H}`}
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    aria-label="T1 premium widens from 1.09x at Pre-Seed to 2.12x at Series D+"
+    class="pw__svg"
+  >
+    <line
+      x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih}
+      class="pw__spine"
+    />
+    <line
+      x1={ml} y1={mt} x2={ml} y2={mt + ih}
+      class="pw__spine"
+    />
+
+    <line
+      x1={ml} y1={refY.toFixed(1)} x2={ml + iw} y2={refY.toFixed(1)}
+      class="pw__ref" stroke-dasharray="3 2"
+    />
+    <text
+      x={ml + iw + 6} y={(refY + 3).toFixed(1)}
+      class="pw__ref-label"
+    >parity</text>
+
+    <polygon points={areaPts} class="pw__area" />
+    <polyline points={linePts} class="pw__line" />
+
+    {stages.map(([labelText, v], i) => {
+      const cx = sx(i);
+      const cy = sy(v);
+      return (
+        <>
+          <circle cx={cx.toFixed(1)} cy={cy.toFixed(1)} r="4" class="pw__dot" />
+          <text x={cx} y={(cy - 12).toFixed(1)} text-anchor="middle" class="pw__val">{v.toFixed(2)}x</text>
+          <text x={cx} y={mt + ih + 18} text-anchor="middle" class="pw__cat">{labelText}</text>
+        </>
+      );
+    })}
+
+    <text
+      x={ml + iw / 2} y={mt + ih + 38}
+      text-anchor="middle"
+      class="pw__axis-title"
+    >T1 / UNREGULATED ROUND-SIZE PREMIUM</text>
+  </svg>
+</IMFigure>
+
+<style>
+  .pw__svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .pw__spine { stroke: var(--c-mahogany); stroke-width: 0.6; }
+  .pw__ref { stroke: rgba(4, 47, 42, 0.35); stroke-width: 0.6; }
+  .pw__ref-label {
+    fill: rgba(37, 0, 1, 0.55);
+    font-family: var(--f-mono);
+    font-size: 8px;
+  }
+  .pw__area { fill: var(--c-tomato); opacity: 0.10; }
+  .pw__line { fill: none; stroke: var(--c-tomato); stroke-width: 1.8; }
+  .pw__dot { fill: var(--c-tomato); }
+  .pw__val {
+    fill: var(--c-tomato);
+    font-family: var(--f-mono);
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .pw__cat {
+    fill: rgba(37, 0, 1, 0.66);
+    font-family: var(--f-mono);
+    font-size: 9px;
+  }
+  .pw__axis-title {
+    fill: var(--c-mahogany);
+    font-family: var(--f-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+    font-weight: 700;
+  }
+</style>
