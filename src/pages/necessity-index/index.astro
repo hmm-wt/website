@@ -5,6 +5,7 @@ import IndexFunnel from '../../components/IndexFunnel.astro';
 import IndexMatrix from '../../components/IndexMatrix.astro';
 import StatusIndicator from '../../components/StatusIndicator.astro';
 import DataSection from '../../components/DataSection.astro';
+import CiteThis from '../../components/CiteThis.astro';
 import data from '../../data/necessity-index.json';
 
 const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
@@ -133,6 +134,17 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       </p>
     </DataSection>
 
+    <section class="ip__share">
+      <p class="kicker ip__share-label">Use this index</p>
+      <CiteThis
+        title="The Necessity Index"
+        version={data.version}
+        href="/necessity-index/"
+        date={data.as_of}
+        embedSrc="/necessity-index/embed/"
+      />
+    </section>
+
     <footer class="ip__foot">
       <p class="ip__sources-label">Source datasets</p>
       <ul class="ip__sources" role="list">
@@ -140,7 +152,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       </ul>
       <p class="ip__methodology">
         <a href="/necessity-index/methodology/">Methodology →</a>
-        <span class="ip__embed-note"> · <a href="/necessity-index/embed/">Embed this index</a></span>
+        <span class="ip__embed-note"> · <a href="/necessity-index/embed/">Open the embed view</a></span>
       </p>
     </footer>
   </section>
@@ -239,10 +251,20 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
     .ip__grid--3, .ip__grid--4 { grid-template-columns: 1fr; }
   }
 
-  .ip__foot {
-    padding-block-start: var(--s-7);
+  .ip__share {
+    padding-block: var(--s-6) var(--s-5);
     border-top: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
     margin-block-start: var(--s-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .ip__share-label { color: var(--c-tomato); margin: 0; }
+
+  .ip__foot {
+    padding-block-start: var(--s-5);
+    border-top: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
+    margin-block-start: var(--s-3);
     font-family: var(--f-mono);
   }
   .ip__sources-label {
