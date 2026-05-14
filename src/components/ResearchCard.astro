@@ -48,7 +48,7 @@ const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
     border-top: 1px solid var(--rule);
     transition: background var(--dur-1) var(--ease);
   }
-  .rc:hover {
+  .rc:hover, .rc:focus-within, .rc:active {
     background: var(--bg-warm);
     --fg: var(--c-mahogany);
     --fg-soft: rgba(37, 0, 1, 0.7);
@@ -56,14 +56,7 @@ const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
     --rule: rgba(4, 47, 42, 0.18);
     color: var(--fg);
   }
-  .rc:focus-within {
-    background: var(--bg-warm);
-    --fg: var(--c-mahogany);
-    --fg-soft: rgba(37, 0, 1, 0.7);
-    --fg-faint: rgba(37, 0, 1, 0.5);
-    --rule: rgba(4, 47, 42, 0.18);
-    color: var(--fg);
-  }
+  .rc:active { transform: scale(0.998); transition-duration: 80ms; }
   .rc__link {
     display: flex;
     flex-direction: column;

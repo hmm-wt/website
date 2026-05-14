@@ -117,7 +117,7 @@ const dataProducts = [
     border-top: 1px solid var(--rule);
     transition: background var(--dur-1) var(--ease);
   }
-  .dp:hover, .dp:focus-within {
+  .dp:hover, .dp:focus-within, .dp:active {
     background: var(--bg-warm);
     --fg: var(--c-mahogany);
     --fg-soft: rgba(37, 0, 1, 0.7);
@@ -125,6 +125,7 @@ const dataProducts = [
     --rule: rgba(4, 47, 42, 0.18);
     color: var(--fg);
   }
+  .dp:active { transform: scale(0.998); transition-duration: 80ms; }
   .dp__link {
     display: flex;
     flex-direction: column;

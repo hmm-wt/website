@@ -77,6 +77,10 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
     --imfig-rule: rgba(4, 47, 42, 0.18);
     --imfig-muted: rgba(37, 0, 1, 0.66);
     --imfig-faint: rgba(37, 0, 1, 0.42);
+    transition: box-shadow var(--mo-tick) var(--ease-golden);
+  }
+  .imfig:hover {
+    box-shadow: 0 6px 18px rgba(4, 47, 42, 0.10), 0 1px 3px rgba(4, 47, 42, 0.08);
   }
   .imfig::before {
     content: "";

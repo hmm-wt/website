@@ -42,12 +42,54 @@ const stats = [
     {stats.map((s, i) => (
       <li class="ss__cell">
         <span class="ss__idx">[{String(i + 1).padStart(2, '0')}]</span>
-        <p class="ss__value">{s.value}</p>
+        <p class="ss__value" data-count-up={s.value}>{s.value}</p>
         <p class="ss__label">{s.label}</p>
         <p class="ss__caption">{s.caption}</p>
       </li>
     ))}
   </ol>
+
+  <script is:inline>
+    // Count-up animation on scroll-into-view. Respects prefers-reduced-motion.
+    (function () {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced || !('IntersectionObserver' in window)) return;
+      const els = document.querySelectorAll('[data-count-up]');
+      const animate = (el) => {
+        const target = el.getAttribute('data-count-up');
+        // Parse: extract numeric portion + suffix (e.g. "%", "x", or full value with commas)
+        const m = target.match(/^([\d,\.]+)(.*)$/);
+        if (!m) return;
+        const finalNum = parseFloat(m[1].replace(/,/g, ''));
+        const suffix = m[2];
+        const decimals = (m[1].split('.')[1] || '').length;
+        const dur = 900;
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / dur);
+          // ease-out cubic
+          const eased = 1 - Math.pow(1 - t, 3);
+          const cur = finalNum * eased;
+          const formatted = decimals > 0
+            ? cur.toFixed(decimals)
+            : Math.floor(cur).toLocaleString('en-US');
+          el.textContent = formatted + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        el.textContent = '0' + suffix;
+        requestAnimationFrame(tick);
+      };
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            animate(e.target);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      els.forEach((el) => obs.observe(el));
+    })();
+  </script>
   <footer class="ss__foot">
     <p class="kicker">
       As of {data.as_of}  ·  IM v3.8.3  ·  sources on <a href="/doctrine/references/">/doctrine/references/</a>
@@ -83,6 +125,10 @@ const stats = [
     padding-block: var(--s-3) var(--s-5);
     border-left: 2px solid var(--c-tomato);
     padding-inline-start: var(--s-4);
+    transition: padding var(--mo-tick) var(--ease-golden);
+  }
+  .ss__cell:hover {
+    padding-inline-start: calc(var(--s-4) + 4px);
   }
 
   .ss__idx {
