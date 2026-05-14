@@ -4,6 +4,7 @@ import KickerLabel from '../components/KickerLabel.astro';
 import CalendarTimeline from '../components/CalendarTimeline.astro';
 import CalendarHorizon from '../components/CalendarHorizon.astro';
 import TagFilter from '../components/TagFilter.astro';
+import DataSection from '../components/DataSection.astro';
 import calendar from '../data/crystallisation-window.json';
 
 const totalCount = calendar.total_count;
@@ -51,21 +52,31 @@ const filterGroups = [
       </div>
     </header>
 
-    <div class="cal__horizon">
+    <DataSection
+      fignum="CW-01"
+      label="Horizon view · Aggregate density 2024 to 2030"
+      title='Density peaks in <em>2026 to 2027</em>.'
+      sub="The four-market regulatory drumbeat at a glance. Per-market intensity by year."
+      source="hmm Ventures Comprehensive Regulatory Dataset"
+      basis="Aggregated by regulator · four-market subset"
+    >
       <CalendarHorizon />
-    </div>
+    </DataSection>
 
-    <div class="cal__filter">
-      <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
-    </div>
+    <DataSection
+      fignum="CW-02"
+      label="Timeline · Per-regulation detail"
+      title='Thirty-four in-flight regulations. <em>Filterable</em> by market, Necessity, tier.'
+      sub="The full per-regulation calendar. Each entry traces a regulator publication to an operational compliance demand window."
+      source="hmm Ventures Comprehensive Regulatory Dataset · 725 regulations, 64 countries, 13 sectors"
+      basis="Generated 2026-04-06 · rebuilt monthly · four-market subset"
+    >
+      <div class="cal__filter">
+        <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
+      </div>
 
-    <CalendarTimeline />
-
-    <footer class="cal__foot">
-      <p class="kicker">
-        Source: HMM Ventures Comprehensive Regulatory Dataset, 725 regulations, 64 countries, 13 sectors. Generated 6 April 2026. Rebuilt monthly.
-      </p>
-    </footer>
+      <CalendarTimeline />
+    </DataSection>
   </section>
 </Base>
 

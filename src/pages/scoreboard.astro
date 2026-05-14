@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Scoreboard from '../components/Scoreboard.astro';
 import BettingWindow from '../components/BettingWindow.astro';
+import DataSection from '../components/DataSection.astro';
 ---
 <Base
   title="Scoreboard"
@@ -19,7 +20,16 @@ import BettingWindow from '../components/BettingWindow.astro';
       </div>
     </header>
 
-    <Scoreboard />
+    <DataSection
+      fignum="SB-01"
+      label="Falsifiable claims · Adversarial collaboration"
+      title='Five predictions. <em>Dated</em>, sourced, bettable.'
+      sub="Each claim is testable against a public dataset by a named date. Charity-bound bets accepted within the open window."
+      source="hmm Ventures proprietary 22,217-company dataset · public regulator publications"
+      basis="Resolution criteria stated per claim · annual rescore"
+    >
+      <Scoreboard />
+    </DataSection>
   </section>
 </Base>
 

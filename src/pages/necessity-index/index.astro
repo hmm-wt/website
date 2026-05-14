@@ -4,6 +4,7 @@ import IndexCard from '../../components/IndexCard.astro';
 import IndexFunnel from '../../components/IndexFunnel.astro';
 import IndexMatrix from '../../components/IndexMatrix.astro';
 import StatusIndicator from '../../components/StatusIndicator.astro';
+import DataSection from '../../components/DataSection.astro';
 import data from '../../data/necessity-index.json';
 
 const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
@@ -28,18 +29,30 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       <p class="ip__as-of">As of {asOfLabel}</p>
     </header>
 
-    <section class="ip__section">
-      <h2 class="ip__h2">Universe</h2>
+    <DataSection
+      fignum="NI-01"
+      label="Universe · Four-market classified dataset"
+      title='The classified universe sits at <em>22,217</em> companies.'
+      sub="Of those, 19,416 trade in the four target markets. 174 four-market regulations frame the thesis."
+      source="hmm Ventures classified universe · 2026-04-08 dataset"
+      basis="Crunchbase + Dealroom · last_funding_amount join · four-market filter"
+    >
       <div class="ip__grid ip__grid--4">
         <IndexCard label="Total companies classified" value={data.universe.total_companies} accent />
         <IndexCard label="Four-market subset" value={data.universe.four_market_companies} />
         <IndexCard label="Regulations mapped (global)" value={data.universe.regulations_global} />
         <IndexCard label="Four-market regulations" value={data.universe.regulations_four_market} accent />
       </div>
-    </section>
+    </DataSection>
 
-    <section class="ip__section">
-      <h2 class="ip__h2">T1 / T2 screen</h2>
+    <DataSection
+      fignum="NI-02"
+      label="T1 / T2 screen · Conservative classifier"
+      title='One in three four-market companies <em>passes the screen</em>.'
+      sub="Conservative T1 / T2 classifier across the four-market universe. T1 = licence-as-barrier."
+      source="hmm Ventures conservative classifier"
+      basis="T1 + T2 union · four-market subset"
+    >
       <div class="ip__grid ip__grid--3">
         <IndexCard
           label="Conservative classifier share"
@@ -51,21 +64,38 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
         <IndexCard label="In-thesis companies" value={data.tier_shares.conservative_classifier_count} />
         <IndexCard label="T1 (licence-as-barrier)" value={data.tier_shares.t1_count} />
       </div>
-    </section>
+    </DataSection>
 
-    <section class="ip__section">
-      <h2 class="ip__h2">Stage funnel</h2>
+    <DataSection
+      fignum="NI-03"
+      label="Stage funnel · From classified to seed-in-scope"
+      title='The seed-in-scope cohort is <em>2,625 companies</em>.'
+      sub="From the four-market universe through the conservative classifier and the seed-stage filter."
+      source="hmm Ventures classified universe · stage funnel"
+      basis="Four-market subset · last_funding_round at or before seed"
+    >
       <IndexFunnel stages={data.stage_funnel} />
-    </section>
+    </DataSection>
 
-    <section class="ip__section">
-      <h2 class="ip__h2">Per market and per Necessity</h2>
+    <DataSection
+      fignum="NI-04"
+      label="Per market and per Necessity · Concentration"
+      title='Regulatory density concentrates in <em>Australia and Japan</em>.'
+      sub="Per-market and per-Necessity counts for the four-market universe. Heat-tinted by intensity."
+      source="hmm Ventures classified universe + Comprehensive Regulatory Dataset"
+      basis="Per-market + per-Necessity joins · four-market filter"
+    >
       <IndexMatrix perMarket={data.per_market} perNecessity={data.per_necessity} />
-    </section>
+    </DataSection>
 
-    <section class="ip__section">
-      <h2 class="ip__h2">Round-size premiums</h2>
-      <p class="ip__note">T1 round-size premium relative to unregulated peers at each stage.</p>
+    <DataSection
+      fignum="NI-05"
+      label="Round-size premiums · T1 vs unregulated"
+      title='Cumulative funding multiple widens to <em>2.12x</em> by Series D+.'
+      sub="T1 round-size premium relative to unregulated peers at each stage. Compounds across the funding ladder."
+      source="hmm Ventures funding-premium analysis · 2024 four-market deal data"
+      basis="T1 / unregulated · last_funding_amount · round-size median"
+    >
       <div class="ip__grid ip__grid--4">
         <IndexCard label="Seed" value={data.premiums.round_size_seed} unit="x" />
         <IndexCard label="Series A" value={data.premiums.round_size_series_a} unit="x" />
@@ -83,10 +113,16 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
           source={`${data.premiums.regulated_exit_rate_pct}% vs ${data.premiums.unregulated_exit_rate_pct}%`}
         />
       </div>
-    </section>
+    </DataSection>
 
-    <section class="ip__section">
-      <h2 class="ip__h2">The Crystallisation Window</h2>
+    <DataSection
+      fignum="NI-06"
+      label="The crystallisation window · 2024 to 2030"
+      title='Thirty-four in-flight regulations. Peak density in <em>2026</em>.'
+      sub="The window where regulator publications convert into operational compliance demand. Each market on a different clock."
+      source="hmm Ventures Comprehensive Regulatory Dataset"
+      basis="In-flight 2024 to 2030 · four-market subset"
+    >
       <div class="ip__grid ip__grid--3">
         <IndexCard label="In-flight regulations 2024 to 2030" value={data.crystallisation_window.in_flight_2024_2030} accent />
         <IndexCard label="Peak year" value={data.crystallisation_window.peak_year} />
@@ -95,7 +131,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       <p class="ip__note ip__note--cta">
         <a href="/calendar/">View the full calendar →</a>
       </p>
-    </section>
+    </DataSection>
 
     <footer class="ip__foot">
       <p class="ip__sources-label">Source datasets</p>
