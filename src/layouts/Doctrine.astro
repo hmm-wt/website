@@ -122,6 +122,11 @@ const { title, description, ogImage } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
+    /* Locally invert text tokens so pearl bg renders dark text. */
+    --fg: var(--c-mahogany);
+    --fg-soft: rgba(37, 0, 1, 0.7);
+    --rule: rgba(4, 47, 42, 0.18);
+    color: var(--fg);
   }
   .doctrine__cta-label { color: var(--c-tomato); margin: 0; }
   .doctrine__cta-line {
@@ -130,6 +135,7 @@ const { title, description, ogImage } = Astro.props;
     line-height: var(--lh-snug);
     margin: 0;
     max-width: 52ch;
+    color: var(--fg);
   }
   .doctrine__cta-row {
     margin: 0;
@@ -142,13 +148,13 @@ const { title, description, ogImage } = Astro.props;
     letter-spacing: 0.12em;
   }
   .doctrine__cta-link {
-    color: var(--fg);
+    color: var(--c-mahogany);
     text-decoration: none;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid currentColor;
     padding-bottom: 2px;
   }
-  .doctrine__cta-link:hover { color: var(--c-tomato); border-bottom-color: currentColor; }
-  .doctrine__cta-link--accent { color: var(--c-tomato); border-bottom-color: currentColor; }
+  .doctrine__cta-link:hover { color: var(--c-tomato); }
+  .doctrine__cta-link--accent { color: var(--c-tomato); }
 
 
   .doctrine__masthead {

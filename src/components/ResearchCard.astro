@@ -28,7 +28,7 @@ const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
       {freshness && <span class="rc__fresh">{freshness}</span>}
       {version && <span class="rc__version">{version}</span>}
     </header>
-    <h3 class="rc__title">{title}</h3>
+    <h3 class="rc__title">{title} <span class="rc__chev" aria-hidden="true">→</span></h3>
     <p class="rc__summary">{summary}</p>
     <footer class="rc__foot">
       <time datetime={date}>{dateLabel}</time>
@@ -94,6 +94,13 @@ const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
     transition: color var(--dur-1) var(--ease);
   }
   .rc__link:hover .rc__title { color: var(--c-tomato); }
+  .rc__chev {
+    display: inline-block;
+    color: var(--c-tomato);
+    margin-inline-start: 0.3em;
+    transition: transform var(--transition);
+  }
+  .rc__link:hover .rc__chev { transform: translateX(4px); }
 
   .rc__summary {
     font-size: var(--fs-md);

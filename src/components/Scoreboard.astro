@@ -143,6 +143,12 @@ const fmtDate = (iso?: string) =>
     background: var(--bg-warm);
     border-left: 3px solid var(--c-tomato);
     scroll-margin-top: var(--s-7);
+    /* Locally invert text tokens so pearl bg has dark-on-light text. */
+    --fg: var(--c-mahogany);
+    --fg-soft: rgba(37, 0, 1, 0.7);
+    --fg-faint: rgba(37, 0, 1, 0.5);
+    --rule: rgba(4, 47, 42, 0.18);
+    color: var(--fg);
   }
 
   .sb__item-head {

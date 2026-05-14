@@ -67,7 +67,7 @@ const dataProducts = [
               <span class="dp__type">{dp.type}</span>
               <span class="dp__version">{dp.version}</span>
             </header>
-            <h3 class="dp__title">{dp.title}</h3>
+            <h3 class="dp__title">{dp.title} <span class="dp__chev" aria-hidden="true">→</span></h3>
             <p class="dp__summary">{dp.summary}</p>
             <footer class="dp__foot">
               <span>Refresh: {dp.refresh}</span>
@@ -145,6 +145,13 @@ const dataProducts = [
     transition: color var(--dur-1) var(--ease);
   }
   .dp__link:hover .dp__title { color: var(--c-tomato); }
+  .dp__chev {
+    display: inline-block;
+    color: var(--c-tomato);
+    margin-inline-start: 0.3em;
+    transition: transform var(--transition);
+  }
+  .dp__link:hover .dp__chev { transform: translateX(4px); }
   .dp__summary {
     font-size: var(--fs-md);
     color: var(--fg-soft);

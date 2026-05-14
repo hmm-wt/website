@@ -70,6 +70,14 @@ h4 {
   background: var(--bg-light);
   color: var(--fg-light);
 }
+.prose a:not([class]) {
+  color: var(--c-tomato);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+.prose a:not([class]):hover { color: var(--accent-hover); }
+.surface-light .prose a:not([class]) { color: var(--c-tomato); }
 .surface-light a { color: var(--c-evergreen); border-bottom: 1px solid currentColor; padding-bottom: 1px; text-decoration: none; }
 .surface-light a:hover { color: var(--c-tomato); }
 .surface-light .kicker { color: var(--fg-light-soft); }
