@@ -34,23 +34,48 @@ const dialogId = `cf-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
       if (!id) return;
       const dialog = document.getElementById(id) as HTMLDialogElement | null;
       if (!dialog) return;
-      btn.addEventListener('click', () => dialog.showModal());
+      let lastFocused: HTMLElement | null = null;
+
+      btn.addEventListener('click', () => {
+        lastFocused = document.activeElement as HTMLElement;
+        dialog.showModal();
+      });
 
       const close = dialog.querySelector<HTMLButtonElement>('[data-cf-close]');
-      close?.addEventListener('click', () => dialog.close());
+      const closeFn = () => {
+        dialog.close();
+        lastFocused?.focus();
+      };
+      close?.addEventListener('click', closeFn);
 
       // Backdrop click closes
       dialog.addEventListener('click', (e) => {
-        const r = (e.target as HTMLElement).getBoundingClientRect();
-        if (e.target === dialog) dialog.close();
+        if (e.target === dialog) closeFn();
       });
+
+      // Esc handled by native <dialog>.
+      // Tab cycles within close button (only focusable inside).
+    });
+  }
+
+  // Image-loading skeleton. Adds .is-loaded once natural dimensions
+  // are known. Layout-stable via aspect-ratio if width/height attrs set.
+  function initImageSkeletons() {
+    document.querySelectorAll<HTMLImageElement>('.cf__img').forEach((img) => {
+      if (img.complete && img.naturalWidth > 0) {
+        img.classList.add('is-loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('is-loaded'), { once: true });
+        img.addEventListener('error', () => img.classList.add('is-loaded'), { once: true });
+      }
     });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initChartFigures);
+    document.addEventListener('DOMContentLoaded', () => { initChartFigures(); initImageSkeletons(); });
   } else {
     initChartFigures();
+    initImageSkeletons();
   }
 </script>
 
@@ -66,7 +91,27 @@ const dialogId = `cf-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
     border: 0;
     cursor: zoom-in;
   }
-  .cf__img { width: 100%; height: auto; display: block; }
+  .cf__img {
+    width: 100%;
+    height: auto;
+    display: block;
+    background:
+      linear-gradient(110deg, rgba(242, 236, 201, 0.04) 8%, rgba(242, 236, 201, 0.08) 18%, rgba(242, 236, 201, 0.04) 33%);
+    background-size: 200% 100%;
+    animation: cf-shimmer 1.4s linear infinite;
+    transition: opacity var(--mo-tick) var(--ease-golden);
+  }
+  .cf__img.is-loaded {
+    background: none;
+    animation: none;
+  }
+  @keyframes cf-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cf__img { animation: none; }
+  }
   .cf__zoom {
     position: absolute;
     top: var(--s-3);

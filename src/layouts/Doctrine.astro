@@ -53,6 +53,8 @@ const { title, description, ogImage } = Astro.props;
     function initDoctrineProgress() {
       const bar = document.querySelector('.doctrine__progress-bar');
       if (!(bar instanceof HTMLElement)) return;
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduced) bar.style.transition = 'none';
       const update = () => {
         const h = document.documentElement;
         const max = (h.scrollHeight - h.clientHeight) || 1;
@@ -62,6 +64,20 @@ const { title, description, ogImage } = Astro.props;
       update();
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);
+
+      // Pulse on chapter boundary crossing.
+      const chapters = document.querySelectorAll<HTMLElement>('.chapter');
+      if (!chapters.length || reduced) return;
+      const pulse = () => {
+        bar.classList.add('is-pulse');
+        window.setTimeout(() => bar.classList.remove('is-pulse'), 320);
+      };
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting && e.intersectionRatio > 0.4) pulse();
+        });
+      }, { threshold: [0, 0.4, 0.8] });
+      chapters.forEach((c) => obs.observe(c));
     }
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initDoctrineProgress);
@@ -89,7 +105,10 @@ const { title, description, ogImage } = Astro.props;
     height: 100%;
     width: 0;
     background: var(--c-tomato);
-    transition: width 80ms linear;
+    transition: width 80ms linear, box-shadow var(--mo-tick) var(--ease-golden);
+  }
+  .doctrine__progress-bar.is-pulse {
+    box-shadow: 0 0 6px var(--c-tomato), 0 0 14px rgba(196, 69, 57, 0.45);
   }
 
   .doctrine__toc-mobile { display: none; }
