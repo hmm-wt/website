@@ -12,28 +12,42 @@ const byYear = calendar.regulations.reduce<Record<number, Reg[]>>((acc, r) => {
 }, {});
 
 const years = Object.keys(byYear).map(Number).sort((a, b) => a - b);
+const currentYear = new Date().getFullYear();
+const yearItems = years.map((year) => ({
+  year,
+  isOpen: year >= currentYear && year <= currentYear + 1,
+  regs: byYear[year].sort((a, b) => a.market.localeCompare(b.market)),
+}));
 ---
 <div class="cal-timeline">
-  {years.map((year) => (
-    <section class="cal-year" id={`year-${year}`}>
-      <header class="cal-year__head">
-        <h2 class="cal-year__num">{year}</h2>
-        <span class="cal-year__count kicker">{byYear[year].length} {byYear[year].length === 1 ? 'regulation' : 'regulations'}</span>
-      </header>
-      <ol class="cal-year__list" role="list">
-        {byYear[year].sort((a, b) => a.market.localeCompare(b.market)).map((r) => (
-          <CalendarEntry
-            id={r.id}
-            market={r.market as 'AU' | 'JP' | 'NZ' | 'SG'}
-            necessity={r.necessity}
-            tier={r.tier as 'T1' | 'T2'}
-            effective_year={r.effective_year}
-            status={r.status}
-            title={r.title}
-          />
-        ))}
-      </ol>
-    </section>
+  {yearItems.map((item) => (
+    item.isOpen ? (
+      <details class="cal-year" id={`year-${item.year}`} open>
+        <summary class="cal-year__head">
+          <h2 class="cal-year__num">{item.year}</h2>
+          <span class="cal-year__count kicker">{item.regs.length} {item.regs.length === 1 ? 'regulation' : 'regulations'}</span>
+          <span class="cal-year__chev" aria-hidden="true">▾</span>
+        </summary>
+        <ol class="cal-year__list" role="list">
+          {item.regs.map((r) => (
+            <CalendarEntry id={r.id} market={r.market as 'AU' | 'JP' | 'NZ' | 'SG'} necessity={r.necessity} tier={r.tier as 'T1' | 'T2'} effective_year={r.effective_year} status={r.status} title={r.title} />
+          ))}
+        </ol>
+      </details>
+    ) : (
+      <details class="cal-year" id={`year-${item.year}`}>
+        <summary class="cal-year__head">
+          <h2 class="cal-year__num">{item.year}</h2>
+          <span class="cal-year__count kicker">{item.regs.length} {item.regs.length === 1 ? 'regulation' : 'regulations'}</span>
+          <span class="cal-year__chev" aria-hidden="true">▾</span>
+        </summary>
+        <ol class="cal-year__list" role="list">
+          {item.regs.map((r) => (
+            <CalendarEntry id={r.id} market={r.market as 'AU' | 'JP' | 'NZ' | 'SG'} necessity={r.necessity} tier={r.tier as 'T1' | 'T2'} effective_year={r.effective_year} status={r.status} title={r.title} />
+          ))}
+        </ol>
+      </details>
+    )
   ))}
 </div>
 
@@ -52,7 +66,20 @@ const years = Object.keys(byYear).map(Number).sort((a, b) => a - b);
     align-items: baseline;
     gap: var(--s-4);
     margin-block-end: var(--s-4);
+    cursor: pointer;
+    list-style: none;
+    transition: color var(--mo-tick) var(--ease-golden);
   }
+  .cal-year__head::-webkit-details-marker { display: none; }
+  .cal-year__head:hover .cal-year__num { color: var(--c-tomato); }
+  .cal-year__chev {
+    margin-inline-start: auto;
+    color: var(--c-tomato);
+    font-family: var(--f-mono);
+    font-size: var(--fs-md);
+    transition: transform var(--mo-tick) var(--ease-golden);
+  }
+  .cal-year[open] .cal-year__chev { transform: rotate(180deg); }
   .cal-year__num {
     font-family: var(--f-display);
     font-size: var(--fs-3xl);

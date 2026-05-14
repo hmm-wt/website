@@ -3,6 +3,8 @@ title: T1 Graduation Rates
 summary: How regulated (T1) companies progress through funding stages relative to unregulated peers. Stage-by-stage round premiums, cumulative funding multiples, and observed exit incidence.
 date: 2026-05-12
 version: v1.0
+status: live
+audience: lps
 markets: [Australia, Japan, New Zealand, Singapore]
 sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
 source_dataset: "hmm Ventures classified universe (19,416 four-market companies, 2026-04-08); funding-premium analysis 2024 four-market dataset."

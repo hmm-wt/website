@@ -3,6 +3,8 @@ title: The Regulatory Landscape Report
 summary: 174 regulations across Australia, Japan, New Zealand, and Singapore. The map that defines the four-market mandate.
 date: 2026-04-06
 version: v1.0
+status: live
+audience: lps
 markets: [Australia, Japan, New Zealand, Singapore]
 sectors: [AI Governance, Agritech & Food Safety, Autonomous Systems, Critical Minerals, Data Privacy, Defence & Dual-Use, Energy & Utilities, Environmental & ESG, Financial Services, Global Logistics, Infrastructure & Construction, Maritime & Aviation, Regulated Health Tech]
 source_dataset: "regulations_comprehensive.json (725 regulations, 64 countries)"
