@@ -8,6 +8,7 @@ audience: lps
 markets: [Australia, Japan, New Zealand, Singapore]
 sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
 source_dataset: "hmm Ventures classified universe (19,416 four-market companies, 2026-04-08); funding-premium analysis 2024 four-market dataset."
+necessities: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
 headline_metrics:
   - { label: "Four-market classified universe", value: "19,416" }
   - { label: "Passes T1 / T2 screen", value: "6,505 (33.5%)" }

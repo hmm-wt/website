@@ -1,0 +1,103 @@
+---
+/**
+ * Exit Evidence table. HTML table inside IMFigure card.
+ * Ports CIM/html/charts.py web_exit_evidence.
+ * Voice: "barrier" not "moat", correct brand.
+ */
+import IMFigure from '../IMFigure.astro';
+
+interface Row {
+  company: string;
+  barrier: string;
+  acquirer: string;
+  multiple: string;
+  yearsToExit: string;
+}
+
+const rows: Row[] = [
+  { company: 'Payapps',  barrier: 'Building compliance (AU)', acquirer: 'Autodesk',         multiple: '~15x revenue', yearsToExit: '8 years' },
+  { company: 'Volpara',  barrier: 'TGA / FDA medical device', acquirer: 'Lunit',            multiple: '~8x revenue',  yearsToExit: '10 years' },
+  { company: 'illion',   barrier: 'APRA data provider',       acquirer: 'Experian',         multiple: '~6x revenue',  yearsToExit: '25+ yrs (legacy)' },
+];
+---
+<IMFigure
+  fignum="WEB-B"
+  label="Exit evidence · Mandate-aligned T1 acquisitions"
+  title='Three named exits. Average <em>~10x revenue</em>.'
+  sub="Mandate-aligned T1 companies in the four target markets that closed strategic acquisitions at meaningful multiples. Each exit traces a regulatory barrier (TGA, FDA, APRA, building compliance) to acquirer demand."
+  metrics={[
+    { label: 'Avg multiple', value: '~10x', ci: 'Revenue basis', accent: true },
+    { label: 'Jurisdictions', value: 'AU · NZ', ci: 'Mandate-aligned' },
+    { label: 'Acquirers', value: 'NA · EMEA', ci: 'Strategic strategics' },
+    { label: 'Time to exit', value: '8–10 yrs', ci: 'Excluding legacy' },
+  ]}
+  source="Public exchange filings · ASX, NZX disclosures"
+  basis="Acquirer-confirmed transactions · hmm Ventures verified exit dataset"
+>
+  <div class="ee__wrap">
+    <table class="ee__tbl">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Regulatory barrier</th>
+          <th>Acquirer</th>
+          <th class="ee__num">Exit multiple</th>
+          <th class="ee__num">Years to exit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td class="ee__co">{r.company}</td>
+            <td>{r.barrier}</td>
+            <td>{r.acquirer}</td>
+            <td class="ee__num ee__mult">{r.multiple}</td>
+            <td class="ee__num">{r.yearsToExit}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <p class="ee__foot">Average exit multiple: ~10x revenue across mandate-aligned T1 acquisitions.</p>
+  </div>
+</IMFigure>
+
+<style>
+  .ee__wrap { font-family: var(--f-mono); }
+  .ee__tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-sm);
+    color: var(--c-mahogany);
+    overflow-x: auto;
+    display: block;
+  }
+  @media (min-width: 720px) { .ee__tbl { display: table; } }
+  .ee__tbl thead th {
+    background: var(--c-mahogany);
+    color: var(--c-pearl);
+    padding: var(--s-2) var(--s-3);
+    text-align: left;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+  }
+  .ee__tbl tbody td {
+    padding: var(--s-3);
+    border-bottom: 1px solid rgba(4, 47, 42, 0.18);
+    vertical-align: middle;
+  }
+  .ee__tbl tbody tr:nth-child(even) { background: rgba(4, 47, 42, 0.04); }
+  .ee__num { text-align: right; }
+  .ee__co { color: var(--c-tomato); font-weight: 700; }
+  .ee__mult { font-weight: 700; }
+  .ee__foot {
+    margin-block-start: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    font-weight: 700;
+    text-align: center;
+    font-size: var(--fs-sm);
+  }
+</style>
