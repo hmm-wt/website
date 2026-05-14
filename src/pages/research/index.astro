@@ -9,6 +9,18 @@ const entries = (await getCollection('research')).sort(
 );
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
+// Group by audience for the audience-grouped layout below.
+const audiences = [
+  { id: 'lps',         label: 'For LPs',         desc: 'Empirical validation, returns framing, dataset depth.' },
+  { id: 'founders',    label: 'For founders',    desc: 'What we look for, how we read regulatory exposure.' },
+  { id: 'researchers', label: 'For researchers', desc: 'Methodology, datasets, citation-grade detail.' },
+  { id: 'general',     label: 'Public',          desc: 'Open-access research and live data products.' },
+] as const;
+const byAudience = audiences.map((a) => ({
+  ...a,
+  items: entries.filter((e) => (e.data.audience ?? 'general') === a.id)
+}));
+
 // Two additional research surfaces that are pages, not content entries.
 // They are listed alongside the regulation report so the /research/ index
 // is the canonical entry point to the public data product surface.
@@ -44,39 +56,55 @@ const dataProducts = [
       </p>
     </header>
 
-    <div class="rh__list">
-      {entries.map((entry, i) => (
-        <ResearchCard
-          href={`/research/${entry.slug}/`}
-          title={entry.data.title}
-          summary={entry.data.summary}
-          date={entry.data.date.toISOString()}
-          version={entry.data.version}
-          status={entry.data.status}
-          markets={entry.data.markets}
-          pages={entry.data.pages}
-          pdfUrl={entry.data.pdf_url}
-          index={pad2(i + 1)}
-        />
-      ))}
+    {byAudience.filter((g) => g.items.length > 0).map((group) => (
+      <section class="rh__group" aria-label={group.label}>
+        <header class="rh__group-head">
+          <p class="kicker rh__group-label">{group.label}</p>
+          <p class="rh__group-desc">{group.desc}</p>
+        </header>
+        <div class="rh__list">
+          {group.items.map((entry, i) => (
+            <ResearchCard
+              href={`/research/${entry.slug}/`}
+              title={entry.data.title}
+              summary={entry.data.summary}
+              date={entry.data.date.toISOString()}
+              version={entry.data.version}
+              status={entry.data.status}
+              markets={entry.data.markets}
+              pages={entry.data.pages}
+              pdfUrl={entry.data.pdf_url}
+              index={pad2(i + 1)}
+            />
+          ))}
+        </div>
+      </section>
+    ))}
 
-      {dataProducts.map((dp, i) => (
-        <article class="dp">
-          <a class="dp__link" href={dp.href}>
-            <header class="dp__head">
-              <span class="dp__idx">[{pad2(entries.length + i + 1)}]</span>
-              <span class="dp__type">{dp.type}</span>
-              <span class="dp__version">{dp.version}</span>
-            </header>
-            <h3 class="dp__title">{dp.title} <span class="dp__chev" aria-hidden="true">→</span></h3>
-            <p class="dp__summary">{dp.summary}</p>
-            <footer class="dp__foot">
-              <span>Refresh: {dp.refresh}</span>
-            </footer>
-          </a>
-        </article>
-      ))}
-    </div>
+    <section class="rh__group" aria-label="Live data products">
+      <header class="rh__group-head">
+        <p class="kicker rh__group-label">Live data products</p>
+        <p class="rh__group-desc">Quarterly-refreshed indices and trackers. Embeddable.</p>
+      </header>
+      <div class="rh__list">
+        {dataProducts.map((dp, i) => (
+          <article class="dp">
+            <a class="dp__link" href={dp.href}>
+              <header class="dp__head">
+                <span class="dp__idx">[{pad2(i + 1)}]</span>
+                <span class="dp__type">{dp.type}</span>
+                <span class="dp__version">{dp.version}</span>
+              </header>
+              <h3 class="dp__title">{dp.title} <span class="dp__chev" aria-hidden="true">→</span></h3>
+              <p class="dp__summary">{dp.summary}</p>
+              <footer class="dp__foot">
+                <span>Refresh: {dp.refresh}</span>
+              </footer>
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
   </section>
 </Base>
 
@@ -107,6 +135,24 @@ const dataProducts = [
     margin: 0;
   }
 
+  .rh__group {
+    margin-block-end: var(--s-7);
+  }
+  .rh__group-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    padding-block-end: var(--s-3);
+    margin-block-end: 0;
+  }
+  .rh__group-label { color: var(--c-tomato); margin: 0; }
+  .rh__group-desc {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-soft);
+    letter-spacing: 0.04em;
+  }
   .rh__list {
     display: flex;
     flex-direction: column;
