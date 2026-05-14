@@ -12,6 +12,9 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+// Long-form data-dense pages collapse sections by default.
+const denseSlugs = new Set(['regulatory-landscape']);
+const collapseSections = denseSlugs.has(entry.slug);
 ---
 <Research
   title={entry.data.title}
@@ -19,6 +22,7 @@ const { Content } = await entry.render();
   headlineMetrics={entry.data.headline_metrics}
   date={entry.data.date.toISOString()}
   version={entry.data.version}
+  collapseSections={collapseSections}
 >
   <Content />
 </Research>

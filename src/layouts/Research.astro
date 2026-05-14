@@ -16,9 +16,11 @@ interface Props {
   date?: string;
   /** Optional version label, e.g. "v1.0". */
   version?: string;
+  /** Auto-collapse h2 sections under details elements. Useful for dense pages. */
+  collapseSections?: boolean;
 }
 
-const { title, description, ogImage, headlineMetrics, date, version } = Astro.props;
+const { title, description, ogImage, headlineMetrics, date, version, collapseSections } = Astro.props;
 const dateLabel = date
   ? new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
   : null;
@@ -35,10 +37,82 @@ const dateLabel = date
         {dateLabel && <p class="research__date kicker">{dateLabel}</p>}
       </header>
       <h1 class="research__title">{title}.</h1>
-      <div class="research__prose prose">
+      {collapseSections && (
+        <p class="research__collapse-toggle">
+          <button type="button" data-expand-all>Expand all</button>
+          <span aria-hidden="true">·</span>
+          <button type="button" data-collapse-all>Collapse all</button>
+        </p>
+      )}
+      <div class={`research__prose prose ${collapseSections ? 'is-collapsible' : ''}`} data-collapsible={collapseSections ? 'true' : 'false'}>
         <slot />
       </div>
     </div>
+
+    <script>
+      // Wrap each h2-led section in a <details> so dense pages collapse.
+      // Honours #anchor links: opens the matching section then scrolls.
+      function initCollapsibleSections() {
+        const root = document.querySelector('.research__prose.is-collapsible');
+        if (!root) return;
+        const children = Array.from(root.children);
+        let groups: HTMLElement[][] = [];
+        let current: HTMLElement[] = [];
+        children.forEach((el) => {
+          if (el.tagName === 'H2') {
+            if (current.length) groups.push(current);
+            current = [el as HTMLElement];
+          } else {
+            current.push(el as HTMLElement);
+          }
+        });
+        if (current.length) groups.push(current);
+        groups.forEach((group, i) => {
+          const h2 = group[0];
+          const details = document.createElement('details');
+          details.className = 'research__section';
+          if (i === 0) details.open = true;
+          const summary = document.createElement('summary');
+          summary.className = 'research__section-summary';
+          summary.innerHTML = h2.outerHTML + '<span class="research__section-chev" aria-hidden="true">▾</span>';
+          details.appendChild(summary);
+          const body = document.createElement('div');
+          body.className = 'research__section-body';
+          group.slice(1).forEach((el) => body.appendChild(el));
+          details.appendChild(body);
+          // Anchor: copy the h2's id (if any) to the details for #links
+          const id = h2.id;
+          if (id) details.id = id;
+          h2.remove();
+          root.appendChild(details);
+        });
+        // Move the original h2s out — already in the summary clone
+        // Auto-open on hash change
+        const openFromHash = () => {
+          const hash = location.hash.slice(1);
+          if (!hash) return;
+          const el = document.getElementById(hash);
+          if (el && el.tagName === 'DETAILS') {
+            (el as HTMLDetailsElement).open = true;
+            requestAnimationFrame(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+          }
+        };
+        window.addEventListener('hashchange', openFromHash);
+        openFromHash();
+        // Toggle all
+        document.querySelector('[data-expand-all]')?.addEventListener('click', () => {
+          root.querySelectorAll<HTMLDetailsElement>('details.research__section').forEach((d) => d.open = true);
+        });
+        document.querySelector('[data-collapse-all]')?.addEventListener('click', () => {
+          root.querySelectorAll<HTMLDetailsElement>('details.research__section').forEach((d, i) => d.open = i === 0);
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCollapsibleSections);
+      } else {
+        initCollapsibleSections();
+      }
+    </script>
 
     {headlineMetrics && headlineMetrics.length > 0 && (
       <aside class="research__rail" aria-label="Headline metrics">
@@ -106,6 +180,62 @@ const dateLabel = date
     font-size: var(--fs-md);
     line-height: var(--lh-loose);
     max-width: 72ch;
+  }
+
+  .research__collapse-toggle {
+    display: flex;
+    gap: var(--s-3);
+    align-items: center;
+    margin-block: var(--s-4);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--c-tomato);
+  }
+  .research__collapse-toggle button {
+    background: none;
+    border: 0;
+    color: var(--c-tomato);
+    font: inherit;
+    cursor: pointer;
+    padding: var(--s-2) 0;
+  }
+  .research__collapse-toggle button:hover { color: var(--c-mahogany); }
+
+  :global(.research__prose details.research__section) {
+    border-top: 1px solid var(--rule-light);
+    margin-block: 0;
+    padding-block: var(--s-3);
+  }
+  :global(.research__prose details.research__section:last-of-type) {
+    border-bottom: 1px solid var(--rule-light);
+  }
+  :global(.research__prose .research__section-summary) {
+    cursor: pointer;
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    list-style: none;
+    transition: color var(--mo-tick) var(--ease-golden);
+  }
+  :global(.research__prose .research__section-summary::-webkit-details-marker) { display: none; }
+  :global(.research__prose .research__section-summary:hover) { color: var(--c-tomato); }
+  :global(.research__prose .research__section-summary h2) {
+    margin: 0;
+    flex: 1;
+  }
+  :global(.research__prose .research__section-chev) {
+    color: var(--c-tomato);
+    font-family: var(--f-mono);
+    font-size: var(--fs-md);
+    transition: transform var(--mo-tick) var(--ease-golden);
+  }
+  :global(.research__prose details.research__section[open] .research__section-chev) {
+    transform: rotate(180deg);
+  }
+  :global(.research__prose .research__section-body) {
+    padding-block-start: var(--s-4);
   }
 
   .research__rail {
