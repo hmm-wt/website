@@ -1,0 +1,88 @@
+{
+  "version": "v3.8.3",
+  "as_of": "2026-05-10",
+  "source_of_truth": "Internal/CIM/html/HMM_Fund_I_IM.html § canonical state file",
+  "fund": {
+    "name": "hmm Fund I",
+    "vintage": "2026",
+    "investment_period_years": 4,
+    "structure": "DIFC Track A self-managed VCFM",
+    "tagline": "Necessity is the thesis."
+  },
+  "thesis": {
+    "markets": ["Australia", "Japan", "New Zealand", "Singapore"],
+    "necessities": ["Biomedical", "Power", "Food Security", "Autonomous", "Critical Materials"],
+    "tier_framework": {
+      "T1": "licence-as-barrier",
+      "T2": "compulsion-as-barrier"
+    }
+  },
+  "universe": {
+    "global_companies": 22217,
+    "four_market_companies": 19416,
+    "regulations_global": 725,
+    "regulations_four_market": 174,
+    "regulations_t1": 117,
+    "regulations_t2": 37,
+    "as_of": "2026-04-08"
+  },
+  "tier_shares": {
+    "conservative_classifier_pct": 33.5,
+    "conservative_classifier_count": 6505,
+    "t1_count": 4170,
+    "seed_in_scope": 2625
+  },
+  "premiums": {
+    "round_size": {
+      "pre_seed": 1.09,
+      "seed": 1.12,
+      "series_a": 1.19,
+      "series_b": 1.35,
+      "series_c": 1.53,
+      "series_d_plus": 1.42
+    },
+    "cumulative_funding_multiple": {
+      "pre_seed": 1.09,
+      "series_d_plus": 2.12
+    },
+    "exit_rate_multiple": 2.22,
+    "regulated_exit_rate_pct": 13.41,
+    "unregulated_exit_rate_pct": 6.03
+  },
+  "returns": {
+    "tiers": ["Target", "Median", "Bear", "Tail"],
+    "dpi": {
+      "target": 3.76,
+      "median": 2.95,
+      "bear": 1.45,
+      "tail": 0.85
+    },
+    "irr_pct": {
+      "target": 17.58,
+      "median": 14.25,
+      "bear": 6.0,
+      "tail": -2.0
+    },
+    "moic": {
+      "target": 4.20,
+      "median": 3.30,
+      "bear": 1.60,
+      "tail": 0.95
+    },
+    "basis": "LP-Net · paid-in basis · R12 v2 Base Case",
+    "source": "Canonical Monte Carlo simulation, raw_distributions (1,000 iterations)"
+  },
+  "crystallisation_window": {
+    "in_flight_2024_2030": 34,
+    "peak_year": 2026,
+    "peak_year_count": 11
+  },
+  "acquirer_track_record": {
+    "named_exits": [
+      { "company": "Payapps",  "barrier": "Building compliance (AU)", "acquirer": "Autodesk",   "multiple": "~15x revenue", "years_to_exit": "8 years" },
+      { "company": "Volpara",  "barrier": "TGA / FDA medical device", "acquirer": "Lunit",      "multiple": "~8x revenue",  "years_to_exit": "10 years" },
+      { "company": "illion",   "barrier": "APRA data provider",       "acquirer": "Experian",   "multiple": "~6x revenue",  "years_to_exit": "25+ yrs (legacy)" }
+    ],
+    "average_multiple_revenue": 10
+  }
+}

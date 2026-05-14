@@ -129,6 +129,38 @@ details:focus-visible {
   }
 }
 
+/* Print stylesheet. Long-form artefacts (doctrine + research) print to PDF
+   as institutional-grade documents. Hide nav, footer, CTAs, interactive
+   chrome. Keep sources, captions, charts. */
+@media print {
+  .nav, .nav-sheet, .footer, .skip-link, .back-to-top,
+  .doctrine__progress, .doctrine__cta, .doctrine__toc, .doctrine__toc-mobile,
+  .nav__cta, .hero__cue {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+  main { padding: 0 !important; }
+  .container, .container-narrow { max-width: 100% !important; padding: 0 !important; }
+  a { color: #000 !important; text-decoration: underline; }
+  h1, h2, h3 { color: #000 !important; page-break-after: avoid; }
+  img, figure, table { page-break-inside: avoid; }
+  .imfig, .ds, .surface-warm, .surface-light {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #000 !important;
+    box-shadow: none !important;
+  }
+  .chapter, .ds, .imfig { break-inside: avoid; }
+  details > summary { list-style: none; }
+  details:not([open]) > *:not(summary) { display: block !important; }
+  details { display: block !important; }
+}
+
 /* Back-to-top floating button. Appears after scrolling >600px on long pages. */
 .back-to-top {
   position: fixed;
