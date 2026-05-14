@@ -1,0 +1,289 @@
+---
+import Base from '../../layouts/Base.astro';
+import KickerLabel from '../../components/KickerLabel.astro';
+
+const necessities = [
+  { name: 'Biomedical', archetypes: 'TGA / FDA / PMDA / HSA SaMD · diagnostic AI · clinical trials infrastructure · therapeutic-pathway tooling.' },
+  { name: 'Power', archetypes: 'Grid-coupled storage · distributed energy resource integration · GX-ETS / NEM / IMDA market participants · distributed energy software.' },
+  { name: 'Food security', archetypes: 'FSANZ / MAFF / FSAI traceability · biosecurity tooling · agritech under labelled-origin frameworks · novel food approval workflows.' },
+  { name: 'Autonomous', archetypes: 'LTA AV framework · APRA risk-mgmt for autonomous capital allocation · maritime / aviation autonomy under MAS / CASA / CAA.' },
+  { name: 'Critical materials', archetypes: 'Mineral provenance · APRA-aligned commodities trading · battery-grade materials supply chain compliance · trade-controls reporting.' }
+];
+
+const wontFund = [
+  'Anything where regulation is incidental to demand.',
+  'Generalist B2B SaaS without a regulatory wedge.',
+  'Crypto-native consumer applications.',
+  'Hardware-only plays without a regulatory pathway',
+  'Companies whose only target market is the United States or Western Europe.'
+];
+
+const process = [
+  { stage: 'Intro', timeline: 'Same week', detail: 'One-line context + deck or one-pager. Tell us which regulator your demand depends on.' },
+  { stage: 'First call', timeline: '7–14 days', detail: '45 min. Pathway, team, current commercial signal.' },
+  { stage: 'Diligence', timeline: '4–6 weeks', detail: 'Reference calls. Regulator-pathway map. Technical review where relevant.' },
+  { stage: 'IC + decision', timeline: 'Within 6 weeks', detail: 'Decision is binary. We say yes or we say no. Pass with reasons.' }
+];
+---
+<Base
+  title="For founders"
+  description="What we fund, what we don't, our process. Cheque size, board posture, expected timeline."
+>
+  <section class="fd container">
+    <header class="fd__head">
+      <KickerLabel index="00" label="For founders" accent />
+      <h1 class="fd__title">If you build into a regulatory clock.</h1>
+      <p class="fd__lede">
+        Seed cheques into companies where the demand curve is set by a regulator publication. We are not a product fit for everyone. Read this before sending a deck.
+      </p>
+    </header>
+
+    <article class="fd__block" id="what-we-fund">
+      <p class="kicker fd__kicker">What we fund</p>
+      <h2 class="fd__h2">Five necessities. Four markets. T1 and T2.</h2>
+      <p class="fd__p">
+        Companies operating inside a structural regulatory perimeter in Australia, Japan, New Zealand, or Singapore. T1 = licence-as-barrier (you cannot legally ship without it). T2 = compulsion-as-barrier (you cannot win deals without compliance evidence).
+      </p>
+      <ul class="fd__necessities" role="list">
+        {necessities.map((n) => (
+          <li class="fd__necessity">
+            <span class="fd__necessity-name">{n.name}</span>
+            <span class="fd__necessity-detail">{n.archetypes}</span>
+          </li>
+        ))}
+      </ul>
+    </article>
+
+    <article class="fd__block" id="what-we-dont">
+      <p class="kicker fd__kicker">What we don't fund</p>
+      <h2 class="fd__h2">No regulatory wedge, no fit.</h2>
+      <ul class="fd__list" role="list">
+        {wontFund.map((item) => (
+          <li class="fd__list-item">{item}</li>
+        ))}
+      </ul>
+      <p class="fd__p fd__p-soft">
+        These are not bad businesses. They are good businesses with a different fund pattern.
+      </p>
+    </article>
+
+    <article class="fd__block" id="our-process">
+      <p class="kicker fd__kicker">Our process</p>
+      <h2 class="fd__h2">Four stages. Six weeks max.</h2>
+      <ol class="fd__process" role="list">
+        {process.map((p, i) => (
+          <li class="fd__process-step">
+            <span class="fd__process-idx">[{String(i + 1).padStart(2, '0')}]</span>
+            <div class="fd__process-content">
+              <p class="fd__process-stage">{p.stage}</p>
+              <p class="fd__process-timeline">{p.timeline}</p>
+              <p class="fd__process-detail">{p.detail}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </article>
+
+    <article class="fd__block" id="our-cheque">
+      <p class="kicker fd__kicker">Our cheque</p>
+      <h2 class="fd__h2">USD 250K to 1.5M. Lead or follow.</h2>
+      <p class="fd__p">
+        Pre-seed and seed. Co-invest with one or two regional funds. Board observer at the first cheque, board director at the second. We do not lead Series A.
+      </p>
+    </article>
+
+    <footer class="fd__cta surface-warm">
+      <p class="kicker fd__cta-label">Ready to send</p>
+      <p class="fd__cta-line">One-pager or deck. Tell us which regulator your demand depends on.</p>
+      <p class="fd__cta-row">
+        <a class="fd__cta-link" href="mailto:wt@hmm.ventures?subject=Founder%20intro">wt@hmm.ventures →</a>
+        <span class="fd__cta-meta">Reply within 72 hours.</span>
+      </p>
+    </footer>
+  </section>
+</Base>
+
+<style>
+  .fd { padding-block: var(--s-8) var(--s-9); max-width: 64rem; }
+  .fd__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-block-end: var(--s-7);
+    padding-block-end: var(--s-5);
+    border-bottom: 1px solid var(--rule);
+  }
+  .fd__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .fd__lede {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  .fd__block {
+    padding-block: var(--s-7);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    scroll-margin-top: var(--s-7);
+  }
+  .fd__kicker { color: var(--c-tomato); margin: 0; }
+  .fd__h2 {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+  .fd__p {
+    margin: 0;
+    line-height: 1.65;
+    max-width: 56ch;
+  }
+  .fd__p-soft { color: var(--fg-soft); font-style: italic; }
+
+  .fd__necessities {
+    list-style: none;
+    margin: var(--s-3) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .fd__necessity {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: var(--s-4);
+    padding-block: var(--s-3);
+    border-top: 1px solid var(--rule);
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+  }
+  .fd__necessity-name {
+    color: var(--c-tomato);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .fd__necessity-detail {
+    color: var(--fg-soft);
+    line-height: 1.55;
+  }
+  @media (max-width: 600px) {
+    .fd__necessity { grid-template-columns: 1fr; gap: var(--s-1); }
+  }
+
+  .fd__list {
+    list-style: none;
+    margin: var(--s-3) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+  .fd__list-item {
+    padding-inline-start: var(--s-4);
+    position: relative;
+    line-height: 1.55;
+  }
+  .fd__list-item::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--c-tomato);
+  }
+
+  .fd__process {
+    list-style: none;
+    margin: var(--s-3) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+  }
+  .fd__process-step {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: var(--s-4);
+    padding-block: var(--s-3);
+    border-top: 1px solid var(--rule);
+  }
+  .fd__process-idx {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--c-tomato);
+    font-weight: 600;
+  }
+  .fd__process-content { display: flex; flex-direction: column; gap: 4px; }
+  .fd__process-stage {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    margin: 0;
+    line-height: 1;
+  }
+  .fd__process-timeline {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--c-tomato);
+    margin: 0;
+  }
+  .fd__process-detail {
+    margin: 0;
+    color: var(--fg-soft);
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+  }
+
+  .fd__cta {
+    margin-block-start: var(--s-7);
+    padding: var(--s-6);
+    background: var(--bg-warm);
+    border-top: 2px solid var(--c-tomato);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .fd__cta-label { color: var(--c-tomato); margin: 0; }
+  .fd__cta-line {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+    margin: 0;
+  }
+  .fd__cta-row {
+    display: flex;
+    gap: var(--s-4);
+    align-items: baseline;
+    margin: 0;
+    flex-wrap: wrap;
+  }
+  .fd__cta-link {
+    font-family: var(--f-mono);
+    font-size: var(--fs-md);
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+  .fd__cta-meta {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+</style>

@@ -1,0 +1,235 @@
+---
+import Base from '../../layouts/Base.astro';
+import KickerLabel from '../../components/KickerLabel.astro';
+
+const archetypes = [
+  {
+    code: 'IFOF',
+    name: 'Industrial fund of funds',
+    mandate: 'Multi-fund allocator with dedicated APAC seed sleeve.',
+    ticket: 'USD 5–15M anchor or LP commit.',
+    blockers: 'Track record format, GP commit, RIA structure.',
+    read_first: ['/research/', '/scoreboard/', '/doctrine/'],
+    href: '/lps/industrial-fof/',
+    cta_subject: 'IM request — Industrial FoF (IFOF)'
+  },
+  {
+    code: 'AUSF',
+    name: 'Australian super fund',
+    mandate: 'Dedicated unlisted growth + venture sleeve, ~AUD 50M+ tickets.',
+    ticket: 'AUD 30–80M.',
+    blockers: 'ESG screen, governance structure, fee + carry calibration, Australia exposure mandate.',
+    read_first: ['/thesis/australia/', '/doctrine/', '/research/regulatory-landscape/'],
+    href: '/lps/au-super/',
+    cta_subject: 'IM request — AU Super (AUSF)'
+  },
+  {
+    code: 'GCCFO',
+    name: 'GCC family office',
+    mandate: 'Sovereign-adjacent multi-asset, opportunistic venture allocation.',
+    ticket: 'USD 10–25M.',
+    blockers: 'Sharia screen (per office), DIFC structuring, currency, reporting cadence.',
+    read_first: ['/doctrine/', '/research/t1-graduation-rates/', '/contact/'],
+    href: '/lps/gcc-fo/',
+    cta_subject: 'IM request — GCC FO (GCCFO)'
+  }
+];
+---
+<Base
+  title="For LPs"
+  description="Three LP archetypes mapped to the fund. Industrial FoF, AU Super, GCC FO. Mandate, ticket, blockers, recommended reading."
+>
+  <section class="lp container">
+    <header class="lp__head">
+      <KickerLabel index="00" label="For LPs" accent />
+      <h1 class="lp__title">Three archetypes. Mapped to the fund.</h1>
+      <p class="lp__lede">
+        Each archetype lands on the fund through a different door. Pick the closest match. Each path lists mandate, ticket size, the blockers we have already worked through, and what to read first.
+      </p>
+    </header>
+
+    <ol class="lp__list" role="list">
+      {archetypes.map((a, i) => (
+        <li class="lp__card surface-warm">
+          <header class="lp__card-head">
+            <span class="lp__card-idx">[{String(i + 1).padStart(2, '0')}]</span>
+            <span class="lp__card-code">{a.code}</span>
+          </header>
+          <h2 class="lp__card-name">{a.name}</h2>
+          <dl class="lp__card-grid">
+            <div>
+              <dt>Mandate</dt>
+              <dd>{a.mandate}</dd>
+            </div>
+            <div>
+              <dt>Ticket</dt>
+              <dd>{a.ticket}</dd>
+            </div>
+            <div>
+              <dt>Blockers we have worked</dt>
+              <dd>{a.blockers}</dd>
+            </div>
+          </dl>
+          <p class="lp__card-read">
+            <span class="lp__card-read-label">Read first:</span>
+            {a.read_first.map((href, j) => (
+              <>
+                {j > 0 && <span aria-hidden="true"> · </span>}
+                <a href={href}>{href}</a>
+              </>
+            ))}
+          </p>
+          <p class="lp__card-cta">
+            <a class="lp__cta-link" href={`mailto:wt@hmm.ventures?subject=${encodeURIComponent(a.cta_subject)}`}>
+              Request the IM →
+            </a>
+          </p>
+        </li>
+      ))}
+    </ol>
+
+    <footer class="lp__foot">
+      <p class="kicker">
+        Not a fit? <a href="/contact/">Email directly</a>. Reply within 48 hours.
+      </p>
+    </footer>
+  </section>
+</Base>
+
+<style>
+  .lp { padding-block: var(--s-8) var(--s-9); max-width: 64rem; }
+  .lp__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin-block-end: var(--s-7);
+    padding-block-end: var(--s-5);
+    border-bottom: 1px solid var(--rule);
+  }
+  .lp__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .lp__lede {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  .lp__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+
+  .lp__card {
+    background: var(--bg-warm);
+    padding: var(--s-6);
+    border-left: 3px solid var(--c-tomato);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+  }
+
+  .lp__card-head {
+    display: flex;
+    gap: var(--s-3);
+    align-items: baseline;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  .lp__card-idx { color: var(--c-tomato); font-weight: 600; }
+  .lp__card-code { color: var(--fg-soft); }
+
+  .lp__card-name {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+
+  .lp__card-grid {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--s-3) var(--s-4);
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+  }
+  .lp__card-grid dt {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: var(--fs-xs);
+    color: var(--fg-soft);
+  }
+  .lp__card-grid dd {
+    margin: 0;
+    line-height: 1.5;
+  }
+  @media (max-width: 600px) {
+    .lp__card-grid { grid-template-columns: 1fr; gap: var(--s-1) 0; }
+    .lp__card-grid > div { padding-block: var(--s-2); border-bottom: 1px solid var(--rule); }
+    .lp__card-grid > div:last-child { border-bottom: 0; }
+  }
+
+  .lp__card-read {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    color: var(--fg-soft);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .lp__card-read-label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-inline-end: var(--s-2);
+  }
+  .lp__card-read a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+
+  .lp__card-cta { margin: 0; }
+  .lp__cta-link {
+    display: inline-block;
+    padding: var(--s-3) var(--s-5);
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    border: 1px solid var(--c-tomato);
+    transition: background var(--mo-tick) var(--ease-golden), color var(--mo-tick) var(--ease-golden);
+  }
+  .lp__cta-link:hover {
+    background: var(--c-mahogany);
+    border-color: var(--c-mahogany);
+  }
+
+  .lp__foot {
+    margin-block-start: var(--s-7);
+    padding-block-start: var(--s-5);
+    border-top: 1px solid var(--rule);
+  }
+  .lp__foot a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+</style>

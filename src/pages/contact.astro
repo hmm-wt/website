@@ -14,10 +14,10 @@ import Base from '../layouts/Base.astro';
 
     <article id="lps" class="contact__block">
       <p class="kicker contact__when">If you allocate capital</p>
-      <h2 class="contact__h2">LPs.</h2>
+      <h2 class="contact__h2"><a href="/lps/">LPs →</a></h2>
       <p>
-        Family offices, allocators, and institutions evaluating Fund I. Expect a direct
-        reply with the materials that match your stage of diligence.
+        Family offices, allocators, and institutions evaluating Fund I. Three archetype
+        paths are mapped on the LP page. Pick the closest match.
       </p>
       <p class="contact__email"><a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a></p>
       <p class="contact__note kicker">Response within 48 hours.</p>
@@ -25,7 +25,7 @@ import Base from '../layouts/Base.astro';
 
     <article id="founders" class="contact__block">
       <p class="kicker contact__when">If you are building in a regulated market</p>
-      <h2 class="contact__h2">Founders.</h2>
+      <h2 class="contact__h2"><a href="/founders/">Founders →</a></h2>
       <p>
         Send a one-pager or a deck. Tell us which regulator your demand curve depends on,
         the published timeline you are tracking, and the cheque you are looking for.
@@ -36,10 +36,10 @@ import Base from '../layouts/Base.astro';
 
     <article id="media" class="contact__block">
       <p class="kicker contact__when">If you write about venture or regulation</p>
-      <h2 class="contact__h2">Media and research.</h2>
+      <h2 class="contact__h2"><a href="/press/">Media and research →</a></h2>
       <p>
-        Press, podcasts, panels, and academic research. The GP is available for short
-        interviews on APAC regulatory divergence and the pathway briefs. Bio and photo on request.
+        Press, podcasts, panels, and academic research. Bio, factsheet, brand assets on
+        the press page. Direct line for interviews and panels.
       </p>
       <p class="contact__email"><a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a></p>
       <p class="contact__note kicker">Response within 48 hours.</p>
@@ -94,6 +94,12 @@ import Base from '../layouts/Base.astro';
     line-height: var(--lh-tight);
     margin: 0;
   }
+  .contact__h2 a {
+    color: var(--fg);
+    text-decoration: none;
+    transition: color var(--mo-tick) var(--ease-golden);
+  }
+  .contact__h2 a:hover { color: var(--c-tomato); }
   .contact__email {
     font-family: var(--f-mono);
     font-size: var(--fs-md);
