@@ -129,6 +129,16 @@ details:focus-visible {
   }
 }
 
+/* Disabled-state pattern for buttons + interactive elements. Greyed,
+   no-cursor, no hover. Apply via [disabled] or aria-disabled="true". */
+button[disabled],
+[role="button"][aria-disabled="true"],
+.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
 /* Print stylesheet. Long-form artefacts (doctrine + research) print to PDF
    as institutional-grade documents. Hide nav, footer, CTAs, interactive
    chrome. Keep sources, captions, charts. */

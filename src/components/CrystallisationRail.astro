@@ -96,8 +96,13 @@ const asOf = new Date(calendar.as_of).toLocaleDateString('en-GB', {
     gap: var(--s-3);
   }
   .cw__item {
-    padding-block-end: var(--s-2);
+    padding: var(--s-2);
+    margin: 0 calc(var(--s-2) * -1);
     border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 10%, transparent);
+    transition: background var(--mo-tick) var(--ease-golden);
+  }
+  .cw__item:hover {
+    background: color-mix(in srgb, var(--c-tomato) 8%, transparent);
   }
   .cw__item:last-child { border-bottom: 0; }
 
