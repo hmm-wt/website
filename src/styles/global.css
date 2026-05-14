@@ -148,6 +148,15 @@ h4 {
   border: 1px solid var(--rule);
   background: var(--c-pearl);
 }
+/* Inside light-surface articles, frame charts in their own dark viewport
+   so PNGs with mismatched intrinsic backgrounds still read as intentional
+   cards rather than rectangular cutouts. */
+.surface-light .prose img {
+  background: var(--c-evergreen);
+  border: 0;
+  padding: var(--s-3);
+  box-shadow: 0 1px 3px rgba(4, 47, 42, 0.18), 0 8px 24px rgba(4, 47, 42, 0.10);
+}
 .prose small {
   display: block;
   font-family: var(--f-mono);
@@ -159,7 +168,7 @@ h4 {
   line-height: 1.5;
 }
 .surface-light .prose strong { color: var(--fg-light); }
-.surface-light .prose img { background: var(--c-pearl); border-color: var(--rule-light); }
+/* Frame override above (line ~155) wins. */
 .surface-light .prose small { color: var(--fg-light-soft); }
 
 .prose table {

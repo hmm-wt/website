@@ -151,7 +151,18 @@ const dateLabel = date
   }
 
   @media (max-width: 900px) {
-    .research { grid-template-columns: minmax(0, 1fr); }
-    .research__rail { position: static; }
+    .research {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "rail" "body";
+      gap: var(--s-5);
+      padding-block: var(--s-7) var(--s-8);
+    }
+    .research__body { grid-area: body; }
+    .research__rail {
+      grid-area: rail;
+      position: static;
+      padding: var(--s-4);
+    }
+    .research__rail-label { font-size: var(--fs-xs); }
   }
 </style>
