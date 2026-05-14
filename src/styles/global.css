@@ -70,6 +70,91 @@ h4 {
   background: var(--bg-light);
   color: var(--fg-light);
 }
+
+/* Warm context: pearl background with mahogany ink. Drop on any block that
+   sets background: var(--bg-warm) so descendant text inverts automatically.
+   Replaces the recurring inline token-scoping pattern previously duplicated
+   in .sb__item, .doctrine__cta, .rc:hover, .dp:hover. */
+.surface-warm {
+  --fg: var(--c-mahogany);
+  --fg-soft: rgba(37, 0, 1, 0.7);
+  --fg-faint: rgba(37, 0, 1, 0.5);
+  --rule: rgba(4, 47, 42, 0.18);
+  color: var(--fg);
+}
+
+/* Skip-to-content link. Hidden until focused via Tab. */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--c-tomato);
+  color: var(--c-pearl);
+  font-family: var(--f-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  z-index: 200;
+  transition: top var(--mo-tick) var(--ease-golden);
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: var(--s-3);
+  outline: 2px solid var(--c-pearl);
+  outline-offset: 2px;
+}
+
+/* Focus-visible ring across all interactive elements. Tomato outline,
+   2px offset. Keyboard parity with hover. */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible,
+details:focus-visible {
+  outline: 2px solid var(--c-tomato);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Reduced motion: disable smooth scroll + transitions site-wide. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Back-to-top floating button. Appears after scrolling >600px on long pages. */
+.back-to-top {
+  position: fixed;
+  right: var(--s-4);
+  bottom: var(--s-4);
+  width: 44px;
+  height: 44px;
+  background: var(--c-evergreen);
+  color: var(--c-pearl);
+  border: 1px solid var(--c-tomato);
+  font-family: var(--f-mono);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--mo-tick) var(--ease-golden), transform var(--mo-tick) var(--ease-golden);
+  pointer-events: none;
+}
+.back-to-top.is-visible {
+  opacity: 0.92;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-to-top:hover { opacity: 1; background: var(--c-tomato); }
+.back-to-top:focus-visible { opacity: 1; }
 .prose a:not([class]) {
   color: var(--c-tomato);
   text-decoration: underline;

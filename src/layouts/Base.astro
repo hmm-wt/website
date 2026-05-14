@@ -56,6 +56,27 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
     </main>
     <Footer />
 
+    <button type="button" class="back-to-top" aria-label="Back to top" data-back-to-top>↑</button>
+
+    <script is:inline>
+      // Back-to-top button. Visible after scrolling >600px on long pages.
+      (function () {
+        const btn = document.querySelector('[data-back-to-top]');
+        if (!btn) return;
+        const update = () => {
+          const showAfter = 600;
+          if (window.scrollY > showAfter) btn.classList.add('is-visible');
+          else btn.classList.remove('is-visible');
+        };
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+        btn.addEventListener('click', () => {
+          const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+        });
+      })();
+    </script>
+
     <script is:inline>
       // Reveal-on-scroll. Any element with .reveal or .reveal-group fades up
       // when entering the viewport. Canonical ease: cubic-bezier(0.16, 1, 0.3, 1).

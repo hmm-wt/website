@@ -45,7 +45,7 @@ const fmtDate = (iso?: string) =>
     {predictions.map((p) => {
       const testLabel = new Date(p.testable_by).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
       return (
-        <li class="sb__item" id={p.id}>
+        <li class="sb__item surface-warm" id={p.id}>
           <header class="sb__item-head">
             <span class="sb__item-id">{p.id}</span>
             <StatusIndicator status={p.status} />
@@ -143,12 +143,6 @@ const fmtDate = (iso?: string) =>
     background: var(--bg-warm);
     border-left: 3px solid var(--c-tomato);
     scroll-margin-top: var(--s-7);
-    /* Locally invert text tokens so pearl bg has dark-on-light text. */
-    --fg: var(--c-mahogany);
-    --fg-soft: rgba(37, 0, 1, 0.7);
-    --fg-faint: rgba(37, 0, 1, 0.5);
-    --rule: rgba(4, 47, 42, 0.18);
-    color: var(--fg);
   }
 
   .sb__item-head {

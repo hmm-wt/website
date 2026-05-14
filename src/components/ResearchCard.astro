@@ -50,7 +50,14 @@ const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
   }
   .rc:hover {
     background: var(--bg-warm);
-    /* Pearl bg needs dark text. Scope tokens locally so all descendants invert. */
+    --fg: var(--c-mahogany);
+    --fg-soft: rgba(37, 0, 1, 0.7);
+    --fg-faint: rgba(37, 0, 1, 0.5);
+    --rule: rgba(4, 47, 42, 0.18);
+    color: var(--fg);
+  }
+  .rc:focus-within {
+    background: var(--bg-warm);
     --fg: var(--c-mahogany);
     --fg-soft: rgba(37, 0, 1, 0.7);
     --fg-faint: rgba(37, 0, 1, 0.5);

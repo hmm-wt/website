@@ -29,7 +29,7 @@ const { title, description, ogImage } = Astro.props;
 
       <main class="doctrine__body">
         <slot />
-        <aside class="doctrine__cta" aria-label="Next steps">
+        <aside class="doctrine__cta surface-warm" aria-label="Next steps">
           <p class="kicker doctrine__cta-label">End of doctrine</p>
           <p class="doctrine__cta-line">Five claims sit on the scoreboard. The full memo expands every chapter with the dataset and the deal pipeline.</p>
           <p class="doctrine__cta-row">
@@ -122,11 +122,6 @@ const { title, description, ogImage } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
-    /* Locally invert text tokens so pearl bg renders dark text. */
-    --fg: var(--c-mahogany);
-    --fg-soft: rgba(37, 0, 1, 0.7);
-    --rule: rgba(4, 47, 42, 0.18);
-    color: var(--fg);
   }
   .doctrine__cta-label { color: var(--c-tomato); margin: 0; }
   .doctrine__cta-line {
