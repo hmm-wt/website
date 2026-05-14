@@ -31,7 +31,7 @@ A regulatory regime crystallises when its enforcement architecture, its complian
 
 Companies that build during crystallisation inherit residual ambiguity (which is why they need regulatory familiarity) but also the procurement preferences and regulator relationships that compound after the regime settles. Companies that build after face a stable but more competitive market.
 
-![Compliance cycle. Draft, consultation, enactment, enforcement. The 2024-2028 window sits at the transition from enactment to enforcement.](/charts/compliance_cycle.png)
+![The compliance cycle. Regulation passes, buyer must comply, compliant vendor required, vendor embeds in stack, switching cost equals legal risk, regulation updates. Each loop hardens the barrier.](/charts/compliance_cycle.png)
 <small>Source: hmm Ventures Comprehensive Regulatory Dataset; 34 in-flight regulations dated 2024 to 2030.</small>
 
 ---
