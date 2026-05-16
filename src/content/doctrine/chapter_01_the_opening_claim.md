@@ -42,7 +42,7 @@ The regulatory build is in flight. DORA enforceable from 17 January 2025. EU AI 
 
 ## The conservative classifier
 
-Of 19,416 four-market companies, 6,505 pass the T1 / T2 screen. **33.5%**.[^1] Of those, 2,625 are seed-stage.
+One in three four-market companies passes the T1 / T2 screen. The seed-stage subset is the doctrine's addressable universe.[^1]
 
 Tier 1 is licence-as-barrier: a company cannot legally operate without regulatory approval. Tier 2 is compulsion-as-barrier: the buyer is statutorily obligated to purchase compliant solutions. Chapter 3 walks the mechanism.
 
