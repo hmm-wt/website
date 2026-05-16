@@ -14,7 +14,7 @@ const display = typeof value === 'number' ? value.toLocaleString('en-US') : valu
 <div class={`ic ${accent ? 'ic--accent' : ''}`}>
   <p class="ic__label">{label}</p>
   <p class="ic__value">
-    {display}{unit && <span class="ic__unit">{unit}</span>}
+    <span class="ticker-roll">{display}</span>{unit && <span class="ic__unit">{unit}</span>}
   </p>
   {source && <p class="ic__source">{source}</p>}
 </div>

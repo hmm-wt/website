@@ -27,7 +27,7 @@ const { fignum, label, title, sub, source, basis } = Astro.props;
       <span class="ds__num">{fignum}</span>
       <span class="ds__label">{label}</span>
     </p>
-    <h2 class="ds__title" set:html={title}></h2>
+    <h2 class="ds__title gavel-drop" set:html={title}></h2>
     {sub && <p class="ds__sub">{sub}</p>}
   </header>
 
