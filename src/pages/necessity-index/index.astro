@@ -5,6 +5,9 @@ import IndexMatrix from '../../components/IndexMatrix.astro';
 import StatusIndicator from '../../components/StatusIndicator.astro';
 import DataSection from '../../components/DataSection.astro';
 import CiteThis from '../../components/CiteThis.astro';
+import ClassifiedFunnel from '../../components/charts/ClassifiedFunnel.astro';
+import MarketRegulationBar from '../../components/charts/MarketRegulationBar.astro';
+import NecessityBar from '../../components/charts/NecessityBar.astro';
 import data from '../../data/necessity-index.json';
 
 const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
@@ -66,44 +69,17 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       </div>
     </DataSection>
 
-    <DataSection
-      fignum="NI-03"
-      label="Stage funnel · From classified to seed-in-scope"
-      title='The seed-in-scope cohort is <em>2,625 companies</em>.'
-      sub="From the global universe through the four-market filter, the conservative classifier, and the seed-stage cut."
-      source="hmm Ventures classified universe · stage funnel"
-      basis="Four-market subset · last_funding_round at or before seed"
-    >
-      <figure class="ip__chart">
-        <img src="/charts/classified_funnel.png" alt="Four-step classification funnel: 22,217 global companies narrow to 2,625 seed-stage four-market in-thesis targets." loading="lazy" decoding="async" />
-      </figure>
-    </DataSection>
+    <section class="ip__inline-fig">
+      <ClassifiedFunnel />
+    </section>
 
-    <DataSection
-      fignum="NI-04"
-      label="Per market · Regulation density"
-      title='Australia leads at <em>47 regulations</em>. Japan close behind at 43.'
-      sub="In-mandate regulations by market, split between enacted and projected. 147 total across the four markets."
-      source="hmm Ventures Comprehensive Regulatory Dataset · v1.1"
-      basis="In-mandate regulations · enacted + projected · four-market subset"
-    >
-      <figure class="ip__chart">
-        <img src="/charts/market_regulation_bar.png" alt="Per-market regulation count bar chart: Australia 47, Japan 43, Singapore 33, New Zealand 24." loading="lazy" decoding="async" />
-      </figure>
-    </DataSection>
+    <section class="ip__inline-fig">
+      <MarketRegulationBar />
+    </section>
 
-    <DataSection
-      fignum="NI-05"
-      label="Per Necessity · Company concentration"
-      title='Biomedical Systems leads at <em>1,269 companies</em>.'
-      sub="In-thesis company count by Necessity across the four-market base. T1 + T2 classifier applied."
-      source="hmm Ventures classified universe"
-      basis="In-thesis companies · T1 + T2 union · four-market base"
-    >
-      <figure class="ip__chart">
-        <img src="/charts/necessity_bar.png" alt="Companies by Necessity: Biomedical Systems 1,269; Power Systems 581; Autonomous Systems 561; Critical Materials and Supply 505; Food Security Systems 395." loading="lazy" decoding="async" />
-      </figure>
-    </DataSection>
+    <section class="ip__inline-fig">
+      <NecessityBar />
+    </section>
 
     <DataSection
       fignum="NI-06"
@@ -264,13 +240,11 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
   .ip__note--cta { margin-block-start: var(--s-5); margin-block-end: 0; }
   .ip__note--cta a { color: var(--c-tomato); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
 
-  .ip__chart {
-    margin: 0;
-    padding: var(--s-3);
-    background: color-mix(in srgb, var(--c-pearl) 4%, transparent);
-    border-left: 2px solid var(--c-tomato);
+  .ip__inline-fig {
+    padding-block: var(--s-7);
+    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 12%, transparent);
   }
-  .ip__chart img { display: block; width: 100%; height: auto; }
+  .ip__inline-fig:last-of-type { border-bottom: 0; }
 
   .ip__grid {
     display: grid;

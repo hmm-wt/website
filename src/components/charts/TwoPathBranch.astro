@@ -1,0 +1,126 @@
+---
+/**
+ * TwoPathBranch — inline port of web_two_path_branch() from CIM/html/charts.py.
+ * Decision tree: Today → Crystallisation (Fund I plays) | Fragmentation (falsified).
+ *
+ * Motion hooks:
+ *  - .branch-node.stagger-row data-i="0..4" on each box (root, two branches, two terminals)
+ *  - .wedge-draw on connectors
+ *  - .breathe on the chosen terminal (Fund I plays here)
+ */
+import IMFigure from '../IMFigure.astro';
+
+const W = 800;
+const H = 360;
+const rootX = W / 2;
+const rootY = 70;
+const branchY = 200;
+const leftX = 200;
+const rightX = 600;
+const endY = 300;
+---
+<IMFigure
+  fignum="WEB-I"
+  label="Two paths · Crystallisation vs Fragmentation"
+  title='Fund I bets <em>Path A</em>. Path B falsifies the doctrine.'
+  sub="The regulatory build is in flight across four markets. Either the regimes converge enough to form a tradeable T1/T2 universe, or they fragment. Fund I plays Crystallisation; the Scoreboard makes Fragmentation falsifiable."
+  metrics={[
+    { label: 'PATH A', value: 'Crystallisation', ci: 'Fund I deploys', accent: true },
+    { label: 'PATH B', value: 'Fragmentation', ci: 'Doctrine fails' },
+    { label: 'TEST', value: 'By 2028', ci: 'Scoreboard window' },
+    { label: 'BASE', value: '2,625 cos', ci: 'Seed-stage in-thesis' },
+  ]}
+  source="Necessity Doctrine v1.0 · Chapter 09 (Path A) · Chapter 10 (Path B)"
+  basis="Binary outcome · Both paths publicly tracked on the Scoreboard"
+>
+  <svg
+    class="tpb"
+    viewBox={`0 0 ${W} ${H}`}
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    aria-label="Two-path branching: Crystallisation (Fund I plays here) versus Fragmentation (falsified by 2028 if regimes diverge)."
+  >
+    {/* Connectors root → branches */}
+    <path
+      class="wedge-draw"
+      d={`M ${rootX},${rootY + 30} Q ${rootX},${branchY - 20} ${leftX},${branchY - 10}`}
+      fill="none"
+      stroke="var(--c-tomato)"
+      stroke-width="2"
+      opacity="0.85"
+    />
+    <path
+      class="wedge-draw"
+      d={`M ${rootX},${rootY + 30} Q ${rootX},${branchY - 20} ${rightX},${branchY - 10}`}
+      fill="none"
+      stroke="var(--c-mahogany)"
+      stroke-width="1.2"
+      opacity="0.30"
+      stroke-dasharray="4 3"
+    />
+
+    {/* Connectors branch → terminal */}
+    <line
+      class="wedge-draw"
+      x1={leftX}
+      y1={branchY + 44}
+      x2={leftX}
+      y2={endY - 10}
+      stroke="var(--c-tomato)"
+      stroke-width="2"
+      opacity="0.85"
+    />
+    <line
+      class="wedge-draw"
+      x1={rightX}
+      y1={branchY + 44}
+      x2={rightX}
+      y2={endY - 10}
+      stroke="var(--c-mahogany)"
+      stroke-width="1.2"
+      opacity="0.30"
+      stroke-dasharray="4 3"
+    />
+
+    {/* Root node */}
+    <g class="tpb__node stagger-row" data-i="0">
+      <rect x={rootX - 130} y={rootY - 22} width="260" height="56" rx="3" fill="var(--c-pearl)" stroke="var(--c-mahogany)" stroke-width="1.2" />
+      <text x={rootX} y={rootY - 4} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7" letter-spacing="0.14em" font-weight="700">TODAY · 2026</text>
+      <text x={rootX} y={rootY + 15} text-anchor="middle" fill="var(--c-mahogany)" font-family="var(--f-display)" font-style="italic" font-size="12">The regulatory build is in flight</text>
+    </g>
+
+    {/* Path A: Crystallisation (left, chosen) */}
+    <g class="tpb__node stagger-row" data-i="1">
+      <rect x={leftX - 90} y={branchY - 10} width="180" height="54" rx="3" fill="var(--c-pearl)" stroke="var(--c-tomato)" stroke-width="1.4" />
+      <text x={leftX} y={branchY + 6} text-anchor="middle" fill="var(--c-tomato)" font-family="var(--f-mono)" font-size="8" letter-spacing="0.14em" font-weight="700">PATH A</text>
+      <text x={leftX} y={branchY + 24} text-anchor="middle" fill="var(--c-tomato)" font-family="var(--f-display)" font-style="italic" font-size="13" font-weight="700">Crystallisation</text>
+      <text x={leftX} y={branchY + 38} text-anchor="middle" fill="var(--c-mahogany)" font-family="var(--f-mono)" font-size="7.5">Four markets harden</text>
+    </g>
+
+    <g class="tpb__node stagger-row breathe" data-i="3">
+      <rect x={leftX - 90} y={endY - 10} width="180" height="54" rx="3" fill="var(--c-tomato)" opacity="0.92" />
+      <text x={leftX} y={endY + 6} text-anchor="middle" fill="var(--c-pearl)" font-family="var(--f-mono)" font-size="7" letter-spacing="0.14em" font-weight="700">FUND I PLAYS HERE</text>
+      <text x={leftX} y={endY + 24} text-anchor="middle" fill="var(--c-pearl)" font-family="var(--f-display)" font-style="italic" font-size="12">T1 / T2 in-thesis</text>
+      <text x={leftX} y={endY + 38} text-anchor="middle" fill="var(--c-pearl)" font-family="var(--f-mono)" font-size="7.5" opacity="0.9">2,625 seed-stage targets</text>
+    </g>
+
+    {/* Path B: Fragmentation (right, rejected) */}
+    <g class="tpb__node stagger-row" data-i="2">
+      <rect x={rightX - 90} y={branchY - 10} width="180" height="54" rx="3" fill="var(--c-pearl)" stroke="var(--c-mahogany)" stroke-width="1" stroke-dasharray="3 2" />
+      <text x={rightX} y={branchY + 6} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="8" letter-spacing="0.14em" font-weight="700">PATH B</text>
+      <text x={rightX} y={branchY + 24} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-display)" font-style="italic" font-size="13" font-weight="500">Fragmentation</text>
+      <text x={rightX} y={branchY + 38} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5">Regimes diverge · mandate breaks</text>
+    </g>
+
+    <g class="tpb__node stagger-row" data-i="4">
+      <rect x={rightX - 90} y={endY - 10} width="180" height="54" rx="3" fill="var(--c-pearl)" stroke="var(--c-mahogany)" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.50" />
+      <text x={rightX} y={endY + 6} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7" letter-spacing="0.14em" font-weight="700">SCOREBOARD TEST</text>
+      <text x={rightX} y={endY + 24} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-display)" font-style="italic" font-size="12">Falsifiable by 2028</text>
+      <text x={rightX} y={endY + 38} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5">Five public claims</text>
+    </g>
+  </svg>
+</IMFigure>
+
+<style>
+  .tpb { width: 100%; height: auto; display: block; }
+</style>

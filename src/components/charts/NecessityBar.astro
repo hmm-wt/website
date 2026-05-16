@@ -1,0 +1,131 @@
+---
+/**
+ * NecessityBar — inline port of web_necessity_bar() from CIM/html/charts.py.
+ * Horizontal bar chart: per-Necessity in-thesis company count. Tomato on the largest.
+ *
+ * Data binds to src/data/necessity-index.json data.per_necessity.
+ *
+ * Motion hooks:
+ *  - .bar-row.stagger-row data-i="0..N" per row
+ *  - .wedge-draw on each rect
+ *  - .ticker-roll on count labels
+ */
+import IMFigure from '../IMFigure.astro';
+import data from '../../data/necessity-index.json';
+
+// Sort by company count descending; truncate long labels for axis
+const rows = [...data.per_necessity]
+  .map((n) => ({
+    label: n.name
+      .replace('Critical Materials and Supply Integrity', 'Critical Materials & Supply'),
+    count: n.in_thesis_companies,
+  }))
+  .sort((a, b) => b.count - a.count);
+
+const W = 800;
+const H = 280;
+const ml = 200, mr = 90, mt = 30, mb = 40;
+const iw = W - ml - mr;
+const ih = H - mt - mb;
+const maxCount = Math.max(...rows.map((r) => r.count));
+const maxX = maxCount * 1.10;
+const rowH = ih / rows.length;
+const ticks = [250, 500, 750, 1000, 1250].filter((t) => t <= maxX);
+
+// Metric strip: leader, second, third, then combined remaining
+const leader = rows[0];
+const second = rows[1];
+const third = rows[2];
+const remainingSum = rows.slice(3).reduce((s, r) => s + r.count, 0);
+---
+<IMFigure
+  fignum="WEB-F"
+  label="Companies by Necessity · In-thesis cohort"
+  title={`<em>${leader.label}</em> leads at ${leader.count.toLocaleString('en-US')}. Four others between ${Math.min(...rows.slice(1).map((r) => r.count))} and ${Math.max(...rows.slice(1).map((r) => r.count))}.`}
+  sub="In-thesis company count by Necessity across the four-market base. T1 + T2 classifier applied. The leading cohort anchors its Necessity."
+  metrics={[
+    { label: leader.label.toUpperCase(), value: leader.count.toLocaleString('en-US'), ci: 'Largest cohort', accent: true },
+    { label: second.label.toUpperCase(), value: second.count.toLocaleString('en-US'), ci: 'Second cohort' },
+    { label: third.label.toUpperCase(), value: third.count.toLocaleString('en-US'), ci: 'Third cohort' },
+    { label: 'COMBINED REMAINDER', value: remainingSum.toLocaleString('en-US'), ci: 'All other cohorts' },
+  ]}
+  source={`hmm Ventures Comprehensive Classified Dataset · ${data.as_of} snapshot`}
+  basis="In-thesis companies · T1 + T2 classifier · Four-market base"
+>
+  <svg
+    class="nb"
+    viewBox={`0 0 ${W} ${H}`}
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    aria-label={`In-thesis companies by Necessity: ${rows.map((r) => `${r.label} ${r.count}`).join(', ')}.`}
+  >
+    <line x1={ml} y1={mt} x2={ml} y2={mt + ih} stroke="var(--c-mahogany)" stroke-width="0.6" />
+    <line x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih} stroke="var(--c-mahogany)" stroke-width="0.6" />
+
+    {ticks.map((v) => {
+      const x = ml + (v / maxX) * iw;
+      return (
+        <g class="nb__tick">
+          <line x1={x} y1={mt} x2={x} y2={mt + ih} stroke="var(--imfig-rule)" stroke-width="0.4" stroke-dasharray="1 2" />
+          <text x={x} y={mt + ih + 14} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7">{v.toLocaleString('en-US')}</text>
+        </g>
+      );
+    })}
+
+    {rows.map((r, i) => {
+      const y = mt + i * rowH + rowH / 2;
+      const barH = rowH * 0.50;
+      const bw = (r.count / maxX) * iw;
+      const isTop = r.count === maxCount;
+      const col = isTop ? 'var(--c-tomato)' : 'var(--c-dark-teal)';
+      const op = isTop ? 0.80 : 0.30;
+      const weight = isTop ? 700 : 500;
+      return (
+        <g class="nb__row stagger-row" data-i={i}>
+          <text
+            x={ml - 10}
+            y={y + 3}
+            text-anchor="end"
+            fill={col}
+            font-family="var(--f-mono)"
+            font-size="8.5"
+            font-weight={weight}
+          >{r.label}</text>
+          <rect
+            class="wedge-draw"
+            x={ml}
+            y={y - barH / 2}
+            width={bw}
+            height={barH}
+            fill={col}
+            opacity={op}
+          />
+          <text
+            class="ticker-roll"
+            x={ml + bw + 8}
+            y={y + 3}
+            fill={col}
+            font-family="var(--f-mono)"
+            font-size="9"
+            font-weight={weight}
+          >{r.count.toLocaleString('en-US')}</text>
+        </g>
+      );
+    })}
+
+    <text
+      x={ml + iw / 2}
+      y={mt + ih + 30}
+      text-anchor="middle"
+      fill="var(--c-mahogany)"
+      font-family="var(--f-mono)"
+      font-size="7"
+      letter-spacing="0.16em"
+      font-weight="700"
+    >IN-THESIS COMPANIES · FOUR-MARKET</text>
+  </svg>
+</IMFigure>
+
+<style>
+  .nb { width: 100%; height: auto; display: block; }
+</style>
