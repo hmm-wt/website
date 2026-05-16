@@ -20,7 +20,7 @@ The thesis here is the simplest of the four markets. Australia is a regulated-ec
 >
 > - **R&D Tax Incentive:** 43.5% refundable offset for companies with aggregated turnover under A$20M; non-refundable offset for larger companies, up to an A$150M expenditure threshold.[^1]
 > - **Superannuation pool:** approximately A$3.7 trillion as of late 2025; allocation to unlisted growth assets in the high single digits to low double digits across major industry funds.[^2]
-> - **Concessional tax cap:** 30% concessional rate applies to superannuation balances above A$3M from the 2025-26 financial year; reform discussion ongoing.[^3]
+> - **Concessional tax cap:** 30% concessional rate applies to superannuation balances above A$3M from 1 July 2026, following Better Targeted Superannuation Concessions passage in 2025.[^3]
 > - **Regulatory architecture:** APRA, ASIC, AEMO, TGA, FIRB, ASX cover the four Necessity-aligned regulated sectors. Each has discrete compliance and approval pathways.
 
 ---
@@ -95,7 +95,7 @@ The exit path is thinner than in the United States. ASX micro-cap listings exist
 
 [^1]: Australian Taxation Office and Department of Industry, Science and Resources, R&D Tax Incentive overview FY25.
 [^2]: Australian Prudential Regulation Authority, Quarterly superannuation industry publication, late 2025 release. Allocation ranges aggregated across MySuper products and major retail/industry funds; precise allocation per fund varies materially.
-[^3]: Australian Treasury, Better Targeted Superannuation Concessions reform, applicable from 1 July 2025. Parameters subject to ongoing legislative process.
+[^3]: Australian Treasury, Better Targeted Superannuation Concessions, enacted 2025; effective 1 July 2026 per Australian Taxation Office.
 [^4]: Australian Government, strategic examinations of Australia's R&D system and innovation policy, both delivered to Government in 2025. Specific recommendations on RDTI and superannuation-VC interface.
 [^5]: APRA Prudential Standard CPS 230 Operational Risk Management, in force 1 July 2025.
 [^6]: Australian Renewable Energy Agency annual reports, 2024-25 vintage.

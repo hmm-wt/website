@@ -374,13 +374,13 @@ headline_metrics:
 | 2014 | enacted | T1 | Maritime NZ MOSS Safety System |
 | 2023 | enacted | T1 | Civil Aviation Act Part 119 Air Operator Certificate |
 
-### Regulated Health Tech (3)
+### Regulated Health Tech (2 active, 1 repealed)
 
 | Year | Status | Tier | Regulation |
 |------|--------|------|------------|
-| 1981 | enacted | T1 | Medicines Act 1981 |
+| 1981 | enacted | T1 | Medicines Act 1981 (interim framework post-TPA repeal) |
 | 2003 | enacted | T2 | Medsafe WAND Database (self-registration, no premarket approval) |
-| 2023 | enacted | T1 | Therapeutic Products Act 2023 |
+| 2024 | repealed | — | Therapeutic Products Act 2023 (repealed December 2024; replacement pending) |
 
 ---
 
