@@ -16,10 +16,19 @@
 /* Speed and easing tokens (extends src/styles/tokens.css)    */
 /* ────────────────────────────────────────────────────────── */
 :root {
-  --speed-strike: 160ms;
-  --speed-print: 320ms;
-  --speed-draw: 1100ms;
-  --speed-heavy: 520ms;
+  /* Three-beat rhythm — the brand cadence. "hmm..." is three letters
+   * plus three dots; every gesture lands on a multiple of this beat.
+   * Beat 1 is the smallest readable unit; Beat 3 is the slowest a
+   * single gesture should take. Compound motions (e.g. SHUTTER-WIPE)
+   * use Beat 2 in + Beat 2 out. The brand is "everything in threes." */
+  --beat-1: 160ms;
+  --beat-2: 320ms;
+  --beat-3: 480ms;
+
+  --speed-strike: var(--beat-1);
+  --speed-print: var(--beat-2);
+  --speed-draw: 1100ms;            /* chart wedge-draw exception; still feels like 7 beats */
+  --speed-heavy: var(--beat-3);
   --ease-strike: cubic-bezier(.2, .9, .1, 1);   /* easeOutExpo, used for STAMP, pills */
   --ease-print: cubic-bezier(.16, 1, .3, 1);    /* easeOutQuart, used for GAVEL-DROP, headings */
   --ease-draw: cubic-bezier(.65, 0, .35, 1);    /* easeInOutCubic, used for WEDGE-DRAW, charts */
@@ -370,6 +379,72 @@ svg polygon.wedge-draw {
 /* ────────────────────────────────────────────────────────── */
 
 /* ────────────────────────────────────────────────────────── */
+/* HMM-CADENCE — the wordmark types itself in six beats.       */
+/* Three letter strokes draw in (beats 1, 2, 3) then three     */
+/* trailing dots punch in (beats 4, 5, 6). The third dot is    */
+/* open and continues to breathe forever — "still thinking."   */
+/* Plays once per session via [data-hmm-played] on <html>.     */
+/* ────────────────────────────────────────────────────────── */
+.hmm-cadence .hmm-letter,
+.hmm-cadence .hmm-dot {
+  opacity: 0;
+}
+.hmm-cadence .hmm-letter[data-beat="1"] { animation: hmm-letter var(--beat-2) var(--ease-print) calc(var(--beat-1) * 0) forwards; }
+.hmm-cadence .hmm-letter[data-beat="2"] { animation: hmm-letter var(--beat-2) var(--ease-print) calc(var(--beat-1) * 1) forwards; }
+.hmm-cadence .hmm-letter[data-beat="3"] { animation: hmm-letter var(--beat-2) var(--ease-print) calc(var(--beat-1) * 2) forwards; }
+.hmm-cadence .hmm-dot[data-beat="4"]    { animation: hmm-dot    var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 4) forwards; }
+.hmm-cadence .hmm-dot[data-beat="5"]    { animation: hmm-dot    var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 5) forwards; }
+.hmm-cadence .hmm-dot[data-beat="6"]    { animation: hmm-dot    var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 6) forwards; }
+@keyframes hmm-letter {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hmm-dot {
+  from { opacity: 0; transform: scale(0.4); }
+  60%  { opacity: 1; transform: scale(1.2); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* The open trailing dot keeps a continuous low-amplitude pulse after
+ * the cadence finishes. The brand's "still thinking" signal — never
+ * decoration, always literal: we are reading, classifying, watching. */
+.hmm-cadence .hmm-dot--open {
+  transform-origin: 201.5px 112.5px;
+  animation: hmm-letter var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 6) forwards,
+             hmm-think 2.4s ease-in-out calc(var(--beat-1) * 7) infinite;
+}
+@keyframes hmm-think {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.86); }
+}
+
+/* If the wordmark has already played this session, render in final
+ * state immediately — no replay on SPA navigation. Sets opacity:1
+ * and skips the entrance animation; the trailing-dot breathe still
+ * plays continuously. */
+html[data-hmm-played="true"] .hmm-cadence .hmm-letter,
+html[data-hmm-played="true"] .hmm-cadence .hmm-dot {
+  opacity: 1;
+  animation: none;
+}
+html[data-hmm-played="true"] .hmm-cadence .hmm-dot--open {
+  animation: hmm-think 2.4s ease-in-out 0s infinite;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* ELLIPSIS-CADENCE — wherever the brand uses three dots as a  */
+/* deliberate pause (• • • separators, "..." trail). Three      */
+/* dots stamp in on consecutive beats. Reusable wrapper.       */
+/* ────────────────────────────────────────────────────────── */
+.ellipsis-cadence > * {
+  opacity: 0;
+  transform: scale(0.4);
+}
+.ellipsis-cadence[data-played="true"] > *:nth-child(1) { animation: hmm-dot var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 0) forwards; }
+.ellipsis-cadence[data-played="true"] > *:nth-child(2) { animation: hmm-dot var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 1) forwards; }
+.ellipsis-cadence[data-played="true"] > *:nth-child(3) { animation: hmm-dot var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 2) forwards; }
+
+/* ────────────────────────────────────────────────────────── */
 /* prefers-reduced-motion contract                            */
 /* All transforms collapse to identity; only opacity fades    */
 /* survive. Continuous loops halve in amplitude (still alive  */
@@ -409,6 +484,16 @@ svg polygon.wedge-draw {
   .now-pulse,
   .breathe {
     animation-duration: 4.8s !important;
+  }
+  .hmm-cadence .hmm-letter,
+  .hmm-cadence .hmm-dot,
+  .ellipsis-cadence > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hmm-cadence .hmm-dot--open {
+    animation: hmm-think 4.8s ease-in-out 0s infinite !important;
   }
   .now-pulse {
     animation-name: now-pulse-reduced !important;

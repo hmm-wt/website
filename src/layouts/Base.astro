@@ -62,6 +62,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
     <button type="button" class="back-to-top" aria-label="Back to top" data-back-to-top>↑</button>
 
     <script is:inline>
+      // HMM-CADENCE — wordmark types itself once per session. After the
+      // first cold-load animation completes, set a flag so SPA navigations
+      // (Astro View Transitions) render the wordmark in final state.
+      (function () {
+        const html = document.documentElement;
+        if (sessionStorage.getItem('hmm-played') === '1') {
+          html.setAttribute('data-hmm-played', 'true');
+        } else {
+          // Six beats × 160ms = 960ms for letters+dots; add tiny buffer.
+          setTimeout(() => {
+            html.setAttribute('data-hmm-played', 'true');
+            sessionStorage.setItem('hmm-played', '1');
+          }, 1200);
+        }
+      })();
+    </script>
+
+    <script is:inline>
       // Back-to-top button. Visible after scrolling >600px on long pages.
       function initBackToTop() {
         const btn = document.querySelector('[data-back-to-top]');
