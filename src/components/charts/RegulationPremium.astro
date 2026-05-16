@@ -66,20 +66,20 @@ const sx = (v: number) => ml + (v / maxX) * iw;
       const colorClass = r.isReg ? 'rp__bar--reg' : 'rp__bar--base';
       const labelClass = r.isReg ? 'rp__label--reg' : 'rp__label--base';
       return (
-        <>
+        <g class="stagger-row" data-i={i}>
           <text x={ml - 10} y={y + 3} text-anchor="end" class={`rp__row-label ${labelClass}`}>{r.label}</text>
           {r.hi > r.lo ? (
             <>
-              <rect x={xLo} y={y - barH / 2} width={xHi - xLo} height={barH} class={`rp__bar ${colorClass}`} />
+              <rect x={xLo} y={y - barH / 2} width={xHi - xLo} height={barH} class={`rp__bar wedge-draw ${colorClass}`} />
               <text x={xHi + 8} y={y + 3} class={`rp__val rp__val--reg`}>{r.lo.toFixed(0)}–{r.hi.toFixed(0)}x</text>
             </>
           ) : (
             <>
-              <rect x={ml} y={y - barH / 2} width={xHi - ml} height={barH} class={`rp__bar ${colorClass}`} />
+              <rect x={ml} y={y - barH / 2} width={xHi - ml} height={barH} class={`rp__bar wedge-draw ${colorClass}`} />
               <text x={xHi + 8} y={y + 3} class={`rp__val ${labelClass}`}>{r.hi.toFixed(1)}x</text>
             </>
           )}
-        </>
+        </g>
       );
     })}
 

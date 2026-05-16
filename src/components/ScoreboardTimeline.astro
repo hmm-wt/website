@@ -38,19 +38,19 @@ const points = Object.entries(grouped).flatMap(([date, group]) =>
 const years = [];
 for (let y = minYear; y <= maxYear; y++) years.push(y);
 ---
-<figure class="sbt" aria-label={`Scoreboard claim timeline: ${preds.length} predictions plotted from ${minYear} to ${maxYear}; today marker shown.`}>
+<figure class="sbt motion-group" aria-label={`Scoreboard claim timeline: ${preds.length} predictions plotted from ${minYear} to ${maxYear}; today marker shown.`}>
   <div class="sbt__svg-wrap">
     <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid meet" role="img">
       <title>Five falsifiable claims on a timeline. Today and the testable-by dates plotted.</title>
 
       {/* Axis */}
-      <line x1="40" y1="140" x2="760" y2="140" stroke="var(--c-mahogany, #250001)" stroke-width="0.8" />
+      <line class="wedge-draw" x1="40" y1="140" x2="760" y2="140" stroke="var(--c-mahogany, #250001)" stroke-width="0.8" />
 
       {/* Year ticks + labels */}
-      {years.map((y) => {
+      {years.map((y, i) => {
         const x = 40 + (yearToX(y) / 100) * 720;
         return (
-          <g>
+          <g class="stagger-row" data-i={i}>
             <line x1={x} y1="136" x2={x} y2="144" stroke="var(--c-mahogany, #250001)" stroke-width="0.6" />
             <text x={x} y="162" text-anchor="middle" font-family="var(--f-mono)" font-size="10" fill="var(--fg-soft, #5a5550)">{y}</text>
           </g>
@@ -79,13 +79,13 @@ for (let y = minYear; y <= maxYear; y++) years.push(y);
       >NOW</text>
 
       {/* Claim markers */}
-      {points.map((p) => {
+      {points.map((p, i) => {
         const x = 40 + (p.x / 100) * 720;
         const baseY = 140;
         const offsetY = p.stackIndex * 18;
         const dotY = baseY - 22 - offsetY;
         return (
-          <g>
+          <g class="stagger-row" data-i={Math.min(i + 2, 7)}>
             <line x1={x} y1={baseY} x2={x} y2={dotY + 6} stroke="var(--c-tomato, #C44539)" stroke-width="0.8" opacity="0.45" />
             <circle cx={x} cy={dotY} r="5" fill="var(--c-tomato, #C44539)" />
             <text x={x} y={dotY + 3} text-anchor="middle" font-family="var(--f-mono)" font-size="8" font-weight="700" fill="var(--c-pearl, #F2ECC9)">{p.id}</text>

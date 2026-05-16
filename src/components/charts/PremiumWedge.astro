@@ -71,18 +71,18 @@ const areaPts = `${linePts} ${sx(n - 1).toFixed(1)},${refY.toFixed(1)} ${sx(0).t
       class="pw__ref-label"
     >parity</text>
 
-    <polygon points={areaPts} class="pw__area" />
-    <polyline points={linePts} class="pw__line" />
+    <polygon points={areaPts} class="pw__area wedge-draw" />
+    <polyline points={linePts} class="pw__line wedge-draw" />
 
     {stages.map(([labelText, v], i) => {
       const cx = sx(i);
       const cy = sy(v);
       return (
-        <>
+        <g class="stagger-row" data-i={i}>
           <circle cx={cx.toFixed(1)} cy={cy.toFixed(1)} r="4" class="pw__dot" />
           <text x={cx} y={(cy - 12).toFixed(1)} text-anchor="middle" class="pw__val">{v.toFixed(2)}x</text>
           <text x={cx} y={mt + ih + 18} text-anchor="middle" class="pw__cat">{labelText}</text>
-        </>
+        </g>
       );
     })}
 

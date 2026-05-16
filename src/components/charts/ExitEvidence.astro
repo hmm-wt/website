@@ -46,8 +46,8 @@ const rows: Row[] = [
         </tr>
       </thead>
       <tbody>
-        {rows.map((r) => (
-          <tr>
+        {rows.map((r, i) => (
+          <tr class="stagger-row" data-i={i}>
             <td class="ee__co">{r.company}</td>
             <td>{r.barrier}</td>
             <td>{r.acquirer}</td>
