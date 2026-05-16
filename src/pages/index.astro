@@ -35,12 +35,6 @@ const chapterCount = doctrineEntries.length;
         <span class="hero__accent shutter-wipe" style="--shutter-delay: 520ms; --shutter-color: var(--c-tomato);">the&nbsp;thesis.</span>
       </h1>
 
-      <ul role="list" class="hero__multiling">
-        <li lang="zh">刚需即论点</li>
-        <li lang="ja">必要性こそ論拠</li>
-        <li lang="mi">Ko te hiahia, ko te kaupapa</li>
-      </ul>
-
       <p class="hero__sub">
         Seed-stage capital deployed where regulation defines the floor of operation. Four markets in developed APAC, on a regulatory clock.<span class="pause" aria-label="pause"></span>
       </p>
@@ -250,31 +244,6 @@ const chapterCount = doctrineEntries.length;
     font-weight: 400;
   }
   .hero__accent { color: var(--c-tomato); }
-
-  .hero__multiling {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-5);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-family: var(--f-display);
-    font-size: var(--fs-md);
-    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
-  }
-  .hero__multiling li {
-    transition: color var(--mo-tick) var(--ease-golden);
-    cursor: default;
-  }
-  .hero__multiling li:hover {
-    color: var(--c-pearl);
-  }
-  @media (max-width: 720px) {
-    .hero__multiling {
-      gap: var(--s-3);
-      font-size: var(--fs-sm);
-    }
-  }
 
   .hero__sub {
     font-family: var(--f-display);
