@@ -30,6 +30,10 @@ import PremiumWedge from '../components/charts/PremiumWedge.astro';
         Seed-stage capital deployed where regulation defines the floor of operation. Four markets in developed APAC, on a regulatory clock.<span class="pause" aria-label="pause"></span>
       </p>
 
+      <figure class="hero__clock" aria-label="Regulatory clock: AUS 2026, NZL 2026, JPN 2027, SIN 2027. NOW marker at 2026.">
+        <img src="/charts/reg_clock_strip.png" alt="Four-market regulatory clock with markers at 2026 (AUS, NZL) and 2027 (JPN, SIN). NOW marker at 2026." loading="eager" decoding="async" />
+      </figure>
+
       <p class="hero__actions">
         <a class="hero__primary" href="/doctrine/">Read the doctrine →</a>
         <a class="hero__secondary" href="/research/">See the research →</a>
@@ -266,6 +270,15 @@ import PremiumWedge from '../components/charts/PremiumWedge.astro';
     max-width: 52ch;
     margin: var(--s-3) 0 0;
   }
+
+  .hero__clock {
+    margin: var(--s-5) 0 0;
+    max-width: 56rem;
+    padding: var(--s-3) var(--s-4);
+    background: color-mix(in srgb, var(--c-pearl) 4%, transparent);
+    border-left: 2px solid var(--c-tomato);
+  }
+  .hero__clock img { display: block; width: 100%; height: auto; }
 
   .hero__actions {
     display: flex;

@@ -87,6 +87,15 @@ The supply integrity layer (track-and-trace, provenance, export-control complian
 
 ---
 
+## In-thesis concentration
+
+![Companies by Necessity: Biomedical Systems 1,269; Power Systems 581; Autonomous Systems 561; Critical Materials and Supply 505; Food Security Systems 395.](/charts/necessity_bar.png)
+<small>Source: hmm Ventures classified universe, 2026-04-08. In-thesis companies; T1 + T2 union; four-market base.</small>
+
+Biomedical anchors the heal Necessity at 1,269 companies. Power, Autonomous, Critical Materials and Food Security each sit between 395 and 581. Five cohorts; one filter; comparable depth across the four markets.
+
+---
+
 ## What did not make the cut
 
 Mobility outside autonomous systems. Real estate. Education. Retail. Generic enterprise software. Consumer health. Each has regulatory exposure but fails the universality, durability, or geopolitical-anchor test.

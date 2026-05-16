@@ -21,6 +21,9 @@ For T1, the barrier is the licence. For T2, the barrier is the institutional sal
 > - **Conservative classifier:** assigns T1/T2 only where regulatory exposure is structural, not incidental.
 > - **Empirical anchor:** 33.5% of the 19,416 four-market universe passes (6,505 companies). 2,625 are seed-stage in scope.[^1]
 
+![Four-step classification funnel: 22,217 global companies narrow to 2,625 seed-stage four-market in-thesis targets.](/charts/classified_funnel.png)
+<small>Source: hmm Ventures classified universe, 2026-04-08. Crunchbase + Dealroom four-market base; conservative T1/T2 classifier; stage filter at seed.</small>
+
 ---
 
 ## Why a binary

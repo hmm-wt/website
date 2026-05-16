@@ -1,7 +1,6 @@
 ---
 import Index from '../../layouts/Index.astro';
 import IndexCard from '../../components/IndexCard.astro';
-import IndexFunnel from '../../components/IndexFunnel.astro';
 import IndexMatrix from '../../components/IndexMatrix.astro';
 import StatusIndicator from '../../components/StatusIndicator.astro';
 import DataSection from '../../components/DataSection.astro';
@@ -71,17 +70,45 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       fignum="NI-03"
       label="Stage funnel · From classified to seed-in-scope"
       title='The seed-in-scope cohort is <em>2,625 companies</em>.'
-      sub="From the four-market universe through the conservative classifier and the seed-stage filter."
+      sub="From the global universe through the four-market filter, the conservative classifier, and the seed-stage cut."
       source="hmm Ventures classified universe · stage funnel"
       basis="Four-market subset · last_funding_round at or before seed"
     >
-      <IndexFunnel stages={data.stage_funnel} />
+      <figure class="ip__chart">
+        <img src="/charts/classified_funnel.png" alt="Four-step classification funnel: 22,217 global companies narrow to 2,625 seed-stage four-market in-thesis targets." loading="lazy" decoding="async" />
+      </figure>
     </DataSection>
 
     <DataSection
       fignum="NI-04"
-      label="Per market and per Necessity · Concentration"
-      title='Regulatory density concentrates in <em>Australia and Japan</em>.'
+      label="Per market · Regulation density"
+      title='Australia leads at <em>47 regulations</em>. Japan close behind at 43.'
+      sub="In-mandate regulations by market, split between enacted and projected. 147 total across the four markets."
+      source="hmm Ventures Comprehensive Regulatory Dataset · v1.1"
+      basis="In-mandate regulations · enacted + projected · four-market subset"
+    >
+      <figure class="ip__chart">
+        <img src="/charts/market_regulation_bar.png" alt="Per-market regulation count bar chart: Australia 47, Japan 43, Singapore 33, New Zealand 24." loading="lazy" decoding="async" />
+      </figure>
+    </DataSection>
+
+    <DataSection
+      fignum="NI-05"
+      label="Per Necessity · Company concentration"
+      title='Biomedical Systems leads at <em>1,269 companies</em>.'
+      sub="In-thesis company count by Necessity across the four-market base. T1 + T2 classifier applied."
+      source="hmm Ventures classified universe"
+      basis="In-thesis companies · T1 + T2 union · four-market base"
+    >
+      <figure class="ip__chart">
+        <img src="/charts/necessity_bar.png" alt="Companies by Necessity: Biomedical Systems 1,269; Power Systems 581; Autonomous Systems 561; Critical Materials and Supply 505; Food Security Systems 395." loading="lazy" decoding="async" />
+      </figure>
+    </DataSection>
+
+    <DataSection
+      fignum="NI-06"
+      label="Detail tables · Per market and per Necessity"
+      title='Drill-down: <em>regulation, tier, and cohort detail</em>.'
       sub="Per-market and per-Necessity counts for the four-market universe. Heat-tinted by intensity."
       source="hmm Ventures classified universe + Comprehensive Regulatory Dataset"
       basis="Per-market + per-Necessity joins · four-market filter"
@@ -90,7 +117,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
     </DataSection>
 
     <DataSection
-      fignum="NI-05"
+      fignum="NI-07"
       label="Round-size premiums · T1 vs unregulated"
       title='Cumulative funding multiple widens to <em>2.12x</em> by Series D+.'
       sub="T1 round-size premium relative to unregulated peers at each stage. Compounds across the funding ladder."
@@ -117,7 +144,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
     </DataSection>
 
     <DataSection
-      fignum="NI-06"
+      fignum="NI-08"
       label="The crystallisation window · 2024 to 2030"
       title='Thirty-four in-flight regulations. Peak density in <em>2026</em>.'
       sub="The window where regulator publications convert into operational compliance demand. Each market on a different clock."
@@ -236,6 +263,14 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
   }
   .ip__note--cta { margin-block-start: var(--s-5); margin-block-end: 0; }
   .ip__note--cta a { color: var(--c-tomato); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+
+  .ip__chart {
+    margin: 0;
+    padding: var(--s-3);
+    background: color-mix(in srgb, var(--c-pearl) 4%, transparent);
+    border-left: 2px solid var(--c-tomato);
+  }
+  .ip__chart img { display: block; width: 100%; height: auto; }
 
   .ip__grid {
     display: grid;

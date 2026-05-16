@@ -26,6 +26,9 @@ headline_metrics:
 
 ## Summary
 
+![Regulatory acceleration timeline 2024 to 2028 across Australia, Japan, New Zealand, and Singapore. Thirty-four in-flight regulations; peak density 2026 to 2027.](/charts/regulatory_direction.png)
+<small>Source: APRA, TGA, METI, MLIT, MAS, MOH, LTA, Medsafe, NZ official publications. Major regulatory events; four-market dataset.</small>
+
 | Metric | Value |
 |--------|-------|
 | Total regulations | 174 |

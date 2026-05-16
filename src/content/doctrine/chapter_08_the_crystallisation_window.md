@@ -74,6 +74,9 @@ Pre-2024 deployments under-utilise the regulatory tailwind. Post-2028 deployment
 
 By 2028, the four markets reach one of two outcomes. Either the regulatory architecture deepens and converges on common standards (path A). Or the architectures diverge under fiscal or political pressure (path B).
 
+![Two-path branching diagram. Today: the regulatory build is in flight. Path A (Crystallisation): four markets harden into a tradeable T1/T2 universe. Path B (Fragmentation): regimes diverge and the doctrine fails. Fund I plays Path A; the Scoreboard makes Path B falsifiable by 2028.](/charts/two_path_branch.png)
+<small>Source: Necessity Doctrine v1.0. Both paths publicly tracked on the Scoreboard.</small>
+
 Both produce returns, through different mechanisms. Path A: portfolio compounding as procurement budgets grow. Path B: specialisation as funds adapt to multi-regime friction.
 
 ---
