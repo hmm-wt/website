@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
   title: string;
@@ -40,6 +41,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
     <meta property="og:image" content={new URL(ogImage, Astro.site ?? 'https://hmm.ventures').toString()} />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <ViewTransitions fallback="swap" />
+
     <link rel="preload" href="/fonts/InstrumentSerif-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/DMSans-VariableFont.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/IBMPlexMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
@@ -60,9 +63,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
 
     <script is:inline>
       // Back-to-top button. Visible after scrolling >600px on long pages.
-      (function () {
+      function initBackToTop() {
         const btn = document.querySelector('[data-back-to-top]');
-        if (!btn) return;
+        if (!btn || btn.dataset.wired) return;
+        btn.dataset.wired = 'true';
         const update = () => {
           const showAfter = 600;
           if (window.scrollY > showAfter) btn.classList.add('is-visible');
@@ -74,13 +78,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
           const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
         });
-      })();
+      }
+      initBackToTop();
+      document.addEventListener('astro:page-load', initBackToTop);
     </script>
 
     <script is:inline>
       // Reveal-on-scroll. Any element with .reveal or .reveal-group fades up
       // when entering the viewport. Canonical ease: cubic-bezier(0.16, 1, 0.3, 1).
-      (function () {
+      function initReveal() {
         if (!('IntersectionObserver' in window)) {
           document.querySelectorAll('.reveal, .reveal-group').forEach((el) => el.classList.add('is-visible'));
           return;
@@ -96,8 +102,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
           },
           { rootMargin: '-5% 0px -10% 0px', threshold: 0.05 }
         );
-        document.querySelectorAll('.reveal, .reveal-group').forEach((el) => observer.observe(el));
-      })();
+        document.querySelectorAll('.reveal:not(.is-visible), .reveal-group:not(.is-visible)').forEach((el) => observer.observe(el));
+      }
+      initReveal();
+      document.addEventListener('astro:page-load', initReveal);
     </script>
 
     <script is:inline>
@@ -120,7 +128,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
        * Continuous animations (.now-pulse, .breathe) loop independently and
        * do not need this driver.
        */
-      (function () {
+      function initMotion() {
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         // Element classes that trigger when the element itself enters viewport.
@@ -248,7 +256,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
         document.querySelectorAll('.ticker-roll, .tape-print').forEach((el) => {
           if (el.dataset.played !== 'true') standaloneObserver.observe(el);
         });
-      })();
+      }
+      initMotion();
+      document.addEventListener('astro:page-load', initMotion);
     </script>
   </body>
 </html>
