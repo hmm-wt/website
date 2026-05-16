@@ -1,0 +1,79 @@
+---
+/**
+ * ChartZoom — wraps an SVG (or other chart DOM) so mobile users can tap
+ * to expand it into the global chart-zoom modal. Used for V-tier components
+ * that don't sit inside an IMFigure.
+ *
+ * Slot content is the chart itself. On mobile (<=720px) the wrapper adds
+ * overflow-x: auto + min-width on inner SVGs so the chart renders at
+ * readable native size with horizontal scroll, plus a "Tap to expand"
+ * chip top-right that opens the full-viewport dialog from chart-zoom.ts.
+ *
+ * On desktop the wrapper is transparent: no chip, no scroll affordance.
+ */
+interface Props {
+  /** Title shown in the modal header. Defaults to "Chart". */
+  title?: string;
+  /** Minimum SVG width on mobile (rem). Default 32. Use 40+ for wide charts. */
+  minWidthRem?: number;
+}
+
+const { title = 'Chart', minWidthRem = 32 } = Astro.props;
+---
+<div class="cz" data-chart-zoom-root data-zoom-title={title} style={`--cz-min: ${minWidthRem}rem;`}>
+  <button type="button" class="cz__btn" data-chart-zoom aria-label={`Expand ${title} to full screen`}>
+    <span class="cz__icon" aria-hidden="true">⤢</span>
+    <span class="cz__label">Tap to expand</span>
+  </button>
+  <div class="cz__content" data-chart-zoom-content>
+    <slot />
+  </div>
+</div>
+
+<script>
+  import '../../scripts/chart-zoom';
+</script>
+
+<style>
+  .cz {
+    position: relative;
+  }
+  .cz__btn {
+    display: none;
+    position: absolute;
+    top: var(--s-2);
+    right: var(--s-2);
+    z-index: 3;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.6rem;
+    background: var(--c-mahogany);
+    color: var(--c-pearl);
+    border: 1px solid var(--c-mahogany);
+    font-family: var(--f-mono);
+    font-size: calc(var(--fs-xs) * 0.92);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+  }
+  .cz__btn:hover, .cz__btn:focus {
+    background: var(--c-tomato);
+    border-color: var(--c-tomato);
+    outline: none;
+  }
+  .cz__icon { font-size: 1.05em; line-height: 1; }
+
+  @media (max-width: 720px) {
+    .cz__btn { display: inline-flex; }
+    .cz__content {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cz__content :global(> svg),
+    .cz__content :global(svg.cz-target) {
+      min-width: var(--cz-min);
+      display: block;
+    }
+  }
+</style>

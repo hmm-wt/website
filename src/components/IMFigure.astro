@@ -54,11 +54,11 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
     )}
 
     <div class="imfig__plot" data-imfig-plot>
-      <button type="button" class="imfig__zoom" data-imfig-zoom aria-label="Expand chart to full screen">
+      <button type="button" class="imfig__zoom" data-chart-zoom aria-label="Expand chart to full screen">
         <span class="imfig__zoom-icon" aria-hidden="true">⤢</span>
         <span class="imfig__zoom-label">Tap to expand</span>
       </button>
-      <div class="imfig__plot-inner">
+      <div class="imfig__plot-inner" data-chart-zoom-content>
         <slot />
       </div>
     </div>
@@ -328,70 +328,5 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
 </style>
 
 <script>
-  function ensureChartZoomModal(): HTMLDialogElement {
-    let modal = document.getElementById('chart-zoom-modal') as HTMLDialogElement | null;
-    if (modal) return modal;
-    modal = document.createElement('dialog');
-    modal.id = 'chart-zoom-modal';
-    modal.className = 'chart-zoom-modal';
-    modal.innerHTML = `
-      <header class="chart-zoom-modal__head">
-        <p class="chart-zoom-modal__title" data-zoom-title></p>
-        <button type="button" class="chart-zoom-modal__close" data-zoom-close aria-label="Close">×</button>
-      </header>
-      <div class="chart-zoom-modal__body" data-zoom-body></div>
-      <p class="chart-zoom-modal__hint">Pinch or scroll to inspect · tap outside to close</p>
-    `;
-    document.body.appendChild(modal);
-    modal.querySelector('[data-zoom-close]')?.addEventListener('click', () => modal!.close());
-    modal.addEventListener('click', (e) => {
-      // Click outside the body (i.e. on the backdrop)
-      const body = modal!.querySelector('[data-zoom-body]');
-      if (!body || !(e.target instanceof Node)) return;
-      if (e.target === modal) modal!.close();
-    });
-    return modal;
-  }
-
-  function initImfigZoom() {
-    document.querySelectorAll<HTMLButtonElement>('[data-imfig-zoom]').forEach((btn) => {
-      if (btn.dataset.bound === 'true') return;
-      btn.dataset.bound = 'true';
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const figure = btn.closest('figure.imfig');
-        if (!figure) return;
-        const inner = figure.querySelector('.imfig__plot-inner');
-        if (!inner) return;
-        const modal = ensureChartZoomModal();
-        const body = modal.querySelector<HTMLElement>('[data-zoom-body]');
-        const title = modal.querySelector<HTMLElement>('[data-zoom-title]');
-        if (!body) return;
-        // Clone the chart content into the modal body.
-        body.innerHTML = '';
-        const clone = inner.cloneNode(true) as HTMLElement;
-        // Remove min-width hack on clone so it adopts modal sizing.
-        clone.querySelectorAll('svg').forEach((svg) => {
-          (svg as SVGSVGElement).style.minWidth = '';
-        });
-        body.appendChild(clone);
-        // Title from the figure's eyebrow label.
-        const label = figure.querySelector('.imfig__label');
-        if (title && label) title.textContent = label.textContent;
-        if (typeof modal.showModal === 'function') {
-          modal.showModal();
-        } else {
-          // Very old browsers: fallback to visible open attr.
-          modal.setAttribute('open', '');
-        }
-      });
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initImfigZoom);
-  } else {
-    initImfigZoom();
-  }
-  document.addEventListener('astro:page-load', initImfigZoom);
+  import '../scripts/chart-zoom';
 </script>

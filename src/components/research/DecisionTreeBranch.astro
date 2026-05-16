@@ -10,6 +10,7 @@
  * Falls back to a static three-column reading with no JS.
  */
 import data from '../../data/classifier-examples.json';
+import ChartZoom from './ChartZoom.astro';
 
 type Branch = keyof typeof data.branches;
 const order: Branch[] = ['t1', 't2', 'excluded'];
@@ -20,6 +21,7 @@ const H = 220;
 ---
 <section class="dtb motion-group" aria-label="T1 / T2 classifier decision tree">
   <div class="dtb__diagram">
+    <ChartZoom title="T1 / T2 decision tree" minWidthRem={36}>
     <svg
       class="dtb__svg"
       viewBox={`0 0 ${W} ${H}`}
@@ -54,6 +56,7 @@ const H = 220;
         <text x="400" y="180" text-anchor="middle" class="dtb__node-s">Excluded</text>
       </g>
     </svg>
+    </ChartZoom>
   </div>
 
   <div class="dtb__panels" data-dtb-panels>

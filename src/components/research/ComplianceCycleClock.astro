@@ -9,6 +9,8 @@
  * The hand points at the current "NOW" position by default — the centre of
  * the operator-build window (stage 4) where the fund deploys.
  */
+import ChartZoom from './ChartZoom.astro';
+
 const stages = [
   {
     id: 's1',
@@ -101,6 +103,7 @@ const [handX, handY] = polar(handAngle, innerRadius - 8);
 ---
 <section class="ccc motion-group" aria-label="Regulatory compliance cycle clock" data-active={defaultActive}>
   <div class="ccc__viz">
+    <ChartZoom title="Compliance cycle clock" minWidthRem={28}>
     <svg
       class="ccc__svg"
       viewBox="0 0 440 440"
@@ -127,6 +130,7 @@ const [handX, handY] = polar(handAngle, innerRadius - 8);
       <circle cx={center} cy={center} r="6" class="ccc__hub" />
       <text x={center} y={center + 30} text-anchor="middle" class="ccc__hub-label">NOW</text>
     </svg>
+    </ChartZoom>
   </div>
 
   <aside class="ccc__panel" data-ccc-panel>

@@ -10,6 +10,7 @@
  * Source: /src/data/exits-named.json (verified per IM §3.4).
  */
 import exits from '../../data/exits-named.json';
+import ChartZoom from './ChartZoom.astro';
 
 const yearList = Array.from(new Set(exits.exits.map((e) => e.year))).sort();
 const minYear = Math.min(...yearList);
@@ -66,6 +67,7 @@ const dots = exits.exits.map((e, i) => {
 ---
 <section class="exc motion-group" aria-label="Named exit chronograph">
   <div class="exc__viz">
+    <ChartZoom title="Named exit chronograph" minWidthRem={40}>
     <svg
       class="exc__svg"
       viewBox={`0 0 ${W} ${H}`}
@@ -120,6 +122,7 @@ const dots = exits.exits.map((e, i) => {
         </g>
       ))}
     </svg>
+    </ChartZoom>
   </div>
 
   <aside class="exc__panel panel-slide" data-exc-panel data-open="false" aria-live="polite">

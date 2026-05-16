@@ -13,6 +13,7 @@
  * still renders all five trapezoids in their resting state.
  */
 import necessity from '../../data/necessity-index.json';
+import ChartZoom from './ChartZoom.astro';
 
 const totalCompanies = necessity.universe.total_companies;
 const fourMarketCount = necessity.universe.four_market_companies;
@@ -89,6 +90,7 @@ const rows = stages.map((s, i) => {
 ---
 <section class="scf motion-group" data-scrolly aria-label="Classifier funnel walkthrough">
   <div class="scf__viz scrolly__viz">
+    <ChartZoom title="Classifier funnel" minWidthRem={36}>
     <svg
       class="scf__svg"
       viewBox={`0 0 ${W} ${H}`}
@@ -108,6 +110,7 @@ const rows = stages.map((s, i) => {
         </g>
       ))}
     </svg>
+    </ChartZoom>
   </div>
 
   <div class="scf__rail scrolly__rail">
