@@ -1,0 +1,160 @@
+---
+import scoreboard from '../data/scoreboard.json';
+
+type Status = 'open' | 'confirmed' | 'refuted' | 'pending';
+interface Prediction {
+  id: string;
+  testable_by: string;
+  status: Status;
+}
+
+const preds = scoreboard.predictions as Prediction[];
+
+const today = new Date();
+const todayYear = today.getFullYear() + (today.getMonth() / 12);
+
+// Bound the axis from start of 2026 to end of latest testable + buffer
+const dates = preds.map((p) => new Date(p.testable_by));
+const minYear = 2026;
+const maxYear = Math.max(...dates.map((d) => d.getFullYear())) + 1;
+
+const yearToX = (yr: number) => ((yr - minYear) / (maxYear - minYear)) * 100;
+
+// Group overlapping claims (same testable_by) so dots stack vertically
+const grouped: Record<string, Prediction[]> = {};
+preds.forEach((p) => {
+  if (!grouped[p.testable_by]) grouped[p.testable_by] = [];
+  grouped[p.testable_by].push(p);
+});
+
+const points = Object.entries(grouped).flatMap(([date, group]) =>
+  group.map((p, i) => {
+    const d = new Date(date);
+    const x = yearToX(d.getFullYear() + d.getMonth() / 12);
+    return { ...p, x, stackIndex: i, stackTotal: group.length };
+  })
+);
+
+const years = [];
+for (let y = minYear; y <= maxYear; y++) years.push(y);
+---
+<figure class="sbt" aria-label={`Scoreboard claim timeline: ${preds.length} predictions plotted from ${minYear} to ${maxYear}; today marker shown.`}>
+  <div class="sbt__svg-wrap">
+    <svg viewBox="0 0 800 220" preserveAspectRatio="xMidYMid meet" role="img">
+      <title>Five falsifiable claims on a timeline. Today and the testable-by dates plotted.</title>
+
+      {/* Axis */}
+      <line x1="40" y1="140" x2="760" y2="140" stroke="var(--c-mahogany, #250001)" stroke-width="0.8" />
+
+      {/* Year ticks + labels */}
+      {years.map((y) => {
+        const x = 40 + (yearToX(y) / 100) * 720;
+        return (
+          <g>
+            <line x1={x} y1="136" x2={x} y2="144" stroke="var(--c-mahogany, #250001)" stroke-width="0.6" />
+            <text x={x} y="162" text-anchor="middle" font-family="var(--f-mono)" font-size="10" fill="var(--fg-soft, #5a5550)">{y}</text>
+          </g>
+        );
+      })}
+
+      {/* NOW marker */}
+      <line
+        x1={40 + (yearToX(todayYear) / 100) * 720}
+        y1="40"
+        x2={40 + (yearToX(todayYear) / 100) * 720}
+        y2="150"
+        stroke="var(--c-tomato, #C44539)"
+        stroke-width="1"
+        stroke-dasharray="3 3"
+      />
+      <text
+        x={40 + (yearToX(todayYear) / 100) * 720}
+        y="32"
+        text-anchor="middle"
+        font-family="var(--f-mono)"
+        font-size="10"
+        font-weight="700"
+        letter-spacing="0.16em"
+        fill="var(--c-tomato, #C44539)"
+      >NOW</text>
+
+      {/* Claim markers */}
+      {points.map((p) => {
+        const x = 40 + (p.x / 100) * 720;
+        const baseY = 140;
+        const offsetY = p.stackIndex * 18;
+        const dotY = baseY - 22 - offsetY;
+        return (
+          <g>
+            <line x1={x} y1={baseY} x2={x} y2={dotY + 6} stroke="var(--c-tomato, #C44539)" stroke-width="0.8" opacity="0.45" />
+            <circle cx={x} cy={dotY} r="5" fill="var(--c-tomato, #C44539)" />
+            <text x={x} y={dotY + 3} text-anchor="middle" font-family="var(--f-mono)" font-size="8" font-weight="700" fill="var(--c-pearl, #F2ECC9)">{p.id}</text>
+          </g>
+        );
+      })}
+
+      {/* Caption */}
+      <text x="400" y="195" text-anchor="middle" font-family="var(--f-mono)" font-size="9" letter-spacing="0.14em" font-weight="700" fill="var(--fg, #ddd)">FIVE CLAIMS · TESTABLE-BY DATES</text>
+    </svg>
+  </div>
+
+  <div class="sbt__legend">
+    <ul role="list" class="sbt__legend-list">
+      {points.map((p) => {
+        const d = new Date(p.testable_by);
+        const label = d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short' });
+        return (
+          <li class="sbt__legend-item">
+            <a href={`#${p.id}`} class="sbt__legend-link">
+              <span class="sbt__legend-id">{p.id}</span>
+              <span class="sbt__legend-date">{label}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</figure>
+
+<style>
+  .sbt {
+    margin: 0;
+    padding: var(--s-4);
+    background: color-mix(in srgb, var(--c-pearl) 4%, transparent);
+    border-left: 2px solid var(--c-tomato);
+  }
+  .sbt__svg-wrap { width: 100%; }
+  .sbt__svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  .sbt__legend {
+    margin-block-start: var(--s-3);
+    padding-block-start: var(--s-3);
+    border-top: 1px solid var(--rule);
+  }
+  .sbt__legend-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+  }
+  .sbt__legend-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--s-2);
+    color: var(--fg-soft);
+    text-decoration: none;
+  }
+  .sbt__legend-link:hover { color: var(--c-tomato); }
+  .sbt__legend-id {
+    color: var(--c-tomato);
+    font-weight: 700;
+  }
+  .sbt__legend-date {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+</style>

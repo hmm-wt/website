@@ -4,6 +4,7 @@ import Scoreboard from '../components/Scoreboard.astro';
 import BettingWindow from '../components/BettingWindow.astro';
 import DataSection from '../components/DataSection.astro';
 import ReturnsTable from '../components/ReturnsTable.astro';
+import ScoreboardTimeline from '../components/ScoreboardTimeline.astro';
 ---
 <Base
   title="Scoreboard"
@@ -28,6 +29,17 @@ import ReturnsTable from '../components/ReturnsTable.astro';
       sub="The four-tier framing is what LPs underwrite against. The Median row is ILPA-comparable; Target is GP-underwritten; Bear and Tail trace the simulation downside."
     >
       <ReturnsTable />
+    </DataSection>
+
+    <DataSection
+      fignum="SB-00"
+      label="Claim timeline · Open through 2028"
+      title='Five claims plotted. <em>NOW</em> at 2026; testable-by dates 2027 and 2028.'
+      sub="Each claim resolves on a named date. Jump to a claim by clicking its label below the axis."
+      source="hmm Ventures Scoreboard · scoreboard.json"
+      basis="Five claims · testable-by dates · annual rescore window"
+    >
+      <ScoreboardTimeline />
     </DataSection>
 
     <DataSection
