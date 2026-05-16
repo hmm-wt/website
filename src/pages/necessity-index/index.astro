@@ -85,7 +85,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       fignum="NI-06"
       label="Detail tables · Per market and per Necessity"
       title='Drill-down: <em>regulation, tier, and cohort detail</em>.'
-      sub="Per-market and per-Necessity counts for the four-market universe. Heat-tinted by intensity."
+      sub="Per-market and per-Necessity counts for the four-market universe. Heat-tinted by intensity. Japan classified count pending dataset re-query; regulations and tier breakdown verified."
       source="hmm Ventures classified universe + Comprehensive Regulatory Dataset"
       basis="Per-market + per-Necessity joins · four-market filter"
     >
@@ -122,14 +122,14 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
     <DataSection
       fignum="NI-08"
       label="The crystallisation window · 2024 to 2030"
-      title='Thirty-four in-flight regulations. Peak density in <em>2026</em>.'
+      title='Thirty-four in-flight regulations. Peak density in <em>2027</em>.'
       sub="The window where regulator publications convert into operational compliance demand. Each market on a different clock."
       source="hmm Ventures Comprehensive Regulatory Dataset"
       basis="In-flight 2024 to 2030 · four-market subset"
     >
       <div class="ip__grid ip__grid--3">
         <IndexCard label="In-flight regulations 2024 to 2030" value={data.crystallisation_window.in_flight_2024_2030} accent />
-        <IndexCard label="Peak year" value={data.crystallisation_window.peak_year} />
+        <IndexCard label="Peak year" value={String(data.crystallisation_window.peak_year)} />
         <IndexCard label="Regulations in peak year" value={data.crystallisation_window.peak_year_count} accent />
       </div>
       <p class="ip__note ip__note--cta">

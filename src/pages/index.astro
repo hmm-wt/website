@@ -6,6 +6,17 @@ import MarketBlock from '../components/MarketBlock.astro';
 import ChartFigure from '../components/ChartFigure.astro';
 import PremiumWedge from '../components/charts/PremiumWedge.astro';
 import RegClockStrip from '../components/charts/RegClockStrip.astro';
+import { getCollection } from 'astro:content';
+
+// Citation count is computed live from doctrine footnotes — same logic as
+// /doctrine/references/. Single source of truth across surfaces.
+const doctrineEntries = await getCollection('doctrine');
+const footnoteRe = /^\[\^(\d+)\]:\s*.+?$/gm;
+const citationCount = doctrineEntries.reduce((acc, e) => {
+  const matches = (e.body || '').match(footnoteRe);
+  return acc + (matches ? matches.length : 0);
+}, 0);
+const chapterCount = doctrineEntries.length;
 ---
 <Base
   title="hmm Ventures"
@@ -87,7 +98,7 @@ import RegClockStrip from '../components/charts/RegClockStrip.astro';
           <span class="paths__kicker-l">Read</span>
           <h3 class="paths__h">The Necessity Doctrine</h3>
           <p class="paths__body">Ten chapters on the Five Necessities, the four markets, and the window in which the operational layer of regulated industries will be built.</p>
-          <p class="paths__stat">10 chapters  ·  24 cited sources  ·  ~10,000 words</p>
+          <p class="paths__stat">{chapterCount} chapters  ·  {citationCount} cited sources  ·  ~10,000 words</p>
         </a>
       </li>
       <li class="paths__cell">

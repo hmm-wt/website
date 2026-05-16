@@ -33,8 +33,9 @@ headline_metrics:
 |--------|-------|
 | Total regulations | 174 |
 | Enacted | 138 |
-| Projected / Expected | 34 |
+| Projected / Expected (in-flight) | 34 |
 | In parliament | 2 |
+| Total upcoming (projected + in-parliament) | 36 |
 | Tier 1 (direct barrier. Licence/approval required) | 137 |
 | Tier 2 (compelled buyers. Statutory penalties) | 37 |
 

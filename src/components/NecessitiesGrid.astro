@@ -24,8 +24,11 @@ const MARKETS = data.per_market.map((m) => ({
   t1: m.t1,
 }));
 
-const necTotals = data.per_necessity;
-const maxCount = Math.max(...necTotals.map((n) => n.in_thesis_companies));
+// Look up per-Necessity data by NAME (not by index). The JSON `per_necessity`
+// order does not match the display order in NECESSITIES, so an index-based
+// join (the previous bug) crossed labels and values.
+const necByName = new Map(data.per_necessity.map((n) => [n.name, n]));
+const maxCount = Math.max(...data.per_necessity.map((n) => n.in_thesis_companies));
 ---
 <section class="ng">
   <header class="ng__head">
@@ -37,8 +40,8 @@ const maxCount = Math.max(...necTotals.map((n) => n.in_thesis_companies));
   </header>
 
   <div class="ng__grid">
-    {NECESSITIES.map((n, i) => {
-      const necData = necTotals[i];
+    {NECESSITIES.map((n) => {
+      const necData = necByName.get(n.name);
       const intensity = necData ? necData.in_thesis_companies / maxCount : 0;
       return (
         <article
