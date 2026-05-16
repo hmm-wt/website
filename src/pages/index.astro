@@ -19,7 +19,10 @@ import RegClockStrip from '../components/charts/RegClockStrip.astro';
         <span class="hero__live"><span class="hero__live-dot pulse-tomato"></span><span class="hero__live-text">live</span></span>
       </div>
 
-      <h1 class="hero__sentence">Necessity is <span class="hero__accent">the&nbsp;thesis.</span></h1>
+      <h1 class="hero__sentence">
+        <span class="shutter-wipe" style="--shutter-delay: 80ms;">Necessity is</span>
+        <span class="hero__accent shutter-wipe" style="--shutter-delay: 520ms; --shutter-color: var(--c-tomato);">the&nbsp;thesis.</span>
+      </h1>
 
       <ul role="list" class="hero__multiling">
         <li lang="zh">刚需即论点</li>
@@ -59,7 +62,7 @@ import RegClockStrip from '../components/charts/RegClockStrip.astro';
   <section class="evidence container surface-light">
     <header class="evidence__head">
       <p class="kicker evidence__kicker">The evidence</p>
-      <h2 class="evidence__title">Enter at parity. Exit at premium.</h2>
+      <h2 class="evidence__title gavel-drop">Enter at parity. Exit at premium.</h2>
       <p class="evidence__lede">
         Four-market dataset. The T1 premium widens at every stage from pre-seed parity to a 2.12x cumulative multiple at Series D+. Exit incidence runs at 2.22x the unregulated rate.
       </p>
@@ -74,7 +77,7 @@ import RegClockStrip from '../components/charts/RegClockStrip.astro';
   <section class="paths container" aria-label="Three paths forward">
     <header class="paths__head">
       <p class="kicker paths__kicker">Three paths</p>
-      <h2 class="paths__title">Read, study, or watch.</h2>
+      <h2 class="paths__title gavel-drop">Read, study, or watch.</h2>
     </header>
 
     <ol class="paths__list" role="list">
