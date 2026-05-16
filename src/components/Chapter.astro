@@ -11,8 +11,8 @@ const { id, index, title, nextHref, nextTitle } = Astro.props;
 ---
 <section id={id} class="chapter">
   <header class="chapter__head">
-    <span class="chapter__idx">[Chapter {index}]</span>
-    <h2 class="chapter__title">{title}</h2>
+    <span class="chapter__idx stamp">[Chapter {index}]</span>
+    <h2 class="chapter__title gavel-drop">{title}</h2>
   </header>
   <div class="chapter__body prose">
     <slot />
