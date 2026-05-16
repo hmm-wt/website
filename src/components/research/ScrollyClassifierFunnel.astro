@@ -2,21 +2,22 @@
 /**
  * V1 — ScrollyClassifierFunnel.
  *
- * Five-stage funnel: 22,217 → 19,416 → 6,505 → 2,625 → 25. Evolves from
+ * Four-stage funnel: 22,217 → 19,416 → 6,505 → 2,625. Evolves from
  * web_classified_funnel() in CIM/html/charts.py. Wired to the shared scrolly
  * engine (src/scripts/scrolly.ts) via [data-scrolly] / .scrolly__stage.
+ *
+ * Public-surface scope: terminates at the seed-stage cohort. The fund-
+ * construction terminal (portfolio target) is LP-tier and not rendered here.
  *
  * Reduced motion + JS-disabled: every row reads in document order; the SVG
  * still renders all five trapezoids in their resting state.
  */
 import necessity from '../../data/necessity-index.json';
-import canonical from '../../data/im-canonical.json';
 
 const totalCompanies = necessity.universe.total_companies;
 const fourMarketCount = necessity.universe.four_market_companies;
 const inThesis = necessity.tier_shares.conservative_classifier_count;
 const seedCount = necessity.stage_funnel[2].count;
-const portfolio = canonical.fund.portfolio_target;
 
 const stages = [
   {
@@ -31,7 +32,7 @@ const stages = [
     count: fourMarketCount,
     pct: ((fourMarketCount / totalCompanies) * 100).toFixed(1) + '%',
     label: 'Four-market filter.',
-    annotation: 'Australia, Japan, New Zealand, Singapore only. The fund’s mandate scope. 19,416 companies remain — the addressable base for every claim that follows.'
+    annotation: 'Australia, Japan, New Zealand, Singapore only. The mandate scope. 19,416 companies remain. The addressable base for every claim that follows.'
   },
   {
     id: 's3',
@@ -45,20 +46,12 @@ const stages = [
     count: seedCount,
     pct: necessity.stage_funnel[2].share_pct + '%',
     label: 'Seed-stage cohort.',
-    annotation: '2,625 companies priced at seed. The fund’s entry-stage cohort. This is the live pipeline base — the population from which 25 first cheques will be drawn over the four-year investment period.'
-  },
-  {
-    id: 's5',
-    count: portfolio,
-    pct: ((portfolio / totalCompanies) * 100).toFixed(3) + '%',
-    label: 'The portfolio.',
-    annotation: 'Twenty-five first cheques. AUS 9 · JPN 8 · NZL 5 · SGP 3 at canonical $50M fund size. The terminal cohort the underwriting selects, the operator commitment closes, and the exit playbook compounds.'
+    annotation: '2,625 companies priced at seed. The live pipeline base. This is the addressable universe for the four-year investment period.'
   }
 ];
 
-// Funnel geometry. Sqrt scaling prevents the terminal stage collapsing to
-// invisibility — 25 vs 22,217 is a ~889:1 ratio that linear scaling cannot
-// represent honestly. Each trapezoid still narrows monotonically.
+// Funnel geometry. Sqrt scaling keeps the terminal stage legible. Each
+// trapezoid still narrows monotonically.
 const W = 800;
 const H = 520;
 const ml = 60, mr = 60, mt = 20, mb = 20;
@@ -101,7 +94,7 @@ const rows = stages.map((s, i) => {
       viewBox={`0 0 ${W} ${H}`}
       preserveAspectRatio="xMidYMid meet"
       role="img"
-      aria-label={`Classifier funnel: ${totalCompanies.toLocaleString('en-GB')} APAC companies narrowing to ${portfolio} portfolio positions across five stages.`}
+      aria-label={`Classifier funnel: ${totalCompanies.toLocaleString('en-GB')} APAC companies narrowing to ${seedCount.toLocaleString('en-GB')} seed-stage in-thesis targets across four stages.`}
     >
       {rows.map((r) => (
         <g class="scf__row stagger-row" data-stage={r.id} data-i={r.i}>
@@ -164,8 +157,7 @@ const rows = stages.map((s, i) => {
   [data-scrolly][data-active-stage="s1"] [data-stage="s1"] .scf__poly,
   [data-scrolly][data-active-stage="s2"] [data-stage="s2"] .scf__poly,
   [data-scrolly][data-active-stage="s3"] [data-stage="s3"] .scf__poly,
-  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__poly,
-  [data-scrolly][data-active-stage="s5"] [data-stage="s5"] .scf__poly {
+  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__poly {
     fill: var(--c-tomato);
     fill-opacity: 0.88;
     stroke: var(--c-tomato);
@@ -174,8 +166,7 @@ const rows = stages.map((s, i) => {
   [data-scrolly][data-active-stage="s1"] [data-stage="s1"] .scf__count,
   [data-scrolly][data-active-stage="s2"] [data-stage="s2"] .scf__count,
   [data-scrolly][data-active-stage="s3"] [data-stage="s3"] .scf__count,
-  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__count,
-  [data-scrolly][data-active-stage="s5"] [data-stage="s5"] .scf__count {
+  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__count {
     fill: var(--c-pearl);
     fill-opacity: 1;
     font-weight: 600;
@@ -183,8 +174,7 @@ const rows = stages.map((s, i) => {
   [data-scrolly][data-active-stage="s1"] [data-stage="s1"] .scf__pct,
   [data-scrolly][data-active-stage="s2"] [data-stage="s2"] .scf__pct,
   [data-scrolly][data-active-stage="s3"] [data-stage="s3"] .scf__pct,
-  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__pct,
-  [data-scrolly][data-active-stage="s5"] [data-stage="s5"] .scf__pct {
+  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__pct {
     fill: var(--c-pearl);
     fill-opacity: 0.85;
   }
@@ -227,8 +217,7 @@ const rows = stages.map((s, i) => {
   [data-scrolly][data-active-stage="s1"] .scrolly__stage[data-stage="s1"],
   [data-scrolly][data-active-stage="s2"] .scrolly__stage[data-stage="s2"],
   [data-scrolly][data-active-stage="s3"] .scrolly__stage[data-stage="s3"],
-  [data-scrolly][data-active-stage="s4"] .scrolly__stage[data-stage="s4"],
-  [data-scrolly][data-active-stage="s5"] .scrolly__stage[data-stage="s5"] {
+  [data-scrolly][data-active-stage="s4"] .scrolly__stage[data-stage="s4"] {
     border-left-color: var(--c-tomato);
     background: color-mix(in srgb, var(--c-tomato) 6%, transparent);
   }

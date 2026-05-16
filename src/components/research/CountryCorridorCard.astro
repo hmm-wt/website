@@ -4,7 +4,11 @@
  *
  * Single market card. Used by CountryCorridorGrid. Hover or focus expands
  * the card horizontally (via flex-grow), revealing the in-flight reg list
- * and the portfolio allocation. Fauna glyph as the visual anchor.
+ * and the strategic capital weighting. Fauna glyph as the visual anchor.
+ *
+ * Public-surface scope: shows strategic capital weighting (%), not fund-
+ * construction integers (per-market position counts). Position counts are
+ * LP-tier and held in the private IM.
  */
 interface Reg {
   id: string;
@@ -23,7 +27,7 @@ interface Props {
   regulations: number;
   t1: number;
   t2: number;
-  portfolioAllocation: number;  // 9 / 8 / 5 / 3
+  capitalWeightingPct: number;  // 35 / 30 / 20 / 15
   inFlightRegs: Reg[];
   href: string;            // /thesis/australia/
 }
@@ -31,7 +35,7 @@ interface Props {
 const {
   code, legacyCode, name, fauna,
   inThesisCompanies, regulations, t1, t2,
-  portfolioAllocation, inFlightRegs, href
+  capitalWeightingPct, inFlightRegs, href
 } = Astro.props;
 
 const topRegs = inFlightRegs.slice(0, 3);
@@ -63,8 +67,8 @@ const topRegs = inFlightRegs.slice(0, 3);
         <span class="ccc__stat-label">Regulations · {t1} T1 / {t2} T2</span>
       </div>
       <div class="ccc__stat">
-        <span class="ccc__stat-value">{portfolioAllocation}</span>
-        <span class="ccc__stat-label">Portfolio positions</span>
+        <span class="ccc__stat-value">{capitalWeightingPct}%</span>
+        <span class="ccc__stat-label">Capital weighting</span>
       </div>
     </div>
 

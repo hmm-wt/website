@@ -5,25 +5,27 @@
  * Four-market snapshot. Hover/focus expands the active card horizontally.
  * Fauna glyph + AUS·JPN·NZL·SGP country code as the visual anchor.
  *
+ * Public-surface scope: strategic capital weighting (%) shown per market.
+ * Per-market position counts and fund-construction details are LP-tier
+ * and held in the private IM.
+ *
  * Data is composed from:
  *   - /src/data/necessity-index.json — per_market (regulations, T1/T2 split, companies)
- *   - /src/data/im-canonical.json — fund.portfolio_split (AU 9 / JP 8 / NZ 5 / SG 3)
  *   - /src/data/crystallisation-window.json — in-flight regulations per market
+ *   - Strategic weighting per IM §6.1 (AU 35% / JP 30% / NZ 20% / SG 15%)
  */
 import CountryCorridorCard from './CountryCorridorCard.astro';
 import necessity from '../../data/necessity-index.json';
-import canonical from '../../data/im-canonical.json';
 import calendar from '../../data/crystallisation-window.json';
 
 const meta = [
-  { legacy: 'AU', code: 'AUS', name: 'Australia',   fauna: '/fauna/hmm-fauna-au-wattle.svg',         href: '/thesis/australia/' },
-  { legacy: 'JP', code: 'JPN', name: 'Japan',       fauna: '/fauna/hmm-fauna-jp-chrysanthemum.svg',  href: '/thesis/japan/' },
-  { legacy: 'NZ', code: 'NZL', name: 'New Zealand', fauna: '/fauna/hmm-fauna-nz-koru.svg',           href: '/thesis/new-zealand/' },
-  { legacy: 'SG', code: 'SGP', name: 'Singapore',   fauna: '/fauna/hmm-fauna-sg-vanda.svg',          href: '/thesis/singapore/' }
+  { legacy: 'AU', code: 'AUS', name: 'Australia',   fauna: '/fauna/hmm-fauna-au-wattle.svg',         href: '/thesis/australia/', weight: 35 },
+  { legacy: 'JP', code: 'JPN', name: 'Japan',       fauna: '/fauna/hmm-fauna-jp-chrysanthemum.svg',  href: '/thesis/japan/',     weight: 30 },
+  { legacy: 'NZ', code: 'NZL', name: 'New Zealand', fauna: '/fauna/hmm-fauna-nz-koru.svg',           href: '/thesis/new-zealand/', weight: 20 },
+  { legacy: 'SG', code: 'SGP', name: 'Singapore',   fauna: '/fauna/hmm-fauna-sg-vanda.svg',          href: '/thesis/singapore/', weight: 15 }
 ];
 
 const perMarket = new Map(necessity.per_market.map((m) => [m.market, m]));
-const portfolioSplit = canonical.fund.portfolio_split as Record<string, number>;
 
 const cards = meta.map((m) => {
   const market = perMarket.get(m.legacy);
@@ -36,7 +38,6 @@ const cards = meta.map((m) => {
     regulations: market?.regulations ?? 0,
     t1: market?.t1 ?? 0,
     t2: market?.t2 ?? 0,
-    portfolioAllocation: portfolioSplit[m.legacy] ?? 0,
     inFlightRegs: inFlight
   };
 });
@@ -53,7 +54,7 @@ const cards = meta.map((m) => {
         regulations={c.regulations}
         t1={c.t1}
         t2={c.t2}
-        portfolioAllocation={c.portfolioAllocation}
+        capitalWeightingPct={c.weight}
         inFlightRegs={c.inFlightRegs}
         href={c.href}
       /></div>
@@ -61,7 +62,7 @@ const cards = meta.map((m) => {
   </div>
   <footer class="ccg__foot">
     <p class="kicker">
-      Source: hmm Ventures classified universe ({necessity.as_of}). Portfolio split per IM §6.1. In-flight regulations refreshed monthly.
+      Source: hmm Ventures classified universe ({necessity.as_of}). Strategic weighting per IM §6.1. In-flight regulations refreshed monthly. Per-market position counts and fund-construction terms are LP-tier and held in the private IM.
     </p>
   </footer>
 </section>
