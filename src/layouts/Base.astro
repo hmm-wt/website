@@ -99,5 +99,156 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
         document.querySelectorAll('.reveal, .reveal-group').forEach((el) => observer.observe(el));
       })();
     </script>
+
+    <script is:inline>
+      /**
+       * Motion primitive driver. Fires CSS-driven primitives and JS-driven
+       * (ticker-roll, tape-print) on viewport entry. Once per element per
+       * session via data-played="true".
+       *
+       * Class hooks expected:
+       *  - .shutter-wipe / .gavel-drop / .stamp / .dossier-turn / .clamp /
+       *    .heavy-drop / .redaction-reveal — toggle data-played on the
+       *    element itself.
+       *  - .stagger-row inside a .motion-group — toggle data-played on the
+       *    group; children inherit via CSS selectors.
+       *  - .wedge-draw inside an SVG inside a .motion-group — same pattern.
+       *  - .ticker-roll — JS rolls digit text from 0 to its final numeric
+       *    value over ~360ms.
+       *  - .tape-print — JS types characters left-to-right at 60ch/sec.
+       *
+       * Continuous animations (.now-pulse, .breathe) loop independently and
+       * do not need this driver.
+       */
+      (function () {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Element classes that trigger when the element itself enters viewport.
+        const elementHooks = [
+          '.shutter-wipe',
+          '.gavel-drop',
+          '.stamp',
+          '.dossier-turn',
+          '.clamp',
+          '.heavy-drop',
+          '.redaction-reveal'
+        ];
+
+        // Group classes that trigger CSS-driven children (.stagger-row, .wedge-draw inside SVG).
+        const groupHooks = ['.motion-group', 'figure.imfig'];
+
+        // ── TICKER-ROLL: animate a number from a low value up to final.
+        function tickerRoll(el) {
+          if (el.dataset.played === 'true') return;
+          el.dataset.played = 'true';
+          // Extract the canonical final value from textContent; strip commas/percent/x.
+          const raw = (el.textContent || '').trim();
+          const numMatch = raw.match(/[\d,.]+/);
+          if (!numMatch) return;
+          const finalStr = numMatch[0];
+          const final = parseFloat(finalStr.replace(/,/g, ''));
+          if (Number.isNaN(final)) return;
+          const prefix = raw.slice(0, numMatch.index);
+          const suffix = raw.slice(numMatch.index + finalStr.length);
+          // Detect decimal places to preserve format
+          const dotIdx = finalStr.indexOf('.');
+          const decimals = dotIdx >= 0 ? finalStr.length - dotIdx - 1 : 0;
+          // Detect comma formatting
+          const hasCommas = finalStr.indexOf(',') >= 0;
+          const duration = 360;
+          const start = performance.now();
+          if (reduced) {
+            el.textContent = raw;
+            return;
+          }
+          function format(v) {
+            let s = decimals > 0 ? v.toFixed(decimals) : Math.round(v).toString();
+            if (hasCommas && decimals === 0) {
+              s = v.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            } else if (hasCommas && decimals > 0) {
+              s = v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+            }
+            return prefix + s + suffix;
+          }
+          function tick(t) {
+            const k = Math.min(1, (t - start) / duration);
+            // easeOutCubic
+            const p = 1 - Math.pow(1 - k, 3);
+            el.textContent = format(final * p);
+            if (k < 1) requestAnimationFrame(tick);
+            else el.textContent = raw;
+          }
+          requestAnimationFrame(tick);
+        }
+
+        // ── TAPE-PRINT: type characters into the element at ~60ch/sec.
+        function tapePrint(el) {
+          if (el.dataset.played === 'true') return;
+          el.dataset.played = 'true';
+          const text = el.textContent || '';
+          if (reduced || text.length === 0) {
+            el.textContent = text;
+            return;
+          }
+          el.textContent = '';
+          el.classList.add('is-typing');
+          const cps = 60;
+          const interval = 1000 / cps;
+          let i = 0;
+          function step() {
+            if (i >= text.length) {
+              el.classList.remove('is-typing');
+              return;
+            }
+            el.textContent = text.slice(0, ++i);
+            setTimeout(step, interval);
+          }
+          step();
+        }
+
+        if (!('IntersectionObserver' in window) || reduced) {
+          // No IO or reduced motion: mark everything played so CSS reaches end states immediately
+          document.querySelectorAll(elementHooks.concat(groupHooks).join(',')).forEach((el) => el.setAttribute('data-played', 'true'));
+          document.querySelectorAll('.ticker-roll').forEach(tickerRoll);
+          document.querySelectorAll('.tape-print').forEach(tapePrint);
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const el = entry.target;
+              el.setAttribute('data-played', 'true');
+              // Drive ticker-roll children inside this group/element
+              el.querySelectorAll('.ticker-roll').forEach(tickerRoll);
+              el.querySelectorAll('.tape-print').forEach(tapePrint);
+              observer.unobserve(el);
+            });
+          },
+          { rootMargin: '-5% 0px -10% 0px', threshold: 0.05 }
+        );
+
+        const selector = elementHooks.concat(groupHooks).join(',');
+        document.querySelectorAll(selector).forEach((el) => observer.observe(el));
+
+        // Ticker/tape elements not inside any motion hook also play when they enter
+        const standaloneObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const el = entry.target;
+              if (el.classList.contains('ticker-roll')) tickerRoll(el);
+              else if (el.classList.contains('tape-print')) tapePrint(el);
+              standaloneObserver.unobserve(el);
+            });
+          },
+          { rootMargin: '-5% 0px -10% 0px', threshold: 0.05 }
+        );
+        document.querySelectorAll('.ticker-roll, .tape-print').forEach((el) => {
+          if (el.dataset.played !== 'true') standaloneObserver.observe(el);
+        });
+      })();
+    </script>
   </body>
 </html>
