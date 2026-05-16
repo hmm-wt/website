@@ -14,11 +14,11 @@ const taglines: Tagline[] = [
   { lang: 'mi', text: 'Ko te hiahia, ko te kaupapa' }
 ];
 
-const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string }[] = [
-  { market: 'SG', name: 'Singapore' },
-  { market: 'JP', name: 'Japan' },
-  { market: 'AU', name: 'Australia' },
-  { market: 'NZ', name: 'New Zealand' }
+const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string; slug: string }[] = [
+  { market: 'SG', name: 'Singapore', slug: 'singapore' },
+  { market: 'JP', name: 'Japan', slug: 'japan' },
+  { market: 'AU', name: 'Australia', slug: 'australia' },
+  { market: 'NZ', name: 'New Zealand', slug: 'new-zealand' }
 ];
 ---
 <footer class="footer">
@@ -53,8 +53,10 @@ const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string }[] = [
       <ul role="list" class="footer__locations">
         {locations.map((loc) => (
           <li class="footer__location">
-            <span class="footer__location-mark"><JurisdictionMark market={loc.market} size={20} /></span>
-            <span class="footer__location-name">{loc.name}</span>
+            <a href={`/thesis/${loc.slug}/`} class="footer__location-link">
+              <span class="footer__location-mark"><JurisdictionMark market={loc.market} size={20} /></span>
+              <span class="footer__location-name">{loc.name}</span>
+            </a>
           </li>
         ))}
       </ul>
@@ -136,11 +138,19 @@ const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string }[] = [
     list-style: none;
   }
   .footer__location {
+    color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+  }
+  .footer__location-link {
     display: flex;
     align-items: center;
     gap: var(--s-2);
-    color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 0;
+    padding: 0;
+    transition: color var(--mo-tick) var(--ease-golden);
   }
+  .footer__location-link:hover { color: var(--c-tomato); border-bottom: 0; }
   .footer__location-mark { color: var(--c-tomato); display: inline-flex; flex-shrink: 0; }
   .footer__location-name { font-size: calc(var(--fs-xs) * 0.96); }
 

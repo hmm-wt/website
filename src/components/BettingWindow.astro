@@ -7,6 +7,35 @@ const open = scoreboard.window_open;
 const closeLabel = new Date(closes).toLocaleDateString('en-GB', {
   year: 'numeric', month: 'long', day: 'numeric'
 });
+
+// SSR fallback for the countdown: compute days remaining at build time so the
+// span never renders as a literal "..." for crawlers, no-JS users, or first
+// paint. Client-side script then takes over and updates every minute.
+let ssrDays: string;
+let ssrUnit: string;
+if (open) {
+  const ms = new Date(closes).getTime() - Date.now();
+  if (ms <= 0) {
+    ssrDays = '0';
+    ssrUnit = 'days · closed';
+  } else {
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+    if (days > 1) {
+      ssrDays = String(days);
+      ssrUnit = 'days';
+    } else if (days === 1) {
+      ssrDays = `1d ${hours}h`;
+      ssrUnit = 'remaining';
+    } else {
+      ssrDays = `${hours}h`;
+      ssrUnit = 'remaining';
+    }
+  }
+} else {
+  ssrDays = '0';
+  ssrUnit = 'days';
+}
 ---
 <aside class={`bw ${open ? 'is-open' : 'is-closed'}`} data-window-closes={closes} data-window-open={open ? 'true' : 'false'}>
   <header class="bw__head">
@@ -18,8 +47,8 @@ const closeLabel = new Date(closes).toLocaleDateString('en-GB', {
     {open ? (
       <>
         <p class="bw__count" data-bw-count>
-          <span class="bw__count-num" data-bw-num>...</span>
-          <span class="bw__count-unit" data-bw-unit>days</span>
+          <span class="bw__count-num" data-bw-num>{ssrDays}</span>
+          <span class="bw__count-unit" data-bw-unit>{ssrUnit}</span>
         </p>
         <p class="bw__close">
           Window closes <time datetime={closes}>{closeLabel}</time>.
