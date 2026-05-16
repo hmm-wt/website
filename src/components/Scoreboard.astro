@@ -45,9 +45,9 @@ const fmtDate = (iso?: string) =>
     {predictions.map((p) => {
       const testLabel = new Date(p.testable_by).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
       return (
-        <li class="sb__item surface-warm" id={p.id}>
+        <li class="sb__item surface-warm dossier-turn" id={p.id}>
           <header class="sb__item-head">
-            <span class="sb__item-id">{p.id}</span>
+            <span class="sb__item-id stamp">{p.id}</span>
             <StatusIndicator status={p.status} />
             <time class="sb__item-test" datetime={p.testable_by}>
               <span class="sb__item-test-label">Testable by</span>

@@ -13,7 +13,7 @@ import ScoreboardTimeline from '../components/ScoreboardTimeline.astro';
   <section class="sb-page container">
     <header class="sb-page__head">
       <p class="kicker">Scoreboard</p>
-      <h1 class="sb-page__title">Five claims. Dated. Sourced. Bettable.</h1>
+      <h1 class="sb-page__title gavel-drop">Five claims. Dated. Sourced. <span class="sb-page__bettable stamp">Bettable.</span></h1>
       <p class="sb-page__lede">
         Each prediction in The Necessity Doctrine is falsifiable, dated, and traceable to a public source. The scoreboard is where the claims live in the open.
       </p>
@@ -69,6 +69,10 @@ import ScoreboardTimeline from '../components/ScoreboardTimeline.astro';
     font-size: var(--fs-3xl);
     line-height: var(--lh-tight);
     margin: 0;
+  }
+  .sb-page__bettable {
+    color: var(--c-tomato);
+    font-style: italic;
   }
   .sb-page__lede {
     font-size: var(--fs-lg);
