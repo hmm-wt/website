@@ -135,3 +135,9 @@ This is not a claim that T1 / T2 is the only path to venture returns. Unregulate
 - Funding-premium analysis, 2024 four-market deal data. Median round size for regulated vs unregulated cohorts at each stage.
 - Exit-rate analysis, 2018–2024 four-market observation window. Strategic and financial-sponsor acquisitions, IPOs, reverse mergers.
 - Methodology and classification rules: Appendix F, The Necessity Index, v1.0.
+
+---
+
+> Full provenance and the deployed pipeline are documented in the IM.
+>
+> [Request the IM →](/lps/)

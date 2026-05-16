@@ -81,6 +81,14 @@ The exit path is thinner than in the United States. ASX micro-cap listings exist
 
 ---
 
+> **What this means for the fund**
+>
+> Australia is a portfolio construction market. The fund deploys here for the T1 cohort against the superannuation-funded capital base. It is not a superannuation access product. LP capital is treated as a portfolio construction question, not a fund-level certainty.
+>
+> [Request the IM →](/lps/)
+
+---
+
 *Chapter 6 turns to New Zealand, where the entry valuation discount is largest, the failure rate is highest, and the capital efficiency of the regulated-sector seed thesis is at its sharpest.*
 
 ---

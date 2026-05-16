@@ -89,6 +89,14 @@ The pool is small. The selection bar is high. The capital required to participat
 
 ---
 
+> **What this means for the fund**
+>
+> New Zealand is the capital-efficiency leg of the four-market portfolio. Smallest classified cohort, highest grant intensity, sharpest seed economics. The fund deploys here for unit-economic discipline against the regulatory architecture, not for fund-of-record scale.
+>
+> [Request the IM →](/lps/)
+
+---
+
 *Chapter 7 examines Singapore: the regional foothold, the regulatory sandbox, and the function it serves in a four-market portfolio.*
 
 ---

@@ -562,4 +562,10 @@ Zero safety-critical regulatory repeals identified across all four markets in th
 
 ---
 
-*Source: HMM Ventures Comprehensive Regulatory Dataset. 725 regulations, 64 countries, 13 sectors. Generated 6 April 2026.*
+*Source: hmm Ventures Comprehensive Regulatory Dataset. 725 regulations, 64 countries, 13 sectors. Generated 6 April 2026.*
+
+---
+
+> The full dataset, the deployed pipeline, and the in-mandate filter are documented in the IM.
+>
+> [Request the IM →](/lps/)
