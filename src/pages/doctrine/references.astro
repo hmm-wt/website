@@ -7,9 +7,34 @@ const entries = (await getCollection('doctrine')).sort(
   (a, b) => a.data.chapter - b.data.chapter
 );
 
-interface Footnote { num: string; text: string; }
+interface Segment { kind: 'text' | 'link'; value: string; href?: string; }
+interface Footnote { num: string; text: string; segments: Segment[]; }
 
 const footnoteRe = /^\[\^(\d+)\]:\s*(.+?)$/gm;
+const urlRe = /(https?:\/\/[^\s<>"')\]]+)/g;
+
+function segmentise(text: string): Segment[] {
+  const parts: Segment[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  urlRe.lastIndex = 0;
+  while ((match = urlRe.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push({ kind: 'text', value: text.slice(lastIndex, match.index) });
+    }
+    // Strip trailing punctuation that's clearly part of the prose, not the URL.
+    let url = match[0];
+    const trailing = url.match(/[.,;:!?]+$/);
+    if (trailing) url = url.slice(0, -trailing[0].length);
+    parts.push({ kind: 'link', value: url, href: url });
+    if (trailing) parts.push({ kind: 'text', value: trailing[0] });
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < text.length) {
+    parts.push({ kind: 'text', value: text.slice(lastIndex) });
+  }
+  return parts.length > 0 ? parts : [{ kind: 'text', value: text }];
+}
 
 const chapters = entries.map((e) => {
   const body = e.body || '';
@@ -17,7 +42,8 @@ const chapters = entries.map((e) => {
   let m: RegExpExecArray | null;
   footnoteRe.lastIndex = 0;
   while ((m = footnoteRe.exec(body)) !== null) {
-    fns.push({ num: m[1], text: m[2].trim() });
+    const text = m[2].trim();
+    fns.push({ num: m[1], text, segments: segmentise(text) });
   }
   return {
     chapter: e.data.chapter,
@@ -57,7 +83,11 @@ const total = chapters.reduce((acc, c) => acc + c.footnotes.length, 0);
             {c.footnotes.map((fn) => (
               <li class="ref__item" id={`ch${c.chapter}-${fn.num}`}>
                 <span class="ref__num">[{fn.num}]</span>
-                <span class="ref__text">{fn.text}</span>
+                <span class="ref__text">{fn.segments.map((seg) => (
+                  seg.kind === 'link'
+                    ? <a href={seg.href} target="_blank" rel="noopener noreferrer">{seg.value}</a>
+                    : <Fragment>{seg.value}</Fragment>
+                ))}</span>
               </li>
             ))}
           </ol>
