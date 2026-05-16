@@ -13,9 +13,9 @@ headline_metrics:
   - { label: "Underwriting framework", value: "4 tiers" }
   - { label: "Simulation iterations", value: "1,000" }
   - { label: "Distribution basis", value: "LP-Net" }
-  - { label: "Waterfall", value: "European, 8% pref" }
-  - { label: "Carry", value: "80 / 20 over pref" }
-  - { label: "Specific tier values", value: "LP-only · IM" }
+  - { label: "Bridge levers", value: "Survival · Win-rate · Exit premium" }
+  - { label: "Empirical anchor (exit-rate)", value: "2.22x T1 vs unregulated" }
+  - { label: "Specific tier values + fund terms", value: "LP-only · IM" }
 ---
 
 A single point estimate is not how an LP underwrites a fund. The same Monte Carlo distribution reads as four discrete tiers. Each tier is a percentile of the same simulation, not a separate forecast.
@@ -50,9 +50,9 @@ Levers compound rather than add. Bridge and simulation are two views of the same
 
 ## Why Gross and Net differ
 
-The fund puts capital into companies (gross). The LP receives what is left after management fees and carried interest (net). The Gross-to-Net gap reflects a 10-year fee chain and the GP's profit share.
+Gross is what the fund puts into companies. Net is what the LP receives after fund-level fees and the GP's profit share. The gap between Gross and Net is the standard seed-stage VC fee architecture applied over the fund's term.
 
-The spread between Gross IRR and Net LP IRR reflects management fees, the 8% compounding preferred return, and 20% carry over pref. This spread sits in the industry-standard band for seed-stage VC funds.
+Specific fund terms — management fee schedule, preferred return rate, GP catch-up mechanism, waterfall structure, carry percentage — are LP-tier and held in the private IM. The spread between Gross and Net sits inside the industry-standard band for seed-stage VC funds.
 
 ## Specific tier values
 
@@ -67,8 +67,8 @@ Past performance is not indicative of future results. Simulated returns are mode
 ## Sources
 
 - Monte Carlo simulation framework, scenario R12 v3.3 JIT, 2026-04-24. Seed canonical. 1,000 iterations.
-- LP-Net basis. European waterfall, 8% compounding pref, 100% GP catch-up, 80 / 20 split.
-- IM v3.8.3 §6.1 (Fund structure), §6.2 (Return Bridge and Monte Carlo baseline), Appendix B (MC Methodology).
+- LP-Net basis. Specific waterfall mechanics held in the private IM.
+- IM v3.8.3 §6.1 (Fund structure), §6.2 (Return Bridge and Monte Carlo baseline), Appendix B (MC Methodology), §8 (Fund Terms).
 
 > Specific tier values, the full percentile strip, sensitivity tables, and the per-region parameter set are in the IM, available to qualified investors under the fund's offering framework.
 >
