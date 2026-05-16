@@ -190,12 +190,20 @@ const isResearchCurrent = path.startsWith('/research/');
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initNavToggles(); initSheet(); });
-  } else {
+  function bootNav() {
     initNavToggles();
     initSheet();
   }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootNav);
+  } else {
+    bootNav();
+  }
+  // Re-bind on Astro View Transitions navigation. The DOM is replaced and
+  // any handlers attached to the prior page's nodes are lost. Without this
+  // the hamburger silently stops working after the first VT swap.
+  document.addEventListener('astro:page-load', bootNav);
 </script>
 
 <style>
