@@ -5,8 +5,15 @@ type NavItem =
 
 const items: NavItem[] = [
   { href: '/doctrine/', label: 'Doctrine' },
-  { href: '/research/', label: 'Research' },
-  { href: '/necessity-index/', label: 'Index' },
+  {
+    label: 'Research',
+    children: [
+      { href: '/research/', label: 'Hub' },
+      { href: '/research/data/necessity-index/', label: 'Necessity Index' },
+      { href: '/research/data/calendar/', label: 'Crystallisation Window' },
+      { href: '/research/data/scoreboard/', label: 'Scoreboard' }
+    ]
+  },
   {
     label: 'Markets',
     children: [
@@ -16,7 +23,6 @@ const items: NavItem[] = [
       { href: '/thesis/singapore/', label: 'Singapore' }
     ]
   },
-  { href: '/scoreboard/', label: 'Scoreboard' },
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' }
 ];
@@ -25,6 +31,7 @@ const path = Astro.url.pathname;
 const isCurrent = (href: string) =>
   path === href || (href !== '/' && path.startsWith(href));
 const isMarketsCurrent = path.startsWith('/thesis/');
+const isResearchCurrent = path.startsWith('/research/');
 ---
 <header class="nav" data-nav>
   <div class="container nav__inner">
@@ -53,7 +60,7 @@ const isMarketsCurrent = path.startsWith('/thesis/');
         {items.map((item) => (
           'children' in item ? (
             <li class="nav__group">
-              <button type="button" class={`nav__link nav__link--toggle ${isMarketsCurrent ? 'is-current' : ''}`} aria-haspopup="true" aria-expanded="false">
+              <button type="button" class={`nav__link nav__link--toggle ${(item.label === 'Markets' && isMarketsCurrent) || (item.label === 'Research' && isResearchCurrent) ? 'is-current' : ''}`} aria-haspopup="true" aria-expanded="false">
                 {item.label} <span aria-hidden="true">▾</span>
               </button>
               <ul role="list" class="nav__submenu">
@@ -93,7 +100,7 @@ const isMarketsCurrent = path.startsWith('/thesis/');
       {items.map((item) => (
         'children' in item ? (
           <li class="nav-sheet__group">
-            <details class={isMarketsCurrent ? 'nav-sheet__details' : 'nav-sheet__details'}>
+            <details class="nav-sheet__details" open={(item.label === 'Markets' && isMarketsCurrent) || (item.label === 'Research' && isResearchCurrent)}>
               <summary class="nav-sheet__summary">{item.label}</summary>
               <ul role="list" class="nav-sheet__sublist">
                 {item.children.map((c) => (

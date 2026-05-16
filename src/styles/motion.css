@@ -445,6 +445,42 @@ html[data-hmm-played="true"] .hmm-cadence .hmm-dot--open {
 .ellipsis-cadence[data-played="true"] > *:nth-child(3) { animation: hmm-dot var(--beat-1) var(--ease-strike) calc(var(--beat-1) * 2) forwards; }
 
 /* ────────────────────────────────────────────────────────── */
+/* 12. SCROLL-PROGRESS                                         */
+/* Top-edge progress bar for scrollytelling layouts. Width    */
+/* set inline by /src/scripts/scrolly.ts. No animation by     */
+/* default — the JS sets width directly so the bar tracks     */
+/* the scroll position 1:1 without lag.                       */
+/* ────────────────────────────────────────────────────────── */
+.scroll-progress {
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--c-tomato);
+  width: 0;
+  z-index: 40;
+  transition: width 80ms linear;
+  transform-origin: left center;
+}
+
+/* ────────────────────────────────────────────────────────── */
+/* 13. PANEL-SLIDE                                             */
+/* Side panel slide-in from the right. Used by interactive    */
+/* surfaces (DecisionTreeBranch, ExitChronograph) when a node */
+/* or chip is selected. 320ms print-out cadence.              */
+/* ────────────────────────────────────────────────────────── */
+.panel-slide {
+  opacity: 0;
+  transform: translateX(16px);
+  transition: opacity var(--speed-print) var(--ease-print),
+              transform var(--speed-print) var(--ease-print);
+}
+.panel-slide[data-open="true"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ────────────────────────────────────────────────────────── */
 /* prefers-reduced-motion contract                            */
 /* All transforms collapse to identity; only opacity fades    */
 /* survive. Continuous loops halve in amplitude (still alive  */
@@ -504,5 +540,12 @@ html[data-hmm-played="true"] .hmm-cadence .hmm-dot--open {
   }
   .redaction-permanent::before {
     /* Permanent redaction stays visible — it's content, not motion */
+  }
+  .scroll-progress {
+    transition: none !important;
+  }
+  .panel-slide {
+    transition: opacity 80ms linear !important;
+    transform: none !important;
   }
 }

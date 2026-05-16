@@ -17,6 +17,9 @@ headline_metrics:
   - { label: "Cumulative funding multiple, pre-seed to D+", value: "1.09x → 2.12x" }
   - { label: "Exit rate multiple, regulated vs unregulated", value: "2.22x" }
 ---
+import PremiumWedge from '../../components/charts/PremiumWedge.astro';
+import RoundLadder from '../../components/research/RoundLadder.astro';
+import ExitChronograph from '../../components/research/ExitChronograph.astro';
 
 **Generated:** 12 May 2026
 **Markets:** Australia, Japan, New Zealand, Singapore
@@ -61,8 +64,7 @@ Of the 6,505 in scope, 2,625 are seed-stage. That is the addressable universe fo
 
 ## Round-size graduation
 
-![Regulated vs unregulated round-size multiples by stage. The premium widens to 1.53x at Series C.](/charts/regulated_vs_unreg_multiples.png)
-<small>Source: hmm Ventures funding-premium analysis, 2024 four-market dataset. Median round size by stage.</small>
+<RoundLadder />
 
 The premium widens with stage.
 
@@ -79,8 +81,7 @@ The mechanism: each cleared regulatory hurdle is an asset that does not decay. L
 
 ## Cumulative funding graduation
 
-![The cumulative funding premium widens from 1.09x at pre-seed to 2.12x at Series D+.](/charts/fig_C-A_premium_wedge.png)
-<small>Source: hmm Ventures funding-premium analysis, 2024 four-market dataset.</small>
+<PremiumWedge />
 
 By Series D+, a T1 company that survives has raised more than twice the capital of an unregulated peer that survives to the same stage. The asymmetry is not seed-driven. At seed the premium is 1.12x (parity). The asymmetry is built stage by stage as the regulatory barrier becomes the rationale for each subsequent round.
 
@@ -88,8 +89,7 @@ By Series D+, a T1 company that survives has raised more than twice the capital 
 
 ## Exit graduation
 
-![Regulated vs unregulated exit incidence and value comparables, 2018-2024.](/charts/exit_comps.png)
-<small>Source: hmm Ventures exit-rate analysis, 2018–2024 four-market observation window.</small>
+<ExitChronograph />
 
 The strongest single figure in the dataset is the exit-rate differential.
 
@@ -99,7 +99,7 @@ The strongest single figure in the dataset is the exit-rate differential.
 | Unregulated | 6.03% |
 | **Multiple** | **2.22x** |
 
-A T1 / T2 company is more than twice as likely to exit as an unregulated peer. Exits appear across Biomedical (TGA / PMDA / HSA-cleared acquirers), Power (utility-coupled offtake), Critical Materials (supply-chain integrity acquirers), and Financial Services / Autonomous (licensed-incumbent acquirers).
+A T1 / T2 company is more than twice as likely to exit as an unregulated peer. Exits appear across Biomedical (TGA / PMDA / HSA-cleared acquirers), Power (utility-coupled offtake), Critical Materials (supply-chain integrity acquirers), and Autonomous (licensed-incumbent acquirers).
 
 The acquirer's published rationale cites regulatory infrastructure, licensing maturity, or approved networks as the deal driver. The acquirer is buying time. The cleared pathway is the asset.
 

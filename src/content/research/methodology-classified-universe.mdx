@@ -1,0 +1,85 @@
+---
+title: Methodology. The classified universe.
+summary: How each figure on the public Index is produced, the source datasets behind the screen, and the steps required to reproduce the result.
+date: 2026-04-08
+version: v1.0
+status: live
+audience: researchers
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "reference_dataset_classified_2026-04-08.csv; regulations_comprehensive.json; four_market_sector_tier_breakdown_2026-04-07.csv."
+necessities: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+headline_metrics:
+  - { label: "Companies classified", value: "22,217" }
+  - { label: "Four-market subset", value: "19,416" }
+  - { label: "Regulations (global)", value: "725" }
+  - { label: "Four-market regulations", value: "174" }
+  - { label: "Conservative classifier share", value: "33.5%" }
+  - { label: "Refresh cadence", value: "Quarterly" }
+---
+import ClassifiedFunnel from '../../components/charts/ClassifiedFunnel.astro';
+
+The Necessity Index is a public, quarterly-refreshed data product that summarises the hmm Ventures classified universe of APAC technology companies and the regulatory architecture they operate against. This page documents how each figure on the index is produced, the source datasets, and the steps required to reproduce the result.
+
+<ClassifiedFunnel />
+
+## Source datasets
+
+The Index draws from three primary datasets, all maintained as part of the fund's continuous research operation.
+
+**Classified company universe.** 22,217 APAC technology companies enriched from licensed commercial data feeds (domain, registry, funding, headcount, location) and classified against the T1 / T2 framework using a two-stage pipeline. 19,416 of the 22,217 are headquartered in the four target markets (Australia, Japan, New Zealand, Singapore).
+
+**Comprehensive regulations dataset.** 725 regulations across 64 countries and 13 sectors, drawn from public legislation portals, regulator publications, and parliamentary records. 174 regulations operate in the four target markets. Status is tracked across three states: enacted, in_parliament, expected.
+
+**Four-market sector-tier breakdown.** A reconciled table of the 174 four-market regulations grouped by sector and by tier (T1 / T2), used for the per-market and per-Necessity views in the Index.
+
+## Classification rules
+
+A company passes the screen and enters the in-thesis universe only if it is classified as Tier 1 or Tier 2 against the Five Necessities or the cross-cutting AI and Data band.
+
+**Tier 1. Licence-as-barrier.** The company cannot legally operate without regulatory approval. The classifier flags a company as T1 when its registry, product description, or hiring signals indicate dependence on a named licence, clearance, or certification regime in one of the four markets.
+
+**Tier 2. Compulsion-as-barrier.** The company's buyers are statutorily required to purchase compliant solutions. The classifier flags a company as T2 when its sector and customer profile map to a compliance mandate that creates demand for the company's product.
+
+The conservative classifier (the figure reported on the public Index) requires both stages of the pipeline to agree. Where the two stages disagree, the company is held out of the conservative count. The conservative classifier returns 33.5 percent (6,505 of 19,416) for the four-market universe.
+
+## Refresh cadence
+
+The Index is rebuilt quarterly. Between rebuilds, the as-of date on the page reflects the last refresh. Material in-quarter changes (a new in-parliament regulation in one of the four markets, a status change on an in-flight regulation, a meaningful expansion of the classified universe) are entered ad hoc and noted in a change log.
+
+## Known limitations
+
+**English-language bias.** Japanese and multilingual portals (e-Gov, METI, MLIT) are scanned in both English and Japanese, but where only the Japanese text is authoritative the English rendering is translated and labelled accordingly.
+
+**Four-market bound.** Coverage outside Australia, Japan, New Zealand, and Singapore is reference-only in the wider 725-regulation dataset. The 174 four-market entries are the authoritative scope for fund investment decisions and for the Index.
+
+**Per-Necessity counts may not reconcile against four-market totals.** Some regulations span multiple Necessities. The per-market totals (174) count each regulation once; the per-Necessity totals do not de-duplicate cross-Necessity entries.
+
+**Founding cohort window for exit analysis.** Exit-rate analysis uses the 2010 to 2015 founding cohort (19,416 four-market companies) because it is the most recent cohort with sufficient exit maturity (10 to 15 year window) to produce statistically meaningful outcomes. Post-2015 founding cohorts are sourced and classified but excluded from exit analysis until they reach equivalent maturity.
+
+## What this Index is not
+
+It is not a fund prospectus. It is not a claim about returns, fund construction, or terms. It is a public reading of the regulatory map and the company universe that the map filters into. Fund-specific content sits in the private channel and is not reflected here.
+
+## Reproducibility
+
+Every figure on the Index resolves to a row in one of the three source datasets above. The full provenance and the classifier pseudo-code are documented in the fund's Investment Memorandum Appendix F (Data Provenance), available to qualified investors with a pre-existing relationship.
+
+The published reproducibility bundle (classifier script, keyword rule sets, registry schemas, headline-statistics JSON) is available to LP auditors on request.
+
+## Citation
+
+When citing the Index in academic, journalistic, or LP-pack contexts, the recommended format is:
+
+> hmm Ventures, *The Necessity Index v1.0*, hmm.ventures/research/data/necessity-index/, as of `{as_of}`. APAC technology companies classified against the T1 / T2 framework across Australia, Japan, New Zealand, and Singapore.
+
+## Sources
+
+- reference_dataset_classified_2026-04-08.csv (19,416 four-market companies; 22,217 global).
+- regulations_comprehensive.json (725 regulations, 64 countries, 13 sectors).
+- four_market_sector_tier_breakdown_2026-04-07.csv (174 four-market regulations).
+- IM v3.8.3 Appendix F (Data Provenance).
+
+> The live data product is published at /research/data/necessity-index/.
+>
+> [Open the Necessity Index →](/research/data/necessity-index/)

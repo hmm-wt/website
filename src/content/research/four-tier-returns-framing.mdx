@@ -1,0 +1,82 @@
+---
+title: Four-tier returns framing. Target / Median / Bear / Tail.
+summary: How the fund's Monte Carlo simulation reads as four discrete tiers an LP can underwrite against. 1,000 iterations, canonical seed, full waterfall. LP-Net basis throughout.
+date: 2026-05-16
+version: v1.0
+status: live
+audience: lps
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "Canonical Monte Carlo simulation (Scenario R12 v3.3, seed=42, 1,000 iterations). LP-Net basis. $50M inclusive ($49.5M LP + $0.5M GP)."
+necessities: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+headline_metrics:
+  - { label: "Target DPI (P75, paid-in)", value: "3.76x" }
+  - { label: "Median DPI (P50, paid-in)", value: "2.95x" }
+  - { label: "Target IRR (P75, LP-Net)", value: "17.58%" }
+  - { label: "Median IRR (P50, LP-Net)", value: "14.25%" }
+  - { label: "P(≥2x) on paid-in basis", value: "82.8%" }
+  - { label: "Bear stress sim median DPI", value: "2.28x" }
+---
+import ProbabilityLadder from '../../components/research/ProbabilityLadder.astro';
+
+A single point estimate is not how an LP underwrites a fund. The same Monte Carlo distribution reads as four discrete tiers. Each tier is a percentile of the simulation, not a separate forecast.
+
+<ProbabilityLadder />
+
+## Three named cases
+
+**Target Case (P75).** 2.63x LP-Net DPI on committed-capital basis (3.76x on paid-in basis) / 17.58% LP-Net IRR. The GP's stated return target, set above the median.
+
+**Base Case (median, P50).** 2.07x committed (2.95x paid-in) / 14.25% LP-Net IRR / 4.21x Fund Gross MOIC. Central tendency at benchmark methodology.
+
+**Downside Case (P10).** 1.19x committed (1.70x paid-in) / 6.95% LP-Net IRR. Worst-decile floor. The threshold the fund defends on.
+
+A separate stress sim under coordinated parameter drift sits at **Bear: 2.28x median DPI / 10.80% median IRR / 1.36x P10** on the paid-in basis. AU and JP win-rate −3pp, winner multiples −20% across all four markets.
+
+## How to read this table
+
+Each row is a percentile of the same 1,000-iteration simulation. Target is P75 (top quarter of outcomes; the GP's stated return objective). Base is the median (half of simulations clear it). Downside is P10 (bottom decile; the floor 90% of simulations clear). LP-Net DPI is distributions to LPs divided by capital called (paid-in basis, $34.65M median) or total LP commitment (committed basis, $49.5M). Net IRR is after fees and carry; gross IRR is before fees and carry.
+
+| Percentile | DPI (committed) | DPI (paid-in) | LP-Net IRR | Label |
+|---|---:|---:|---:|---|
+| **P10**    | **1.19x** | **1.70x** | **6.95%**  | **Downside Case** (worst-decile floor) |
+| P25        | 1.61x | 2.24x | 10.58% | |
+| **P50 (Median)** | **2.07x** | **2.95x** | **14.25%** | **Base Case** (benchmark-comparable) |
+| Mean       | 2.23x | 3.19x | 14.17% | |
+| **P75**    | **2.63x** | **3.76x** | **17.58%** | **Target Case** (GP target) |
+| P90        | 3.49x | 4.85x | 21.12% | |
+
+## The Return Bridge
+
+The Return Bridge decomposes the gross return into identifiable levers relative to an unweighted APAC seed baseline. The empirical lever magnitudes are drawn from the empirical validation in §5. The Monte Carlo implements these through the scenario framework (p_fail, p_win, moic_win adjustments).
+
+| Step | Target / P75 | Base / median | What changes |
+|---|---|---|---|
+| Pure-canonical floor (no thesis premium) | 2.72x | 2.14x | Unweighted APAC seed baseline. v3.3-JIT engine, no lever adjustments. |
+| + Survival advantage (Lever 1) | +0.45x | +0.35x | T1 companies fail less. p_fail reduced 15pp across regions. Empirical anchor: 13.41% T1 vs 6.03% unregulated all-exit rate. |
+| + Win-rate advantage (Lever 2) | +0.28x | +0.22x | T1 companies win more. p_win increased 10pp. Empirical: 3.33x public-exit differential. |
+| + Exit premium x1.50 (Lever 3) | +0.31x | +0.24x | Winners exit at higher multiples. moic_win scaled 1.50x. Empirical: 1.53x Series C round premium. |
+| **Base Case** | **2.63x committed / 3.76x paid-in** | **2.07x committed / 2.95x paid-in** | All three levers applied. Canonical simulation seed=42, 1,000 iterations. |
+
+Levers compound rather than add. The Bridge and the sim are two views of the same structural edge, triangulated from different angles.
+
+## Why Gross and Net differ
+
+The fund puts capital into companies (gross). The LP receives what is left after management fees and carried interest (net). Base Case gap between 4.21x gross and 2.95x net (paid-in basis) reflects a 10-year fee chain and the GP's profit share.
+
+Spread between Gross IRR (27.5%) and Net LP IRR (14.25% Base; 17.58% Target) reflects management fees (2% / 1.50% step-down across 10 years), the 8% compounding preferred return, and 20% carry over pref. This spread sits in the industry-standard band for seed-stage VC funds.
+
+## What this is not
+
+This is not a forecast. Each tier is a percentile of a simulated distribution. The simulation is built from per-region outcome probabilities calibrated to developed-APAC seed-stage industry data, with the three levers applied to anchor against the fund's empirical thesis. The full lever derivation, sensitivity table, and per-region parameter set are in Appendix B of the IM.
+
+## Sources
+
+- Canonical Monte Carlo simulation, seed=42, 1,000 iterations. Scenario R12 v3.3 JIT, 2026-04-24.
+- LP-Net basis. European waterfall, 8% compounding pref, 100% GP catch-up, 80/20 split.
+- $50M inclusive: $49.5M LP commitment + $0.5M GP commitment.
+- IM v3.8.3 §6.1 (Fund structure), §6.2 (Return Bridge and Monte Carlo baseline), Appendix B (MC Methodology).
+
+> Full provenance, parameter set, and sensitivity analysis are in the IM.
+>
+> [Request the IM →](/lps/)

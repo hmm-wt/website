@@ -1,0 +1,74 @@
+---
+title: The crystallisation window. 2024 to 2030.
+summary: Thirty-four in-flight regulations across the four target markets, dated 2024 to 2030. The four-year investment-period regulatory calendar. Why density peaks 2026 to 2027.
+date: 2026-05-16
+version: v1.0
+status: live
+audience: lps
+template: scrolly
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "hmm Ventures Comprehensive Regulatory Dataset (725 regulations, 64 countries). Four-market subset: 174 regulations. In-flight 2024-2030: 34."
+necessities: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+headline_metrics:
+  - { label: "Four-market regulations", value: "174" }
+  - { label: "In flight 2024-2030", value: "34" }
+  - { label: "Peak year (in flight)", value: "2027" }
+  - { label: "AU in flight", value: "11" }
+  - { label: "JP in flight", value: "11" }
+  - { label: "SG in flight", value: "10" }
+---
+import CrystallisationCalendarStrip from '../../components/research/CrystallisationCalendarStrip.astro';
+import RegClockStrip from '../../components/charts/RegClockStrip.astro';
+
+The four-year investment period is calibrated to a measurable regulatory window. Across the proprietary 22,217-company classified dataset, T1 regulated companies trade at a 1.12x round-multiple premium at seed and 1.53x at Series C. The cumulative T1-to-unregulated funding premium widens from 1.09x at pre-seed to 2.12x at Series D+. The thesis is to enter at near-parity and exit at premium.
+
+That arbitrage closes once the compliance layer reaches commercial maturity. The investment window is the period before it does.
+
+<RegClockStrip />
+
+## The window is dated
+
+Thirty-four in-flight regulations across the four markets carry effective dates between 2024 and 2030. Each one creates a category of work that did not previously exist. The fund's investment period is structured to deploy capital before the categories are filled.
+
+The compliance layer reaches commercial maturity 24 to 48 months post-mandate. The window closes when it does. Specific anchors:
+
+- **NCC 2025** takes mandatory effect May 2026 (Australia, construction).
+- **PMDA and MLIT approval crystallisation** runs 2026 to 2028 (Japan, biomedical and autonomous).
+- **EU Battery Regulation** battery-passport provisions apply from February 2027 (critical materials).
+- **MAS AI governance** licensing framework arrives mid-2026 (Singapore, cross-cutting AI).
+
+The window's peak density is 2026 to 2027. Sixteen of the 34 in-flight regs land in those two years.
+
+<CrystallisationCalendarStrip />
+
+## Why APAC seed and not US / EU seed
+
+Regulation in the US and EU is largely incumbent advantage: the regulatory landscape was cleared a decade ago and seed entrants compete against incumbents that already cleared it. Regulation in APAC is regulatory advantage: NCC 2025 in Australia (May 2026 adoption), TSE governance reforms in Japan (2024 onward), Medsafe WAND in New Zealand, MAS sandbox extensions in Singapore. Each of these resets the field.
+
+That arbitrage is absent in the US, where regulated-tech seed already trades at the premium.
+
+## Per-Necessity sequencing
+
+Within each Necessity, regulatory cycle times dictate deployment sequence:
+
+- **Singapore's sandbox approvals** (6 to 12 months) allow earliest capital deployment and fastest regulatory validation.
+- **Australia's frameworks** open the door to New Zealand via Trans-Tasman mutual recognition (FSANZ for food, Medsafe-TGA for health tech), making AUS the gateway investment for NZL expansion.
+- **Japan's longer approval cycles** (12 to 24 months for PMDA, MLIT) are offset by the highest exit multiples in the portfolio. Japanese companies should be modelled at 7 to 10 year holding periods.
+
+The fund does not need to predict which companies fill the categories. It needs to deploy before the categories are filled.
+
+## What this is not
+
+The window is not a forecast. Every regulation in the dataset above has a published effective date, a primary-source regulator publication, and a traceable parliamentary or executive record. The 34 in-flight regulations are enacted or in-parliament; expected-only regulations are tracked separately and not used as load-bearing thesis evidence.
+
+## Sources
+
+- hmm Ventures Comprehensive Regulatory Dataset, regulations_comprehensive.json. 725 regulations across 64 countries, 13 sectors.
+- Four-market subset: 174 regulations dated 2024 to 2030.
+- Per-regulation primary-source URLs: regulator portals (TGA, PMDA, MLIT, MAS, MOH, LTA, Medsafe, AEMO, ERA, APRA), parliamentary records, official gazette publications.
+- IM v3.8.3 §1.3, §3.1, §3.2.
+
+> The full calendar with per-regulation primary-source URLs is also published as a live tracker.
+>
+> [The Crystallisation Window calendar →](/research/data/calendar/)

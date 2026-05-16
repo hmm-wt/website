@@ -1,0 +1,175 @@
+---
+/**
+ * V6 — NecessityBarDrilldown.
+ *
+ * Click a Necessity bar, the page transitions to a stage-2 view showing
+ * that Necessity's regulation profile (T1 / T2 split) and its share of the
+ * in-thesis universe. Stage-1 is the existing NecessityBar chart; stage-2
+ * is rendered inline next to it.
+ *
+ * No new data file required — per-necessity counts come straight from
+ * necessity-index.json.
+ */
+import necessity from '../../data/necessity-index.json';
+import NecessityBar from '../charts/NecessityBar.astro';
+
+const items = necessity.per_necessity.map((n) => {
+  const totalRegs = n.regulations_t1 + n.regulations_t2;
+  return {
+    id: n.name.toLowerCase().replace(/\s+/g, '-'),
+    name: n.name,
+    short: n.name.replace(/ Systems$/, '').replace(/ and Supply Integrity$/, ''),
+    in_thesis: n.in_thesis_companies,
+    t1: n.regulations_t1,
+    t2: n.regulations_t2,
+    totalRegs
+  };
+});
+const totalInThesis = items.reduce((acc, i) => acc + i.in_thesis, 0);
+const maxRegs = Math.max(...items.map((i) => i.totalRegs));
+---
+<section class="nbd" aria-label="Necessity bar drilldown">
+  <div class="nbd__bar">
+    <NecessityBar />
+  </div>
+
+  <div class="nbd__detail">
+    <header class="nbd__detail-head">
+      <p class="kicker nbd__detail-kicker">Drill in · Per-Necessity profile</p>
+      <p class="nbd__detail-sub">Companies in thesis · T1 / T2 regulation count · share of the four-market in-thesis universe.</p>
+    </header>
+    <ol class="nbd__rows" role="list">
+      {items.map((n) => (
+        <li class="nbd__row" data-necessity={n.id}>
+          <header class="nbd__row-head">
+            <span class="nbd__row-name">{n.short}</span>
+            <span class="nbd__row-share">{((n.in_thesis / totalInThesis) * 100).toFixed(1)}%</span>
+          </header>
+          <div class="nbd__row-grid">
+            <div class="nbd__cell">
+              <span class="nbd__cell-label">In thesis</span>
+              <span class="nbd__cell-value">{n.in_thesis.toLocaleString('en-GB')}</span>
+            </div>
+            <div class="nbd__cell">
+              <span class="nbd__cell-label">T1 regs</span>
+              <span class="nbd__cell-value">{n.t1}</span>
+              <span class="nbd__cell-bar"><span class="nbd__cell-bar-fill nbd__cell-bar-fill--t1" style={`width: ${((n.t1 / maxRegs) * 100).toFixed(1)}%`}></span></span>
+            </div>
+            <div class="nbd__cell">
+              <span class="nbd__cell-label">T2 regs</span>
+              <span class="nbd__cell-value">{n.t2}</span>
+              <span class="nbd__cell-bar"><span class="nbd__cell-bar-fill nbd__cell-bar-fill--t2" style={`width: ${((n.t2 / maxRegs) * 100).toFixed(1)}%`}></span></span>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .nbd {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: var(--s-5);
+    margin-block: var(--s-6);
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .nbd { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .nbd__detail {
+    border-inline-start: 1px solid var(--rule);
+    padding-inline-start: var(--s-5);
+  }
+  @media (max-width: 900px) {
+    .nbd__detail { border-inline-start: 0; padding-inline-start: 0; border-top: 1px solid var(--rule); padding-block-start: var(--s-5); }
+  }
+  .nbd__detail-head { margin-block-end: var(--s-4); }
+  .nbd__detail-kicker { color: var(--c-tomato); margin: 0; }
+  .nbd__detail-sub {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    margin: 0.25rem 0 0;
+  }
+
+  .nbd__rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .nbd__row {
+    padding-block: var(--s-3);
+    border-top: 1px solid var(--rule);
+  }
+  .nbd__row-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    margin-block-end: var(--s-2);
+  }
+  .nbd__row-name {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    color: var(--fg);
+    line-height: 1.1;
+  }
+  .nbd__row-share {
+    margin-inline-start: auto;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--c-tomato);
+  }
+  .nbd__row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--s-3);
+  }
+  @media (max-width: 600px) { .nbd__row-grid { grid-template-columns: 1fr; gap: var(--s-2); } }
+
+  .nbd__cell {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 0.15rem;
+  }
+  .nbd__cell-label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+  }
+  .nbd__cell-value {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    color: var(--fg);
+    line-height: 1;
+  }
+  .nbd__cell-bar {
+    display: block;
+    height: 3px;
+    background: color-mix(in srgb, var(--rule) 100%, transparent);
+    margin-block-start: 0.15rem;
+  }
+  .nbd__cell-bar-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    transition: width var(--speed-draw) var(--ease-draw);
+  }
+  .nbd__cell-bar-fill--t1 { background: var(--c-tomato); }
+  .nbd__cell-bar-fill--t2 { background: var(--c04, var(--c-mahogany)); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nbd__cell-bar-fill { transition: none; }
+  }
+</style>

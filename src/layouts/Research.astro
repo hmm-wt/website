@@ -295,4 +295,58 @@ const dateLabel = date
     }
     .research__rail-label { font-size: var(--fs-xs); }
   }
+
+  /* Print: expand every collapsible section, single-column body, rail
+   * below body, no sticky positioning, white-on-black avoided. The dense
+   * research entries must be readable on paper. */
+  @media print {
+    .research {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "body" "rail";
+      gap: var(--s-4);
+      padding-block: 0;
+      background: white;
+      color: black;
+    }
+    .research__rail {
+      position: static;
+      background: white;
+      color: black;
+      border-left: 2px solid black;
+      page-break-before: always;
+    }
+    .research__rail dt, .research__rail dd { color: black; }
+    .research__collapse-toggle { display: none; }
+    /* Force every collapsible section open. */
+    :global(.research__prose details.research__section) {
+      page-break-inside: avoid;
+    }
+    :global(.research__prose details.research__section[open]),
+    :global(.research__prose details.research__section) {
+      display: block;
+    }
+    :global(.research__prose details.research__section > .research__section-body) {
+      display: block !important;
+    }
+    :global(.research__prose .research__section-chev) {
+      display: none;
+    }
+  }
 </style>
+<script>
+  // Print-mode helper: force every collapsible details open before print.
+  if (typeof window !== 'undefined') {
+    window.addEventListener('beforeprint', () => {
+      document.querySelectorAll<HTMLDetailsElement>('details.research__section').forEach((d) => {
+        d.dataset.printRestoreOpen = String(d.open);
+        d.open = true;
+      });
+    });
+    window.addEventListener('afterprint', () => {
+      document.querySelectorAll<HTMLDetailsElement>('details.research__section').forEach((d, i) => {
+        d.open = d.dataset.printRestoreOpen === 'true' || i === 0;
+        delete d.dataset.printRestoreOpen;
+      });
+    });
+  }
+</script>

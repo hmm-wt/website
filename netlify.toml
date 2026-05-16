@@ -9,6 +9,40 @@
   NODE_VERSION = "20"
   NPM_FLAGS = "--legacy-peer-deps=false"
 
+# Research hub consolidation (Phase 1, 2026-05-16).
+# Data products moved from top-level routes to /research/data/.
+# Specific paths first; the splat covers scoreboard sub-routes (per-claim pages).
+# /necessity-index/embed/ stays at its original URL (third-party iframe contract).
+[[redirects]]
+  from = "/necessity-index"
+  to = "/research/data/necessity-index/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/necessity-index/methodology"
+  to = "/research/data/necessity-index/methodology/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/calendar"
+  to = "/research/data/calendar/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/scoreboard"
+  to = "/research/data/scoreboard/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/scoreboard/*"
+  to = "/research/data/scoreboard/:splat"
+  status = 301
+  force = true
+
 # Force SPA-style 404 for client-side routes that don't exist as files.
 # Astro generates static .html per route, so 404s only hit for unknown URLs.
 [[redirects]]

@@ -1,0 +1,58 @@
+---
+title: How we read regulatory exposure.
+summary: The screen we apply before any partner time is spent. Off-mandate first, then T1 (licence-as-barrier), then T2 (compulsion-as-barrier). Paste a one-liner about your company and see what the probe reads.
+date: 2026-05-16
+version: v1.0
+status: live
+audience: founders
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "hmm Ventures conservative classifier. Methodology in IM Appendix F."
+headline_metrics:
+  - { label: "Four-market regulations on the map", value: "174" }
+  - { label: "T1 share inside the Five Necessities", value: "81%" }
+  - { label: "T1 exit-rate multiple vs unregulated", value: "2.22x" }
+  - { label: "Average first cheque", value: "$1.2M" }
+---
+import ClassifierProbe from '../../components/research/ClassifierProbe.astro';
+
+If you are about to pitch hmm, the most useful 30 seconds you can spend is figuring out whether the screen reads your company as T1, T2, or excluded. The screen is mechanical. It does not care about narrative.
+
+## The order
+
+Off-mandate exclusions first. Financial services / fintech is fully off-mandate. Defence-tech and dual-use weapons applications are off-mandate. Both have real regulatory complexity. Neither is in scope.
+
+T1 next. The barrier is *permission to operate*. A regulator has created or tightened a licensing regime, and the operational layer needed to comply with it is missing or under-built. Concrete signals: a named clearance (TGA, PMDA, MAS, APRA, MLIT, HSA, Medsafe, FSANZ), a licence application in flight, a registered representative, a compliance officer hire on LinkedIn.
+
+T2 last. The barrier is *evidence of compliance*. A regulator has not created a licence, but has compelled an industry to do something it was not previously required to do, and the compliance layer is missing. Concrete signals: a statutory mandate the buyer must demonstrate against, an audit obligation, a compulsory disclosure regime.
+
+If neither barrier is present, the company is excluded regardless of regulatory-adjacent language in the deck.
+
+## Try it
+
+<ClassifierProbe />
+
+## What the probe is not
+
+The probe is a public utility, not the deployed classifier. The fund's pipeline applies a two-stage validator with registry joins (ASIC, IP Australia, ACRA, MAS, METI, NZBN, sector-specific registries), licensed commercial data feeds, and human review before any IC engagement. The probe communicates the screen. It does not substitute for it.
+
+Companies excluded by the probe sometimes pass the deployed classifier (the regulatory signal is buried in registry data, not the marketing copy). Companies passed by the probe sometimes fail the deployed classifier (the regulatory signal is performative, not load-bearing). The probe is calibrated to be honest about its limitations.
+
+## What to do if the probe reads T1 or T2
+
+Three things help.
+
+**Document the regulatory dependency in plain language.** Which regulator. Which regime. Which milestone. The pitch deck slide that wins seed money in regulated markets is "here is the licence / clearance / accreditation, here is the date we crossed it, here is the buyer line item it unlocked."
+
+**Show the buyer's compliance line item.** If you are T2, the most persuasive evidence is a buyer's statement that they cannot operate without your solution. A signed contract is best. A scoped procurement is second best. A regulator-cited use case is third best.
+
+**Show the primary source.** Every claim attaches to a regulator portal URL, a parliamentary record, or an official gazette. If the founder cannot point to the source, the fund cannot underwrite the thesis.
+
+## Sources
+
+- hmm Ventures conservative classifier methodology. IM Appendix F.
+- Four-market regulator portals: TGA, PMDA, MAS, APRA, MLIT, HSA, Medsafe, FSANZ, AEMO, ERA, and sector-specific equivalents.
+
+> Founders ready to engage can email the GP directly.
+>
+> [wt@hmm.ventures →](mailto:wt@hmm.ventures)

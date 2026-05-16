@@ -1,0 +1,87 @@
+---
+title: Classifier walkthrough. 19,416 → 25
+summary: How the four-market classified universe narrows from 22,217 APAC technology companies to 25 portfolio positions. The mechanical funnel, the T1 / T2 binary, the three live claims.
+date: 2026-05-16
+version: v1.0
+status: live
+audience: lps
+template: scrolly
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "hmm Ventures classified universe (19,416 four-market companies, 2026-04-08); regulations_comprehensive.json (725 regulations, 64 countries)."
+necessities: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+headline_metrics:
+  - { label: "APAC universe (classified)", value: "22,217" }
+  - { label: "Four-market subset", value: "19,416" }
+  - { label: "Passes T1 / T2 screen", value: "6,505 (33.5%)" }
+  - { label: "Seed-stage in scope", value: "2,625" }
+  - { label: "Portfolio target", value: "25" }
+  - { label: "T1 exit-rate multiple vs unregulated", value: "2.22x" }
+---
+import ScrollyClassifierFunnel from '../../components/research/ScrollyClassifierFunnel.astro';
+import DecisionTreeBranch from '../../components/research/DecisionTreeBranch.astro';
+
+Most seed funds treat regulation as friction. hmm treats it as a filter. The mechanism is mechanical, not philosophical.
+
+Start with the math. Four target markets contain 19,416 classified technology companies. A solo-GP fund can diligence a few hundred opportunities a year and invest in 25 over a four-year investment period. Compressing 19,416 to 25 is a 99.87% cut, and the deterministic part of that cut has to happen before any partner time is spent.
+
+Regulation does the deterministic cut. A company is in-scope only if it sits behind a Tier 1 or Tier 2 barrier in one of the Five Necessities, in one of the four target markets. First cut takes 19,416 to 6,505 companies, a 66.50% reduction with no human triage. Adding the seed-stage filter takes the addressable universe to 2,625, an 86.49% cumulative cut. From there the funnel narrows through traction, founder, and Necessity fit at progressively higher partner cost per company.
+
+<ScrollyClassifierFunnel />
+
+## The binary
+
+The framework is deliberately binary. Anything more elaborate collapses under the weight of subjective scoring.
+
+**Tier 1. Licence-as-barrier.** A regulator has created or tightened a licensing regime, and the operational layer needed to comply with it is missing or under-built. Examples: a digital health software classification under TGA, a new MAS payments licence category, an APRA prudential rule that demands fresh reporting infrastructure, an MLIT Level 4 autonomous-vehicle approval. The barrier is *permission to operate*.
+
+**Tier 2. Compulsion-as-barrier.** A regulator has not created a licence, but has compelled an industry to do something it was not previously required to do, and the compliance layer is missing. Examples: mandatory embodied-carbon disclosure on construction projects, mandatory AI risk assessments under guardrails, mandatory critical-minerals provenance under dual-use rules. The barrier is *evidence of compliance*.
+
+Of the 725 regulations on the current map, 605 are Tier 1 and 120 are Tier 2. The Tier 1 weighting is a feature, not a bug: licence regimes create harder, longer-lived barriers than compliance regimes, and the fund's preference order follows the same hierarchy.
+
+<DecisionTreeBranch />
+
+## Three live claims
+
+Every headline metric in this section runs from one classifier script in the data room. The conservative keyword classifier sits behind every empirical outcome claim and every universe-sizing figure. Deterministic. Re-runnable by any LP auditor from shipped keyword sets.
+
+**Live Claim 1. T1 companies in the four target markets exit at 2.22x the rate of unregulated peers.** Conservative classifier on the four-market universe, over a 10 to 15 year post-founding window. 13.41% T1 vs 6.03% unregulated, n=5,556 vs n=12,911. This is the central empirical validation of the thesis. The filter works, measured in the single outcome that matters most to an LP, on the file that is in the data room today.
+
+**Live Claim 2. T1 companies in the four target markets clear a 1.19x Series A round size premium.** USD $5.6M median for T1 vs $4.7M for unregulated, n=277 vs n=366 closed Series A rounds, conservative classifier on the four-market universe.
+
+**Live Claim 3. The regulated subset of the four-market cohort is 33.5% of companies, weighted to T1.** The classifier is deliberately conservative: keyword-based, deterministic, and reproducible from the script in the data room. A broader definition would lift the number higher. The thesis does not depend on where the share lands. It depends on the exit-rate premium, which holds cleanly on the conservative classifier.
+
+## What the screen produces
+
+Applying the screen to the fund's four target markets and mapping to the Five Necessities yields 144 regulations across the Five Necessities (as of 7 April 2026):
+
+| Necessity | T1 | T2 | Total |
+|---|---:|---:|---:|
+| Biomedical Systems | 19 | 1 | 20 |
+| Autonomous Systems | 58 | 10 | 68 |
+| Power Systems | 22 | 8 | 30 |
+| Food Security Systems | 16 | 2 | 18 |
+| Critical Materials and Supply Integrity | 2 | 6 | 8 |
+| **Five Necessities total** | **117** | **27** | **144** |
+
+A further 17 in-market regulations sit in the cross-cutting band (AI Governance 13, Data Privacy 4) and surface inside every row above via the AI / data overlay. The remaining in-market regulations cover off-mandate sectors (Environmental & ESG and other categories outside the fund's screen) and are excluded from the fund's active screen.
+
+The Tier 1 share inside the Five Necessities is steep: 117 of 144, roughly 81%. This is where the durable barriers sit. The two largest buckets by rule count, Power Systems and Autonomous Systems, are also the two where the operational compliance layer is most under-built relative to the pace of new rulemaking.
+
+## Three design limits
+
+The screen identifies opportunity, not winners. Founder quality determines who fills a category; that work sits inside investment selection.
+
+Monthly refresh cost on the map is budgeted for.
+
+Jurisdictionally legible markets only. That is one reason the fund does not invest outside the four targets.
+
+## Sources
+
+- hmm Ventures classified universe, reference dataset 2026-04-08. 19,416 four-market companies, conservative T1 / T2 classifier. Script and rule sets in the data room.
+- regulations_comprehensive.json. 725 regulations across 64 countries, 13 sectors.
+- IM v3.8.3 §2 (The Thesis: How to Identify the Investable Subset), §5 (Empirical Validation), Appendix F (Data Provenance).
+
+> Full provenance and the deployed classifier pipeline are documented in the IM.
+>
+> [Request the IM →](/lps/)

@@ -1,8 +1,8 @@
 ---
-import Base from '../../layouts/Base.astro';
-import KickerLabel from '../../components/KickerLabel.astro';
-import StatusIndicator from '../../components/StatusIndicator.astro';
-import scoreboard from '../../data/scoreboard.json';
+import Base from '../../../../layouts/Base.astro';
+import KickerLabel from '../../../../components/KickerLabel.astro';
+import StatusIndicator from '../../../../components/StatusIndicator.astro';
+import scoreboard from '../../../../data/scoreboard.json';
 
 export async function getStaticPaths() {
   return scoreboard.predictions.map((p) => ({
@@ -21,7 +21,7 @@ const fmtDate = (iso?: string) =>
 >
   <article class="claim container">
     <header class="claim__head">
-      <p class="claim__crumbs"><a href="/scoreboard/">← All claims</a></p>
+      <p class="claim__crumbs"><a href="/research/data/scoreboard/">← All claims</a></p>
       <KickerLabel index={prediction.id} label={`Claim · testable by ${fmtDate(prediction.testable_by)}`} accent />
       <h1 class="claim__title">{prediction.claim}</h1>
       <div class="claim__status-row">
@@ -60,11 +60,11 @@ const fmtDate = (iso?: string) =>
     <section class="claim__share">
       <p class="kicker claim__kicker">Share this claim</p>
       <p class="claim__share-line">
-        <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(prediction.claim)}&url=https://hmm.ventures/scoreboard/${prediction.id.toLowerCase()}/`} target="_blank" rel="noopener">Twitter / X</a>
+        <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(prediction.claim)}&url=https://hmm.ventures/research/data/scoreboard/${prediction.id.toLowerCase()}/`} target="_blank" rel="noopener">Twitter / X</a>
         <span aria-hidden="true"> · </span>
-        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=https://hmm.ventures/scoreboard/${prediction.id.toLowerCase()}/`} target="_blank" rel="noopener">LinkedIn</a>
+        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=https://hmm.ventures/research/data/scoreboard/${prediction.id.toLowerCase()}/`} target="_blank" rel="noopener">LinkedIn</a>
         <span aria-hidden="true"> · </span>
-        <a href={`mailto:?subject=${encodeURIComponent(`hmm Scoreboard ${prediction.id}`)}&body=${encodeURIComponent(prediction.claim + '\n\nhttps://hmm.ventures/scoreboard/' + prediction.id.toLowerCase() + '/')}`}>Email</a>
+        <a href={`mailto:?subject=${encodeURIComponent(`hmm Scoreboard ${prediction.id}`)}&body=${encodeURIComponent(prediction.claim + '\n\nhttps://hmm.ventures/research/data/scoreboard/' + prediction.id.toLowerCase() + '/')}`}>Email</a>
       </p>
     </section>
   </article>

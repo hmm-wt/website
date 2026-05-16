@@ -38,6 +38,7 @@ const research = defineCollection({
     pages: z.number().optional(),
     headline_metrics: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
     source_dataset: z.string().optional(),
+    template: z.enum(['dense', 'scrolly', 'data', 'corridor']).optional(),
   }),
 });
 

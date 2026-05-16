@@ -1,0 +1,314 @@
+---
+/**
+ * V11 — ComplianceCycleClock.
+ *
+ * Six-stage regulatory clock from a founder's perspective. Each sector is
+ * clickable; the active sector expands to show what happens, what the
+ * founder should do, and where in the cycle the fund typically engages.
+ *
+ * The hand points at the current "NOW" position by default — the centre of
+ * the operator-build window (stage 4) where the fund deploys.
+ */
+const stages = [
+  {
+    id: 's1',
+    label: 'Consultation',
+    band: '12-24 mo before effective',
+    summary: 'Regulator publishes draft rules. Industry submissions, expert panels, public comment.',
+    founder: 'Read the direction. Watch the language for licence triggers (T1) or compulsion triggers (T2). Build relationships with the regulator while the door is open.',
+    hmm_engagement: 'Map adds the draft. No funding cycle starts here.'
+  },
+  {
+    id: 's2',
+    label: 'Enactment',
+    band: '3-12 mo before effective',
+    summary: 'Parliament or executive ratifies. Effective date is set. Industry now has a deadline.',
+    founder: 'The deadline is the demand. Talk to buyers about their compliance roadmap. Document the regulatory dependency in your investor materials.',
+    hmm_engagement: 'Map upgrades the rule to in-flight. Sourcing layer surfaces the matching company set.'
+  },
+  {
+    id: 's3',
+    label: 'Effective date',
+    band: 'T-zero',
+    summary: 'Rule comes into force. First reporting cycle, first audit, first licence application window opens.',
+    founder: 'If your product is not in production by the effective date, you are competing for first-mover slots against operators who are.',
+    hmm_engagement: 'Seed window is open. Companies with credentials in production are the fund\'s first-cheque target.'
+  },
+  {
+    id: 's4',
+    label: 'Operator build',
+    band: '0-24 mo post-effective',
+    summary: 'Operators race to ship compliant solutions. Buyers begin allocating compliance budget. First procurements close.',
+    founder: 'This is the seed-to-Series A window. Land first reference customers. Document the regulatory dependency in every commercial deck.',
+    hmm_engagement: 'Primary deployment phase. The four-year investment period is calibrated to this band across the 34 in-flight regulations.'
+  },
+  {
+    id: 's5',
+    label: 'First enforcement',
+    band: '12-36 mo post-effective',
+    summary: 'Regulator publishes first enforcement action. Market validates that the rule has teeth.',
+    founder: 'Compliance becomes commercial table stakes. Series B / C round-size premium widens (the 1.53x figure runs through here).',
+    hmm_engagement: 'Portfolio reaches Series B / C. Cross-border strategics begin acquirer outreach.'
+  },
+  {
+    id: 's6',
+    label: 'Steady state',
+    band: '36+ mo post-effective',
+    summary: 'Compliance is table stakes. Late-cycle exits, larger acquirers, regulatory consolidation.',
+    founder: 'If you are still scaling here, the exit window is open. The acquirer is buying time, not technology.',
+    hmm_engagement: 'Exit phase. The compounding regulatory premium (cumulative 2.12x by Series D+) crystallises.'
+  }
+];
+
+const stageCount = stages.length;
+const radius = 160;
+const innerRadius = 96;
+const center = 220;
+// 6 equal sectors, starting at 12 o'clock (-90deg) clockwise.
+const sectorAngle = (Math.PI * 2) / stageCount;
+const startOffset = -Math.PI / 2;
+
+const polar = (angle: number, r: number) => [
+  center + r * Math.cos(angle),
+  center + r * Math.sin(angle)
+];
+
+const sectors = stages.map((s, i) => {
+  const a0 = startOffset + i * sectorAngle;
+  const a1 = startOffset + (i + 1) * sectorAngle;
+  const aMid = (a0 + a1) / 2;
+  const [x0Out, y0Out] = polar(a0, radius);
+  const [x1Out, y1Out] = polar(a1, radius);
+  const [x0In, y0In] = polar(a0, innerRadius);
+  const [x1In, y1In] = polar(a1, innerRadius);
+  const [labelX, labelY] = polar(aMid, (radius + innerRadius) / 2);
+  const largeArc = sectorAngle > Math.PI ? 1 : 0;
+  const path = [
+    `M ${x0In.toFixed(2)} ${y0In.toFixed(2)}`,
+    `L ${x0Out.toFixed(2)} ${y0Out.toFixed(2)}`,
+    `A ${radius} ${radius} 0 ${largeArc} 1 ${x1Out.toFixed(2)} ${y1Out.toFixed(2)}`,
+    `L ${x1In.toFixed(2)} ${y1In.toFixed(2)}`,
+    `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x0In.toFixed(2)} ${y0In.toFixed(2)}`,
+    'Z'
+  ].join(' ');
+  return { ...s, i, path, labelX, labelY };
+});
+
+// Default "now" is stage 4 (operator build), where the fund deploys.
+const defaultActive = 's4';
+const handAngle = startOffset + (3 + 0.5) * sectorAngle; // centre of stage 4
+const [handX, handY] = polar(handAngle, innerRadius - 8);
+---
+<section class="ccc motion-group" aria-label="Regulatory compliance cycle clock" data-active={defaultActive}>
+  <div class="ccc__viz">
+    <svg
+      class="ccc__svg"
+      viewBox="0 0 440 440"
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      aria-label="Six-stage regulatory compliance cycle clock. The hand points at the operator-build window where the fund deploys."
+    >
+      {sectors.map((s) => (
+        <g class={`ccc__sector ccc__sector--${s.id} stagger-row`} data-i={s.i} data-stage={s.id} role="button" tabindex="0" aria-label={`${s.label}, ${s.band}.`}>
+          <path d={s.path} class="ccc__sector-path" />
+          <text x={s.labelX} y={s.labelY - 2} text-anchor="middle" class="ccc__sector-num">0{s.i + 1}</text>
+          <text x={s.labelX} y={s.labelY + 10} text-anchor="middle" class="ccc__sector-label">{s.label}</text>
+        </g>
+      ))}
+
+      <!-- Hand -->
+      <line
+        x1={center}
+        y1={center}
+        x2={handX}
+        y2={handY}
+        class="ccc__hand now-pulse"
+      />
+      <circle cx={center} cy={center} r="6" class="ccc__hub" />
+      <text x={center} y={center + 30} text-anchor="middle" class="ccc__hub-label">NOW</text>
+    </svg>
+  </div>
+
+  <aside class="ccc__panel" data-ccc-panel>
+    {sectors.map((s) => (
+      <article
+        class="ccc__article"
+        data-article={s.id}
+        data-open={s.id === defaultActive ? 'true' : 'false'}
+      >
+        <header class="ccc__article-head">
+          <span class="ccc__article-idx">0{s.i + 1} · {s.label}</span>
+          <span class="ccc__article-band">{s.band}</span>
+        </header>
+        <p class="ccc__article-summary">{s.summary}</p>
+        <dl class="ccc__article-meta">
+          <div>
+            <dt>What the founder does</dt>
+            <dd>{s.founder}</dd>
+          </div>
+          <div>
+            <dt>Where hmm engages</dt>
+            <dd>{s.hmm_engagement}</dd>
+          </div>
+        </dl>
+      </article>
+    ))}
+  </aside>
+</section>
+
+<script>
+  function initCcc() {
+    document.querySelectorAll<HTMLElement>('.ccc').forEach((root) => {
+      const sectors = root.querySelectorAll<SVGGElement>('.ccc__sector');
+      const articles = root.querySelectorAll<HTMLElement>('[data-article]');
+      const setActive = (id: string) => {
+        root.dataset.active = id;
+        sectors.forEach((s) => s.classList.toggle('is-active', s.dataset.stage === id));
+        articles.forEach((a) => a.dataset.open = a.dataset.article === id ? 'true' : 'false');
+      };
+      sectors.forEach((s) => {
+        s.classList.toggle('is-active', s.dataset.stage === root.dataset.active);
+        s.addEventListener('click', () => setActive(s.dataset.stage ?? 's1'));
+        s.addEventListener('keydown', (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setActive(s.dataset.stage ?? 's1');
+          }
+        });
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCcc);
+  } else {
+    initCcc();
+  }
+</script>
+
+<style>
+  .ccc {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-6);
+    align-items: center;
+    margin-block: var(--s-6);
+    border-block: 1px solid var(--rule);
+    padding: var(--s-5);
+  }
+  @media (max-width: 800px) {
+    .ccc { grid-template-columns: 1fr; }
+  }
+
+  .ccc__svg { width: 100%; height: auto; max-width: 28rem; display: block; margin-inline: auto; }
+
+  .ccc__sector-path {
+    fill: color-mix(in srgb, var(--c-evergreen) 8%, transparent);
+    stroke: var(--c-evergreen);
+    stroke-opacity: 0.45;
+    stroke-width: 1.2;
+    cursor: pointer;
+    transition: fill var(--mo-tick) var(--ease-golden), stroke var(--mo-tick) var(--ease-golden);
+  }
+  .ccc__sector:hover .ccc__sector-path,
+  .ccc__sector:focus .ccc__sector-path,
+  .ccc__sector.is-active .ccc__sector-path {
+    fill: color-mix(in srgb, var(--c-tomato) 22%, transparent);
+    stroke: var(--c-tomato);
+    stroke-width: 1.6;
+  }
+  .ccc__sector:focus { outline: none; }
+  .ccc__sector-num {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--c-tomato);
+    letter-spacing: 0.06em;
+    pointer-events: none;
+  }
+  .ccc__sector-label {
+    font-family: var(--f-display);
+    font-size: 13px;
+    fill: var(--c-mahogany);
+    pointer-events: none;
+  }
+  .ccc__sector.is-active .ccc__sector-label { fill: var(--c-tomato); font-weight: 600; }
+
+  .ccc__hand {
+    stroke: var(--c-tomato);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .ccc__hub {
+    fill: var(--c-tomato);
+  }
+  .ccc__hub-label {
+    font-family: var(--f-mono);
+    font-size: 10px;
+    fill: var(--c-tomato);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+  }
+
+  .ccc__article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .ccc__article[data-open="false"] { display: none; }
+
+  .ccc__article-head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+    padding-block-end: var(--s-2);
+    border-bottom: 1px solid var(--rule);
+  }
+  .ccc__article-idx {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--c-tomato);
+    font-weight: 600;
+  }
+  .ccc__article-band {
+    margin-inline-start: auto;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+  }
+  .ccc__article-summary {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: var(--fs-lg);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+    margin: 0;
+    max-width: 48ch;
+  }
+  .ccc__article-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+    margin: 0;
+  }
+  .ccc__article-meta div { display: flex; flex-direction: column; gap: 0.25rem; }
+  .ccc__article-meta dt {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+  }
+  .ccc__article-meta dd {
+    margin: 0;
+    font-family: var(--f-body);
+    font-size: var(--fs-md);
+    line-height: 1.55;
+    color: var(--fg);
+    max-width: 56ch;
+  }
+</style>

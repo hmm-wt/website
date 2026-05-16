@@ -7,7 +7,17 @@
     "vintage": "2026",
     "investment_period_years": 4,
     "structure": "DIFC Track A self-managed VCFM",
-    "tagline": "Necessity is the thesis."
+    "tagline": "Necessity is the thesis.",
+    "target_size_usd_m": 50,
+    "minimum_close_usd_m": 35,
+    "hard_cap_usd_m": 80,
+    "portfolio_target": 25,
+    "initial_cheque_usd_m_avg": 1.2,
+    "target_ownership_pct": 15,
+    "reserve_ratio_pct": 35,
+    "recycling_cap_pct": 20,
+    "portfolio_split": { "AU": 9, "JP": 8, "NZ": 5, "SG": 3 },
+    "portfolio_source": "IM §6.1, §8.1 Fund Terms"
   },
   "thesis": {
     "markets": ["Australia", "Japan", "New Zealand", "Singapore"],

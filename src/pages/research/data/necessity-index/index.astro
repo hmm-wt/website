@@ -1,14 +1,14 @@
 ---
-import Index from '../../layouts/Index.astro';
-import IndexCard from '../../components/IndexCard.astro';
-import IndexMatrix from '../../components/IndexMatrix.astro';
-import StatusIndicator from '../../components/StatusIndicator.astro';
-import DataSection from '../../components/DataSection.astro';
-import CiteThis from '../../components/CiteThis.astro';
-import ClassifiedFunnel from '../../components/charts/ClassifiedFunnel.astro';
-import MarketRegulationBar from '../../components/charts/MarketRegulationBar.astro';
-import NecessityBar from '../../components/charts/NecessityBar.astro';
-import data from '../../data/necessity-index.json';
+import Index from '../../../../layouts/Index.astro';
+import IndexCard from '../../../../components/IndexCard.astro';
+import IndexMatrix from '../../../../components/IndexMatrix.astro';
+import StatusIndicator from '../../../../components/StatusIndicator.astro';
+import DataSection from '../../../../components/DataSection.astro';
+import CiteThis from '../../../../components/CiteThis.astro';
+import ClassifiedFunnel from '../../../../components/charts/ClassifiedFunnel.astro';
+import MarketRegulationBar from '../../../../components/charts/MarketRegulationBar.astro';
+import NecessityBar from '../../../../components/charts/NecessityBar.astro';
+import data from '../../../../data/necessity-index.json';
 
 const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
   year: 'numeric', month: 'long', day: 'numeric'
@@ -133,7 +133,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
         <IndexCard label="Regulations in peak year" value={data.crystallisation_window.peak_year_count} accent />
       </div>
       <p class="ip__note ip__note--cta">
-        <a href="/calendar/">View the full calendar →</a>
+        <a href="/research/data/calendar/">View the full calendar →</a>
       </p>
     </DataSection>
 
@@ -142,7 +142,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       <CiteThis
         title="The Necessity Index"
         version={data.version}
-        href="/necessity-index/"
+        href="/research/data/necessity-index/"
         date={data.as_of}
         embedSrc="/necessity-index/embed/"
       />
@@ -154,7 +154,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
         {data.source_datasets.map((s) => <li>{s}</li>)}
       </ul>
       <p class="ip__methodology">
-        <a href="/necessity-index/methodology/">Methodology →</a>
+        <a href="/research/data/necessity-index/methodology/">Methodology →</a>
         <span class="ip__embed-note"> · <a href="/necessity-index/embed/">Open the embed view</a></span>
       </p>
     </footer>

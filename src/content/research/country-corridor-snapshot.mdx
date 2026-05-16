@@ -1,0 +1,74 @@
+---
+title: Four-market corridor snapshot.
+summary: Australia, Japan, New Zealand, Singapore. Why these four markets, the structural edge in each, and how portfolio capital allocates across them.
+date: 2026-05-16
+version: v1.0
+status: live
+audience: lps
+template: corridor
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "hmm Ventures classified universe (19,416 four-market companies, 2026-04-08); regulations_comprehensive.json four-market subset (174 regs)."
+necessities: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+headline_metrics:
+  - { label: "Four-market companies classified", value: "19,416" }
+  - { label: "Four-market regulations", value: "174" }
+  - { label: "Portfolio target", value: "25" }
+  - { label: "AUS allocation", value: "9 / 35%" }
+  - { label: "JPN allocation", value: "8 / 30%" }
+  - { label: "NZL + SGP combined", value: "8 / 35%" }
+---
+import CountryCorridorGrid from '../../components/research/CountryCorridorGrid.astro';
+
+Pan-APAC is the obvious mandate. It is also the wrong one for this thesis. The fund's four markets were not chosen by GDP, population, or VC volume. They were chosen because they are the only four developed APAC markets where the regulation map produces a reliable result: public-source regulatory calendars, traceable parliamentary records, and an exit lane to NA / EMEA strategics that is documented and active.
+
+## Why these four
+
+**Jurisdictional legibility.** All four are common-law or transparent civil-law systems with public regulator publications, traceable parliamentary records, and enforceable intellectual-property regimes. The regulation map works because these four markets are where primary sources are accessible and auditable. It does not transfer cleanly into less transparent jurisdictions, which is why the fund does not invest there.
+
+**Regulatory density.** The four markets contain 174 of the 725 mapped regulations globally and 117 Tier 1 regulations in the Five Necessities. This is a disproportionate density relative to population or GDP, and it reflects a coordinated sovereign response to AI deployment, supply-chain fragility, and infrastructure modernisation concentrated in the 2024 to 2030 window.
+
+**Developed-market economics at emerging-market entry prices.** The four target markets collectively deployed approximately USD $7B in VC capital in 2024, roughly 4% of US annual volume, across a 19,416-company ecosystem. Across those 19,416 companies, the 174 regulations creating the compliance demand we target sit inside a dated Crystallisation Window. That window is measurably open.
+
+<CountryCorridorGrid />
+
+## Per-market structural edge
+
+**Japan.** 49 regulations (T1: 41, T2: 8). Primary Necessities: Autonomous Systems, Biomedical Systems, AI cross-cutting. CVC-dominant (40%+ early capital). TSE governance reforms creating M&A appetite among mid-caps and conglomerates. PMDA and MLIT approval timelines are the barrier, not the cost. Model at 7 to 10 year hold. Sourcing is partnership-led via APAC co-investment relationships and corporate venture arms. The diligence layer, language layer, and post-investment support layer are pre-built through co-investment rather than replicated by the GP.
+
+**Australia.** 56 regulations (T1: 44, T2: 12). Primary Necessities: Power Systems, Biomedical Systems, Critical Materials and Supply Integrity, Autonomous Systems. R&D tax incentive extends seed runway 10 to 14 months on average. Superannuation-backed Series A ecosystem. AU frameworks carry into NZ via Trans-Tasman mutual recognition (FSANZ, Medsafe-TGA). 9,389 companies in the reference dataset.
+
+**New Zealand.** 28 regulations (T1: 20, T2: 8). Primary Necessities: Food Security Systems, Biomedical Systems, Power Systems. Fastest OECD pathway to Class II medical-device commercial revenue (Medsafe WAND). Callaghan Innovation grant pipeline pre-funds regulatory engagement. Small market means regulator relationships compound quickly. 2,130 companies in the reference dataset.
+
+**Singapore.** 41 regulations (T1: 28, T2: 13). Primary Necessities: Autonomous Systems, Biomedical Systems, Food Security Systems. Cross-border hub for ASEAN market access. MAS Regulatory Sandbox with published graduation track record across Necessity-aligned cohorts. Most tractable Series A and B follow-on market of the four. RCEP / CPTPP country-of-origin enforcement creates logistics compliance demand.
+
+## Portfolio allocation
+
+Geographic allocation across the four target markets reflects regulatory density, pipeline depth in the reference dataset, and structural considerations:
+
+| Market | Allocation | Companies (25 x allocation) |
+|---|---|---:|
+| Japan | 30% | 8 |
+| Australia | 35% | 9 |
+| New Zealand | 20% | 5 |
+| Singapore | 15% | 3 |
+| **Total** | **100%** | **25** |
+
+## Deployment sequence
+
+Within each Necessity, regulatory cycle times dictate deployment sequence. Singapore's sandbox approvals (6 to 12 months) allow earliest capital deployment and fastest regulatory validation. Australia's frameworks open the door to New Zealand via Trans-Tasman mutual recognition (FSANZ for food, Medsafe-TGA for health tech), making AUS the gateway investment for NZL expansion. Japan's longer approval cycles (12 to 24 months for PMDA, MLIT) are offset by the highest exit multiples in the portfolio. Japanese companies should be modelled at 7 to 10 year holding periods.
+
+## What this is not
+
+This is not a pan-APAC mandate. The fund does not invest in mainland China, India, Korea, Indonesia, Vietnam, the Philippines, or other APAC markets outside the four. Each excluded market fails one or more of the three jurisdictional-legibility tests. That exclusion is deliberate.
+
+## Sources
+
+- hmm Ventures classified universe, reference dataset 2026-04-08. 19,416 four-market companies, conservative T1 / T2 classifier.
+- Comprehensive Regulatory Dataset (regulations_comprehensive.json). 725 regulations across 64 countries, 13 sectors. Four-market subset: 174 regulations.
+- Portfolio split per IM §6.1 (Fund structure and portfolio construction).
+- IM v3.8.3 §3.1 (Why these four markets, and why now), §3.2 (Four markets at a glance), Appendix D (Road-to-Market Reference).
+
+> Full per-market regulatory calendars, entry dynamics, and deployment sequencing are in Appendix D of the IM.
+>
+> [Request the IM →](/lps/)

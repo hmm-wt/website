@@ -43,7 +43,7 @@ const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string; slug: string
       <p class="kicker">Read</p>
       <ul role="list" class="footer__links">
         <li><a href="/doctrine/">The Necessity Doctrine</a></li>
-        <li><a href="/scoreboard/">Scoreboard</a></li>
+        <li><a href="/research/data/scoreboard/">Scoreboard</a></li>
         <li><a href="/research/">Research</a></li>
       </ul>
     </nav>
@@ -65,6 +65,9 @@ const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string; slug: string
 
   <div class="container footer__base">
     <p class="kicker footer__legal">© {year} hmm Ventures · <a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a></p>
+    <p class="footer__disclaimer">
+      This site is published for informational and research purposes only. It is not an offer to sell, or a solicitation of an offer to buy, any securities or partnership interests in any jurisdiction. Any such offer would be made only pursuant to a confidential private placement memorandum and subscription documents, and only to qualified investors in accordance with the applicable laws of their jurisdiction. Past performance is not indicative of future results. Simulated returns are model outputs, not forecasts. Actual results may differ materially.
+    </p>
   </div>
 </footer>
 
@@ -163,6 +166,15 @@ const locations: { market: 'SG' | 'JP' | 'AU' | 'NZ'; name: string; slug: string
     max-width: 80ch;
     color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
     line-height: 1.5;
+  }
+  .footer__disclaimer {
+    margin: var(--s-3) 0 0;
+    max-width: 80ch;
+    font-family: var(--f-mono);
+    font-size: calc(var(--fs-xs) * 0.92);
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--c-pearl) 45%, transparent);
+    letter-spacing: 0.02em;
   }
 
   .footer .kicker { color: color-mix(in srgb, var(--c-pearl) 65%, transparent); }

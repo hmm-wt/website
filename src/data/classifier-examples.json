@@ -1,0 +1,88 @@
+{
+  "version": "v1.0",
+  "as_of": "2026-05-10",
+  "source": "hmm Ventures classifier methodology (IM §2.2, §5.1). Worked examples drawn from the canonical 9-exit dataset and the off-mandate exclusions in the doctrine.",
+  "branches": {
+    "t1": {
+      "label": "T1. Licence-as-barrier",
+      "rule": "Company cannot legally operate without regulatory approval. The classifier flags T1 when registry, product description, or hiring signals indicate dependence on a named licence, clearance, or certification regime in one of the four markets.",
+      "examples": [
+        {
+          "company": "Eucalyptus",
+          "market": "AU",
+          "necessity": "Biomedical",
+          "rule_applied": "Telehealth licensing + ACHS accreditation. Cannot prescribe or dispense without approved-provider status.",
+          "outcome": "Exit 2026 — Hims & Hers, up to $1.15B total."
+        },
+        {
+          "company": "Volpara Health",
+          "market": "NZ",
+          "necessity": "Biomedical",
+          "rule_applied": "TGA + FDA medical-device clearance. Cannot ship breast-density AI without regulatory approval per indication.",
+          "outcome": "Exit 2024 — Lunit, $193M."
+        },
+        {
+          "company": "Telecare",
+          "market": "AU",
+          "necessity": "Biomedical",
+          "rule_applied": "Virtual specialist care licensing. Cannot deliver specialist consults without registered-practitioner credentialing.",
+          "outcome": "Exit 2025 — Teladoc, undisclosed."
+        }
+      ]
+    },
+    "t2": {
+      "label": "T2. Compulsion-as-barrier",
+      "rule": "Buyers are statutorily required to purchase compliant solutions. The classifier flags T2 when sector and customer profile map to a compliance mandate that creates demand for the company's product.",
+      "examples": [
+        {
+          "company": "Payapps",
+          "market": "AU",
+          "necessity": "Critical Materials",
+          "rule_applied": "AU Building & Construction Industry Security of Payment Act compels head contractors to manage statutory progress claims. The buyer's purchase is the compliance mechanism.",
+          "outcome": "Exit 2024 — Autodesk, ~$390M."
+        },
+        {
+          "company": "Costa Group",
+          "market": "AU",
+          "necessity": "Food Security",
+          "rule_applied": "FSANZ Standard 3.2.2A compels food businesses to demonstrate supply-chain traceability. Buyers can only source from compliant growers.",
+          "outcome": "Exit 2024 — Paine Schwartz, A$2.459B."
+        },
+        {
+          "company": "Infigen Energy",
+          "market": "AU",
+          "necessity": "Power",
+          "rule_applied": "Renewable Energy Target compels retailers to source from accredited generators. Buyers must purchase from licensed renewables to meet statutory targets.",
+          "outcome": "Exit 2020 — Iberdrola, A$893M."
+        }
+      ]
+    },
+    "excluded": {
+      "label": "Excluded. Off-mandate.",
+      "rule": "Fails both T1 and T2 screens, or sits inside an off-mandate sector. Cross-cutting band is restricted to AI and Data only; financial services / fintech and defence tech are off-mandate everywhere.",
+      "examples": [
+        {
+          "company": "Consumer fintech (neobank)",
+          "market": "Any",
+          "necessity": "—",
+          "rule_applied": "Financial services / fintech is fully off-mandate. Banking licences are real T1 barriers, but the sector itself sits outside the fund's scope.",
+          "outcome": "Excluded — off-mandate sector, regardless of regulatory depth."
+        },
+        {
+          "company": "Defence-tech / dual-use",
+          "market": "Any",
+          "necessity": "—",
+          "rule_applied": "Defence-tech is off-mandate everywhere. Export-control regimes meet the T1 criterion in form, but the fund does not invest in defence applications.",
+          "outcome": "Excluded — off-mandate sector."
+        },
+        {
+          "company": "Generalist B2B SaaS",
+          "market": "Any",
+          "necessity": "—",
+          "rule_applied": "No named licence, clearance, or certification dependency. Buyers are not statutorily required to purchase. Fails both screens.",
+          "outcome": "Excluded — neither barrier present."
+        }
+      ]
+    }
+  }
+}

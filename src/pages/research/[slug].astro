@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Research from '../../layouts/Research.astro';
+import ResearchScrolly from '../../layouts/ResearchScrolly.astro';
+import ResearchCorridor from '../../layouts/ResearchCorridor.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('research');
@@ -12,17 +14,57 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-// Long-form data-dense pages collapse sections by default.
+
+// Template selection. Explicit `template` field in frontmatter wins; otherwise
+// fall back to per-slug sets so existing entries don't need rewriting.
 const denseSlugs = new Set(['regulatory-landscape']);
-const collapseSections = denseSlugs.has(entry.slug);
+const scrollySlugs = new Set([
+  'classifier-walkthrough',
+  'exit-evidence-dataset',
+  'crystallisation-window-2024-2030'
+]);
+const corridorSlugs = new Set(['country-corridor-snapshot']);
+
+const template =
+  entry.data.template
+  ?? (scrollySlugs.has(entry.slug) ? 'scrolly'
+   :  corridorSlugs.has(entry.slug) ? 'corridor'
+   :  'dense');
+
+const collapseSections = template === 'dense' && denseSlugs.has(entry.slug);
+const dateIso = entry.data.date.toISOString();
 ---
-<Research
-  title={entry.data.title}
-  description={entry.data.summary}
-  headlineMetrics={entry.data.headline_metrics}
-  date={entry.data.date.toISOString()}
-  version={entry.data.version}
-  collapseSections={collapseSections}
->
-  <Content />
-</Research>
+{template === 'scrolly' && (
+  <ResearchScrolly
+    title={entry.data.title}
+    description={entry.data.summary}
+    headlineMetrics={entry.data.headline_metrics}
+    date={dateIso}
+    version={entry.data.version}
+  >
+    <Content />
+  </ResearchScrolly>
+)}
+{template === 'corridor' && (
+  <ResearchCorridor
+    title={entry.data.title}
+    description={entry.data.summary}
+    headlineMetrics={entry.data.headline_metrics}
+    date={dateIso}
+    version={entry.data.version}
+  >
+    <Content />
+  </ResearchCorridor>
+)}
+{template === 'dense' && (
+  <Research
+    title={entry.data.title}
+    description={entry.data.summary}
+    headlineMetrics={entry.data.headline_metrics}
+    date={dateIso}
+    version={entry.data.version}
+    collapseSections={collapseSections}
+  >
+    <Content />
+  </Research>
+)}

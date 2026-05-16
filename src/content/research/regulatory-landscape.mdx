@@ -6,7 +6,7 @@ version: v1.0
 status: live
 audience: lps
 markets: [Australia, Japan, New Zealand, Singapore]
-sectors: [AI Governance, Agritech & Food Safety, Autonomous Systems, Critical Minerals, Data Privacy, Defence & Dual-Use, Energy & Utilities, Environmental & ESG, Financial Services, Global Logistics, Infrastructure & Construction, Maritime & Aviation, Regulated Health Tech]
+sectors: [AI Governance, Agritech & Food Safety, Autonomous Systems, Critical Minerals, Data Privacy, Energy & Utilities, Environmental & ESG, Global Logistics, Infrastructure & Construction, Maritime & Aviation, Regulated Health Tech]
 source_dataset: "regulations_comprehensive.json (725 regulations, 64 countries)"
 headline_metrics:
   - { label: "Regulations in target markets", value: "174" }
@@ -15,19 +15,25 @@ headline_metrics:
   - { label: "Tier 1 (licence-as-barrier)", value: "137" }
   - { label: "Tier 2 (compulsion-as-barrier)", value: "37" }
 ---
+import RegClockStrip from '../../components/charts/RegClockStrip.astro';
+import MarketRegulationBar from '../../components/charts/MarketRegulationBar.astro';
+import CrystallisationCalendarStrip from '../../components/research/CrystallisationCalendarStrip.astro';
 
 **Generated:** 6 April 2026
 **Markets:** Australia, Japan, New Zealand, Singapore
 **Total regulations in target markets:** 174
 **Global dataset:** 725 regulations across 64 countries, 13 sectors
-**Sectors:** AI Governance, Agritech & Food Safety, Autonomous Systems, Critical Minerals, Data Privacy, Defence & Dual-Use, Energy & Utilities, Environmental & ESG, Financial Services, Global Logistics, Infrastructure & Construction, Maritime & Aviation, Regulated Health Tech
+**Sectors:** AI Governance, Agritech & Food Safety, Autonomous Systems, Critical Minerals, Data Privacy, Energy & Utilities, Environmental & ESG, Global Logistics, Infrastructure & Construction, Maritime & Aviation, Regulated Health Tech
 
 ---
 
 ## Summary
 
-![Regulatory acceleration timeline 2024 to 2028 across Australia, Japan, New Zealand, and Singapore. Thirty-four in-flight regulations; peak density 2026 to 2027.](/charts/regulatory_direction.png)
-<small>Source: APRA, TGA, METI, MLIT, MAS, MOH, LTA, Medsafe, NZ official publications. Major regulatory events; four-market dataset.</small>
+<RegClockStrip />
+
+<MarketRegulationBar />
+
+<CrystallisationCalendarStrip />
 
 | Metric | Value |
 |--------|-------|
@@ -381,7 +387,7 @@ headline_metrics:
 |------|--------|------|------------|
 | 1981 | enacted | T1 | Medicines Act 1981 (interim framework post-TPA repeal) |
 | 2003 | enacted | T2 | Medsafe WAND Database (self-registration, no premarket approval) |
-| 2024 | repealed | — | Therapeutic Products Act 2023 (repealed December 2024; replacement pending) |
+| 2024 | repealed | n/a | Therapeutic Products Act 2023 (repealed December 2024; replacement pending) |
 
 ---
 

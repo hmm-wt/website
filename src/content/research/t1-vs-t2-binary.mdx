@@ -1,0 +1,87 @@
+---
+title: T1 vs T2. The binary.
+summary: How a 725-regulation map narrows to two categories. Licence-as-barrier versus compulsion-as-barrier. The framework that powers the classifier.
+date: 2026-05-16
+version: v1.0
+status: live
+audience: lps
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "regulations_comprehensive.json (725 regulations, 64 countries, 13 sectors). Four-market subset: 174 regulations."
+necessities: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+headline_metrics:
+  - { label: "Regulations on the map (global)", value: "725" }
+  - { label: "Tier 1 (licence-as-barrier)", value: "605" }
+  - { label: "Tier 2 (compulsion-as-barrier)", value: "120" }
+  - { label: "Four-market T1", value: "117" }
+  - { label: "Four-market T2", value: "27" }
+  - { label: "T1 share inside the Five Necessities", value: "81%" }
+---
+import DecisionTreeBranch from '../../components/research/DecisionTreeBranch.astro';
+
+The framework is deliberately binary. Anything more elaborate collapses under the weight of subjective scoring.
+
+## Tier 1. Licence-as-barrier.
+
+A regulator has created or tightened a licensing regime, and the operational layer needed to comply with it is missing or under-built.
+
+Examples: a digital health software classification under TGA, a new MAS payments licence category, an APRA prudential rule that demands fresh reporting infrastructure, an MLIT Level 4 autonomous-vehicle approval.
+
+The barrier is *permission to operate*.
+
+## Tier 2. Compulsion-as-barrier.
+
+A regulator has not created a licence, but has compelled an industry to do something it was not previously required to do, and the compliance layer is missing.
+
+Examples: mandatory embodied-carbon disclosure on construction projects, mandatory AI risk assessments under guardrails, mandatory critical-minerals provenance under dual-use rules.
+
+The barrier is *evidence of compliance*.
+
+## The split
+
+Of the 725 regulations on the current map, **605 are Tier 1 and 120 are Tier 2**. The Tier 1 weighting is a feature, not a bug: licence regimes create harder, longer-lived barriers than compliance regimes, and the fund's preference order follows the same hierarchy.
+
+<DecisionTreeBranch />
+
+## What the screen produces in the four markets
+
+| Necessity | T1 | T2 | Total |
+|---|---:|---:|---:|
+| Biomedical Systems | 19 | 1 | 20 |
+| Autonomous Systems | 58 | 10 | 68 |
+| Power Systems | 22 | 8 | 30 |
+| Food Security Systems | 16 | 2 | 18 |
+| Critical Materials and Supply Integrity | 2 | 6 | 8 |
+| **Five Necessities total** | **117** | **27** | **144** |
+
+A further 17 in-market regulations sit in the cross-cutting band (AI Governance 13, Data Privacy 4) and are not treated as a standalone Necessity. They surface inside every row above via the AI / data overlay. The remaining in-market regulations cover off-mandate sectors and are excluded from the fund's active screen.
+
+The Tier 1 share inside the Five Necessities is steep: 117 of 144, roughly 81%. This is where the durable barriers sit. The two largest buckets by rule count, Power Systems and Autonomous Systems, are also the two where the operational compliance layer is most under-built relative to the pace of new rulemaking.
+
+## What the binary excludes
+
+The framework deliberately excludes things that *look* regulated but are not, in practice, barriers a seed company can build a moat behind. Examples of out-of-scope:
+
+- **Voluntary frameworks and ethics codes.** No statutory penalty, no licence dependence. No barrier.
+- **Regulated buyers in non-mandated workflows.** A hospital is a regulated buyer, but if the workflow being sold into is not under statutory compliance, the regulatory layer is irrelevant to demand.
+- **Disclosure rules with no enforcement.** Mandatory disclosure with no published enforcement record is not a T2 barrier.
+
+The screen does not pretend that all regulation matters equally. The binary forces a clean call: licence or compulsion. If neither, the company is excluded regardless of regulatory-adjacent language in its marketing.
+
+## Three design limits
+
+The screen identifies opportunity, not winners. Founder quality determines who fills a category.
+
+Monthly refresh cost on the map is budgeted for.
+
+Jurisdictionally legible markets only. That is one reason the fund does not invest outside the four targets.
+
+## Sources
+
+- regulations_comprehensive.json. 725 regulations across 64 countries, 13 sectors.
+- Per-regulation primary-source URLs: regulator portals, parliamentary records, official gazettes.
+- IM v3.8.3 §2.2 (The Tier 1 / Tier 2 binary), §2.3 (What the screen produces), Appendix F (Data Provenance).
+
+> Full classifier rules, regex sets, registry schemas, and worked examples are documented in Appendix F.
+>
+> [Request the IM →](/lps/)

@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ResearchCard from '../../components/ResearchCard.astro';
+import ResearchCardLarge from '../../components/ResearchCardLarge.astro';
+import LiveStatusStrip from '../../components/LiveStatusStrip.astro';
 import KickerLabel from '../../components/KickerLabel.astro';
 
 const entries = (await getCollection('research')).sort(
@@ -9,82 +11,120 @@ const entries = (await getCollection('research')).sort(
 );
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
-// Group by audience for the audience-grouped layout below.
-const audiences = [
-  { id: 'lps',         label: 'For LPs',         desc: 'Empirical validation, returns framing, dataset depth.' },
-  { id: 'founders',    label: 'For founders',    desc: 'What we look for, how we read regulatory exposure.' },
-  { id: 'researchers', label: 'For researchers', desc: 'Methodology, datasets, citation-grade detail.' },
-  { id: 'general',     label: 'Public',          desc: 'Open-access research and live data products.' },
+// Four lanes. LP lane is the dominant tier; others render compressed.
+const lanes = [
+  { id: 'lps',         label: 'For LPs',         desc: 'Empirical validation, returns framing, dataset depth. Cited primary sources throughout.' },
+  { id: 'founders',    label: 'For founders',    desc: 'How we read regulatory exposure. What we fund at pre-product. The compliance clock.' },
+  { id: 'researchers', label: 'For researchers', desc: 'Methodology, datasets, citation-grade detail. Reproducible figures.' },
+  { id: 'general',     label: 'Public',          desc: 'Open-access primers and explainers.' }
 ] as const;
-const byAudience = audiences.map((a) => ({
-  ...a,
-  items: entries.filter((e) => (e.data.audience ?? 'general') === a.id)
-}));
 
-// Two additional research surfaces that are pages, not content entries.
-// They are listed alongside the regulation report so the /research/ index
-// is the canonical entry point to the public data product surface.
+type LaneId = typeof lanes[number]['id'];
+type Entry = typeof entries[number];
+
+const byLane: Record<LaneId, Entry[]> = {
+  lps: [], founders: [], researchers: [], general: []
+};
+for (const e of entries) {
+  const lane = (e.data.audience ?? 'general') as LaneId;
+  byLane[lane].push(e);
+}
+
+// Live data products. First-class entries under /research/data/.
 const dataProducts = [
   {
-    href: '/necessity-index/',
+    href: '/research/data/necessity-index/',
     title: 'The Necessity Index',
-    summary: 'Live data product. 22,217 APAC technology companies classified against the T1 / T2 thesis. Updated quarterly. Embeddable.',
-    type: 'Data product',
+    summary: 'The classified APAC technology universe. 22,217 companies against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations.',
+    type: 'Live data product',
     version: 'v1.0',
     refresh: 'Quarterly'
   },
   {
-    href: '/calendar/',
-    title: 'The Crystallisation Window Calendar',
-    summary: 'Thirty-four in-flight regulations across Australia, Japan, New Zealand, and Singapore dated 2024 to 2030. Filter by market and necessity.',
+    href: '/research/data/calendar/',
+    title: 'The Crystallisation Window',
+    summary: 'Thirty-four in-flight regulations across the four markets, dated 2024 to 2030. Filterable by market, Necessity, tier. Density peaks 2026 to 2027.',
     type: 'Live tracker',
     version: 'v1.0',
     refresh: 'Monthly'
+  },
+  {
+    href: '/research/data/scoreboard/',
+    title: 'The Scoreboard',
+    summary: 'Five falsifiable predictions, dated and sourced. Charity-bound bets. Adversarial collaboration as scholarly commitment.',
+    type: 'Falsifiable claims',
+    version: 'v1.0',
+    refresh: 'Annual rescore'
   }
 ];
 ---
 <Base
   title="Research"
-  description="Public research from hmm Ventures. The regulatory landscape, the company universe, and the crystallisation window."
+  description="Public research from hmm Ventures. The regulatory landscape, the classified universe, the crystallisation window, the scoreboard. LP-grade evidence with primary-source citations."
 >
   <section class="rh container">
     <header class="rh__head">
-      <KickerLabel index="00" label="Research" accent />
-      <h1 class="rh__title gavel-drop">Public research.</h1>
+      <KickerLabel index="v2.0" label="Research" accent />
+      <h1 class="rh__title gavel-drop">The map. The dataset. The calendar.</h1>
       <p class="rh__lede">
-        The map that defines the four-market mandate. The dataset that anchors the thesis. The calendar that times the deployment. Cited primary sources throughout.
+        The four-market regulated thesis on a public surface. Citable primary sources throughout. The dataset, the in-flight regulatory calendar, the five falsifiable claims that close the loop.
       </p>
     </header>
 
-    {byAudience.filter((g) => g.items.length > 0).map((group) => (
-      <section class="rh__group" aria-label={group.label}>
-        <header class="rh__group-head">
-          <p class="kicker rh__group-label">{group.label}</p>
-          <p class="rh__group-desc">{group.desc}</p>
-        </header>
-        <div class="rh__list">
-          {group.items.map((entry, i) => (
-            <ResearchCard
-              href={`/research/${entry.slug}/`}
-              title={entry.data.title}
-              summary={entry.data.summary}
-              date={entry.data.date.toISOString()}
-              version={entry.data.version}
-              status={entry.data.status}
-              markets={entry.data.markets}
-              pages={entry.data.pages}
-              pdfUrl={entry.data.pdf_url}
-              index={pad2(i + 1)}
-            />
-          ))}
-        </div>
-      </section>
-    ))}
+    <LiveStatusStrip />
 
-    <section class="rh__group" aria-label="Live data products">
+    {lanes.map((lane) => {
+      const items = byLane[lane.id];
+      if (items.length === 0) return null;
+      const isLP = lane.id === 'lps';
+      return (
+        <section class={`rh__group ${isLP ? 'rh__group--lp' : ''}`} aria-label={lane.label}>
+          <header class="rh__group-head">
+            <p class="kicker rh__group-label">{lane.label}</p>
+            <p class="rh__group-desc">{lane.desc}</p>
+          </header>
+          <div class="rh__list">
+            {items.map((entry, i) => (
+              isLP ? (
+                <ResearchCardLarge
+                  href={`/research/${entry.slug}/`}
+                  title={entry.data.title}
+                  summary={entry.data.summary}
+                  date={entry.data.date.toISOString()}
+                  version={entry.data.version}
+                  status={entry.data.status}
+                  markets={entry.data.markets}
+                  necessities={entry.data.necessities}
+                  pages={entry.data.pages}
+                  pdfUrl={entry.data.pdf_url}
+                  sourceDataset={entry.data.source_dataset}
+                  headlineMetric={entry.data.headline_metrics?.[0]}
+                  index={pad2(i + 1)}
+                />
+              ) : (
+                <ResearchCard
+                  href={`/research/${entry.slug}/`}
+                  title={entry.data.title}
+                  summary={entry.data.summary}
+                  date={entry.data.date.toISOString()}
+                  version={entry.data.version}
+                  status={entry.data.status}
+                  markets={entry.data.markets}
+                  pages={entry.data.pages}
+                  pdfUrl={entry.data.pdf_url}
+                  index={pad2(i + 1)}
+                />
+              )
+            ))}
+          </div>
+        </section>
+      );
+    })}
+
+    <section class="rh__group rh__group--data" aria-label="Live data products">
       <header class="rh__group-head">
         <p class="kicker rh__group-label">Live data products</p>
-        <p class="rh__group-desc">Quarterly-refreshed indices and trackers. Embeddable.</p>
+        <p class="rh__group-desc">Refreshed on their own clocks. Embeddable.</p>
       </header>
       <div class="rh__list">
         {dataProducts.map((dp, i) => (
@@ -109,12 +149,12 @@ const dataProducts = [
 </Base>
 
 <style>
-  .rh { padding-block: var(--s-8) var(--s-9); max-width: 64rem; }
+  .rh { padding-block: var(--s-8) var(--s-9); max-width: 72rem; }
   .rh__head {
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
-    margin-block-end: var(--s-7);
+    margin-block-end: var(--s-5);
     padding-block-end: var(--s-5);
     border-bottom: 1px solid var(--rule);
   }
@@ -124,6 +164,7 @@ const dataProducts = [
     line-height: var(--lh-tight);
     margin: 0;
     letter-spacing: -0.02em;
+    max-width: 18ch;
   }
   .rh__lede {
     font-family: var(--f-display);
@@ -131,7 +172,7 @@ const dataProducts = [
     font-size: var(--fs-xl);
     line-height: var(--lh-snug);
     color: var(--fg-soft);
-    max-width: 52ch;
+    max-width: 56ch;
     margin: 0;
   }
 
@@ -142,7 +183,7 @@ const dataProducts = [
     display: flex;
     flex-direction: column;
     gap: var(--s-2);
-    padding-block-end: var(--s-3);
+    padding-block-end: var(--s-4);
     margin-block-end: 0;
   }
   .rh__group-label { color: var(--c-tomato); margin: 0; }
@@ -152,13 +193,23 @@ const dataProducts = [
     font-size: var(--fs-xs);
     color: var(--fg-soft);
     letter-spacing: 0.04em;
+    text-transform: none;
+    max-width: 64ch;
   }
+
+  .rh__group--lp .rh__group-label {
+    font-size: var(--fs-sm);
+    letter-spacing: 0.14em;
+  }
+
   .rh__list {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid var(--rule);
   }
 
+  /* Data products strip. */
+  .rh__group--data { margin-block-start: var(--s-4); }
   .dp {
     border-top: 1px solid var(--rule);
     transition: background var(--dur-1) var(--ease);

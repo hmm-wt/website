@@ -1,0 +1,179 @@
+---
+/**
+ * V12 — RoundLadder.
+ *
+ * Stage-by-stage round-size premium ladder. T1-classified seed companies
+ * raise larger rounds than unregulated peers at every stage; the gap
+ * widens through Series C. Cumulative funding multiple lands at 2.12x by
+ * Series D+.
+ *
+ * Source: /src/data/necessity-index.json `premiums` block.
+ */
+import necessity from '../../data/necessity-index.json';
+
+const stages = [
+  { id: 'pre-seed',  label: 'Pre-Seed',    value: necessity.premiums.cumulative_pre_seed,       basis: 'parity' },
+  { id: 'seed',      label: 'Seed',        value: necessity.premiums.round_size_seed,           basis: 'round-size' },
+  { id: 'series-a',  label: 'Series A',    value: necessity.premiums.round_size_series_a,       basis: 'round-size' },
+  { id: 'series-c',  label: 'Series C',    value: necessity.premiums.round_size_series_c,       basis: 'round-size' },
+  { id: 'series-dp', label: 'Series D+',   value: necessity.premiums.round_size_series_d_plus,  basis: 'round-size' }
+];
+
+const cumulative = necessity.premiums.cumulative_series_d_plus;
+const exitMul = necessity.premiums.exit_rate_multiple;
+
+// Bar scale. Baseline 1.00x is the parity reference line.
+const maxVal = Math.max(...stages.map((s) => s.value), cumulative);
+const scale = (v: number) => ((v - 1) / (maxVal - 1)) * 100;
+---
+<section class="rdl motion-group" aria-label="Round-size premium ladder">
+  <header class="rdl__head">
+    <p class="kicker rdl__kicker">T1 round-size premium · stage by stage</p>
+    <p class="rdl__source">Source: hmm Ventures funding-premium analysis · 2024 four-market deal data · T1 / unregulated last_funding_amount median.</p>
+  </header>
+
+  <ol class="rdl__rungs" role="list">
+    {stages.map((s, i) => (
+      <li class={`rdl__rung rdl__rung--${s.id} stagger-row`} data-i={i}>
+        <span class="rdl__rung-stage">{s.label}</span>
+        <span class="rdl__rung-bar">
+          <span class="rdl__rung-baseline" aria-hidden="true"></span>
+          <span class="rdl__rung-fill" style={`width: ${scale(s.value).toFixed(1)}%`}></span>
+        </span>
+        <span class="rdl__rung-value">{s.value.toFixed(2)}x</span>
+      </li>
+    ))}
+  </ol>
+
+  <footer class="rdl__foot">
+    <div class="rdl__cum">
+      <p class="rdl__cum-label">Cumulative funding multiple · Series D+</p>
+      <p class="rdl__cum-value">{cumulative.toFixed(2)}x</p>
+      <p class="rdl__cum-note">Per-stage premiums compound. The cumulative effect is the structural exit price.</p>
+    </div>
+    <div class="rdl__cum">
+      <p class="rdl__cum-label">Exit-rate multiple · regulated vs unregulated</p>
+      <p class="rdl__cum-value">{exitMul.toFixed(2)}x</p>
+      <p class="rdl__cum-note">{necessity.premiums.regulated_exit_rate_pct}% T1 exit incidence vs {necessity.premiums.unregulated_exit_rate_pct}% unregulated, in the four-market 2024 dataset.</p>
+    </div>
+  </footer>
+</section>
+
+<style>
+  .rdl {
+    margin-block: var(--s-6);
+    border-block: 1px solid var(--rule);
+  }
+  .rdl__head {
+    padding: var(--s-3) var(--s-5);
+    border-bottom: 1px solid var(--rule);
+    background: color-mix(in srgb, var(--c-pearl) 30%, transparent);
+  }
+  .rdl__kicker { color: var(--c-tomato); margin: 0; text-transform: none; letter-spacing: 0.04em; }
+  .rdl__source {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    margin: 0.25rem 0 0;
+  }
+
+  .rdl__rungs {
+    list-style: none;
+    margin: 0;
+    padding: var(--s-4) var(--s-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .rdl__rung {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr) 5rem;
+    gap: var(--s-3);
+    align-items: center;
+  }
+  .rdl__rung-stage {
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg);
+  }
+  .rdl__rung-bar {
+    position: relative;
+    height: 14px;
+    background: color-mix(in srgb, var(--rule) 100%, transparent);
+  }
+  .rdl__rung-baseline {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 2px;
+    background: var(--fg-soft);
+  }
+  .rdl__rung-fill {
+    display: block;
+    height: 100%;
+    background: var(--c-tomato);
+    width: 0;
+    transition: width var(--speed-draw) var(--ease-draw);
+  }
+  .rdl__rung-value {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    color: var(--c-tomato);
+    text-align: right;
+    line-height: 1;
+  }
+  .rdl__rung--pre-seed .rdl__rung-fill { background: color-mix(in srgb, var(--c-tomato) 35%, transparent); }
+  .rdl__rung--pre-seed .rdl__rung-value { color: var(--fg-soft); }
+
+  .rdl__foot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 640px) {
+    .rdl__rung { grid-template-columns: 5rem minmax(0, 1fr) 4rem; gap: var(--s-2); }
+    .rdl__foot { grid-template-columns: 1fr; }
+  }
+  .rdl__cum {
+    padding: var(--s-4) var(--s-5);
+    border-inline-start: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .rdl__cum:first-child { border-inline-start: 0; }
+  .rdl__cum-label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    margin: 0;
+  }
+  .rdl__cum-value {
+    font-family: var(--f-display);
+    font-size: var(--fs-3xl);
+    line-height: 1;
+    color: var(--c-tomato);
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .rdl__cum-note {
+    font-family: var(--f-body);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    color: var(--fg-soft);
+    margin: var(--s-2) 0 0;
+    max-width: 44ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rdl__rung-fill { transition: none; }
+  }
+</style>

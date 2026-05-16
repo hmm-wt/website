@@ -1,0 +1,235 @@
+---
+/**
+ * V1 — ScrollyClassifierFunnel.
+ *
+ * Five-stage funnel: 22,217 → 19,416 → 6,505 → 2,625 → 25. Evolves from
+ * web_classified_funnel() in CIM/html/charts.py. Wired to the shared scrolly
+ * engine (src/scripts/scrolly.ts) via [data-scrolly] / .scrolly__stage.
+ *
+ * Reduced motion + JS-disabled: every row reads in document order; the SVG
+ * still renders all five trapezoids in their resting state.
+ */
+import necessity from '../../data/necessity-index.json';
+import canonical from '../../data/im-canonical.json';
+
+const totalCompanies = necessity.universe.total_companies;
+const fourMarketCount = necessity.universe.four_market_companies;
+const inThesis = necessity.tier_shares.conservative_classifier_count;
+const seedCount = necessity.stage_funnel[2].count;
+const portfolio = canonical.fund.portfolio_target;
+
+const stages = [
+  {
+    id: 's1',
+    count: totalCompanies,
+    pct: '100%',
+    label: 'The APAC universe.',
+    annotation: 'Twenty-two thousand APAC technology companies in the classified dataset. Enriched from licensed commercial feeds. Product description, registry, and hiring signals folded in to identify regulatory exposure.'
+  },
+  {
+    id: 's2',
+    count: fourMarketCount,
+    pct: ((fourMarketCount / totalCompanies) * 100).toFixed(1) + '%',
+    label: 'Four-market filter.',
+    annotation: 'Australia, Japan, New Zealand, Singapore only. The fund’s mandate scope. 19,416 companies remain — the addressable base for every claim that follows.'
+  },
+  {
+    id: 's3',
+    count: inThesis,
+    pct: necessity.tier_shares.conservative_classifier_pct + '%',
+    label: 'T1 / T2 screen.',
+    annotation: 'Conservative classifier applies the licence-or-compulsion test. T1 = the company cannot legally operate without regulatory approval. T2 = the buyer is statutorily required to purchase compliant solutions. One in three companies passes.'
+  },
+  {
+    id: 's4',
+    count: seedCount,
+    pct: necessity.stage_funnel[2].share_pct + '%',
+    label: 'Seed-stage cohort.',
+    annotation: '2,625 companies priced at seed. The fund’s entry-stage cohort. This is the live pipeline base — the population from which 25 first cheques will be drawn over the four-year investment period.'
+  },
+  {
+    id: 's5',
+    count: portfolio,
+    pct: ((portfolio / totalCompanies) * 100).toFixed(3) + '%',
+    label: 'The portfolio.',
+    annotation: 'Twenty-five first cheques. AUS 9 · JPN 8 · NZL 5 · SGP 3 at canonical $50M fund size. The terminal cohort the underwriting selects, the operator commitment closes, and the exit playbook compounds.'
+  }
+];
+
+// Funnel geometry. Sqrt scaling prevents the terminal stage collapsing to
+// invisibility — 25 vs 22,217 is a ~889:1 ratio that linear scaling cannot
+// represent honestly. Each trapezoid still narrows monotonically.
+const W = 800;
+const H = 520;
+const ml = 60, mr = 60, mt = 20, mb = 20;
+const iw = W - ml - mr;
+const ih = H - mt - mb;
+const cx = W / 2;
+const rowH = ih / stages.length;
+const gap = 4;
+const maxCount = Math.max(...stages.map((s) => s.count));
+const minWidthPct = 0.08;
+
+const rows = stages.map((s, i) => {
+  const scale = Math.max(Math.sqrt(s.count / maxCount), minWidthPct);
+  const nextScale = i + 1 < stages.length
+    ? Math.max(Math.sqrt(stages[i + 1].count / maxCount), minWidthPct)
+    : scale * 0.85;
+  const topW = scale * iw;
+  const botW = nextScale * iw;
+  const y0 = mt + i * rowH + gap / 2;
+  const y1 = mt + (i + 1) * rowH - gap / 2;
+  const labelY = (y0 + y1) / 2 + 4;
+  return {
+    ...s,
+    i,
+    points: [
+      `${(cx - topW / 2).toFixed(1)},${y0.toFixed(1)}`,
+      `${(cx + topW / 2).toFixed(1)},${y0.toFixed(1)}`,
+      `${(cx + botW / 2).toFixed(1)},${y1.toFixed(1)}`,
+      `${(cx - botW / 2).toFixed(1)},${y1.toFixed(1)}`
+    ].join(' '),
+    labelY,
+    countX: cx,
+  };
+});
+---
+<section class="scf motion-group" data-scrolly aria-label="Classifier funnel walkthrough">
+  <div class="scf__viz scrolly__viz">
+    <svg
+      class="scf__svg"
+      viewBox={`0 0 ${W} ${H}`}
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      aria-label={`Classifier funnel: ${totalCompanies.toLocaleString('en-GB')} APAC companies narrowing to ${portfolio} portfolio positions across five stages.`}
+    >
+      {rows.map((r) => (
+        <g class="scf__row stagger-row" data-stage={r.id} data-i={r.i}>
+          <polygon class="scf__poly wedge-draw" points={r.points} />
+          <text class="scf__count" x={r.countX} y={r.labelY - 4} text-anchor="middle">
+            {r.count.toLocaleString('en-GB')}
+          </text>
+          <text class="scf__pct" x={r.countX} y={r.labelY + 11} text-anchor="middle">
+            {r.pct}
+          </text>
+        </g>
+      ))}
+    </svg>
+  </div>
+
+  <div class="scf__rail scrolly__rail">
+    {stages.map((s, i) => (
+      <div class="scf__stage scrolly__stage" data-stage={s.id}>
+        <p class="scf__idx">{String(i + 1).padStart(2, '0')} / 05</p>
+        <h3 class="scf__label">{s.label}</h3>
+        <p class="scf__count-text">{s.count.toLocaleString('en-GB')}</p>
+        <p class="scf__anno">{s.annotation}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .scf__svg { width: 100%; height: auto; display: block; max-width: 32rem; }
+
+  /* Trapezoid resting state — softly drawn so the figure is informative
+   * even without scroll activity. The active stage lifts to full tomato. */
+  .scf__poly {
+    fill: var(--c-evergreen);
+    fill-opacity: 0.18;
+    stroke: var(--c-evergreen);
+    stroke-opacity: 0.35;
+    stroke-width: 0.6;
+    transition: fill var(--mo-tick) var(--ease-golden),
+                fill-opacity var(--mo-tick) var(--ease-golden),
+                stroke var(--mo-tick) var(--ease-golden);
+  }
+  .scf__count {
+    font-family: var(--f-display);
+    font-size: 16px;
+    font-weight: 500;
+    fill: var(--c-mahogany);
+    fill-opacity: 0.55;
+    transition: fill var(--mo-tick) var(--ease-golden), fill-opacity var(--mo-tick) var(--ease-golden);
+  }
+  .scf__pct {
+    font-family: var(--f-mono);
+    font-size: 9px;
+    fill: var(--c-mahogany);
+    fill-opacity: 0.4;
+    letter-spacing: 0.08em;
+  }
+
+  /* Active stage. The scrolly engine sets data-active-stage on the container. */
+  [data-scrolly][data-active-stage="s1"] [data-stage="s1"] .scf__poly,
+  [data-scrolly][data-active-stage="s2"] [data-stage="s2"] .scf__poly,
+  [data-scrolly][data-active-stage="s3"] [data-stage="s3"] .scf__poly,
+  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__poly,
+  [data-scrolly][data-active-stage="s5"] [data-stage="s5"] .scf__poly {
+    fill: var(--c-tomato);
+    fill-opacity: 0.88;
+    stroke: var(--c-tomato);
+    stroke-opacity: 1;
+  }
+  [data-scrolly][data-active-stage="s1"] [data-stage="s1"] .scf__count,
+  [data-scrolly][data-active-stage="s2"] [data-stage="s2"] .scf__count,
+  [data-scrolly][data-active-stage="s3"] [data-stage="s3"] .scf__count,
+  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__count,
+  [data-scrolly][data-active-stage="s5"] [data-stage="s5"] .scf__count {
+    fill: var(--c-pearl);
+    fill-opacity: 1;
+    font-weight: 600;
+  }
+  [data-scrolly][data-active-stage="s1"] [data-stage="s1"] .scf__pct,
+  [data-scrolly][data-active-stage="s2"] [data-stage="s2"] .scf__pct,
+  [data-scrolly][data-active-stage="s3"] [data-stage="s3"] .scf__pct,
+  [data-scrolly][data-active-stage="s4"] [data-stage="s4"] .scf__pct,
+  [data-scrolly][data-active-stage="s5"] [data-stage="s5"] .scf__pct {
+    fill: var(--c-pearl);
+    fill-opacity: 0.85;
+  }
+
+  /* Stage cards. */
+  .scf__stage { transition: border-left-color var(--mo-tick) var(--ease-golden); }
+  .scf__idx {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--c-tomato);
+    margin: 0 0 var(--s-2);
+  }
+  .scf__label {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-tight);
+    color: var(--fg);
+    margin: 0 0 var(--s-2);
+  }
+  .scf__count-text {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    color: var(--c-tomato);
+    line-height: 1;
+    margin: 0 0 var(--s-3);
+    letter-spacing: -0.01em;
+  }
+  .scf__anno {
+    font-family: var(--f-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-loose);
+    color: var(--fg-soft);
+    margin: 0;
+    max-width: 32ch;
+  }
+
+  /* Active card emphasis. */
+  [data-scrolly][data-active-stage="s1"] .scrolly__stage[data-stage="s1"],
+  [data-scrolly][data-active-stage="s2"] .scrolly__stage[data-stage="s2"],
+  [data-scrolly][data-active-stage="s3"] .scrolly__stage[data-stage="s3"],
+  [data-scrolly][data-active-stage="s4"] .scrolly__stage[data-stage="s4"],
+  [data-scrolly][data-active-stage="s5"] .scrolly__stage[data-stage="s5"] {
+    border-left-color: var(--c-tomato);
+    background: color-mix(in srgb, var(--c-tomato) 6%, transparent);
+  }
+</style>
