@@ -77,6 +77,8 @@ const isCurrent = (href: string) =>
     const sheet = document.querySelector<HTMLElement>('[data-sheet]');
     const close = document.querySelector<HTMLButtonElement>('[data-sheet-close]');
     if (!toggle || !sheet || !close) return;
+    if (toggle.dataset.bound === 'true') return;
+    toggle.dataset.bound = 'true';
     let lastFocused: HTMLElement | null = null;
 
     const open = () => {

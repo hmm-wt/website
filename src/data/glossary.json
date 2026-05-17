@@ -1,5 +1,4 @@
 {
-  "source": "hmm Ventures IM §10 Glossary. Lifted verbatim where the definition is public-safe; fund-specific parameters (cheque sizes, fee rates, carry percentages, sponsored-GP-commit composition, simulated return tier values) are held back in the private IM.",
   "categories": [
     {
       "id": "returns",
@@ -38,9 +37,6 @@
       "id": "reporting",
       "label": "Reporting standards and conventions",
       "terms": [
-        { "term": "ILPA Reporting Template 2.0", "def": "Institutional Limited Partners Association standard for fund performance disclosure. Defines paid-in capital as the DPI denominator. Used by Cambridge Associates, Burgiss, and Preqin benchmarks." },
-        { "term": "ILPA Principles 3.0", "def": "The associated principles document covering GP/LP alignment, transparency, and governance." },
-        { "term": "IPEV Guidelines", "def": "International Private Equity and Venture Capital Valuation Guidelines. The primary framework for portfolio-company mark-to-market valuation." },
         { "term": "JIT (just-in-time) capital call convention", "def": "Capital called from LPs at the moment it is deployed. Total called approaches the full commitment over the fund life." },
         { "term": "Pre-funded reserve convention", "def": "Capital called from LPs at investment time; follow-on reserves drawn from within-fund cash. Total called is lower than the full commitment." },
         { "term": "Convention-invariance", "def": "The property of the canonical simulation that the same headline results are produced under both capital-call conventions." },
@@ -57,18 +53,6 @@
         { "term": "Carried interest (carry)", "def": "The GP's share of fund profits after pref and catch-up." },
         { "term": "Reserve ratio", "def": "The proportion of committed capital held back for follow-on investments rather than initial cheques." },
         { "term": "Recycling", "def": "Reinvestment of early-exit proceeds into new portfolio companies during the investment period. Subject to a cap on the recycled share of fund size." }
-      ]
-    },
-    {
-      "id": "tax",
-      "label": "Tax and structure",
-      "terms": [
-        { "term": "DIFC", "def": "Dubai International Financial Centre. The fund's domicile. Operates a common-law judicial system separate from UAE federal civil law. Regulated by the Dubai Financial Services Authority (DFSA)." },
-        { "term": "DFSA", "def": "Dubai Financial Services Authority. The regulator of the DIFC. Grants the fund manager its operating licence." },
-        { "term": "QFZP", "def": "Qualifying Free Zone Person. A UAE corporate tax classification that enables 0% tax on qualifying income, applicable to DIFC-domiciled funds meeting substance and activity tests." },
-        { "term": "DTA Article 13", "def": "The article in UAE Double Tax Avoidance treaties covering capital gains on equity disposals. Provides exemption from withholding tax on equity disposal gains across the four target markets." },
-        { "term": "WHT", "def": "Withholding Tax. The tax withheld at source on cross-border distributions." },
-        { "term": "DIFC QIF", "def": "Qualified Investor Fund domicile. The legal vehicle type used by this fund." }
       ]
     },
     {

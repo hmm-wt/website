@@ -1,5 +1,5 @@
 {
-  "source": "hmm Ventures classifier methodology (IM §2.2, §5.1). Worked examples drawn from the canonical 9-exit dataset and the off-mandate exclusions in the doctrine.",
+  "source": "hmm Ventures classifier methodology. Worked examples drawn from the canonical 9-exit dataset and the off-mandate exclusions in the doctrine.",
   "branches": {
     "t1": {
       "label": "T1. Licence-as-barrier",

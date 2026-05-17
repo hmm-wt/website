@@ -1,18 +1,7 @@
 ---
 /**
- * V3 — CountryCorridorGrid.
- *
- * Four-market snapshot. Hover/focus expands the active card horizontally.
- * Fauna glyph + AUS·JPN·NZL·SGP country code as the visual anchor.
- *
- * Public-surface scope: strategic capital weighting (%) shown per market.
- * Per-market position counts and fund-construction details are LP-tier
- * and held in the private IM.
- *
- * Data is composed from:
- *   - /src/data/necessity-index.json — per_market (regulations, T1/T2 split, companies)
- *   - /src/data/crystallisation-window.json — in-flight regulations per market
- *   - Strategic weighting per IM §6.1 (AU 35% / JP 30% / NZ 20% / SG 15%)
+ * CountryCorridorGrid. Four-market snapshot with hover/focus expansion.
+ * Data: /src/data/necessity-index.json + /src/data/crystallisation-window.json.
  */
 import CountryCorridorCard from './CountryCorridorCard.astro';
 import necessity from '../../data/necessity-index.json';
