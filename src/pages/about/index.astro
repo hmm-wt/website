@@ -1,36 +1,29 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { buildContactMailto } from '../../utils/mailto.ts';
 
 const operators = [
   {
     idx: '01',
     name: 'Skalata Ventures',
-    years: 'National coverage',
-    role: 'The awakening · built the sourcing engine',
-    detail: 'Hired to take an organisation transitioning from non-profit accelerator to seed fund and build its outbound sourcing capability and national footprint. Inside one year, proprietary deal-flow networks across universities, accelerators, and co-working spaces in every Australian state, from Hobart and the Sunshine Coast to Sydney and Melbourne.'
+    detail: 'Hired to take an organisation transitioning from non-profit accelerator to seed fund and build its outbound sourcing capability and national footprint. Inside one year, proprietary deal-flow networks across universities, accelerators, and co-working spaces in every Australian state, from Hobart and the Sunshine Coast to Sydney and Melbourne. Founders who, when he met them, did not realise the problem they were solving was global. Twelve months later they were hiring in Colorado after closing their largest contract. The period where the founding observation of hmm became unignorable: regulated-industry companies in developed APAC are systematically capital-scarce at seed relative to their eventual defensibility.',
+    bridge: 'This is the sourcing engine the fund is built on.'
   },
   {
     idx: '02',
     name: 'Paddle',
-    years: 'Dec 2017 → May 2022',
-    role: 'The operator credential · APAC build, China decision',
-    detail: 'Joined ahead of the Series B at under 30 people. Stayed four years through to the $1.4B Series D. Team-of-one on whichever zero-to-one initiative the company needed: product validation, revenue building, post-sales function design, the APAC market build. APAC was around 20% of company revenue by exit, China the primary contributor.'
+    detail: 'Joined ahead of the Series B in December 2017 at under 30 people. Stayed four years through to the $1.4B Series D. Team-of-one on whichever zero-to-one initiative the company needed: product validation, revenue building, post-sales function design, the APAC market build. By exit, APAC was around 20% of company revenue with China the primary contributor. Conventional advice on China was clear: do not expand without local presence, a Chinese-speaking team, or a playbook. The business had a single Chinese speaker, no local entity, and no playbook. Consensus said no. Wahid built the market anyway. Inside 12 months China was the third-largest revenue contributor to the entire company.',
+    bridge: 'Same posture, same evidence-over-consensus discipline, applied to fund deployment.'
   },
   {
     idx: '03',
     name: 'GoodFit',
-    years: 'Four years · VP Revenue',
-    role: 'The machinery · built the classifier',
-    detail: '5x revenue growth from a founder-led, high-churn starting point through to Series A readiness. $13M Series A led by Notion Capital, September 2025. The classifier methodology powering Layers 1 and 2 of hmm\'s sourcing engine was built and validated over four years inside GoodFit, now rebuilt against a regulated-T1/T2 ICP.'
+    detail: 'VP Revenue from a founder-led, high-churn starting point through to Series A readiness. 5x revenue growth. First enterprise agreements. Operations, marketing, customer success, and sales built from scratch. $13M Series A led by Notion Capital, September 2025. The classifier methodology powering Layers 1 and 2 of hmm\'s sourcing engine was built and validated over four years inside GoodFit, now rebuilt against a regulated-T1/T2 ICP.',
+    bridge: 'This is the classifier infrastructure that surfaces companies before they pitch any investor.'
   }
 ];
 
-const assets = [
-  'Regulatory-map sourcing across four heterogeneous markets.',
-  'Approval-pathway underwriting as the primary investment filter.',
-  'Classifier infrastructure that surfaces companies before they pitch any investor.',
-  'A cross-border GTM playbook the GP has executed and can transfer to portfolio founders from day one.'
-];
+const gpBackgroundMailto = buildContactMailto('GP background');
 ---
 <Base
   title="The GP"
@@ -44,7 +37,7 @@ const assets = [
         At an early age, his father, an anaesthetist, showed him how health systems reach past the patient to the family in the corridor, the team in theatre, and the people walking down the street. A school trip to Zealandia, the Wellington wildlife sanctuary held inside the world's first predator-proof fence, sparked a lifelong curiosity for how any system actually works. Every move since fed it: Sydney to Wellington as a child; Jeddah, Melbourne, and London as an operator; work reaching Shenzhen, Taipei, Chengdu, Kyiv, Barcelona, New York, the Bay Area, Montreal, Mexico City, South Africa, and beyond.
       </p>
       <p class="ab__lede">
-        Cross-border operating exposes seams the rest of the market treats as separate problems. Critical minerals mined in Western Australia, assembled into a handset in Shenzhen, sold to a hospital in Tokyo: three regulators, one compliance question, no margin for translation error. Medical device pathways in Sydney (TGA) and Tokyo (PMDA), grid-connection regimes in Singapore (EMA) and New Zealand (Electricity Authority): different statutes, same gap. The vocabulary changes; the underlying problem does not.
+        Cross-border operating exposes seams the rest of the market treats as separate problems. Critical minerals mined in Western Australia, assembled in Shenzhen, sold to a hospital in Tokyo: three regulators, one compliance question, no margin for error.
       </p>
       <p class="ab__lede">
         APAC is not one market. It is four markets that look heterogeneous from outside and gradient from the borders: Japan's CVC dominance, Australia's super-backed Series A, New Zealand's regulator-as-partner pathway, Singapore's regulatory arbitrage. Four points on a gradient only legible to an operator who has worked all four.
@@ -54,44 +47,36 @@ const assets = [
     <section class="ab__sec">
       <h2 class="ab__sec-title gavel-drop">Why this GP, why this thesis.</h2>
       <p class="ab__sec-lede">
-        Backing this GP is a decision built on a decade's evidence across three operating roles, each of which maps onto a problem the fund has to solve.
+        A decade of work across three operating roles. Each maps onto a problem the fund has to solve.
       </p>
       <ol class="ab__list" role="list">
         {operators.map((op) => (
           <li class="ab__card surface-warm dossier-turn">
             <header class="ab__card-head">
               <span class="ab__card-idx">[{op.idx}]</span>
-              <span class="ab__card-years">{op.years}</span>
             </header>
             <h3 class="ab__card-name">{op.name}</h3>
-            <p class="ab__card-role">{op.role}</p>
             <p class="ab__card-detail">{op.detail}</p>
+            <p class="ab__card-bridge">{op.bridge}</p>
           </li>
         ))}
       </ol>
     </section>
 
-    <section class="ab__sec">
-      <h2 class="ab__sec-title gavel-drop">Four structural assets the generalist fund does not have.</h2>
-      <ol class="ab__assets" role="list">
-        {assets.map((a, i) => (
-          <li class="ab__asset">
-            <span class="ab__asset-idx">{String(i + 1).padStart(2, '0')}</span>
-            <span class="ab__asset-text">{a}</span>
-          </li>
-        ))}
-      </ol>
-    </section>
-
-    <section class="ab__coda">
-      <p class="ab__coda-line">A developed-APAC mandate held by a generalist seed fund does not produce the same alpha because none of the four sources are central to how those funds operate.</p>
-      <p class="ab__coda-line">The GP's decade of work is the synthesis that makes the thesis executable in this seat.</p>
+    <section class="ab__solo">
+      <h2 class="ab__sec-title gavel-drop">The solo-GP question, answered.</h2>
+      <p class="ab__solo-p">
+        Solo-GP funds turn on the GP. The fund deploys three mitigations against single-person risk. Key-person insurance with the fund as beneficiary. LPAC succession protocol with explicit replacement authority if the GP is incapacitated. A sourcing posture that is infrastructure-driven, not relationship-driven — the 22,217-company classified universe, the 174 four-market regulation map, and the per-market regulator access channels are all replicable by a successor GP.
+      </p>
+      <p class="ab__solo-p">
+        The single-person-risk is real for relationship-driven funds. It is less material for an infrastructure-driven sourcing posture. Fund II will add a partner. That is a roadmap commitment, not a Fund I requirement.
+      </p>
     </section>
 
     <footer class="ab__foot">
-      <a class="ab__cta-primary" href="/lps/">For LPs →</a>
-      <a class="ab__cta-secondary" href="/research/data/scoreboard/">Five falsifiable claims →</a>
-      <a class="ab__cta-email" href="mailto:wt@hmm.ventures">wt@hmm.ventures</a>
+      <p class="ab__foot-line">
+        GP background, references, anything not in the IM: <a href={gpBackgroundMailto}>wt@hmm.ventures</a>
+      </p>
     </footer>
   </section>
 </Base>
@@ -109,12 +94,10 @@ const assets = [
   }
   .ab__title {
     font-family: var(--f-display);
-    font-style: italic;
     font-size: var(--fs-3xl);
     line-height: var(--lh-tight);
     letter-spacing: -0.02em;
     margin: 0;
-    color: var(--c-pearl);
   }
   .ab__subline {
     font-family: var(--f-mono);
@@ -143,7 +126,6 @@ const assets = [
   }
   .ab__sec-lede {
     font-family: var(--f-display);
-    font-style: italic;
     font-size: var(--fs-lg);
     line-height: var(--lh-snug);
     color: var(--fg-soft);
@@ -180,19 +162,10 @@ const assets = [
     letter-spacing: 0.14em;
   }
   .ab__card-idx { color: var(--c-tomato); font-weight: 600; }
-  .ab__card-years { color: var(--fg-soft); }
   .ab__card-name {
     font-family: var(--f-display);
     font-size: var(--fs-xl);
     line-height: var(--lh-tight);
-    margin: 0;
-  }
-  .ab__card-role {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--c-tomato);
     margin: 0;
   }
   .ab__card-detail {
@@ -202,82 +175,52 @@ const assets = [
     color: var(--fg-soft);
     margin: 0;
   }
-
-  .ab__assets {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-  }
-  .ab__asset {
-    display: grid;
-    grid-template-columns: 3rem 1fr;
-    gap: var(--s-4);
-    padding-block: var(--s-2);
-    border-top: 1px solid var(--rule);
-  }
-  .ab__asset-idx {
+  .ab__card-bridge {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
-    color: var(--c-tomato);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    padding-top: 0.15em;
+    color: var(--c-tomato);
+    margin: var(--s-2) 0 0;
+    padding-block-start: var(--s-3);
+    border-top: 1px dashed var(--rule);
+    line-height: 1.4;
   }
-  .ab__asset-text {
+
+  .ab__solo {
+    margin-block-start: var(--s-8);
+    padding-block: var(--s-6);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .ab__solo-p {
     font-family: var(--f-body);
     font-size: var(--fs-base);
     line-height: var(--lh-body);
     color: var(--fg);
+    margin: var(--s-3) 0 0;
+    max-width: 64ch;
   }
-
-  .ab__coda {
-    margin-block-start: var(--s-8);
-    padding: var(--s-6);
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-  }
-  .ab__coda-line {
-    font-family: var(--f-display);
-    font-style: italic;
-    font-size: var(--fs-lg);
-    line-height: var(--lh-snug);
-    color: var(--c-pearl);
-    max-width: 52ch;
-    margin: 0;
-  }
+  .ab__solo-p:first-of-type { margin-top: 0; }
 
   .ab__foot {
     margin-block-start: var(--s-7);
     padding-block-start: var(--s-5);
     border-top: 1px solid var(--rule);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--s-5);
+  }
+  .ab__foot-line {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    margin: 0;
   }
-  .ab__cta-primary {
+  .ab__foot-line a {
     color: var(--c-tomato);
     text-decoration: none;
     border-bottom: 1px solid currentColor;
     padding-bottom: 1px;
-    font-weight: 600;
   }
-  .ab__cta-primary:hover { color: var(--c-pearl); border-bottom-color: var(--c-pearl); }
-  .ab__cta-secondary,
-  .ab__cta-email {
-    color: var(--fg-soft);
-    text-decoration: none;
-  }
-  .ab__cta-secondary:hover,
-  .ab__cta-email:hover { color: var(--c-tomato); }
+  .ab__foot-line a:hover { color: var(--fg); border-bottom-color: var(--fg); }
 </style>

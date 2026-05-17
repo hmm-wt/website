@@ -10,6 +10,15 @@ export default defineConfig({
   // sitemap.xml served from public/ instead — see public/sitemap.xml
   // and public/sitemap-index.xml.
   integrations: [mdx()],
+  redirects: {
+    // Pages collapsed into anchored panels on the home page.
+    '/lps': '/#lps',
+    '/lps/': '/#lps',
+    '/founders': '/#founders',
+    '/founders/': '/#founders'
+    // Note: /thesis/[market] chapters remain as deep-dive pages linked
+    // from the /markets/ comparison view. No redirect needed.
+  },
   build: {
     inlineStylesheets: 'auto'
   },
