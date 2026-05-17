@@ -46,23 +46,9 @@ The regulatory map ingests publications from the following primary sources:
 
 Each row in the regulations dataset carries a primary-source URL to a regulator publication, an official gazette entry, or a parliamentary record. URLs are timestamped to publication date.
 
-## IM section anchors
-
-Most public research entries cite an Investment Memorandum (IM) section anchor as the underlying source. The IM is available to qualified investors with a pre-existing relationship. Section anchors used across the research surface:
-
-- **§1. Necessity is the thesis.** Regulatory drumbeat, Five Necessities framing.
-- **§2. How to identify the investable subset.** Regulation as identification mechanism, the T1 / T2 binary, what the screen produces.
-- **§3. The opportunity.** Four markets, three exit pathways, named exit precedent (§3.4).
-- **§4. Fund operations.** Sourcing layer, IC framework, value-add architecture.
-- **§5. Empirical validation.** Reference dataset, three live claims, shadow portfolio cross-check.
-- **§7. Risks.** Falsification conditions, mitigation.
-- **Appendix C.** Exit framework.
-- **Appendix D.** Road-to-Market reference.
-- **Appendix F.** Data provenance, classifier methodology.
-
 ## Doctrine references
 
-The hmm Necessity Doctrine is the long-form public companion to the IM. It is structured in ten chapters, with full citation footnotes published in the site-wide [References](/references/) page. The doctrine is open-access; the IM is private.
+The hmm Necessity Doctrine is the long-form public companion to the fund's thesis. It is structured in ten chapters, with full citation footnotes published in the site-wide [References](/references/) page.
 
 ## Falsification commitments
 
@@ -71,8 +57,7 @@ The Scoreboard at /research/data/scoreboard/ publishes five falsifiable claims, 
 ## Sources for this page
 
 - hmm Ventures research surface.
-- IM (private).
-- The Necessity Doctrine (public, /doctrine/).
+- The Necessity Doctrine (/doctrine/).
 
 > For research, press, or academic enquiries, email the GP.
 >

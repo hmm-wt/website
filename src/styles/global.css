@@ -84,6 +84,30 @@ h4 {
   color: var(--fg);
 }
 
+/* Full-page light register. Wraps an entire page body in pearl with mahogany
+   ink, re-scoping the cascade tokens so every descendant inherits the light
+   register without per-element overrides. Sticky nav and footer keep their
+   dark/mahogany registers; this wrapper sits between them. */
+.page-light {
+  background: var(--bg-light);
+  color: var(--fg-light);
+  --fg: var(--c-mahogany);
+  --fg-soft: rgba(37, 0, 1, 0.7);
+  --fg-faint: rgba(37, 0, 1, 0.5);
+  --rule: rgba(4, 47, 42, 0.18);
+  --link: var(--c-evergreen);
+  --link-hover: var(--c-tomato);
+}
+.page-light a:not([class]) { color: var(--c-tomato); }
+.page-light a {
+  color: var(--c-evergreen);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  text-decoration: none;
+}
+.page-light a:hover { color: var(--c-tomato); }
+.page-light .kicker { color: var(--fg-light-soft); }
+
 /* Skip-to-content link. Hidden until focused via Tab. */
 .skip-link {
   position: absolute;

@@ -74,6 +74,6 @@ Five domains meet the test: Food Security, Biomedical, Power, Autonomous, Critic
 
 ---
 
-[^1]: hmm Ventures classified universe. Methodology in Appendix F of the Necessity Index.
+[^1]: hmm Ventures classified universe.
 [^2]: hmm Ventures Comprehensive Regulatory Dataset, 2026-04. 725 regulations, 64 countries, 13 sectors.
 [^3]: hmm Ventures funding-premium analysis, 2024 four-market dataset. Premiums report median round size for regulated vs unregulated comparables.

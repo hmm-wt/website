@@ -51,7 +51,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
       </p>
       <ol class="ab__list" role="list">
         {operators.map((op) => (
-          <li class="ab__card surface-warm dossier-turn">
+          <li class="ab__card surface-warm">
             <header class="ab__card-head">
               <span class="ab__card-idx">[{op.idx}]</span>
             </header>
@@ -61,16 +61,6 @@ const gpBackgroundMailto = buildContactMailto('GP background');
           </li>
         ))}
       </ol>
-    </section>
-
-    <section class="ab__solo">
-      <h2 class="ab__sec-title gavel-drop">The solo-GP question, answered.</h2>
-      <p class="ab__solo-p">
-        Solo-GP funds turn on the GP. The fund deploys three mitigations against single-person risk. Key-person insurance with the fund as beneficiary. LPAC succession protocol with explicit replacement authority if the GP is incapacitated. A sourcing posture that is infrastructure-driven, not relationship-driven. The 22,217-company classified universe, the 174 four-market regulation map, and the per-market regulator access channels are all replicable by a successor GP.
-      </p>
-      <p class="ab__solo-p">
-        The single-person-risk is real for relationship-driven funds. It is less material for an infrastructure-driven sourcing posture. Fund II will add a partner. That is a roadmap commitment, not a Fund I requirement.
-      </p>
     </section>
 
     <footer class="ab__foot">
@@ -186,22 +176,6 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     border-top: 1px dashed var(--rule);
     line-height: 1.4;
   }
-
-  .ab__solo {
-    margin-block-start: var(--s-8);
-    padding-block: var(--s-6);
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-  }
-  .ab__solo-p {
-    font-family: var(--f-body);
-    font-size: var(--fs-base);
-    line-height: var(--lh-body);
-    color: var(--fg);
-    margin: var(--s-3) 0 0;
-    max-width: 64ch;
-  }
-  .ab__solo-p:first-of-type { margin-top: 0; }
 
   .ab__foot {
     margin-block-start: var(--s-7);

@@ -1,13 +1,8 @@
 ---
 /**
- * V5 — ExitChronograph.
- *
- * Nine named developed-APAC regulated-company acquisitions along a 2020–2026
- * axis, sized by disclosed deal value, coloured by Necessity. Hover a dot to
- * preview the deal; click to pin the detail panel. Primary-source URLs ship
- * with the panel.
- *
- * Source: /src/data/exits-named.json (verified per IM §3.4).
+ * ExitChronograph. Named developed-APAC regulated-company acquisitions along
+ * a 2020-2026 axis, sized by disclosed deal value, coloured by Necessity.
+ * Source: /src/data/exits-named.json.
  */
 import exits from '../../data/exits-named.json';
 import ChartZoom from './ChartZoom.astro';
@@ -144,7 +139,7 @@ const dots = exits.exits.map((e, i) => {
       <a data-exc-acquirer-link href="#" target="_blank" rel="noopener">Acquirer site →</a>
       <a data-exc-company-link href="#" target="_blank" rel="noopener" hidden>Press release →</a>
     </p>
-    <p class="exc__panel-source">Source: hmm Ventures IM §3.4 · primary-source verified.</p>
+    <p class="exc__panel-source">Source: hmm Ventures research surface · primary-source verified.</p>
   </aside>
 
   <!-- Static fallback table — readable without JS and always present below the chart. -->

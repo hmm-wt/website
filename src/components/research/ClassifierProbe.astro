@@ -1,15 +1,8 @@
 ---
 /**
- * V10 — ClassifierProbe.
- *
- * Founder-facing utility. Paste a one-liner about your company, the probe
- * returns a rules-based T1 / T2 / excluded verdict. Client-side keyword
- * matching only — no API call, no telemetry. Designed to communicate the
- * fund's screen, not to substitute for it.
- *
- * Source: /src/data/classifier-rules.json (illustrative rule set; deployed
- * pipeline applies a two-stage validator with registry joins, per IM
- * Appendix F).
+ * ClassifierProbe. Founder-facing utility. Paste a one-liner, returns a
+ * rules-based T1 / T2 / excluded verdict. Client-side keyword matching only.
+ * Source: /src/data/classifier-rules.json (illustrative rule set).
  */
 import rules from '../../data/classifier-rules.json';
 ---

@@ -20,6 +20,7 @@ const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? pr
   title={`${prediction.certainty ?? prediction.id} · Scoreboard · hmm Ventures`}
   description={prediction.claim.slice(0, 200)}
 >
+  <div class="page-light">
   <article class="claim container">
     <header class="claim__head">
       <p class="claim__crumbs"><a href="/research/data/scoreboard/">← All certainties</a></p>
@@ -52,6 +53,7 @@ const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? pr
       <a class="claim__cta" href={betMailto}>Bet on this →</a>
     </footer>
   </article>
+  </div>
 </Base>
 
 <style>
