@@ -21,7 +21,7 @@
   },
   "per_market": [
     { "market": "AU", "code": "Australia", "companies": 9389, "regulations": 56, "t1": 41, "t2": 15, "enacted": 43, "projected": 13 },
-    { "market": "JP", "code": "Japan", "companies": null, "regulations": 49, "t1": 36, "t2": 13, "enacted": 38, "projected": 11 },
+    { "market": "JP", "code": "Japan", "companies": 2995, "regulations": 49, "t1": 36, "t2": 13, "enacted": 38, "projected": 11 },
     { "market": "NZ", "code": "New Zealand", "companies": 2130, "regulations": 28, "t1": 25, "t2": 3, "enacted": 26, "projected": 2 },
     { "market": "SG", "code": "Singapore", "companies": 4902, "regulations": 41, "t1": 35, "t2": 6, "enacted": 31, "projected": 10 }
   ],
