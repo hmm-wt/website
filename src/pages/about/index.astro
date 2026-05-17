@@ -5,32 +5,32 @@ import KickerLabel from '../../components/KickerLabel.astro';
 const operators = [
   {
     idx: '01',
-    name: 'GoodFit',
-    years: '4 years',
-    role: 'Built the sourcing infrastructure',
-    detail: 'Spent four years building and validating the classifier methodology now running against the four-market universe. The Necessity Index is a direct descendant of that work.'
+    name: 'Skalata Ventures',
+    years: 'National coverage',
+    role: 'The awakening · built the sourcing engine',
+    detail: 'Hired to take an organisation transitioning from non-profit accelerator to seed fund and build its outbound sourcing capability and national footprint. Inside one year, proprietary deal-flow networks across universities, accelerators, and co-working spaces in every Australian state, from Hobart and the Sunshine Coast to Sydney and Melbourne.'
   },
   {
     idx: '02',
     name: 'Paddle',
-    years: 'APAC from inception',
-    role: 'Built the cross-border commercial playbook',
-    detail: 'Took the APAC mandate from zero. Stood up China from zero. 20% of company revenue by exit. The cross-border muscle portfolio founders now inherit was built here.'
+    years: 'Dec 2017 → May 2022',
+    role: 'The operator credential · APAC build, China decision',
+    detail: 'Joined ahead of the Series B at under 30 people. Stayed four years through to the $1.4B Series D. Team-of-one on whichever zero-to-one initiative the company needed: product validation, revenue building, post-sales function design, the APAC market build. APAC was around 20% of company revenue by exit, China the primary contributor.'
   },
   {
     idx: '03',
-    name: 'Skalata',
-    years: 'National coverage',
-    role: 'Built the deal-flow architecture',
-    detail: 'Mandate was to take a non-profit accelerator to a seed fund and build national coverage across every Australian state. The sourcing layer hmm uses to find founders before they pitch anyone traces to this work.'
+    name: 'GoodFit',
+    years: 'Four years · VP Revenue',
+    role: 'The machinery · built the classifier',
+    detail: '5x revenue growth from a founder-led, high-churn starting point through to Series A readiness. $13M Series A led by Notion Capital, September 2025. The classifier methodology powering Layers 1 and 2 of hmm\'s sourcing engine was built and validated over four years inside GoodFit, now rebuilt against a regulated-T1/T2 ICP.'
   }
 ];
 
 const assets = [
-  'A classifier that surfaces regulated founders before they pitch anyone.',
-  'A sourcing layer anchored to regulatory filings, not conference pipelines.',
-  'An underwriting discipline built around the approval pathway, not the pitch deck.',
-  'A cross-border commercial playbook executed at Paddle, transferable to founders at entry.'
+  'Regulatory-map sourcing across four heterogeneous markets.',
+  'Approval-pathway underwriting as the primary investment filter.',
+  'Classifier infrastructure that surfaces companies before they pitch any investor.',
+  'A cross-border GTM playbook the GP has executed and can transfer to portfolio founders from day one.'
 ];
 ---
 <Base
@@ -43,14 +43,20 @@ const assets = [
       <h1 class="ab__title gavel-drop">Wahid Tashkandi</h1>
       <p class="ab__subline">Founding GP · hmm Ventures</p>
       <p class="ab__lede">
-        Cross-border operating exposes seams the rest of the market treats as separate problems. Critical minerals mined in Western Australia, assembled in Shenzhen, sold to a hospital in Tokyo: three regulators, one compliance question, no margin for translation error. Medical device pathways under TGA and PMDA, grid-connection regimes under EMA and the Electricity Authority: different statutes, same gap. The vocabulary changes; the problem does not.
+        At an early age, his father, an anaesthetist, showed him how health systems reach past the patient to the family in the corridor, the team in theatre, and the people walking down the street. A school trip to Zealandia, the Wellington wildlife sanctuary held inside the world's first predator-proof fence, sparked a lifelong curiosity for how any system actually works. Every move since fed it: Sydney to Wellington as a child; Jeddah, Melbourne, and London as an operator; work reaching Shenzhen, Taipei, Chengdu, Kyiv, Barcelona, New York, the Bay Area, Montreal, Mexico City, South Africa, and beyond.
+      </p>
+      <p class="ab__lede">
+        Cross-border operating exposes seams the rest of the market treats as separate problems. Critical minerals mined in Western Australia, assembled into a handset in Shenzhen, sold to a hospital in Tokyo: three regulators, one compliance question, no margin for translation error. Medical device pathways in Sydney (TGA) and Tokyo (PMDA), grid-connection regimes in Singapore (EMA) and New Zealand (Electricity Authority): different statutes, same gap. The vocabulary changes; the underlying problem does not.
+      </p>
+      <p class="ab__lede">
+        APAC is not one market. It is four markets that look heterogeneous from outside and gradient from the borders: Japan's CVC dominance, Australia's super-backed Series A, New Zealand's regulator-as-partner pathway, Singapore's regulatory arbitrage. Four points on a gradient only legible to an operator who has worked all four.
       </p>
     </header>
 
     <section class="ab__sec">
-      <h2 class="ab__sec-title gavel-drop">Three companies. One pattern.</h2>
+      <h2 class="ab__sec-title gavel-drop">Why this GP, why this thesis.</h2>
       <p class="ab__sec-lede">
-        The Necessity Doctrine runs on muscles built across three operating roles. Each answers a different problem the fund has to solve.
+        Backing this GP is a decision built on a decade's evidence across three operating roles, each of which maps onto a problem the fund has to solve.
       </p>
       <ol class="ab__list" role="list">
         {operators.map((op) => (
@@ -80,8 +86,8 @@ const assets = [
     </section>
 
     <section class="ab__coda">
-      <p class="ab__coda-line">A generalist developed-APAC seed fund holds none of the four. That is the structural position.</p>
-      <p class="ab__coda-line">Fund I establishes the method. The method scales.</p>
+      <p class="ab__coda-line">A developed-APAC mandate held by a generalist seed fund does not produce the same alpha because none of the four sources are central to how those funds operate.</p>
+      <p class="ab__coda-line">The GP's decade of work is the synthesis that makes the thesis executable in this seat.</p>
     </section>
 
     <footer class="ab__foot">
@@ -128,6 +134,7 @@ const assets = [
     max-width: 60ch;
     margin: var(--s-4) 0 0;
   }
+  .ab__lede + .ab__lede { margin-top: var(--s-3); }
 
   .ab__sec { margin-block-start: var(--s-8); }
   .ab__sec-title {
