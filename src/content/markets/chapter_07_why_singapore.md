@@ -81,14 +81,6 @@ The doctrine assumes that all four hold over the next five years. The assumption
 
 ---
 
-> **What this means for the fund**
->
-> Singapore is the regulatory translation layer. MAS, HSA, IMDA frameworks set the operational floor that the other three markets converge toward. The fund deploys here for cross-jurisdiction compounding, not for single-market scale.
->
-> [Request the IM →](/lps/)
-
----
-
 *Chapter 8 examines the Crystallisation Window: why 2024-2028 is the specific period in which the regulatory architecture sets, and what the indicators are that confirm or contradict the framing.*
 
 ---

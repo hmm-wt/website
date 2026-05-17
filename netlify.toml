@@ -58,6 +58,33 @@
   status = 301
   force = true
 
+# Fund-economics archive (2026-05-17). Returns framing and exit-multiple
+# disclosures retired from the public surface; LP-tier content lives in
+# the private IM. External links land on the IM-request page.
+[[redirects]]
+  from = "/research/four-tier-returns-framing"
+  to = "/lps/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/research/four-tier-returns-framing/*"
+  to = "/lps/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/research/exit-evidence-dataset"
+  to = "/lps/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/research/exit-evidence-dataset/*"
+  to = "/lps/"
+  status = 301
+  force = true
+
 # Force SPA-style 404 for client-side routes that don't exist as files.
 # Astro generates static .html per route, so 404s only hit for unknown URLs.
 [[redirects]]

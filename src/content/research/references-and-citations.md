@@ -37,10 +37,6 @@ The fund's public research is citable. This page documents recommended citation 
 
 **Four-market sector-tier breakdown.** 174 four-market regulations reconciled by sector and tier. Source file: `four_market_sector_tier_breakdown_2026-04-07.csv`.
 
-**Exit proof-points dataset.** Nine named developed-APAC regulated-company acquisitions, 2020 to 2026. Primary-source verified per row. URL-anchored to acquirer or regulator publication. Source file: hmm Ventures exit proof-points (data room).
-
-**Funding-premium analysis.** 2024 four-market deal data. Median round size per stage for T1 vs unregulated cohorts. Source file: hmm Ventures funding-premium analysis (data room).
-
 ## Regulator portal references
 
 The regulatory map ingests publications from the following primary sources:
@@ -61,10 +57,7 @@ Most public research entries cite an Investment Memorandum (IM) section anchor a
 - **§3. The opportunity.** Four markets, three exit pathways, named exit precedent (§3.4).
 - **§4. Fund operations.** Sourcing layer, IC framework, value-add architecture.
 - **§5. Empirical validation.** Reference dataset, three live claims, shadow portfolio cross-check.
-- **§6. Fund economics and returns.** Fund structure, Monte Carlo simulation, Return Bridge.
 - **§7. Risks.** Falsification conditions, mitigation.
-- **§8. Fund terms.** Reconciled portfolio construction, fees, waterfall.
-- **Appendix B.** Monte Carlo methodology.
 - **Appendix C.** Exit framework.
 - **Appendix D.** Road-to-Market reference.
 - **Appendix F.** Data provenance, classifier methodology.

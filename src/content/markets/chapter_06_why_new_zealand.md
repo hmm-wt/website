@@ -31,7 +31,7 @@ The NZ seed cheque is smaller than the AU equivalent. The seed valuation is lowe
 
 A T1 medtech company in Auckland that books TGA approval and FDA 510(k) clearance has the same regulatory asset as the Sydney equivalent and the San Francisco equivalent. The difference is the cost of building it. Auckland engineering and clinical talent costs less, the Callaghan/MBIE grant ecosystem subsidises early R&D, and the seed entry valuation reflects the smaller domestic market rather than the international optionality.
 
-The implication is that the regulatory asset, once built, has the same export value as in any larger jurisdiction. The capital required to build it is smaller. The seed-stage IRR profile that follows is structurally different.
+The implication is that the regulatory asset, once built, has the same export value as in any larger jurisdiction. The capital required to build it is smaller.
 
 ---
 
@@ -86,14 +86,6 @@ The MBIE transition itself is a near-term risk. Functional handover between agen
 A small number of well-priced companies. T1 medtech with Medsafe and TGA in hand and FDA 510(k) on roadmap. T2 agritech selling into MPI-regulated processors with cross-listed export to Australian and U.S. food businesses. T1 grid-edge technology trialling under Electricity Authority sandbox provisions and licensing into larger grid markets.
 
 The pool is small. The selection bar is high. The capital required to participate is the smallest of the four markets. The next chapter examines Singapore, where the friction is lowest and the regional foothold is the structural feature.
-
----
-
-> **What this means for the fund**
->
-> New Zealand is the capital-efficiency leg of the four-market portfolio. Smallest classified cohort, highest grant intensity, sharpest seed economics. The fund deploys here for unit-economic discipline against the regulatory architecture, not for fund-of-record scale.
->
-> [Request the IM →](/lps/)
 
 ---
 

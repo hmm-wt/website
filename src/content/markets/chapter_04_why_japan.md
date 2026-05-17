@@ -85,14 +85,6 @@ That profile is rare. The candidates that match it sit at lower entry valuations
 
 ---
 
-> **What this means for the fund**
->
-> Japan is a regulatory-access market. Capital is abundant; the barrier is operational and on-ground. The fund treats Japan as a co-invest portfolio anchor under METI and PMDA frameworks, not a direct sourcing market.
->
-> [Request the IM →](/lps/)
-
----
-
 *Chapter 5 examines Australia: where R&D incentives, superannuation capital, and the regulatory architecture of a mid-sized commodity-export economy converge.*
 
 ---
