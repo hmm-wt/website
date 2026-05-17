@@ -7,7 +7,7 @@ import DataSection from '../../../../components/DataSection.astro';
 import CiteThis from '../../../../components/CiteThis.astro';
 import ScrollyClassifierFunnel from '../../../../components/research/ScrollyClassifierFunnel.astro';
 import MarketRegulationBar from '../../../../components/charts/MarketRegulationBar.astro';
-import NecessityBar from '../../../../components/charts/NecessityBar.astro';
+import NecessityBarDrilldown from '../../../../components/research/NecessityBarDrilldown.astro';
 import data from '../../../../data/necessity-index.json';
 
 const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
@@ -78,7 +78,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
     </section>
 
     <section class="ip__inline-fig">
-      <NecessityBar />
+      <NecessityBarDrilldown />
     </section>
 
     <DataSection
