@@ -5,7 +5,7 @@ import IndexMatrix from '../../../../components/IndexMatrix.astro';
 import StatusIndicator from '../../../../components/StatusIndicator.astro';
 import DataSection from '../../../../components/DataSection.astro';
 import CiteThis from '../../../../components/CiteThis.astro';
-import ClassifiedFunnel from '../../../../components/charts/ClassifiedFunnel.astro';
+import ScrollyClassifierFunnel from '../../../../components/research/ScrollyClassifierFunnel.astro';
 import MarketRegulationBar from '../../../../components/charts/MarketRegulationBar.astro';
 import NecessityBar from '../../../../components/charts/NecessityBar.astro';
 import data from '../../../../data/necessity-index.json';
@@ -70,7 +70,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
     </DataSection>
 
     <section class="ip__inline-fig">
-      <ClassifiedFunnel />
+      <ScrollyClassifierFunnel inline={true} />
     </section>
 
     <section class="ip__inline-fig">

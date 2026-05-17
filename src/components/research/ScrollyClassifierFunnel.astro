@@ -6,12 +6,21 @@
  * web_classified_funnel() in CIM/html/charts.py. Wired to the shared scrolly
  * engine (src/scripts/scrolly.ts) via [data-scrolly] / .scrolly__stage.
  *
+ * Two render modes:
+ *   - default (scrollytelling): sticky SVG + scroll-linked rail. Use inside
+ *     a ResearchScrolly layout where the user scrolls through the stages.
+ *   - inline={true}: static figure. SVG renders full-saturation, stage cards
+ *     fall below in a 2-column grid. Use on data pages where the funnel
+ *     is one figure among many.
+ *
  * Public-surface scope: terminates at the seed-stage cohort. The fund-
  * construction terminal (portfolio target) is LP-tier and not rendered here.
  *
  * Reduced motion + JS-disabled: every row reads in document order; the SVG
- * still renders all five trapezoids in their resting state.
+ * renders all four trapezoids in their final state.
  */
+interface Props { inline?: boolean }
+const { inline = false } = Astro.props;
 import necessity from '../../data/necessity-index.json';
 import ChartZoom from './ChartZoom.astro';
 
@@ -88,8 +97,13 @@ const rows = stages.map((s, i) => {
   };
 });
 ---
-<section class="scf motion-group" data-scrolly aria-label="Classifier funnel walkthrough">
-  <div class="scf__viz scrolly__viz">
+<section
+  class={`scf motion-group ${inline ? 'scf--inline' : ''}`}
+  data-scrolly={inline ? undefined : true}
+  data-active-stage={inline ? 's-all' : undefined}
+  aria-label="Classifier funnel walkthrough"
+>
+  <div class={`scf__viz ${inline ? '' : 'scrolly__viz'}`}>
     <ChartZoom title="Classifier funnel" minWidthRem={36}>
     <svg
       class="scf__svg"
@@ -113,10 +127,10 @@ const rows = stages.map((s, i) => {
     </ChartZoom>
   </div>
 
-  <div class="scf__rail scrolly__rail">
+  <div class={`scf__rail ${inline ? '' : 'scrolly__rail'}`}>
     {stages.map((s, i) => (
-      <div class="scf__stage scrolly__stage" data-stage={s.id}>
-        <p class="scf__idx">{String(i + 1).padStart(2, '0')} / 05</p>
+      <div class={`scf__stage ${inline ? '' : 'scrolly__stage'}`} data-stage={s.id}>
+        <p class="scf__idx">{String(i + 1).padStart(2, '0')} / {String(stages.length).padStart(2, '0')}</p>
         <h3 class="scf__label">{s.label}</h3>
         <p class="scf__count-text">{s.count.toLocaleString('en-GB')}</p>
         <p class="scf__anno">{s.annotation}</p>
@@ -223,5 +237,52 @@ const rows = stages.map((s, i) => {
   [data-scrolly][data-active-stage="s4"] .scrolly__stage[data-stage="s4"] {
     border-left-color: var(--c-tomato);
     background: color-mix(in srgb, var(--c-tomato) 6%, transparent);
+  }
+
+  /* Inline (static) mode. All trapezoids show in final tomato state; stage
+   * cards render as a 2-column grid below the SVG, not as a sticky rail. */
+  .scf--inline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+    margin-block: var(--s-6);
+  }
+  .scf--inline .scf__viz {
+    position: static;
+    height: auto;
+    max-height: none;
+    display: flex;
+    justify-content: center;
+  }
+  .scf--inline .scf__rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-4);
+    padding: 0;
+  }
+  @media (max-width: 700px) {
+    .scf--inline .scf__rail { grid-template-columns: 1fr; }
+  }
+  .scf--inline .scf__stage {
+    padding: var(--s-4);
+    border-left: 2px solid var(--c-tomato);
+    background: color-mix(in srgb, var(--c-tomato) 6%, transparent);
+    min-height: 0;
+  }
+  /* All trapezoids show full tomato in inline mode. */
+  .scf--inline .scf__poly {
+    fill: var(--c-tomato);
+    fill-opacity: 0.88;
+    stroke: var(--c-tomato);
+    stroke-opacity: 1;
+  }
+  .scf--inline .scf__count {
+    fill: var(--c-pearl);
+    fill-opacity: 1;
+    font-weight: 600;
+  }
+  .scf--inline .scf__pct {
+    fill: var(--c-pearl);
+    fill-opacity: 0.85;
   }
 </style>
