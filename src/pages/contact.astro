@@ -1,38 +1,28 @@
 ---
 import Base from '../layouts/Base.astro';
+import { buildContactMailto, buildIMRequestMailto } from '../utils/mailto.ts';
+
+const lpMailto = buildIMRequestMailto();
+const founderMailto = buildContactMailto('Founder intro');
 ---
 <Base
   title="Contact"
-  description="Get in touch. LPs, founders, media and research. Direct email, no forms."
+  description="Direct email. For LPs and founders."
 >
   <section class="contact container-narrow">
     <header class="contact__head">
-      <p class="kicker">Contact</p>
       <h1 class="contact__title gavel-drop">Get in touch.</h1>
-      <p class="contact__sub">Direct email. The first message lands with the GP.</p>
     </header>
 
-    <article id="lps" class="contact__block clamp">
-      <p class="kicker contact__when">If you allocate capital</p>
-      <h2 class="contact__h2 gavel-drop"><a href="/lps/">LPs →</a></h2>
-      <p>
-        Family offices, allocators, and institutions evaluating Fund I. Send a few lines on the fund or office, the mandate, and what you have already read. The IM is available on request.
-      </p>
-      <p class="contact__email"><a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a></p>
+    <article id="lps" class="contact__block">
+      <h2 class="contact__h2"><a href={lpMailto}>For LPs →</a></h2>
     </article>
 
-    <article id="founders" class="contact__block clamp">
-      <p class="kicker contact__when">If you are building in a regulated market</p>
-      <h2 class="contact__h2 gavel-drop"><a href="/founders/">Founders →</a></h2>
-      <p>
-        Send a one-pager or a deck. Tell us which regulator your demand curve depends on, the published timeline you are tracking, and the cheque you are looking for.
-      </p>
-      <p class="contact__email"><a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a></p>
+    <article id="founders" class="contact__block">
+      <h2 class="contact__h2"><a href={founderMailto}>For founders →</a></h2>
     </article>
 
     <footer class="contact__trust">
-      <p class="kicker">hmm Ventures</p>
-      <p class="contact__addr">DIFC, Dubai. Track A self-managed VCFM.</p>
       <p class="contact__tag">Necessity is the thesis.</p>
     </footer>
   </section>
@@ -41,9 +31,6 @@ import Base from '../layouts/Base.astro';
 <style>
   .contact { padding-block: var(--s-8) var(--s-9); }
   .contact__head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
     margin-block-end: var(--s-7);
     padding-block-end: var(--s-5);
     border-bottom: 1px solid var(--rule);
@@ -55,24 +42,11 @@ import Base from '../layouts/Base.astro';
     letter-spacing: -0.02em;
     margin: 0;
   }
-  .contact__sub {
-    font-family: var(--f-display);
-    font-style: italic;
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--fg-soft);
-    max-width: 52ch;
-    margin: 0;
-  }
   .contact__block {
-    padding-block: var(--s-6) var(--s-7);
+    padding-block: var(--s-6);
     border-bottom: 1px solid var(--rule);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
     scroll-margin-top: var(--s-7);
   }
-  .contact__when { color: var(--c-tomato); margin: 0; }
   .contact__h2 {
     font-family: var(--f-display);
     font-size: var(--fs-2xl);
@@ -85,37 +59,12 @@ import Base from '../layouts/Base.astro';
     transition: color var(--mo-tick) var(--ease-golden);
   }
   .contact__h2 a:hover { color: var(--c-tomato); }
-  .contact__email {
-    font-family: var(--f-mono);
-    font-size: var(--fs-md);
-    margin: 0;
-  }
-  .contact__email a {
-    color: var(--c-tomato);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 2px;
-  }
-  .contact__email a:hover { color: var(--fg); }
-  .contact__note { color: var(--fg-soft); margin: 0; }
   .contact__trust {
     margin-block-start: var(--s-7);
     padding-block: var(--s-6);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-  }
-  .contact__addr {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--fg-soft);
-    margin: 0;
   }
   .contact__tag {
     font-family: var(--f-display);
-    font-style: italic;
     font-size: var(--fs-xl);
     color: var(--c-tomato);
     margin: 0;

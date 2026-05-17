@@ -1,12 +1,12 @@
 ---
 /**
  * Cite-this button. Generates a formatted citation string and copies
- * it to the clipboard on click. Optional embed code expander beside it.
+ * it to the clipboard on click. Optional embed code copy on click.
  */
 interface Props {
   title: string;
   href: string;
-  /** Optional iframe URL for the "Embed" disclosure. */
+  /** Optional iframe URL for the "Embed" button. */
   embedSrc?: string;
 }
 const { title, href, embedSrc } = Astro.props;
@@ -20,13 +20,9 @@ const embedCode = embedSrc
     <span aria-hidden="true">⧉</span> Cite this
   </button>
   {embedSrc && (
-    <details class="cite__embed">
-      <summary class="cite__btn cite__btn--summary">
-        <span aria-hidden="true">▾</span> Embed
-      </summary>
-      <pre class="cite__code"><code>{embedCode}</code></pre>
-      <button type="button" class="cite__copy" data-cite-embed={embedCode}>Copy embed code</button>
-    </details>
+    <button type="button" class="cite__btn" data-cite-embed={embedCode} aria-label="Copy embed code">
+      Copy embed code
+    </button>
   )}
 </div>
 
@@ -79,35 +75,4 @@ const embedCode = embedSrc
     transition: background var(--mo-tick) var(--ease-golden), color var(--mo-tick) var(--ease-golden);
   }
   .cite__btn:hover { background: var(--c-tomato); color: var(--c-pearl); }
-  .cite__btn--summary {
-    list-style: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-  }
-  .cite__btn--summary::-webkit-details-marker { display: none; }
-  .cite__embed { display: inline-block; }
-  .cite__code {
-    margin: var(--s-3) 0;
-    padding: var(--s-3);
-    background: rgba(4, 47, 42, 0.06);
-    color: var(--c-mahogany);
-    font-size: calc(var(--fs-xs) * 0.95);
-    overflow-x: auto;
-    text-transform: none;
-    letter-spacing: 0;
-    white-space: pre-wrap;
-    word-break: break-all;
-  }
-  .cite__copy {
-    background: var(--c-mahogany);
-    color: var(--c-pearl);
-    border: 0;
-    padding: var(--s-2) var(--s-3);
-    cursor: pointer;
-    font: inherit;
-    text-transform: inherit;
-    letter-spacing: inherit;
-  }
-  .cite__copy:hover { background: var(--c-tomato); }
 </style>

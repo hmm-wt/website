@@ -4,7 +4,6 @@ import Base from '../../layouts/Base.astro';
 import ResearchCard from '../../components/ResearchCard.astro';
 import ResearchCardLarge from '../../components/ResearchCardLarge.astro';
 import LiveStatusStrip from '../../components/LiveStatusStrip.astro';
-import KickerLabel from '../../components/KickerLabel.astro';
 
 const entries = (await getCollection('research')).sort(
   (a, b) => a.data.title.localeCompare(b.data.title)
@@ -58,7 +57,6 @@ const dataProducts = [
 >
   <section class="rh container">
     <header class="rh__head">
-      <KickerLabel label="Research" accent />
       <h1 class="rh__title gavel-drop">The map. The dataset. The calendar.</h1>
       <p class="rh__lede">
         The four-market regulated thesis on a public surface. Citable primary sources throughout. The dataset, the in-flight regulatory calendar, the five falsifiable claims that close the loop.

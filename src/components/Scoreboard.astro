@@ -1,6 +1,7 @@
 ---
 import scoreboard from '../data/scoreboard.json';
 import StatusIndicator from './StatusIndicator.astro';
+import { buildContactMailto } from '../utils/mailto.ts';
 
 type Status = 'open' | 'confirmed' | 'refuted' | 'pending';
 
@@ -19,60 +20,40 @@ interface EvidenceLink {
 
 const predictions = scoreboard.predictions as Array<{
   id: string;
+  certainty_num?: number;
+  certainty?: string;
   claim: string;
   testable_by: string;
   status: Status;
-  source?: string;
-  last_reviewed?: string;
-  resolution_criteria?: string;
   evidence?: EvidenceLink[];
   bets: Bet[];
 }>;
-
-const fmtDate = (iso?: string) =>
-  iso ? new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' }) : '';
 ---
 <section class="sb">
-  <header class="sb__head">
-    <p class="kicker sb__kicker">Scoreboard · adversarial collaboration</p>
-    <h2 class="sb__title">Five falsifiable claims.</h2>
-    <p class="sb__lede">
-      Each prediction is dated and sourced from public datasets. Charity-bound bets accepted within the open window. After the window closes, predictions stand and are scored annually.
-    </p>
-  </header>
-
   <ol class="sb__list" role="list">
     {predictions.map((p) => {
       const testLabel = new Date(p.testable_by).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
+      const totalStake = p.bets.reduce((sum, b) => sum + b.amount_usd, 0);
+      const certaintyMailto = buildContactMailto(`Scoreboard · ${p.certainty ?? p.id}`);
       return (
-        <li class="sb__item surface-warm dossier-turn" id={p.id}>
+        <li class="sb__item" id={p.id}>
           <header class="sb__item-head">
-            <span class="sb__item-id stamp">{p.id}</span>
+            <p class="sb__item-cnum">{p.certainty_num ? `Certainty ${p.certainty_num}` : p.id}</p>
+            <h3 class="sb__item-certainty">{p.certainty ?? p.id}</h3>
+          </header>
+
+          <p class="sb__item-claim">{p.claim}</p>
+
+          <div class="sb__item-meta">
             <StatusIndicator status={p.status} />
             <time class="sb__item-test" datetime={p.testable_by}>
               <span class="sb__item-test-label">Testable by</span>
               <span class="sb__item-test-value">{testLabel}</span>
             </time>
-          </header>
-
-          <p class="sb__item-claim">{p.claim}</p>
-
-          {p.source && (
-            <p class="sb__item-source">
-              <span class="sb__item-source-label">Source:</span> {p.source}
-            </p>
-          )}
-
-          {p.resolution_criteria && (
-            <details class="sb__item-resolve">
-              <summary>Resolution criteria</summary>
-              <p>{p.resolution_criteria}</p>
-            </details>
-          )}
+          </div>
 
           {p.evidence && p.evidence.length > 0 && (
             <p class="sb__item-evidence">
-              <span class="sb__item-evidence-label">Evidence:</span>
               {p.evidence.map((e, i) => (
                 <>
                   {i > 0 && <span aria-hidden="true"> · </span>}
@@ -82,28 +63,18 @@ const fmtDate = (iso?: string) =>
             </p>
           )}
 
-          {p.last_reviewed && (
-            <p class="sb__item-reviewed">
-              <span class="sb__item-reviewed-label">Last reviewed:</span> {fmtDate(p.last_reviewed)}
-            </p>
-          )}
-
-          {p.bets.length > 0 ? (
-            <div class="sb__bets">
-              <p class="sb__bets-label">Standing bets ({p.bets.length})</p>
-              <ul role="list" class="sb__bets-list">
-                {p.bets.map((b) => (
-                  <li class="sb__bet">
-                    <span class={`sb__bet-dir sb__bet-dir--${b.direction}`}>{b.direction.toUpperCase()}</span>
-                    <span class="sb__bet-name">{b.bettor}</span>
-                    <span class="sb__bet-amount">${b.amount_usd.toLocaleString('en-US')} → {b.charity}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <p class="sb__bets-empty">Open for bets. First wager credited as patron.</p>
-          )}
+          <footer class="sb__item-bets">
+            {p.bets.length > 0 ? (
+              <p class="sb__bets-line">
+                <span class="sb__bets-count">{p.bets.length} {p.bets.length === 1 ? 'bet' : 'bets'}</span>
+                <span class="sb__bets-sep">·</span>
+                <span class="sb__bets-stake">${totalStake.toLocaleString('en-US')} staked</span>
+              </p>
+            ) : (
+              <p class="sb__bets-line sb__bets-line--empty">Open for bets.</p>
+            )}
+            <a class="sb__bets-cta" href={certaintyMailto}>Bet on this →</a>
+          </footer>
         </li>
       );
     })}
@@ -112,22 +83,6 @@ const fmtDate = (iso?: string) =>
 
 <style>
   .sb { padding-block: var(--s-7); }
-
-  .sb__head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    margin-block-end: var(--s-7);
-    max-width: 64ch;
-  }
-  .sb__kicker { color: var(--c-tomato); }
-  .sb__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-tight);
-    margin: 0;
-  }
-  .sb__lede { font-size: var(--fs-md); color: var(--fg-soft); }
 
   .sb__list {
     list-style: none;
@@ -139,31 +94,51 @@ const fmtDate = (iso?: string) =>
   }
 
   .sb__item {
-    padding: var(--s-5);
+    padding: var(--s-5) var(--s-5) var(--s-4);
     background: var(--bg-warm);
     border-left: 3px solid var(--c-tomato);
     scroll-margin-top: var(--s-7);
   }
 
   .sb__item-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--s-4);
     margin-block-end: var(--s-4);
     padding-block-end: var(--s-3);
     border-bottom: 1px solid var(--rule);
   }
-  .sb__item-id {
+  .sb__item-cnum {
     font-family: var(--f-mono);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-weight: 600;
     color: var(--c-tomato);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .sb__item-certainty {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: var(--s-2) 0 0;
+    color: var(--fg);
   }
 
+  .sb__item-claim {
+    font-family: var(--f-body);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 64ch;
+    color: var(--fg);
+  }
+
+  .sb__item-meta {
+    margin-block-start: var(--s-3);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-4);
+  }
   .sb__item-test {
-    margin-inline-start: auto;
     display: flex;
     align-items: baseline;
     gap: var(--s-2);
@@ -180,54 +155,11 @@ const fmtDate = (iso?: string) =>
     font-weight: 600;
   }
 
-  .sb__item-claim {
-    font-family: var(--f-display);
-    font-size: var(--fs-lg);
-    line-height: var(--lh-snug);
-    margin: 0;
-    max-width: 60ch;
-  }
-
-  .sb__item-source {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    color: var(--fg-soft);
-    margin-block-start: var(--s-3);
-  }
-  .sb__item-source-label { text-transform: uppercase; letter-spacing: 0.1em; }
-
-  .sb__item-resolve {
-    margin-block-start: var(--s-3);
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-  }
-  .sb__item-resolve summary {
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--c-tomato);
-    list-style: none;
-  }
-  .sb__item-resolve summary::-webkit-details-marker { display: none; }
-  .sb__item-resolve summary::after { content: " ▾"; }
-  .sb__item-resolve[open] summary::after { content: " ▴"; }
-  .sb__item-resolve p {
-    margin-block-start: var(--s-2);
-    color: var(--fg);
-    font-family: var(--f-body);
-    line-height: var(--lh-body);
-  }
-
   .sb__item-evidence {
     margin-block-start: var(--s-3);
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     color: var(--fg-soft);
-  }
-  .sb__item-evidence-label {
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-inline-end: var(--s-2);
   }
   .sb__item-evidence a {
     color: var(--c-tomato);
@@ -236,42 +168,34 @@ const fmtDate = (iso?: string) =>
     padding-bottom: 1px;
   }
 
-  .sb__item-reviewed {
-    margin-block-start: var(--s-2);
-    font-family: var(--f-mono);
-    font-size: calc(var(--fs-xs) * 0.95);
-    color: var(--fg-faint);
-  }
-  .sb__item-reviewed-label { text-transform: uppercase; letter-spacing: 0.1em; }
-
-  .sb__bets,
-  .sb__bets-empty {
+  .sb__item-bets {
     margin-block-start: var(--s-4);
     padding-block-start: var(--s-3);
     border-top: 1px dashed var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--s-3);
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
   }
-  .sb__bets-label,
-  .sb__bets-empty {
+  .sb__bets-line {
+    margin: 0;
+    color: var(--fg-soft);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--fg-soft);
-    margin: 0 0 var(--s-2);
   }
-  .sb__bets-empty { font-style: italic; }
-
-  .sb__bets-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s-2); }
-  .sb__bet { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: baseline; }
-  .sb__bet-dir {
-    font-weight: 600;
-    padding: 0.15em 0.55em;
-    font-size: calc(var(--fs-xs) * 0.85);
-    border: 1px solid currentColor;
-    background: transparent;
+  .sb__bets-count, .sb__bets-stake { color: var(--fg); font-weight: 600; }
+  .sb__bets-sep { color: var(--fg-faint); margin: 0 0.5em; }
+  .sb__bets-line--empty { color: var(--fg-soft); }
+  .sb__bets-cta {
+    color: var(--c-tomato);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
   }
-  .sb__bet-dir--for { color: var(--c-tomato); }
-  .sb__bet-dir--against { color: var(--fg); }
-  .sb__bet-name { font-weight: 600; }
-  .sb__bet-amount { color: var(--fg-soft); }
+  .sb__bets-cta:hover { color: var(--c-mahogany); border-bottom-color: var(--c-mahogany); }
 </style>

@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import KickerLabel from '../../components/KickerLabel.astro';
 import { getCollection } from 'astro:content';
 import glossary from '../../data/glossary.json';
 
@@ -91,7 +90,6 @@ const totalTerms = glossary.categories.reduce((acc, c) => acc + c.terms.length, 
 >
   <section class="refs container">
     <header class="refs__head">
-      <KickerLabel index="00" label="References · site-wide" accent />
       <h1 class="refs__title gavel-drop">References.</h1>
       <p class="refs__lede">
         Glossary plus citations across every public surface. {totalTerms} terms across {glossary.categories.length} categories. {totalFootnotes} footnotes across the Necessity Doctrine, the four market chapters, and the research library.
@@ -199,7 +197,6 @@ const totalTerms = glossary.categories.reduce((acc, c) => acc + c.terms.length, 
   }
   .refs__lede {
     font-family: var(--f-display);
-    font-style: italic;
     font-size: var(--fs-xl);
     line-height: var(--lh-snug);
     color: var(--fg-soft);
