@@ -209,15 +209,13 @@ const { title, description, ogImage } = Astro.props;
   .doctrine__body :global(.footnotes) {
     display: none;
   }
-  .doctrine__body :global(a[data-footnote-ref]),
-  .doctrine__body :global(sup.footnote-ref a),
-  .doctrine__body :global(a.data-footnote-ref) {
-    color: var(--c-tomato);
-    font-family: var(--f-mono);
-    font-size: 0.78em;
-    text-decoration: none;
-    border-bottom: none;
-    padding: 0 0.1em;
+  /* Inline footnote markers also hidden — the link target is the now-
+   * hidden in-page footnote section, so the marker would be a dead
+   * click. Reader finds citations on the consolidated /references/
+   * page (linked from the nav, footer, and DoctrineHeader). */
+  .doctrine__body :global(sup.footnote-ref),
+  .doctrine__body :global(a[data-footnote-ref]) {
+    display: none;
   }
 
   .doctrine__rail {

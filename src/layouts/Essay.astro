@@ -39,15 +39,10 @@ const { title, description, ogImage, hideWidget = false } = Astro.props;
   .essay__prose :global(.footnotes) {
     display: none;
   }
-  .essay__prose :global(a[data-footnote-ref]),
-  .essay__prose :global(sup.footnote-ref a),
-  .essay__prose :global(a.data-footnote-ref) {
-    color: var(--c-tomato);
-    font-family: var(--f-mono);
-    font-size: 0.78em;
-    text-decoration: none;
-    border-bottom: none;
-    padding: 0 0.1em;
+  /* Inline footnote markers also hidden — see /references/. */
+  .essay__prose :global(sup.footnote-ref),
+  .essay__prose :global(a[data-footnote-ref]) {
+    display: none;
   }
 
   .essay {
