@@ -7,7 +7,7 @@ import LiveStatusStrip from '../../components/LiveStatusStrip.astro';
 import KickerLabel from '../../components/KickerLabel.astro';
 
 const entries = (await getCollection('research')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  (a, b) => a.data.title.localeCompare(b.data.title)
 );
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
@@ -36,25 +36,19 @@ const dataProducts = [
     href: '/research/data/necessity-index/',
     title: 'The Necessity Index',
     summary: 'The classified APAC technology universe. 22,217 companies against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations.',
-    type: 'Live data product',
-    version: 'v1.0',
-    refresh: 'Quarterly'
+    type: 'Live data product'
   },
   {
     href: '/research/data/calendar/',
     title: 'The Crystallisation Window',
     summary: 'Thirty-four in-flight regulations across the four markets, dated 2024 to 2030. Filterable by market, Necessity, tier. Density peaks 2026 to 2027.',
-    type: 'Live tracker',
-    version: 'v1.0',
-    refresh: 'Monthly'
+    type: 'Live tracker'
   },
   {
     href: '/research/data/scoreboard/',
     title: 'The Scoreboard',
     summary: 'Five falsifiable predictions, dated and sourced. Charity-bound bets. Adversarial collaboration as scholarly commitment.',
-    type: 'Falsifiable claims',
-    version: 'v1.0',
-    refresh: 'Annual rescore'
+    type: 'Falsifiable claims'
   }
 ];
 ---
@@ -64,7 +58,7 @@ const dataProducts = [
 >
   <section class="rh container">
     <header class="rh__head">
-      <KickerLabel index="v2.0" label="Research" accent />
+      <KickerLabel label="Research" accent />
       <h1 class="rh__title gavel-drop">The map. The dataset. The calendar.</h1>
       <p class="rh__lede">
         The four-market regulated thesis on a public surface. Citable primary sources throughout. The dataset, the in-flight regulatory calendar, the five falsifiable claims that close the loop.
@@ -90,8 +84,6 @@ const dataProducts = [
                   href={`/research/${entry.slug}/`}
                   title={entry.data.title}
                   summary={entry.data.summary}
-                  date={entry.data.date.toISOString()}
-                  version={entry.data.version}
                   status={entry.data.status}
                   markets={entry.data.markets}
                   necessities={entry.data.necessities}
@@ -106,8 +98,6 @@ const dataProducts = [
                   href={`/research/${entry.slug}/`}
                   title={entry.data.title}
                   summary={entry.data.summary}
-                  date={entry.data.date.toISOString()}
-                  version={entry.data.version}
                   status={entry.data.status}
                   markets={entry.data.markets}
                   pages={entry.data.pages}

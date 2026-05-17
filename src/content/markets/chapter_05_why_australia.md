@@ -1,14 +1,12 @@
 ---
 chapter: 5
 title: Why Australia
-date: 2026-05-02
 word_count: 1268
 rail_market: AU
 ---
 
 
 **The Necessity Doctrine, Chapter 5**
-*2 May 2026*
 
 ---
 
@@ -19,7 +17,7 @@ The thesis here is the simplest of the four markets. Australia is a regulated-ec
 > **Australia, current state**
 >
 > - **R&D Tax Incentive:** 43.5% refundable offset for companies with aggregated turnover under A$20M; non-refundable offset for larger companies, up to an A$150M expenditure threshold.[^1]
-> - **Superannuation pool:** approximately A$3.7 trillion as of late 2025; allocation to unlisted growth assets in the high single digits to low double digits across major industry funds.[^2]
+> - **Superannuation pool:** approximately A$3.7 trillion; allocation to unlisted growth assets in the high single digits to low double digits across major industry funds.[^2]
 > - **Concessional tax cap:** 30% concessional rate applies to superannuation balances above A$3M from 1 July 2026, following Better Targeted Superannuation Concessions passage in 2025.[^3]
 > - **Regulatory architecture:** APRA, ASIC, AEMO, TGA, FIRB, ASX cover the four Necessity-aligned regulated sectors. Each has discrete compliance and approval pathways.
 
@@ -39,7 +37,7 @@ The risk is not abolition. The risk is parameter drift. A tightening of the elig
 
 ## The superannuation pool and the slow turn
 
-Australia's superannuation system holds A$3.7 trillion in retirement assets as of late 2025.[^2] The legal mandate to invest in retirement savers' best financial interests has historically been read as a preference for liquid, listed, low-cost beta. That reading is changing.
+Australia's superannuation system holds A$3.7 trillion in retirement assets.[^2] The legal mandate to invest in retirement savers' best financial interests has historically been read as a preference for liquid, listed, low-cost beta. That reading is changing.
 
 Regulatory pressure from APRA, political pressure from successive governments, and competitive pressure between large industry funds have combined to push allocations into unlisted assets, including private equity and venture capital. Industry fund allocation to unlisted growth assets sits in the high single digits to low double digits across the major funds.[^2] A 1% incremental allocation to venture and growth equity across the system is multiples of the entire current Australian VC market.
 

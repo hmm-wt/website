@@ -9,27 +9,22 @@ import ScrollyClassifierFunnel from '../../../../components/research/ScrollyClas
 import MarketRegulationBar from '../../../../components/charts/MarketRegulationBar.astro';
 import NecessityBarDrilldown from '../../../../components/research/NecessityBarDrilldown.astro';
 import data from '../../../../data/necessity-index.json';
-
-const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'long', day: 'numeric'
-});
 ---
 <Index
   title="The Necessity Index"
-  description="The classified APAC technology universe. Quarterly. Embeddable. The citation engine for the four-market regulated thesis."
+  description="The classified APAC technology universe. Embeddable. The citation engine for the four-market regulated thesis."
 >
   <section class="ip container">
     <header class="ip__head">
       <div class="ip__meta">
         <span class="ip__reg" aria-hidden="true"></span>
-        <span class="ip__kicker">Necessity Index · {data.version}</span>
+        <span class="ip__kicker">Necessity Index</span>
         <StatusIndicator status="live" />
       </div>
       <h1 class="ip__title">The classified universe.</h1>
       <p class="ip__lede">
-        Twenty-two thousand APAC technology companies, classified against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations. Refreshed {data.refresh_cadence}.
+        Twenty-two thousand APAC technology companies, classified against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations.
       </p>
-      <p class="ip__as-of">As of {asOfLabel}</p>
     </header>
 
     <DataSection
@@ -37,8 +32,8 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       label="Universe · Four-market classified dataset"
       title='The classified universe sits at <em>22,217</em> companies.'
       sub="Of those, 19,416 trade in the four target markets. 174 four-market regulations frame the thesis."
-      source="hmm Ventures classified universe · 2026-04-08 dataset"
-      basis="Crunchbase + Dealroom · last_funding_amount join · four-market filter"
+      source="hmm Ventures classified universe"
+      basis="Commercial data feeds · last_funding_amount join · four-market filter"
     >
       <div class="ip__grid ip__grid--4">
         <IndexCard label="Total companies classified" value={data.universe.total_companies} accent />
@@ -85,7 +80,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       fignum="NI-06"
       label="Detail tables · Per market and per Necessity"
       title='Drill-down: <em>regulation, tier, and cohort detail</em>.'
-      sub="Per-market and per-Necessity counts for the four-market universe. Heat-tinted by intensity. Per-market companies + regulations + tier breakdown verified against the 2026-04-08 classified dataset."
+      sub="Per-market and per-Necessity counts for the four-market universe. Heat-tinted by intensity. Per-market companies + regulations + tier breakdown verified against the classified dataset."
       source="hmm Ventures classified universe + Comprehensive Regulatory Dataset"
       basis="Per-market + per-Necessity joins · four-market filter"
     >
@@ -141,9 +136,7 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
       <p class="kicker ip__share-label">Use this index</p>
       <CiteThis
         title="The Necessity Index"
-        version={data.version}
         href="/research/data/necessity-index/"
-        date={data.as_of}
         embedSrc="/necessity-index/embed/"
       />
     </section>

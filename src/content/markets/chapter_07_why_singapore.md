@@ -1,14 +1,12 @@
 ---
 chapter: 7
 title: Why Singapore
-date: 2026-05-02
 word_count: 1184
 rail_market: SG
 ---
 
 
 **The Necessity Doctrine, Chapter 7**
-*2 May 2026*
 
 ---
 

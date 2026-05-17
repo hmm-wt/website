@@ -1,12 +1,10 @@
 ---
 chapter: 9
 title: "Path A: crystallisation."
-date: 2026-05-02
 word_count: 560
 ---
 
 **The Necessity Doctrine, Chapter 9**
-*2 May 2026*
 
 ---
 

@@ -1,7 +1,5 @@
 {
-  "version": "v1.0",
-  "as_of": "2026-05-17",
-  "source": "hmm Ventures IM v3.8.3 §10 Glossary. Lifted verbatim where the definition is public-safe; fund-specific parameters (cheque sizes, fee rates, carry percentages, sponsored-GP-commit composition, simulated return tier values) are held back in the private IM.",
+  "source": "hmm Ventures IM §10 Glossary. Lifted verbatim where the definition is public-safe; fund-specific parameters (cheque sizes, fee rates, carry percentages, sponsored-GP-commit composition, simulated return tier values) are held back in the private IM.",
   "categories": [
     {
       "id": "returns",
@@ -46,7 +44,7 @@
         { "term": "JIT (just-in-time) capital call convention", "def": "Capital called from LPs at the moment it is deployed. Total called approaches the full commitment over the fund life." },
         { "term": "Pre-funded reserve convention", "def": "Capital called from LPs at investment time; follow-on reserves drawn from within-fund cash. Total called is lower than the full commitment." },
         { "term": "Convention-invariance", "def": "The property of the canonical simulation that the same headline results are produced under both capital-call conventions." },
-        { "term": "R12 v2 / v3.3-JIT", "def": "Internal scenario and engine identifiers. R12 v2 is the current canonical Base Case configuration; v3.3-JIT is the simulation engine version." }
+        { "term": "Scenario / engine identifiers", "def": "Internal codes for the current canonical Base Case configuration and simulation engine." }
       ]
     },
     {

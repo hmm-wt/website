@@ -5,7 +5,6 @@ const doctrine = defineCollection({
   schema: z.object({
     chapter: z.number(),
     title: z.string(),
-    date: z.coerce.date(),
     word_count: z.number().optional(),
     rail_market: z.enum(['AU', 'JP', 'NZ', 'SG']).optional(),
   }),
@@ -16,7 +15,6 @@ const markets = defineCollection({
   schema: z.object({
     chapter: z.number().optional(),
     title: z.string(),
-    date: z.coerce.date(),
     word_count: z.number().optional(),
     rail_market: z.enum(['AU', 'JP', 'NZ', 'SG']),
   }),
@@ -27,8 +25,6 @@ const research = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
-    date: z.coerce.date(),
-    version: z.string().default('v1.0'),
     status: z.enum(['live', 'draft', 'archived']).default('live'),
     audience: z.enum(['lps', 'founders', 'researchers', 'general']).default('general'),
     necessities: z.array(z.enum(['Biomedical', 'Power', 'Food Security', 'Autonomous', 'Critical Materials'])).optional(),

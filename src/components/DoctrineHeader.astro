@@ -2,28 +2,19 @@
 import StatusIndicator from './StatusIndicator.astro';
 
 interface Props {
-  version: string;        // e.g. "v1.0"
-  published: string;      // ISO date
   author?: string;
   designer?: string;      // optional designer credit (AI 2027 style)
 }
 
 const {
-  version,
-  published,
   author = 'Wahid Tashkandi',
   designer
 } = Astro.props;
-
-const pubLabel = new Date(published).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'long', day: 'numeric'
-});
 ---
 <div class="dh container">
   <div class="dh__meta">
     <span class="dh__reg" aria-hidden="true"></span>
     <span class="dh__kicker">The Necessity Doctrine</span>
-    <span class="dh__version">{version}</span>
   </div>
 
   <h1 class="dh__title">
@@ -34,7 +25,7 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
 
   <p class="dh__subtitle">
     <slot name="subtitle">
-      A doctrine for seed-stage capital in developed APAC, 2026 to 2030. Five Necessities, four markets, the regulatory architecture that defines the floor of operation.
+      A doctrine for seed-stage capital in developed APAC. Five Necessities, four markets, the regulatory architecture that defines the floor of operation.
     </slot>
   </p>
 
@@ -49,10 +40,6 @@ const pubLabel = new Date(published).toLocaleDateString('en-GB', {
         <span class="dh__credit-value">{designer}</span>
       </div>
     )}
-    <div class="dh__credit">
-      <span class="dh__credit-label">Published</span>
-      <time class="dh__credit-value" datetime={published}>{pubLabel}</time>
-    </div>
     <div class="dh__credit dh__credit--status">
       <StatusIndicator status="live" />
     </div>

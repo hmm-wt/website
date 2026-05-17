@@ -49,7 +49,7 @@ const remainingSum = rows.slice(3).reduce((s, r) => s + r.count, 0);
     { label: third.label.toUpperCase(), value: third.count.toLocaleString('en-US'), ci: 'Third cohort' },
     { label: 'COMBINED REMAINDER', value: remainingSum.toLocaleString('en-US'), ci: 'All other cohorts' },
   ]}
-  source={`hmm Ventures Comprehensive Classified Dataset · ${data.as_of} snapshot`}
+  source="hmm Ventures Comprehensive Classified Dataset"
   basis="In-thesis companies · T1 + T2 classifier · Four-market base"
 >
   <svg

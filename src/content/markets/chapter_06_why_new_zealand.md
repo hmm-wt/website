@@ -1,14 +1,12 @@
 ---
 chapter: 6
 title: Why New Zealand
-date: 2026-05-02
 word_count: 1271
 rail_market: NZ
 ---
 
 
 **The Necessity Doctrine, Chapter 6**
-*2 May 2026*
 
 ---
 
@@ -53,7 +51,7 @@ Agritech and food security: Ministry for Primary Industries; AsureQuality verifi
 
 Biomedical and medtech: Medsafe approval; Health and Disability Services Standards; SoMD framework aligning with TGA. The medtech export channel through Australia and onward to Asia and North America is established and well-trodden.
 
-Renewable energy: Electricity Authority code; Climate Change Response Act emissions trading scheme; Emissions Reduction Plan; renewable generation deployment policy. The country has near-100% renewable electricity generation as of 2025, which makes it a natural test bed for grid-edge technologies that export back into larger grid markets.
+Renewable energy: Electricity Authority code; Climate Change Response Act emissions trading scheme; Emissions Reduction Plan; renewable generation deployment policy. The country runs near-100% renewable electricity generation, which makes it a natural test bed for grid-edge technologies that export back into larger grid markets.
 
 Adjacent verticals (financial services, consumer software, advertising technology) lack the same depth and the same grant alignment.
 

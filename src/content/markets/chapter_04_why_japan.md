@@ -1,14 +1,12 @@
 ---
 chapter: 4
 title: Why Japan
-date: 2026-05-02
 word_count: 1314
 rail_market: JP
 ---
 
 
 **The Necessity Doctrine, Chapter 4**
-*2 May 2026*
 
 ---
 

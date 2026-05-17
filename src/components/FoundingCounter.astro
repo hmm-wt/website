@@ -12,9 +12,6 @@ const { variant = 'full', light = false } = Astro.props;
 
 const remaining = Math.max(0, founding.cap - founding.count);
 const pct = Math.min(100, Math.round((founding.count / founding.cap) * 100));
-const asOf = new Date(founding.as_of).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'short', day: '2-digit'
-});
 
 const label = founding.count === 1 ? founding.label_singular : founding.label_plural;
 const closed = founding.closed || remaining === 0;
@@ -25,7 +22,6 @@ const closed = founding.closed || remaining === 0;
     <span class="fc__label">
       {closed ? 'Founding cohort · closed' : 'Founding cohort · open'}
     </span>
-    <time class="fc__date" datetime={founding.as_of}>{asOf}</time>
   </header>
 
   <div class="fc__body">

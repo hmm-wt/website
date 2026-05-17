@@ -4,8 +4,6 @@ interface Props {
   href: string;
   title: string;
   summary: string;
-  date: string;
-  version?: string;
   markets?: string[];
   necessities?: string[];
   pdfUrl?: string;
@@ -17,15 +15,9 @@ interface Props {
 }
 
 const {
-  href, title, summary, date, version, markets, necessities,
+  href, title, summary, markets, necessities,
   pdfUrl, pages, index, status = 'live', headlineMetric, sourceDataset
 } = Astro.props;
-
-const dateLabel = new Date(date).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'short', day: '2-digit'
-});
-const ageDays = Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
-const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
 
 const faunaByMarket: Record<string, string> = {
   AU: '/fauna/hmm-fauna-au-wattle.svg',
@@ -44,13 +36,10 @@ const fauna = (markets ?? [])
         {index && <span class="rcl__idx">[{index}]</span>}
         <span class="rcl__type">Research</span>
         <span class={`rcl__status rcl__status--${status}`}>{status}</span>
-        {freshness && <span class="rcl__fresh">{freshness}</span>}
-        {version && <span class="rcl__version">{version}</span>}
       </header>
       <h3 class="rcl__title">{title} <span class="rcl__chev" aria-hidden="true">→</span></h3>
       <p class="rcl__summary">{summary}</p>
       <footer class="rcl__foot">
-        <time datetime={date}>{dateLabel}</time>
         {pages && <span>{pages} pp</span>}
         {markets && markets.length > 0 && (
           <span class="rcl__markets">{markets.join(' · ')}</span>

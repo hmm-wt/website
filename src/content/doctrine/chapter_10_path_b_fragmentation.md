@@ -1,12 +1,10 @@
 ---
 chapter: 10
 title: "Path B: fragmentation."
-date: 2026-05-02
 word_count: 660
 ---
 
 **The Necessity Doctrine, Chapter 10**
-*2 May 2026*
 
 ---
 

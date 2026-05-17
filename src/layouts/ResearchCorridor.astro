@@ -7,14 +7,9 @@ interface Props {
   description?: string;
   ogImage?: string;
   headlineMetrics?: HeadlineMetric[];
-  date?: string;
-  version?: string;
 }
 
-const { title, description, ogImage, headlineMetrics, date, version } = Astro.props;
-const dateLabel = date
-  ? new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
-  : null;
+const { title, description, ogImage, headlineMetrics } = Astro.props;
 
 const markets = [
   { code: 'AUS', name: 'Australia', fauna: '/fauna/hmm-fauna-au-wattle.svg' },
@@ -29,9 +24,7 @@ const markets = [
       <p class="kicker rcorr__kicker">
         <span class="rcorr__reg" aria-hidden="true"></span>
         Research · hmm Ventures
-        {version && <span class="rcorr__version">{version}</span>}
       </p>
-      {dateLabel && <p class="rcorr__date kicker">{dateLabel}</p>}
       <h1 class="rcorr__title gavel-drop">{title}.</h1>
       <ul class="rcorr__fauna-row" role="list" aria-label="Four corridor markets">
         {markets.map((m) => (

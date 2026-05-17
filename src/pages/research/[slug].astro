@@ -31,15 +31,12 @@ const template =
    :  'dense');
 
 const collapseSections = template === 'dense' && denseSlugs.has(entry.slug);
-const dateIso = entry.data.date.toISOString();
 ---
 {template === 'scrolly' && (
   <ResearchScrolly
     title={entry.data.title}
     description={entry.data.summary}
     headlineMetrics={entry.data.headline_metrics}
-    date={dateIso}
-    version={entry.data.version}
   >
     <Content />
   </ResearchScrolly>
@@ -49,8 +46,6 @@ const dateIso = entry.data.date.toISOString();
     title={entry.data.title}
     description={entry.data.summary}
     headlineMetrics={entry.data.headline_metrics}
-    date={dateIso}
-    version={entry.data.version}
   >
     <Content />
   </ResearchCorridor>
@@ -60,8 +55,6 @@ const dateIso = entry.data.date.toISOString();
     title={entry.data.title}
     description={entry.data.summary}
     headlineMetrics={entry.data.headline_metrics}
-    date={dateIso}
-    version={entry.data.version}
     collapseSections={collapseSections}
   >
     <Content />

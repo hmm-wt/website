@@ -13,11 +13,9 @@ const metrics = [
   title="The Necessity Index. Methodology"
   description="How the classified universe was built, how the T1 / T2 screen is applied, and how to reproduce the headline figures."
   headlineMetrics={metrics}
-  date={data.as_of}
-  version={data.version}
 >
   <p>
-    The Necessity Index is a public, quarterly-refreshed data product that summarises the hmm Ventures classified universe of APAC technology companies and the regulatory architecture they operate against. This page documents how each figure on the index is produced, the source datasets, and the steps required to reproduce the result.
+    The Necessity Index is a public data product that summarises the hmm Ventures classified universe of APAC technology companies and the regulatory architecture they operate against. This page documents how each figure on the index is produced, the source datasets, and the steps required to reproduce the result.
   </p>
 
   <h2>Source datasets</h2>
@@ -39,7 +37,7 @@ const metrics = [
   <h2>Classification rules</h2>
 
   <p>
-    A company passes the screen and enters the in-thesis universe only if it is classified as Tier 1 or Tier 2 against the Five Necessities or the cross-cutting Data and AI Governance / Financial Integrity band.
+    A company passes the screen and enters the in-thesis universe only if it is classified as Tier 1 or Tier 2 against the Five Necessities or the cross-cutting AI and Data band.
   </p>
 
   <ul>
@@ -53,12 +51,6 @@ const metrics = [
 
   <p>
     The conservative classifier (the figure reported on the public Index) requires both stages of the pipeline to agree. Where the two stages disagree, the company is held out of the conservative count. The conservative classifier returns 33.5 percent (6,505 of 19,416) for the four-market universe.
-  </p>
-
-  <h2>Refresh cadence</h2>
-
-  <p>
-    The Index is rebuilt quarterly. Between rebuilds, the as-of date on the page reflects the last refresh. Material in-quarter changes (a new in-parliament regulation in one of the four markets, a status change on an in-flight regulation, a meaningful expansion of the classified universe) are entered ad hoc and noted in a change log.
   </p>
 
   <h2>Known limitations</h2>
@@ -85,9 +77,5 @@ const metrics = [
 
   <p>
     Every figure on the Index resolves to a row in one of the three source datasets above. The full provenance and the classifier pseudo-code are documented in the fund's Investment Memorandum Appendix F (Data Provenance), available to qualified investors with a pre-existing relationship.
-  </p>
-
-  <p>
-    <em>Source generated {new Date(data.as_of).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })}. Next refresh: end of next quarter.</em>
   </p>
 </Research>

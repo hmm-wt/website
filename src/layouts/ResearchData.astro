@@ -6,12 +6,6 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
-  /** Display version, e.g. "v1.0". */
-  version?: string;
-  /** ISO date string. Rendered as "As of {long date}". */
-  asOf?: string;
-  /** Refresh cadence label, e.g. "Quarterly", "Monthly", "Annual rescore". */
-  refresh?: string;
   /** Status badge. Mirrors the StatusIndicator component's enum. */
   status?: 'live' | 'open' | 'closed' | 'pending' | 'embargoed' | 'confirmed' | 'refuted';
   /** Surface register: 'dark' (default — matches Index pattern) or 'light'. */
@@ -22,32 +16,21 @@ interface Props {
 
 const {
   title, description, ogImage,
-  version = 'v1.0',
-  asOf,
-  refresh,
   status = 'live',
   surface = 'dark',
   kicker = 'Live data product'
 } = Astro.props;
-
-const asOfLabel = asOf
-  ? new Date(asOf).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
-  : null;
 ---
 <Base title={title} description={description} ogImage={ogImage}>
   <article class={`rdata rdata--${surface}`}>
     <header class="rdata__head container">
       <div class="rdata__meta">
         <span class="rdata__reg" aria-hidden="true"></span>
-        <span class="rdata__kicker">{kicker} · {version}</span>
+        <span class="rdata__kicker">{kicker}</span>
         <StatusIndicator status={status} />
       </div>
       <h1 class="rdata__title gavel-drop"><slot name="title">{title}.</slot></h1>
       <slot name="lede" />
-      <div class="rdata__chips">
-        {refresh && <span class="rdata__chip">Refresh: {refresh}</span>}
-        {asOfLabel && <span class="rdata__chip">As of {asOfLabel}</span>}
-      </div>
     </header>
 
     <div class="rdata__body container">

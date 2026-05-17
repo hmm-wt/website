@@ -3,8 +3,6 @@ interface Props {
   href: string;
   title: string;
   summary: string;
-  date: string;
-  version?: string;
   markets?: string[];
   pdfUrl?: string;
   pages?: number;
@@ -12,12 +10,7 @@ interface Props {
   status?: 'live' | 'draft' | 'archived';
 }
 
-const { href, title, summary, date, version, markets, pdfUrl, pages, index, status = 'live' } = Astro.props;
-const dateLabel = new Date(date).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'short', day: '2-digit'
-});
-const ageDays = Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
-const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
+const { href, title, summary, markets, pdfUrl, pages, index, status = 'live' } = Astro.props;
 ---
 <article class="rc">
   <a class="rc__link" href={href}>
@@ -25,21 +18,20 @@ const freshness = ageDays < 30 ? 'New' : ageDays < 120 ? 'Recent' : null;
       {index && <span class="rc__idx">[{index}]</span>}
       <span class="rc__type">Research</span>
       <span class={`rc__status rc__status--${status}`}>{status}</span>
-      {freshness && <span class="rc__fresh">{freshness}</span>}
-      {version && <span class="rc__version">{version}</span>}
     </header>
     <h3 class="rc__title">{title} <span class="rc__chev" aria-hidden="true">→</span></h3>
     <p class="rc__summary">{summary}</p>
-    <footer class="rc__foot">
-      <time datetime={date}>{dateLabel}</time>
-      {pages && <span>{pages} pp</span>}
-      {markets && markets.length > 0 && (
-        <span class="rc__markets">{markets.join(' · ')}</span>
-      )}
-      {pdfUrl && (
-        <a class="rc__pdf" href={pdfUrl} download data-stop>PDF ↓</a>
-      )}
-    </footer>
+    {(pages || (markets && markets.length > 0) || pdfUrl) && (
+      <footer class="rc__foot">
+        {pages && <span>{pages} pp</span>}
+        {markets && markets.length > 0 && (
+          <span class="rc__markets">{markets.join(' · ')}</span>
+        )}
+        {pdfUrl && (
+          <a class="rc__pdf" href={pdfUrl} download data-stop>PDF ↓</a>
+        )}
+      </footer>
+    )}
   </a>
 </article>
 

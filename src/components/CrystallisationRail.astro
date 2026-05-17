@@ -19,16 +19,11 @@ const filtered = calendar.regulations
 
 const marketLabel: Record<string, string> = { AU: 'Australia', JP: 'Japan', NZ: 'New Zealand', SG: 'Singapore' };
 const headerLabel = title ?? (market ? `Crystallisation Window · ${marketLabel[market]}` : 'Crystallisation Window');
-
-const asOf = new Date(calendar.as_of).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'short', day: '2-digit'
-});
 ---
 <aside class="cw" aria-label={headerLabel}>
   <header class="cw__head">
     <span class="cw__reg" aria-hidden="true"></span>
     <span class="cw__label">{headerLabel}</span>
-    <time class="cw__date" datetime={calendar.as_of}>{asOf}</time>
   </header>
 
   <ol class="cw__list" role="list">

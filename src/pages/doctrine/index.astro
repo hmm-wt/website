@@ -30,19 +30,19 @@ for (let i = 0; i < entries.length; i++) {
 }
 
 const railRows = [
-  { label: 'Four-market classified universe', value: '19,416', source: 'hmm Ventures dataset, 2026-04-08' },
+  { label: 'Four-market classified universe', value: '19,416', source: 'hmm Ventures dataset' },
   { label: 'Passes T1 / T2 conservative classifier', value: '33.5%', source: '6,505 of 19,416 companies' },
-  { label: 'Seed-stage in scope', value: '2,625', source: 'hmm Ventures dataset, 2026-04-08' },
+  { label: 'Seed-stage in scope', value: '2,625', source: 'hmm Ventures dataset' },
   { label: 'Four-market regulations', value: '174', source: '117 T1 in the Five Necessities' },
   { label: 'In-flight 2024 to 2030', value: '34', source: 'AU 11 · JP 11 · SG 10 · NZ 2' },
 ];
 ---
 <Doctrine
   title="The Necessity Doctrine"
-  description="Necessity is the thesis. A doctrine for seed-stage capital in developed APAC, 2026 to 2030."
+  description="Necessity is the thesis. A doctrine for seed-stage capital in developed APAC."
 >
   <Fragment slot="header">
-    <DoctrineHeader version="v1.0" published="2026-05-01" author="Wahid Tashkandi" />
+    <DoctrineHeader author="Wahid Tashkandi" />
   </Fragment>
 
   <Fragment slot="toc">
@@ -53,7 +53,6 @@ const railRows = [
     <MarginWidget
       title="The four-market universe"
       market="AU · JP · NZ · SG"
-      dateStamp="2026-04-08"
       rows={railRows}
       index="01"
     />

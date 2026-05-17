@@ -1,6 +1,4 @@
 {
-  "version": "v1.0",
-  "as_of": "2026-05-16",
   "source": "hmm Ventures conservative classifier keyword sets. Illustrative rules; the deployed pipeline applies a two-stage tech-company + T1/T2 validator with registry joins. Methodology in IM Appendix F.",
   "note": "Order of evaluation is top-down. The first matching rule wins. Off-mandate exclusions are evaluated before T1 / T2.",
   "rules": [

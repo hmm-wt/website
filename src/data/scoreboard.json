@@ -9,11 +9,11 @@
       "claim": "By end-2028, T1-classified seed companies in the four markets will show a Series A graduation rate at least 1.5x the unregulated cohort, observable from public Crunchbase and Dealroom data.",
       "testable_by": "2028-12-31",
       "status": "open",
-      "source": "hmm proprietary 22,217-company dataset, four-market cohort",
+      "source": "hmm proprietary 19,416-company four-market cohort",
       "last_reviewed": "2026-05-01",
       "resolution_criteria": "Resolved YES if T1 cohort Series A graduation rate ≥ 1.5× unregulated cohort across the four markets, measured on the 2028-12-31 dataset re-query. Resolved NO if < 1.5×. Pending if data unavailable.",
       "evidence": [
-        { "label": "Necessity Index v1.0", "href": "/necessity-index/" },
+        { "label": "Necessity Index", "href": "/necessity-index/" },
         { "label": "T1 Graduation Rates", "href": "/research/t1-graduation-rates/" }
       ],
       "bets": []

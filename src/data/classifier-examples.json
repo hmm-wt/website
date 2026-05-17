@@ -1,6 +1,4 @@
 {
-  "version": "v1.0",
-  "as_of": "2026-05-10",
   "source": "hmm Ventures classifier methodology (IM §2.2, §5.1). Worked examples drawn from the canonical 9-exit dataset and the off-mandate exclusions in the doctrine.",
   "branches": {
     "t1": {

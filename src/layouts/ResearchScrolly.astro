@@ -8,16 +8,9 @@ interface Props {
   ogImage?: string;
   /** Optional headline metrics shown above the first scroll stage. */
   headlineMetrics?: HeadlineMetric[];
-  /** Optional date label, ISO format. */
-  date?: string;
-  /** Optional version label, e.g. "v1.0". */
-  version?: string;
 }
 
-const { title, description, ogImage, headlineMetrics, date, version } = Astro.props;
-const dateLabel = date
-  ? new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
-  : null;
+const { title, description, ogImage, headlineMetrics } = Astro.props;
 ---
 <Base title={title} description={description} ogImage={ogImage}>
   <article class="rscroll surface-light">
@@ -27,9 +20,7 @@ const dateLabel = date
       <p class="kicker rscroll__kicker">
         <span class="rscroll__reg" aria-hidden="true"></span>
         Research · hmm Ventures
-        {version && <span class="rscroll__version">{version}</span>}
       </p>
-      {dateLabel && <p class="rscroll__date kicker">{dateLabel}</p>}
       <h1 class="rscroll__title gavel-drop">{title}.</h1>
     </header>
 

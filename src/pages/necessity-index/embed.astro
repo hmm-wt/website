@@ -2,10 +2,6 @@
 import '../../styles/global.css';
 import IndexCard from '../../components/IndexCard.astro';
 import data from '../../data/necessity-index.json';
-
-const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'short', day: '2-digit'
-});
 ---
 <!doctype html>
 <html lang="en">
@@ -18,13 +14,11 @@ const asOfLabel = new Date(data.as_of).toLocaleDateString('en-GB', {
     <meta name="robots" content="noindex" />
   </head>
   <body class="embed">
-    <h1 class="visually-hidden">The Necessity Index — classified APAC technology universe ({data.version}, as of {asOfLabel})</h1>
+    <h1 class="visually-hidden">The Necessity Index — classified APAC technology universe</h1>
     <a class="embed__link" href="https://hmm.ventures/research/data/necessity-index/" target="_top">
       <header class="embed__head">
         <span class="embed__reg" aria-hidden="true"></span>
         <span class="embed__brand">hmm Ventures · Necessity Index</span>
-        <span class="embed__version">{data.version}</span>
-        <time class="embed__date" datetime={data.as_of}>{asOfLabel}</time>
       </header>
 
       <div class="embed__grid">

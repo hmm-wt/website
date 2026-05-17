@@ -1,11 +1,8 @@
 {
-  "as_of": "2026-04-08",
-  "version": "v1.0",
-  "refresh_cadence": "quarterly",
   "source_datasets": [
-    "reference_dataset_classified_2026-04-08.csv (19,416 four-market companies)",
+    "reference_dataset_classified.csv (19,416 four-market companies)",
     "regulations_comprehensive.json (725 regulations, 64 countries, 13 sectors)",
-    "four_market_sector_tier_breakdown_2026-04-07.csv (174 four-market regulations)"
+    "four_market_sector_tier_breakdown.csv (174 four-market regulations)"
   ],
   "universe": {
     "total_companies": 22217,

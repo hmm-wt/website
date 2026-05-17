@@ -1,15 +1,4 @@
 ---
-/**
- * Right-margin regulatory state-of-play widget.
- * Per Public Surface Doctrine §3.4: every essay carries a date-stamped widget
- * with 3-5 regulatory metrics relevant to the essay. Compounding visual identity.
- *
- * Reused in Doctrine.astro and Essay.astro layouts.
- *
- * Data row schema:
- *   { label: string, value: string, source?: string, sourceUrl?: string }
- */
-
 interface DataRow {
   label: string;
   value: string;
@@ -20,7 +9,6 @@ interface DataRow {
 interface Props {
   title?: string;                  // Default: "Regulatory State of Play"
   market?: string;                  // AU / JP / NZ / SG / Global
-  dateStamp: string;                // ISO date, e.g. "2026-05-11"
   rows: DataRow[];                  // 3-5 rows recommended
   index?: string;                   // optional [01] index
 }
@@ -28,14 +16,9 @@ interface Props {
 const {
   title = 'Regulatory State of Play',
   market,
-  dateStamp,
   rows,
   index
 } = Astro.props;
-
-const dateLabel = new Date(dateStamp).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'short', day: '2-digit'
-});
 ---
 <aside class="margin-widget" aria-label={title}>
   <header class="margin-widget__head">
@@ -45,7 +28,6 @@ const dateLabel = new Date(dateStamp).toLocaleDateString('en-GB', {
       {title}
       {market && <span class="margin-widget__market">{market}</span>}
     </span>
-    <time class="margin-widget__date" datetime={dateStamp}>{dateLabel}</time>
   </header>
 
   <dl class="margin-widget__rows">

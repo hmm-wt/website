@@ -55,7 +55,6 @@ const { Content } = await entry.render();
       <EssayMeta
         chapterRef={`Thesis · Markets · ${fullName}`}
         title={`Why ${fullName}.`}
-        date={entry.data.date.toISOString()}
         readingTime={Math.ceil((entry.data.word_count ?? 1200) / 250)}
         market={market}
       />

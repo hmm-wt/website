@@ -1,8 +1,6 @@
 ---
 title: Citation index.
 summary: How to cite hmm Ventures research. Recommended formats per artefact, primary-source datasets, IM section anchors, regulator portal references.
-date: 2026-05-16
-version: v1.0
 status: live
 audience: researchers
 markets: [Australia, Japan, New Zealand, Singapore]
@@ -15,27 +13,27 @@ The fund's public research is citable. This page documents recommended citation 
 
 ### The Necessity Index
 
-> hmm Ventures, *The Necessity Index v1.0*, hmm.ventures/research/data/necessity-index/, as of [date]. APAC technology companies classified against the T1 / T2 framework across Australia, Japan, New Zealand, and Singapore.
+> hmm Ventures, *The Necessity Index*, hmm.ventures/research/data/necessity-index/. APAC technology companies classified against the T1 / T2 framework across Australia, Japan, New Zealand, and Singapore.
 
 ### The Crystallisation Window calendar
 
-> hmm Ventures, *The Crystallisation Window*, hmm.ventures/research/data/calendar/, as of [date]. Thirty-four in-flight regulations across the four target markets, 2024 to 2030.
+> hmm Ventures, *The Crystallisation Window*, hmm.ventures/research/data/calendar/. Thirty-four in-flight regulations across the four target markets, 2024 to 2030.
 
 ### The Scoreboard
 
-> hmm Ventures, *The Scoreboard v1.0*, hmm.ventures/research/data/scoreboard/, as of [date]. Five falsifiable predictions, dated and sourced.
+> hmm Ventures, *The Scoreboard*, hmm.ventures/research/data/scoreboard/. Five falsifiable predictions, dated and sourced.
 
 ### Research entries
 
-> hmm Ventures, *[Entry title]*, hmm.ventures/research/[slug]/, [date].
+> hmm Ventures, *[Entry title]*, hmm.ventures/research/[slug]/.
 
 ## Primary-source datasets
 
-**Classified company universe.** 22,217 APAC technology companies; 19,416 in the four target markets. Enriched from licensed commercial data feeds. Classified against the T1 / T2 framework via a two-stage pipeline. Source file: `reference_dataset_classified_2026-04-08.csv`.
+**Classified company universe.** 22,217 APAC technology companies; 19,416 in the four target markets. Enriched from licensed commercial data feeds. Classified against the T1 / T2 framework via a two-stage pipeline. Source file: `reference_dataset_classified.csv`.
 
 **Comprehensive regulations dataset.** 725 regulations across 64 countries and 13 sectors. Sourced from public legislation portals, regulator publications, and parliamentary records. Source file: `regulations_comprehensive.json`.
 
-**Four-market sector-tier breakdown.** 174 four-market regulations reconciled by sector and tier. Source file: `four_market_sector_tier_breakdown_2026-04-07.csv`.
+**Four-market sector-tier breakdown.** 174 four-market regulations reconciled by sector and tier. Source file: `four_market_sector_tier_breakdown.csv`.
 
 ## Regulator portal references
 
@@ -72,9 +70,9 @@ The Scoreboard at /research/data/scoreboard/ publishes five falsifiable claims, 
 
 ## Sources for this page
 
-- hmm Ventures research surface, 2026-05-16.
-- IM v3.8.3 (private).
-- The Necessity Doctrine v1.0 (public, /doctrine/).
+- hmm Ventures research surface.
+- IM (private).
+- The Necessity Doctrine (public, /doctrine/).
 
 > For research, press, or academic enquiries, email the GP.
 >

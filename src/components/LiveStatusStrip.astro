@@ -5,16 +5,11 @@ import crystallisation from '../data/crystallisation-window.json';
 const peakYear = Object.entries(crystallisation.year_counts as Record<string, number>)
   .sort((a, b) => b[1] - a[1])[0]?.[0] ?? '2027';
 
-const asOf = new Date(necessityIndex.as_of).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'short', day: '2-digit'
-});
-
 const cells = [
   { label: 'Companies classified', value: necessityIndex.universe.total_companies.toLocaleString('en-GB') },
   { label: 'Four-market regs', value: String(necessityIndex.universe.regulations_four_market) },
   { label: 'In flight', value: String(crystallisation.total_count) },
-  { label: 'Window peak', value: peakYear },
-  { label: 'Last refresh', value: asOf }
+  { label: 'Window peak', value: peakYear }
 ];
 ---
 <aside class="lss" aria-label="Research live status">
@@ -36,7 +31,7 @@ const cells = [
   }
   .lss__list {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--s-4);
     margin: 0;
     padding: 0;

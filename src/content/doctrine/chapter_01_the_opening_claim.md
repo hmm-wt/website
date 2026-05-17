@@ -1,12 +1,10 @@
 ---
 chapter: 1
 title: The opening claim.
-date: 2026-05-01
 word_count: 540
 ---
 
 **The Necessity Doctrine, Chapter 1**
-*1 May 2026*
 
 ---
 
@@ -76,6 +74,6 @@ Five domains meet the test: Food Security, Biomedical, Power, Autonomous, Critic
 
 ---
 
-[^1]: hmm Ventures classified universe, reference dataset 2026-04-08. Methodology in Appendix F of the Necessity Index.
+[^1]: hmm Ventures classified universe. Methodology in Appendix F of the Necessity Index.
 [^2]: hmm Ventures Comprehensive Regulatory Dataset, 2026-04. 725 regulations, 64 countries, 13 sectors.
 [^3]: hmm Ventures funding-premium analysis, 2024 four-market dataset. Premiums report median round size for regulated vs unregulated comparables.

@@ -12,18 +12,11 @@ interface Props {
   ogImage?: string;
   /** Optional headline metrics rendered in the right rail. */
   headlineMetrics?: HeadlineMetric[];
-  /** Optional date label, ISO format. */
-  date?: string;
-  /** Optional version label, e.g. "v1.0". */
-  version?: string;
   /** Auto-collapse h2 sections under details elements. Useful for dense pages. */
   collapseSections?: boolean;
 }
 
-const { title, description, ogImage, headlineMetrics, date, version, collapseSections } = Astro.props;
-const dateLabel = date
-  ? new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
-  : null;
+const { title, description, ogImage, headlineMetrics, collapseSections } = Astro.props;
 ---
 <Base title={title} description={description} ogImage={ogImage}>
   <article class="research container surface-light">
@@ -32,9 +25,7 @@ const dateLabel = date
         <p class="kicker research__kicker">
           <span class="research__reg" aria-hidden="true"></span>
           Research · hmm Ventures
-          {version && <span class="research__version">{version}</span>}
         </p>
-        {dateLabel && <p class="research__date kicker">{dateLabel}</p>}
       </header>
       <h1 class="research__title">{title}.</h1>
       {collapseSections && (

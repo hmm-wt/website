@@ -1,42 +1,32 @@
 ---
 interface Props {
   title: string;
-  date: string;            // ISO date string
   readingTime?: number;    // minutes
   market?: string;         // AU / JP / NZ / SG / cross
   necessity?: string;      // Food Security / Biomedical / Power / Autonomous / Critical Materials
   chapterRef?: string;     // e.g. "Doctrine Chapter 31"
 }
 
-const { title, date, readingTime, market, necessity, chapterRef } = Astro.props;
-const dateLabel = new Date(date).toLocaleDateString('en-GB', {
-  year: 'numeric', month: 'long', day: 'numeric'
-});
+const { title, readingTime, market, necessity, chapterRef } = Astro.props;
+const rowItems = [
+  readingTime ? `${readingTime} min read` : null,
+  market ?? null,
+  necessity ?? null
+].filter(Boolean) as string[];
 ---
 <header class="essay-meta">
   {chapterRef && <p class="essay-meta__chapter kicker">{chapterRef}</p>}
   <h1 class="essay-meta__title">{title}</h1>
-  <div class="essay-meta__row">
-    <time class="essay-meta__date kicker" datetime={date}>{dateLabel}</time>
-    {readingTime && (
-      <>
-        <span class="essay-meta__sep" aria-hidden="true">·</span>
-        <span class="kicker">{readingTime} min read</span>
-      </>
-    )}
-    {market && (
-      <>
-        <span class="essay-meta__sep" aria-hidden="true">·</span>
-        <span class="kicker essay-meta__tag">{market}</span>
-      </>
-    )}
-    {necessity && (
-      <>
-        <span class="essay-meta__sep" aria-hidden="true">·</span>
-        <span class="kicker essay-meta__tag">{necessity}</span>
-      </>
-    )}
-  </div>
+  {rowItems.length > 0 && (
+    <div class="essay-meta__row">
+      {rowItems.map((item, i) => (
+        <>
+          {i > 0 && <span class="essay-meta__sep" aria-hidden="true">·</span>}
+          <span class={`kicker ${i === 0 ? '' : 'essay-meta__tag'}`.trim()}>{item}</span>
+        </>
+      ))}
+    </div>
+  )}
 </header>
 
 <style>

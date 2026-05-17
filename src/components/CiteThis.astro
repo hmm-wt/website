@@ -5,15 +5,12 @@
  */
 interface Props {
   title: string;
-  version?: string;
   href: string;
-  date?: string;
   /** Optional iframe URL for the "Embed" disclosure. */
   embedSrc?: string;
 }
-const { title, version, href, date, embedSrc } = Astro.props;
-const year = date ? new Date(date).getFullYear() : new Date().getFullYear();
-const citation = `hmm Ventures (${year}). ${title}${version ? ` ${version}` : ''}. Retrieved from https://hmm.ventures${href}`;
+const { title, href, embedSrc } = Astro.props;
+const citation = `hmm Ventures. ${title}. Retrieved from https://hmm.ventures${href}`;
 const embedCode = embedSrc
   ? `<iframe src="https://hmm.ventures${embedSrc}" width="100%" height="420" frameborder="0" loading="lazy" title="${title}"></iframe>`
   : '';
