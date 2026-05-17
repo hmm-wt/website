@@ -1,138 +1,95 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import ResearchCard from '../../components/ResearchCard.astro';
-import ResearchCardLarge from '../../components/ResearchCardLarge.astro';
 import LiveStatusStrip from '../../components/LiveStatusStrip.astro';
+import { buildContactMailto } from '../../utils/mailto.ts';
 
-const entries = (await getCollection('research')).sort(
-  (a, b) => a.data.title.localeCompare(b.data.title)
-);
-const pad2 = (n: number) => String(n).padStart(2, '0');
+const longForm = [
+  {
+    href: '/research/necessities/',
+    title: 'The five necessities. And why now.',
+    summary: 'Heal, power, eat, move, supply. Five non-discretionary demand vectors and the window across the four target markets, open through 2028.'
+  },
+  {
+    href: '/research/method/',
+    title: 'The method. How the fund identifies investable companies.',
+    summary: 'T1 and T2. Licence-as-barrier and compulsion-as-barrier. The two-tier filter that takes the 19,416-company four-market universe down to the 6,505 in the thesis.'
+  },
+  {
+    href: '/research/results/',
+    title: 'The results. T1 graduation, T1 exits.',
+    summary: 'Round-size premium from 1.12x at seed to 1.53x at Series C. Exit incidence at 2.22x the unregulated rate. Nine named exits, primary-source verified.'
+  }
+];
 
-// Four lanes. LP lane is the dominant tier; others render compressed.
-const lanes = [
-  { id: 'lps',         label: 'For LPs',         desc: 'Empirical validation, dataset depth. Cited primary sources throughout.' },
-  { id: 'founders',    label: 'For founders',    desc: 'How we read regulatory exposure. What we fund at pre-product. The compliance clock.' },
-  { id: 'researchers', label: 'For researchers', desc: 'Methodology, datasets, citation-grade detail. Reproducible figures.' },
-  { id: 'general',     label: 'Public',          desc: 'Open-access primers and explainers.' }
-] as const;
-
-type LaneId = typeof lanes[number]['id'];
-type Entry = typeof entries[number];
-
-const byLane: Record<LaneId, Entry[]> = {
-  lps: [], founders: [], researchers: [], general: []
-};
-for (const e of entries) {
-  const lane = (e.data.audience ?? 'general') as LaneId;
-  byLane[lane].push(e);
-}
-
-// Live data products. First-class entries under /research/data/.
 const dataProducts = [
   {
     href: '/research/data/necessity-index/',
     title: 'The Necessity Index',
-    summary: 'The classified APAC technology universe. 22,217 companies against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations.',
-    type: 'Live data product'
+    summary: 'The classified APAC technology universe. 22,217 companies against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations.'
   },
   {
     href: '/research/data/calendar/',
     title: 'The Crystallisation Window',
-    summary: 'Thirty-four in-flight regulations across the four markets, dated 2024 to 2030. Filterable by market, Necessity, tier. Density peaks 2026 to 2027.',
-    type: 'Live tracker'
+    summary: 'Thirty-four in-flight regulations across the four markets, dated 2024 to 2030. Filterable by market, Necessity, tier. Density peaks 2026 to 2027.'
   },
   {
     href: '/research/data/scoreboard/',
     title: 'The Scoreboard',
-    summary: 'Five falsifiable predictions, dated and sourced. Charity-bound bets. Adversarial collaboration as scholarly commitment.',
-    type: 'Falsifiable claims'
+    summary: 'Five Structural Certainties. Five falsifiable predictions, dated and testable against a public dataset. Charity-bound bets within the open window.'
   }
 ];
+
+const mailto = buildContactMailto('Research · talk through it');
 ---
 <Base
   title="Research"
-  description="Public research from hmm Ventures. The regulatory landscape, the classified universe, the crystallisation window, the scoreboard. LP-grade evidence with primary-source citations."
+  description="The map. The dataset. The calendar. Public research from hmm Ventures. Five necessities, four markets, the in-thesis universe, the named exits."
 >
   <section class="rh container">
     <header class="rh__head">
-      <h1 class="rh__title gavel-drop">The map. The dataset. The calendar.</h1>
+      <h1 class="rh__title gavel-drop">What people need. Who is building it. How we know.</h1>
       <p class="rh__lede">
-        The four-market regulated thesis on a public surface. Citable primary sources throughout. The dataset, the in-flight regulatory calendar, the five falsifiable claims that close the loop.
+        The five necessities, the two-tier filter that identifies investable companies, and the empirical results — graduation rates and named exits. Three long-form pages plus three live data products.
       </p>
     </header>
 
     <LiveStatusStrip />
 
-    {lanes.map((lane) => {
-      const items = byLane[lane.id];
-      if (items.length === 0) return null;
-      const isLP = lane.id === 'lps';
-      return (
-        <section class={`rh__group ${isLP ? 'rh__group--lp' : ''}`} aria-label={lane.label}>
-          <header class="rh__group-head">
-            <p class="kicker rh__group-label">{lane.label}</p>
-            <p class="rh__group-desc">{lane.desc}</p>
-          </header>
-          <div class="rh__list">
-            {items.map((entry, i) => (
-              isLP ? (
-                <ResearchCardLarge
-                  href={`/research/${entry.slug}/`}
-                  title={entry.data.title}
-                  summary={entry.data.summary}
-                  status={entry.data.status}
-                  markets={entry.data.markets}
-                  necessities={entry.data.necessities}
-                  pages={entry.data.pages}
-                  pdfUrl={entry.data.pdf_url}
-                  sourceDataset={entry.data.source_dataset}
-                  headlineMetric={entry.data.headline_metrics?.[0]}
-                  index={pad2(i + 1)}
-                />
-              ) : (
-                <ResearchCard
-                  href={`/research/${entry.slug}/`}
-                  title={entry.data.title}
-                  summary={entry.data.summary}
-                  status={entry.data.status}
-                  markets={entry.data.markets}
-                  pages={entry.data.pages}
-                  pdfUrl={entry.data.pdf_url}
-                  index={pad2(i + 1)}
-                />
-              )
-            ))}
-          </div>
-        </section>
-      );
-    })}
+    <section class="rh__group" aria-label="Long-form research">
+      <header class="rh__group-head">
+        <p class="kicker rh__group-label">Long-form research</p>
+      </header>
+      <ol class="rh__list" role="list">
+        {longForm.map((item) => (
+          <li class="rh__cell">
+            <a href={item.href} class="rh__link">
+              <h3 class="rh__h">{item.title}</h3>
+              <p class="rh__body">{item.summary}</p>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
 
-    <section class="rh__group rh__group--data" aria-label="Live data products">
+    <section class="rh__group" aria-label="Live data products">
       <header class="rh__group-head">
         <p class="kicker rh__group-label">Live data products</p>
-        <p class="rh__group-desc">Refreshed on their own clocks. Embeddable.</p>
       </header>
-      <div class="rh__list">
-        {dataProducts.map((dp, i) => (
-          <article class="dp">
-            <a class="dp__link" href={dp.href}>
-              <header class="dp__head">
-                <span class="dp__idx">[{pad2(i + 1)}]</span>
-                <span class="dp__type">{dp.type}</span>
-                <span class="dp__version">{dp.version}</span>
-              </header>
-              <h3 class="dp__title">{dp.title} <span class="dp__chev" aria-hidden="true">→</span></h3>
-              <p class="dp__summary">{dp.summary}</p>
-              <footer class="dp__foot">
-                <span>Refresh: {dp.refresh}</span>
-              </footer>
+      <ol class="rh__list" role="list">
+        {dataProducts.map((dp) => (
+          <li class="rh__cell">
+            <a href={dp.href} class="rh__link">
+              <h3 class="rh__h">{dp.title}</h3>
+              <p class="rh__body">{dp.summary}</p>
             </a>
-          </article>
+          </li>
         ))}
-      </div>
+      </ol>
     </section>
+
+    <footer class="rh__foot">
+      <a class="rh__cta" href={mailto}>Talk through it →</a>
+    </footer>
   </section>
 </Base>
 
@@ -152,115 +109,89 @@ const dataProducts = [
     line-height: var(--lh-tight);
     margin: 0;
     letter-spacing: -0.02em;
-    max-width: 18ch;
+    max-width: 28ch;
   }
   .rh__lede {
     font-family: var(--f-display);
-    font-style: italic;
     font-size: var(--fs-xl);
     line-height: var(--lh-snug);
     color: var(--fg-soft);
-    max-width: 56ch;
+    max-width: 60ch;
     margin: 0;
   }
 
-  .rh__group {
-    margin-block-end: var(--s-7);
-  }
+  .rh__group { margin-block-start: var(--s-7); }
   .rh__group-head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-    padding-block-end: var(--s-4);
-    margin-block-end: 0;
+    padding-block-end: var(--s-3);
+    margin-block-end: var(--s-3);
   }
   .rh__group-label { color: var(--c-tomato); margin: 0; }
-  .rh__group-desc {
-    margin: 0;
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    color: var(--fg-soft);
-    letter-spacing: 0.04em;
-    text-transform: none;
-    max-width: 64ch;
-  }
-
-  .rh__group--lp .rh__group-label {
-    font-size: var(--fs-sm);
-    letter-spacing: 0.14em;
-  }
 
   .rh__list {
-    display: flex;
-    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
   }
+  @media (max-width: 980px) { .rh__list { grid-template-columns: 1fr; } }
 
-  /* Data products strip. */
-  .rh__group--data { margin-block-start: var(--s-4); }
-  .dp {
-    border-top: 1px solid var(--rule);
-    transition: background var(--dur-1) var(--ease);
+  .rh__cell { border-left: 1px solid var(--rule); }
+  .rh__cell:first-child { border-left: 0; }
+  @media (max-width: 980px) {
+    .rh__cell { border-left: 0; border-top: 1px solid var(--rule); }
+    .rh__cell:first-child { border-top: 0; }
   }
-  .dp:hover, .dp:focus-within, .dp:active {
-    background: var(--bg-warm);
-    --fg: var(--c-mahogany);
-    --fg-soft: rgba(37, 0, 1, 0.7);
-    --fg-faint: rgba(37, 0, 1, 0.5);
-    --rule: rgba(4, 47, 42, 0.18);
-    color: var(--fg);
-  }
-  .dp:active { transform: scale(0.998); transition-duration: 80ms; }
-  .dp__link {
+
+  .rh__link {
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
     padding: var(--s-6) var(--s-5);
     text-decoration: none;
     color: var(--fg);
+    height: 100%;
+    transition: background var(--mo-hold) var(--ease-golden);
   }
-  .dp__head {
-    display: flex;
-    align-items: baseline;
-    gap: var(--s-3);
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-  }
-  .dp__idx { color: var(--c-tomato); font-weight: 600; }
-  .dp__type { color: var(--fg-soft); }
-  .dp__version { margin-inline-start: auto; color: var(--c-tomato); }
-  .dp__title {
+  .rh__link:hover { background: color-mix(in srgb, var(--c-tomato) 10%, transparent); }
+
+  .rh__h {
     font-family: var(--f-display);
-    font-size: var(--fs-2xl);
+    font-size: var(--fs-xl);
     line-height: var(--lh-tight);
     margin: 0;
-    transition: color var(--dur-1) var(--ease);
+    color: var(--fg);
+    transition: color var(--mo-tick) var(--ease-golden);
   }
-  .dp__link:hover .dp__title { color: var(--c-tomato); }
-  .dp__chev {
-    display: inline-block;
-    color: var(--c-tomato);
-    margin-inline-start: 0.3em;
-    transition: transform var(--transition);
-  }
-  .dp__link:hover .dp__chev { transform: translateX(4px); }
-  .dp__summary {
-    font-size: var(--fs-md);
-    color: var(--fg-soft);
-    max-width: 64ch;
-    margin: 0;
+  .rh__link:hover .rh__h { color: var(--c-tomato); }
+  .rh__body {
+    font-family: var(--f-body);
+    font-size: var(--fs-sm);
     line-height: 1.55;
-  }
-  .dp__foot {
-    margin-block-start: var(--s-3);
-    padding-block-start: var(--s-3);
-    border-top: 1px dashed var(--rule);
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
     color: var(--fg-soft);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    margin: 0;
+    max-width: 44ch;
   }
+
+  .rh__foot {
+    margin-block-start: var(--s-8);
+    padding-block-start: var(--s-5);
+    border-top: 1px solid var(--rule);
+  }
+  .rh__cta {
+    display: inline-block;
+    padding: var(--s-3) var(--s-5);
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: background var(--dur-1) var(--ease);
+  }
+  .rh__cta:hover { background: var(--c-mahogany); }
 </style>
