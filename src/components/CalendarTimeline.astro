@@ -4,7 +4,6 @@ import CalendarEntry from './CalendarEntry.astro';
 
 type Reg = (typeof calendar.regulations)[number];
 
-// Group by year
 const byYear = calendar.regulations.reduce<Record<number, Reg[]>>((acc, r) => {
   if (!acc[r.effective_year]) acc[r.effective_year] = [];
   acc[r.effective_year].push(r as Reg);
@@ -12,42 +11,24 @@ const byYear = calendar.regulations.reduce<Record<number, Reg[]>>((acc, r) => {
 }, {});
 
 const years = Object.keys(byYear).map(Number).sort((a, b) => a - b);
-const currentYear = new Date().getFullYear();
 const yearItems = years.map((year) => ({
   year,
-  isOpen: year >= currentYear && year <= currentYear + 1,
   regs: byYear[year].sort((a, b) => a.market.localeCompare(b.market)),
 }));
 ---
 <div class="cal-timeline">
   {yearItems.map((item) => (
-    item.isOpen ? (
-      <details class="cal-year" id={`year-${item.year}`} open>
-        <summary class="cal-year__head">
-          <h2 class="cal-year__num">{item.year}</h2>
-          <span class="cal-year__count kicker">{item.regs.length} {item.regs.length === 1 ? 'regulation' : 'regulations'}</span>
-          <span class="cal-year__chev" aria-hidden="true">▾</span>
-        </summary>
-        <ol class="cal-year__list" role="list">
-          {item.regs.map((r) => (
-            <CalendarEntry id={r.id} market={r.market as 'AU' | 'JP' | 'NZ' | 'SG'} necessity={r.necessity} tier={r.tier as 'T1' | 'T2'} effective_year={r.effective_year} status={r.status} title={r.title} />
-          ))}
-        </ol>
-      </details>
-    ) : (
-      <details class="cal-year" id={`year-${item.year}`}>
-        <summary class="cal-year__head">
-          <h2 class="cal-year__num">{item.year}</h2>
-          <span class="cal-year__count kicker">{item.regs.length} {item.regs.length === 1 ? 'regulation' : 'regulations'}</span>
-          <span class="cal-year__chev" aria-hidden="true">▾</span>
-        </summary>
-        <ol class="cal-year__list" role="list">
-          {item.regs.map((r) => (
-            <CalendarEntry id={r.id} market={r.market as 'AU' | 'JP' | 'NZ' | 'SG'} necessity={r.necessity} tier={r.tier as 'T1' | 'T2'} effective_year={r.effective_year} status={r.status} title={r.title} />
-          ))}
-        </ol>
-      </details>
-    )
+    <section class="cal-year" id={`year-${item.year}`}>
+      <header class="cal-year__head">
+        <h2 class="cal-year__num">{item.year}</h2>
+        <span class="cal-year__count">{item.regs.length} {item.regs.length === 1 ? 'regulation' : 'regulations'}</span>
+      </header>
+      <ol class="cal-year__list" role="list">
+        {item.regs.map((r) => (
+          <CalendarEntry id={r.id} market={r.market as 'AU' | 'JP' | 'NZ' | 'SG'} necessity={r.necessity} tier={r.tier as 'T1' | 'T2'} effective_year={r.effective_year} status={r.status} title={r.title} />
+        ))}
+      </ol>
+    </section>
   ))}
 </div>
 
@@ -66,30 +47,21 @@ const yearItems = years.map((year) => ({
     align-items: baseline;
     gap: var(--s-4);
     margin-block-end: var(--s-4);
-    cursor: pointer;
-    list-style: none;
-    transition: color var(--mo-tick) var(--ease-golden);
   }
-  .cal-year__head::-webkit-details-marker { display: none; }
-  .cal-year__head:hover .cal-year__num { color: var(--c-tomato); }
-  .cal-year__chev {
-    margin-inline-start: auto;
-    color: var(--c-tomato);
-    font-family: var(--f-mono);
-    font-size: var(--fs-md);
-    transition: transform var(--mo-tick) var(--ease-golden);
-  }
-  .cal-year[open] .cal-year__chev { transform: rotate(180deg); }
   .cal-year__num {
     font-family: var(--f-display);
     font-size: var(--fs-3xl);
     line-height: 1;
     margin: 0;
     letter-spacing: -0.02em;
+    color: var(--c-tomato);
   }
   .cal-year__count {
-    margin: 0;
-    color: var(--c-tomato);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-soft);
   }
   .cal-year__list {
     list-style: none;

@@ -1,18 +1,9 @@
 ---
 import Base from '../../../../layouts/Base.astro';
-import KickerLabel from '../../../../components/KickerLabel.astro';
 import CalendarTimeline from '../../../../components/CalendarTimeline.astro';
-import CalendarHorizon from '../../../../components/CalendarHorizon.astro';
 import TagFilter from '../../../../components/TagFilter.astro';
-import DataSection from '../../../../components/DataSection.astro';
 import calendar from '../../../../data/crystallisation-window.json';
-
-const totalCount = calendar.total_count;
-
-const marketCounts = calendar.regulations.reduce<Record<string, number>>((acc, r) => {
-  acc[r.market] = (acc[r.market] || 0) + 1;
-  return acc;
-}, {});
+import { buildContactMailto } from '../../../../utils/mailto.ts';
 
 const necessityList = Array.from(new Set(calendar.regulations.map((r) => r.necessity))).sort();
 
@@ -21,62 +12,30 @@ const filterGroups = [
   { key: 'necessity', label: 'Necessity', options: necessityList },
   { key: 'tier', label: 'Tier', options: ['T1', 'T2'] }
 ];
+
+const mailto = buildContactMailto('Crystallisation Window');
 ---
 <Base
   title="The Crystallisation Window"
-  description="Thirty-four in-flight regulations across Australia, Japan, New Zealand, and Singapore dated 2024 to 2030."
+  description="Thirty-four regulations crystallising what people need into law across Australia, Japan, New Zealand, and Singapore, dated 2024 to 2030."
 >
   <section class="cal container">
     <header class="cal__head">
-      <KickerLabel index="00" label="Crystallisation Window · live tracker" accent />
-      <h1 class="cal__title gavel-drop">The window opens here.</h1>
+      <h1 class="cal__title gavel-drop">When necessities crystallise into law.</h1>
       <p class="cal__lede">
-        Thirty-four in-flight regulations across the four target markets, dated 2024 to 2030. Each one creates a category of work that did not previously exist.
+        Thirty-four regulations across four markets, dated 2024 to 2030. Each one turns a necessity people cannot do without into a category of work that did not previously exist. Density peaks 2026 to 2027.
       </p>
-
-      <div class="cal__summary">
-        <div class="cal__metric">
-          <span class="cal__metric-label">Total in-flight</span>
-          <span class="cal__metric-value ticker-roll">{totalCount}</span>
-        </div>
-        {Object.entries(marketCounts).sort().map(([m, c]) => (
-          <div class="cal__metric">
-            <span class="cal__metric-label">{m}</span>
-            <span class="cal__metric-value ticker-roll">{c}</span>
-          </div>
-        ))}
-        <div class="cal__metric">
-          <span class="cal__metric-label">Peak year</span>
-          <span class="cal__metric-value">2027</span>
-        </div>
-      </div>
     </header>
 
-    <DataSection
-      fignum="CW-01"
-      label="Horizon view · Aggregate density 2024 to 2030"
-      title='Density peaks in <em>2026 to 2027</em>.'
-      sub="The four-market regulatory drumbeat at a glance. Per-market intensity by year."
-      source="hmm Ventures Comprehensive Regulatory Dataset"
-      basis="Aggregated by regulator · four-market subset"
-    >
-      <CalendarHorizon />
-    </DataSection>
+    <div class="cal__filter">
+      <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
+    </div>
 
-    <DataSection
-      fignum="CW-02"
-      label="Timeline · Per-regulation detail"
-      title='Thirty-four in-flight regulations. <em>Filterable</em> by market, Necessity, tier.'
-      sub="The full per-regulation calendar. Each entry traces a regulator publication to an operational compliance demand window."
-      source="hmm Ventures Comprehensive Regulatory Dataset · 725 regulations, 64 countries, 13 sectors"
-      basis="Four-market subset"
-    >
-      <div class="cal__filter">
-        <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
-      </div>
+    <CalendarTimeline />
 
-      <CalendarTimeline />
-    </DataSection>
+    <footer class="cal__foot">
+      <a class="cal__cta" href={mailto}>Talk through the window →</a>
+    </footer>
   </section>
 </Base>
 
@@ -99,43 +58,29 @@ const filterGroups = [
   }
   .cal__lede {
     font-family: var(--f-display);
-    font-style: italic;
     font-size: var(--fs-xl);
     line-height: var(--lh-snug);
     color: var(--fg-soft);
-    max-width: 52ch;
+    max-width: 56ch;
     margin: 0;
   }
-
-  .cal__summary {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--s-4) var(--s-6);
-    margin-block-start: var(--s-5);
-    padding: var(--s-4) 0;
-    border-block: 1px solid var(--rule);
-  }
-  .cal__metric { display: flex; flex-direction: column; gap: 2px; }
-  .cal__metric-label {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--fg-soft);
-  }
-  .cal__metric-value {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    color: var(--c-tomato);
-    line-height: 1;
-  }
-
-  .cal__horizon { margin-block-end: var(--s-7); }
   .cal__filter { margin-block-end: var(--s-5); }
-
   .cal__foot {
-    margin-block-start: var(--s-7);
+    margin-block-start: var(--s-8);
     padding-block-start: var(--s-5);
     border-top: 1px solid var(--rule);
   }
+  .cal__cta {
+    display: inline-block;
+    padding: var(--s-3) var(--s-5);
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: background var(--dur-1) var(--ease);
+  }
+  .cal__cta:hover { background: var(--c-mahogany); }
 </style>

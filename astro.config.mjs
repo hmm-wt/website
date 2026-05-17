@@ -10,6 +10,40 @@ export default defineConfig({
   // sitemap.xml served from public/ instead — see public/sitemap.xml
   // and public/sitemap-index.xml.
   integrations: [mdx()],
+  redirects: {
+    // Pages collapsed into anchored panels on the home page.
+    '/lps': '/#lps',
+    '/lps/': '/#lps',
+    '/founders': '/#founders',
+    '/founders/': '/#founders',
+    // 13 research articles consolidated into 3 long-form pages.
+    '/research/five-necessities-primer': '/research/necessities/',
+    '/research/five-necessities-primer/': '/research/necessities/',
+    '/research/why-now-explainer': '/research/necessities/',
+    '/research/why-now-explainer/': '/research/necessities/',
+    '/research/t1-vs-t2-binary': '/research/method/',
+    '/research/t1-vs-t2-binary/': '/research/method/',
+    '/research/how-we-read-regulatory-exposure': '/research/method/',
+    '/research/how-we-read-regulatory-exposure/': '/research/method/',
+    '/research/classifier-walkthrough': '/research/method/',
+    '/research/classifier-walkthrough/': '/research/method/',
+    '/research/methodology-classified-universe': '/research/method/',
+    '/research/methodology-classified-universe/': '/research/method/',
+    '/research/country-corridor-snapshot': '/research/method/',
+    '/research/country-corridor-snapshot/': '/research/method/',
+    '/research/compliance-cycle-clock': '/research/method/',
+    '/research/compliance-cycle-clock/': '/research/method/',
+    '/research/regulatory-landscape': '/research/method/',
+    '/research/regulatory-landscape/': '/research/method/',
+    '/research/crystallisation-window-2024-2030': '/research/data/calendar/',
+    '/research/crystallisation-window-2024-2030/': '/research/data/calendar/',
+    '/research/t1-graduation-rates': '/research/results/',
+    '/research/t1-graduation-rates/': '/research/results/',
+    '/research/what-we-fund-pre-product': '/#founders',
+    '/research/what-we-fund-pre-product/': '/#founders'
+    // Note: /thesis/[market] chapters remain as deep-dive pages linked
+    // from the /markets/ comparison view. No redirect needed.
+  },
   build: {
     inlineStylesheets: 'auto'
   },

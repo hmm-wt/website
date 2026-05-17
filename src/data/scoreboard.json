@@ -5,39 +5,14 @@
   "scored_at": null,
   "predictions": [
     {
-      "id": "P1",
-      "claim": "By end-2028, T1-classified seed companies in the four markets will show a Series A graduation rate at least 1.5x the unregulated cohort, observable from public Crunchbase and Dealroom data.",
-      "testable_by": "2028-12-31",
-      "status": "open",
-      "source": "hmm proprietary 19,416-company four-market cohort",
-      "last_reviewed": "2026-05-01",
-      "resolution_criteria": "Resolved YES if T1 cohort Series A graduation rate ≥ 1.5× unregulated cohort across the four markets, measured on the 2028-12-31 dataset re-query. Resolved NO if < 1.5×. Pending if data unavailable.",
-      "evidence": [
-        { "label": "Necessity Index", "href": "/necessity-index/" },
-        { "label": "T1 Graduation Rates", "href": "/research/t1-graduation-rates/" }
-      ],
-      "bets": []
-    },
-    {
-      "id": "P2",
-      "claim": "By end-2028, at least three of the five regulator-anchored compliance frameworks (TGA digital health, FSANZ food traceability, MAS AI risk, PMDA digital-therapeutic pathway, Medsafe WAND) will publish operational compliance frameworks materially in their final form.",
-      "testable_by": "2028-12-31",
-      "status": "open",
-      "source": "Public regulator publications across AU, JP, NZ, SG",
-      "last_reviewed": "2026-05-01",
-      "resolution_criteria": "Resolved YES if 3+ of the five named frameworks have published their final operational compliance documentation by 2028-12-31. Resolved NO if ≤ 2.",
-      "evidence": [
-        { "label": "Regulatory Landscape", "href": "/research/regulatory-landscape/" }
-      ],
-      "bets": []
-    },
-    {
-      "id": "P3",
-      "claim": "By end-2027, the cumulative T1-to-unregulated funding premium will widen from 2.12x (2026) to at least 2.30x at Series D+ in the four target markets.",
+      "id": "C1",
+      "certainty_num": 1,
+      "certainty": "Seed entry is at near-parity. Exit is at premium.",
+      "claim": "By end-2027, the cumulative T1-to-unregulated funding premium widens from 2.12x (2026) to at least 2.30x at Series D+ in the four target markets.",
       "testable_by": "2027-12-31",
       "status": "open",
       "source": "hmm dataset re-query (annual)",
-      "last_reviewed": "2026-05-01",
+      "last_reviewed": "2026-05-17",
       "resolution_criteria": "Resolved YES if Series D+ cumulative funding premium ≥ 2.30× on the 2027 re-query. Resolved NO if < 2.30×.",
       "evidence": [
         { "label": "T1 Graduation Rates", "href": "/research/t1-graduation-rates/" }
@@ -45,25 +20,61 @@
       "bets": []
     },
     {
-      "id": "P4",
-      "claim": "By end-2028, at least two additional named acquisitions of developed-APAC regulated-technology companies by NA or EMEA strategic acquirers will close at EV at or above $100M.",
+      "id": "C2",
+      "certainty_num": 2,
+      "certainty": "Regulation is the sieve for defensible returns at every stage.",
+      "claim": "By end-2028, the T1+T2 share of the four-market 19,416-company dataset re-query holds at or above 33%.",
       "testable_by": "2028-12-31",
       "status": "open",
-      "source": "Primary-source verified exit dataset; ASX, TSE, NZX, SGX filings",
-      "last_reviewed": "2026-05-01",
-      "resolution_criteria": "Resolved YES if 2+ named acquisitions meeting the EV threshold close by 2028-12-31. Each must have a primary-source filing trail (exchange disclosure, 8-K, or equivalent).",
+      "source": "hmm proprietary four-market dataset re-query",
+      "last_reviewed": "2026-05-17",
+      "resolution_criteria": "Resolved YES if T1+T2 share of the four-market 19,416 universe is ≥ 33% on the 2028-12-31 re-query. Resolved NO if < 33%.",
+      "evidence": [
+        { "label": "Necessity Index", "href": "/research/data/necessity-index/" }
+      ],
+      "bets": []
+    },
+    {
+      "id": "C3",
+      "certainty_num": 3,
+      "certainty": "Regulation absorbs capital at an accelerating rate.",
+      "claim": "By end-2028, regulated companies' share of four-market Series C funding holds at or above 60%.",
+      "testable_by": "2028-12-31",
+      "status": "open",
+      "source": "hmm dataset re-query (annual)",
+      "last_reviewed": "2026-05-17",
+      "resolution_criteria": "Resolved YES if regulated (T1+T2) share of four-market Series C funding ≥ 60% on the 2028 re-query (today 63%). Resolved NO if < 60%.",
+      "evidence": [
+        { "label": "T1 Graduation Rates", "href": "/research/t1-graduation-rates/" }
+      ],
+      "bets": []
+    },
+    {
+      "id": "C4",
+      "certainty_num": 4,
+      "certainty": "A global strategic-acquirer buyer set exists and is active.",
+      "claim": "By end-2028, at least two additional named acquisitions of developed-APAC regulated-technology companies by NA or EMEA strategic acquirers close at EV at or above $100M.",
+      "testable_by": "2028-12-31",
+      "status": "open",
+      "source": "Primary-source verified exit dataset",
+      "last_reviewed": "2026-05-17",
+      "resolution_criteria": "Resolved YES if 2+ named acquisitions meeting the EV threshold close by 2028-12-31. Each must have a primary-source filing trail.",
       "evidence": [],
       "bets": []
     },
     {
-      "id": "P5",
-      "claim": "By end-2027, at least one of MAS, PMDA, or AEMO will publish a mandatory operational AI risk framework that creates direct compliance-software demand observable in public procurement notices.",
-      "testable_by": "2027-12-31",
+      "id": "C5",
+      "certainty_num": 5,
+      "certainty": "Developed APAC sets frontier regulation in the Necessity categories.",
+      "claim": "By end-2028, at least three of the thirty-four in-flight regulations crystallise as enacted operational frameworks.",
+      "testable_by": "2028-12-31",
       "status": "open",
-      "source": "Public regulator publications and procurement notices",
-      "last_reviewed": "2026-05-01",
-      "resolution_criteria": "Resolved YES if any of MAS, PMDA, or AEMO publishes a mandatory framework AND a public procurement notice referencing the framework appears within 12 months of publication.",
-      "evidence": [],
+      "source": "Public regulator publications across AU, JP, NZ, SG",
+      "last_reviewed": "2026-05-17",
+      "resolution_criteria": "Resolved YES if 3+ of the 34 in-flight regulations have published their final operational compliance documentation by 2028-12-31. Resolved NO if ≤ 2.",
+      "evidence": [
+        { "label": "Crystallisation Window", "href": "/research/data/calendar/" }
+      ],
       "bets": []
     }
   ]

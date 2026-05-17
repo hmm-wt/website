@@ -1,0 +1,94 @@
+---
+title: The results. T1 graduation, T1 exits.
+summary: Enter at parity. Exit at premium. T1 round-size premium widens from 1.12x at seed to 1.53x at Series C. Exit incidence at 2.22x the unregulated rate. Nine named developed-APAC regulated-tech acquisitions, primary-source verified.
+status: live
+audience: general
+markets: [Australia, Japan, New Zealand, Singapore]
+sectors: [Biomedical, Power, Food Security, Autonomous, Critical Materials]
+source_dataset: "hmm Ventures classified universe; primary-source verified exit dataset 2026-05-10."
+template: dense
+headline_metrics:
+  - { label: "Seed round-size premium", value: "1.12x" }
+  - { label: "Series C round-size premium", value: "1.53x" }
+  - { label: "Cumulative funding multiple, pre-seed to D+", value: "2.12x" }
+  - { label: "Exit rate, regulated vs unregulated", value: "2.22x" }
+  - { label: "Named verified APAC regulated-tech exits", value: "9" }
+---
+import PremiumWedge from '../../components/charts/PremiumWedge.astro';
+import RoundLadder from '../../components/research/RoundLadder.astro';
+import ExitChronograph from '../../components/research/ExitChronograph.astro';
+
+A T1 founder in Sydney, Tokyo, Auckland, or Singapore raises an A round 1.19x larger than an unregulated peer at the same stage. By Series C, 1.53x. By exit, 2.22x more likely to clear. The graduation rates and the exit dataset are public. Both reconcile to the 19,416-company four-market subset and the primary-source verified exit ledger.
+
+## Round-size graduation
+
+<RoundLadder />
+
+| Stage | Round-size premium (T1 vs unregulated) |
+|---|---|
+| Seed | 1.12x. Near-parity. Barrier not yet priced in. |
+| Series A | 1.19x. Regulatory milestones begin to price in. |
+| Series C | **1.53x**. Differential opens. Regulatory portfolios visible. |
+| Series D+ | 1.42x. Premium remains above 1.4x. |
+
+Each cleared regulatory hurdle is an asset that does not decay. Licences renew. Certifications carry forward. By Series C a successful T1 has multiple jurisdictions, multiple approvals, and a compliance track record competitors cannot replicate inside one round.
+
+## Cumulative funding graduation
+
+<PremiumWedge />
+
+The cumulative T1-to-unregulated funding premium widens from 1.09x at pre-seed to **2.12x at Series D+**. The asymmetry is not seed-driven. At seed the premium is 1.12x. Parity. The asymmetry is built stage by stage as the regulatory barrier becomes the rationale for each subsequent round.
+
+By Series D+, a T1 company that survives has raised more than twice the capital of an unregulated peer that survives to the same stage.
+
+## Exit graduation
+
+<ExitChronograph />
+
+| Cohort | Exit rate (2018–2024) |
+|---|---|
+| Regulated (T1 / T2) | **13.41%** |
+| Unregulated | 6.03% |
+| **Multiple** | **2.22x** |
+
+A T1 / T2 company is more than twice as likely to exit as an unregulated peer over the 2018–2024 four-market observation window. Exits appear across Biomedical, Power, Critical Materials, and Autonomous. The acquirer's published rationale cites regulatory infrastructure, licensing maturity, or approved networks as the deal driver. The acquirer is buying time. The cleared pathway is the asset.
+
+## Named exits, primary-source verified
+
+The acquisition pattern is observable, not theoretical. Nine named developed-APAC regulated-tech exits, primary-source verified in the canonical exit dataset.
+
+**Volpara Health.** New Zealand-headquartered, T1 biomedical, breast-density AI. TGA and FDA clearance as the regulatory moat. Acquired by Lunit, Korean strategic, in 2024 for $193M USD. Ten-year arc from founding to exit. The acquirer paid for the regulatory infrastructure, not the technology. Lunit could have built breast-density AI; they could not have replicated the TGA + FDA clearance trail in less than three years.
+
+**Eucalyptus.** Australian biomedical platform. Telehealth + prescription pathways under TGA. Acquired in a strategic transaction; consideration disclosed in primary-source filing.
+
+**Costa Group.** Australian food security and biosecurity-compliant agricultural producer. ASX-listed exit under FSANZ regime.
+
+**Payapps.** Australian construction-payments compliance software. NCC-adjacent demand. Strategic acquisition by Autodesk in 2024.
+
+Five further verified acquisitions sit in the full dataset (Medtech Global, Telecare, Infigen, Icon, Buildlogic), each with acquirer-by-acquirer rationale and primary-source filing trail. Mandate-aligned acquirer set includes Hims, Teladoc, Autodesk, Banyan Software, Iberdrola, Accenture, JDM, Paine Schwartz Partners, Lunit.
+
+## Why the rate compounds
+
+Three mechanisms.
+
+Cleared milestones are sticky. A TGA SaMD clearance, MAS Digital Bank licence, or PMDA SAKIGAKE designation does not expire on the same cycle as a product release.
+
+Cross-jurisdiction recognition matters. A T1 company with FDA 510(k) is materially closer to TGA, HSA, and Medsafe than a competitor starting from zero. The compliance trail is portable.
+
+Acquirer demand is structural. Strategic acquirers cannot organically build the compliance layer at the pace the regulatory clock demands. Acquisition is the rational response.
+
+## What this is not
+
+This is not a claim that T1 / T2 is the only path to venture returns. Unregulated companies produce outsized exits. The claim is narrower: inside the four-market regulated-sector seed thesis, the stage-graduation curve is materially steeper than the unregulated comparable, and the exit dataset is verifiable per row.
+
+## Sources
+
+- hmm Ventures classified universe. 19,416 four-market companies, conservative T1 / T2 classifier.
+- Funding-premium analysis, 2024 four-market deal data. Median round size for regulated vs unregulated cohorts at each stage.
+- Exit-rate analysis, 2018–2024 four-market observation window. Strategic and financial-sponsor acquisitions, IPOs, reverse mergers.
+- Primary-source verified exit dataset (LP_Cleaned 2026-05-10): nine named acquisitions, acquirer-by-acquirer rationale, exchange disclosures and 8-K trails per row.
+- IM §5.2 (Empirical validation), §3.4 (Exit pathway), Appendix F (Methodology).
+
+> Full provenance and the deployed pipeline are documented in the IM. The exit dataset is available in the data room.
+>
+> [Request the IM →](/#lps)

@@ -1,13 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import KickerLabel from '../components/KickerLabel.astro';
 ---
 <Base
   title="Not found"
   description="That page does not exist on hmm.ventures."
 >
   <section class="nf container">
-    <KickerLabel index="404" label="Not found" accent />
     <h1 class="nf__title">That page does not exist.</h1>
     <p class="nf__sub">
       The URL you followed does not resolve to a page on this site. The link may be stale, mistyped, or pointing at a page that has been moved.
@@ -38,7 +36,6 @@ import KickerLabel from '../components/KickerLabel.astro';
   }
   .nf__sub {
     font-family: var(--f-display);
-    font-style: italic;
     font-size: var(--fs-xl);
     line-height: var(--lh-snug);
     color: var(--fg-soft);

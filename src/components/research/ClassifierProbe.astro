@@ -45,8 +45,8 @@ import rules from '../../data/classifier-rules.json';
     </header>
     <p class="cpr__verdict-explain" data-cpr-explain>The verdict, the rule that matched, and a worked next step will print here.</p>
     <p class="cpr__verdict-next" data-cpr-next hidden></p>
-    <details class="cpr__rules">
-      <summary>How the probe decides</summary>
+    <section class="cpr__rules">
+      <h3 class="cpr__rules-h">How the probe decides</h3>
       <ol>
         {rules.rules.map((r) => (
           <li class={`cpr__rule cpr__rule--${r.outcome}`}>
@@ -58,7 +58,7 @@ import rules from '../../data/classifier-rules.json';
         ))}
       </ol>
       <p class="cpr__rules-foot">Order of evaluation is top-down. The first matching rule wins. Off-mandate exclusions are evaluated before T1 / T2.</p>
-    </details>
+    </section>
   </article>
 </section>
 
@@ -273,14 +273,14 @@ import rules from '../../data/classifier-rules.json';
     padding-block-start: var(--s-3);
     border-top: 1px solid var(--rule);
   }
-  .cpr__rules summary {
-    cursor: pointer;
+  .cpr__rules-h {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--c-tomato);
-    margin-block-end: var(--s-3);
+    margin: 0 0 var(--s-3);
+    font-weight: 600;
   }
   .cpr__rules ol {
     margin: var(--s-3) 0 0;

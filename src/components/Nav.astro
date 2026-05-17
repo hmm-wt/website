@@ -1,29 +1,10 @@
 ---
-type NavItem =
-  | { href: string; label: string }
-  | { label: string; children: { href: string; label: string }[] };
+interface NavItem { href: string; label: string; }
 
 const items: NavItem[] = [
   { href: '/doctrine/', label: 'Doctrine' },
-  {
-    label: 'Research',
-    children: [
-      { href: '/research/', label: 'Hub' },
-      { href: '/research/data/necessity-index/', label: 'Necessity Index' },
-      { href: '/research/data/calendar/', label: 'Crystallisation Window' },
-      { href: '/research/data/scoreboard/', label: 'Scoreboard' },
-      { href: '/references/', label: 'References' }
-    ]
-  },
-  {
-    label: 'Markets',
-    children: [
-      { href: '/thesis/australia/', label: 'Australia' },
-      { href: '/thesis/japan/', label: 'Japan' },
-      { href: '/thesis/new-zealand/', label: 'New Zealand' },
-      { href: '/thesis/singapore/', label: 'Singapore' }
-    ]
-  },
+  { href: '/research/', label: 'Research' },
+  { href: '/markets/', label: 'Markets' },
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' }
 ];
@@ -31,8 +12,6 @@ const items: NavItem[] = [
 const path = Astro.url.pathname;
 const isCurrent = (href: string) =>
   path === href || (href !== '/' && path.startsWith(href));
-const isMarketsCurrent = path.startsWith('/thesis/');
-const isResearchCurrent = path.startsWith('/research/');
 ---
 <header class="nav" data-nav>
   <div class="container nav__inner">
@@ -59,32 +38,13 @@ const isResearchCurrent = path.startsWith('/research/');
     <nav class="nav__primary" aria-label="Primary">
       <ul role="list" class="nav__list">
         {items.map((item) => (
-          'children' in item ? (
-            <li class="nav__group">
-              <button type="button" class={`nav__link nav__link--toggle ${(item.label === 'Markets' && isMarketsCurrent) || (item.label === 'Research' && isResearchCurrent) ? 'is-current' : ''}`} aria-haspopup="true" aria-expanded="false">
-                {item.label} <span aria-hidden="true">▾</span>
-              </button>
-              <ul role="list" class="nav__submenu">
-                {item.children.map((c) => (
-                  <li>
-                    <a
-                      href={c.href}
-                      class={`nav__sublink ${isCurrent(c.href) ? 'is-current' : ''}`}
-                      aria-current={isCurrent(c.href) ? 'page' : undefined}
-                    >{c.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ) : (
-            <li>
-              <a
-                href={item.href}
-                class={`nav__link ${isCurrent(item.href) ? 'is-current' : ''}`}
-                aria-current={isCurrent(item.href) ? 'page' : undefined}
-              >{item.label}</a>
-            </li>
-          )
+          <li>
+            <a
+              href={item.href}
+              class={`nav__link ${isCurrent(item.href) ? 'is-current' : ''}`}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >{item.label}</a>
+          </li>
         ))}
       </ul>
     </nav>
@@ -99,61 +59,19 @@ const isResearchCurrent = path.startsWith('/research/');
   <nav class="nav-sheet__nav container" aria-label="Primary mobile">
     <ul role="list" class="nav-sheet__list">
       {items.map((item) => (
-        'children' in item ? (
-          <li class="nav-sheet__group">
-            <details class="nav-sheet__details" open={(item.label === 'Markets' && isMarketsCurrent) || (item.label === 'Research' && isResearchCurrent)}>
-              <summary class="nav-sheet__summary">{item.label}</summary>
-              <ul role="list" class="nav-sheet__sublist">
-                {item.children.map((c) => (
-                  <li>
-                    <a
-                      href={c.href}
-                      class={`nav-sheet__sublink ${isCurrent(c.href) ? 'is-current' : ''}`}
-                      aria-current={isCurrent(c.href) ? 'page' : undefined}
-                    >{c.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          </li>
-        ) : (
-          <li>
-            <a
-              href={item.href}
-              class={`nav-sheet__link ${isCurrent(item.href) ? 'is-current' : ''}`}
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
-            >{item.label}</a>
-          </li>
-        )
+        <li>
+          <a
+            href={item.href}
+            class={`nav-sheet__link ${isCurrent(item.href) ? 'is-current' : ''}`}
+            aria-current={isCurrent(item.href) ? 'page' : undefined}
+          >{item.label}</a>
+        </li>
       ))}
     </ul>
   </nav>
 </aside>
 
 <script>
-  // Desktop dropdown click toggle (existing).
-  function initNavToggles() {
-    const toggles = document.querySelectorAll<HTMLButtonElement>('.nav__link--toggle');
-    toggles.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        const group = btn.closest('.nav__group');
-        if (!group) return;
-        const isOpen = group.classList.toggle('is-open');
-        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        e.stopPropagation();
-      });
-    });
-    document.addEventListener('click', (e) => {
-      document.querySelectorAll('.nav__group.is-open').forEach((g) => {
-        if (!g.contains(e.target as Node)) {
-          g.classList.remove('is-open');
-          g.querySelector('.nav__link--toggle')?.setAttribute('aria-expanded', 'false');
-        }
-      });
-    });
-  }
-
-  // Mobile sheet open/close. Open via hamburger, close via × or Esc.
   function initSheet() {
     const toggle = document.querySelector<HTMLButtonElement>('[data-sheet-toggle]');
     const sheet = document.querySelector<HTMLElement>('[data-sheet]');
@@ -167,7 +85,6 @@ const isResearchCurrent = path.startsWith('/research/');
       sheet.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
-      // Move focus into the sheet (first link after close button).
       requestAnimationFrame(() => close.focus());
     };
     const closeFn = () => {
@@ -185,30 +102,20 @@ const isResearchCurrent = path.startsWith('/research/');
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && sheet.classList.contains('is-open')) closeFn();
     });
-    // Close after navigating to a sheet link.
     sheet.querySelectorAll('a').forEach((a) => {
       a.addEventListener('click', closeFn);
     });
   }
 
-  function bootNav() {
-    initNavToggles();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSheet);
+  } else {
     initSheet();
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootNav);
-  } else {
-    bootNav();
-  }
-  // Re-bind on Astro View Transitions navigation. The DOM is replaced and
-  // any handlers attached to the prior page's nodes are lost. Without this
-  // the hamburger silently stops working after the first VT swap.
-  document.addEventListener('astro:page-load', bootNav);
+  document.addEventListener('astro:page-load', initSheet);
 </script>
 
 <style>
-  /* ---------- Top bar ---------- */
   .nav {
     position: sticky;
     top: 0;
@@ -237,7 +144,6 @@ const isResearchCurrent = path.startsWith('/research/');
   .nav__brand:hover { color: var(--c-tomato); }
   .nav__logo { height: 28px; width: auto; display: block; color: currentColor; }
 
-  /* ---------- Hamburger (mobile only) ---------- */
   .nav__hamburger {
     display: none;
     width: 44px;
@@ -262,7 +168,6 @@ const isResearchCurrent = path.startsWith('/research/');
   .nav__hamburger-bar:nth-child(3) { top: 28px; }
   .nav__hamburger:hover .nav__hamburger-bar { background: var(--c-tomato); }
 
-  /* ---------- Primary nav (desktop) ---------- */
   .nav__list {
     display: flex;
     gap: var(--s-5);
@@ -286,73 +191,13 @@ const isResearchCurrent = path.startsWith('/research/');
     color: var(--accent);
     border-bottom-color: currentColor;
   }
-  .nav__link--toggle {
-    background: none;
-    border: 0;
-    cursor: pointer;
-    font: inherit;
-    text-transform: inherit;
-    letter-spacing: inherit;
-    padding-block: 0.25rem;
-  }
 
-  .nav__group { position: relative; }
-  .nav__submenu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    list-style: none;
-    margin: 0;
-    padding: var(--s-3);
-    background: var(--bg);
-    border: 1px solid var(--rule);
-    min-width: 12rem;
-    display: none;
-    flex-direction: column;
-    gap: var(--s-2);
-    z-index: 60;
-  }
-  .nav__group:hover .nav__submenu,
-  .nav__group:focus-within .nav__submenu,
-  .nav__group.is-open .nav__submenu { display: flex; }
-  .nav__sublink {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    color: var(--fg-soft);
-    padding: 0.25rem 0.4rem;
-    display: block;
-  }
-  .nav__sublink:hover, .nav__sublink.is-current { color: var(--c-tomato); }
-
-  .nav__cta {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-decoration: none;
-    padding: 0.55rem 0.9rem;
-    border: 1px solid var(--c-pearl);
-    color: var(--c-pearl);
-    background: transparent;
-    transition: background var(--mo-tick) var(--ease-golden), color var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
-  }
-  .nav__cta:hover {
-    background: var(--c-tomato);
-    border-color: var(--c-tomato);
-    color: var(--c-pearl);
-  }
-
-  /* ---------- Mobile breakpoint ---------- */
   @media (max-width: 820px) {
     .nav__primary { display: none; }
     .nav__hamburger { display: block; }
     .nav__inner { padding-block: var(--s-3); }
   }
 
-  /* ---------- Mobile full-screen sheet ---------- */
   .nav-sheet {
     position: fixed;
     inset: 0;
@@ -411,64 +256,16 @@ const isResearchCurrent = path.startsWith('/research/');
     flex-direction: column;
     gap: var(--s-4);
   }
-  .nav-sheet__link, .nav-sheet__summary {
+  .nav-sheet__link {
     font-family: var(--f-display);
     font-size: var(--fs-2xl);
     color: var(--c-pearl);
     text-decoration: none;
     display: block;
     padding-block: var(--s-2);
-    cursor: pointer;
-    list-style: none;
   }
-  .nav-sheet__summary::-webkit-details-marker { display: none; }
-  .nav-sheet__summary::after {
-    content: " ▾";
-    font-family: var(--f-mono);
-    font-size: var(--fs-md);
-    color: var(--c-tomato);
-  }
-  .nav-sheet__details[open] .nav-sheet__summary::after { content: " ▴"; }
   .nav-sheet__link:hover,
-  .nav-sheet__summary:hover,
   .nav-sheet__link.is-current { color: var(--c-tomato); }
-
-  .nav-sheet__sublist {
-    list-style: none;
-    margin: var(--s-3) 0 0;
-    padding-left: var(--s-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    border-left: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
-  }
-  .nav-sheet__sublink {
-    font-family: var(--f-mono);
-    font-size: var(--fs-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: color-mix(in srgb, var(--c-pearl) 75%, transparent);
-    text-decoration: none;
-  }
-  .nav-sheet__sublink:hover, .nav-sheet__sublink.is-current { color: var(--c-tomato); }
-
-  .nav-sheet__foot {
-    padding-block: var(--s-5);
-    border-top: 1px solid color-mix(in srgb, var(--c-pearl) 15%, transparent);
-  }
-  .nav-sheet__cta {
-    display: inline-block;
-    font-family: var(--f-mono);
-    font-size: var(--fs-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-    padding: var(--s-3) var(--s-5);
-    border: 1px solid var(--c-tomato);
-    color: var(--c-tomato);
-    background: transparent;
-  }
-  .nav-sheet__cta:hover { background: var(--c-tomato); color: var(--c-pearl); }
 
   @media (min-width: 821px) {
     .nav-sheet { display: none; }

@@ -1,8 +1,8 @@
 ---
 import Base from '../../../../layouts/Base.astro';
-import KickerLabel from '../../../../components/KickerLabel.astro';
 import StatusIndicator from '../../../../components/StatusIndicator.astro';
 import scoreboard from '../../../../data/scoreboard.json';
+import { buildContactMailto } from '../../../../utils/mailto.ts';
 
 export async function getStaticPaths() {
   return scoreboard.predictions.map((p) => ({
@@ -14,37 +14,28 @@ export async function getStaticPaths() {
 const { prediction } = Astro.props;
 const fmtDate = (iso?: string) =>
   iso ? new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: '2-digit' }) : '';
+const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? prediction.id}`);
 ---
 <Base
-  title={`${prediction.id} · Scoreboard claim · hmm Ventures`}
+  title={`${prediction.certainty ?? prediction.id} · Scoreboard · hmm Ventures`}
   description={prediction.claim.slice(0, 200)}
 >
   <article class="claim container">
     <header class="claim__head">
-      <p class="claim__crumbs"><a href="/research/data/scoreboard/">← All claims</a></p>
-      <KickerLabel index={prediction.id} label={`Claim · testable by ${fmtDate(prediction.testable_by)}`} accent />
-      <h1 class="claim__title">{prediction.claim}</h1>
+      <p class="claim__crumbs"><a href="/research/data/scoreboard/">← All certainties</a></p>
+      {prediction.certainty_num && (
+        <p class="claim__cnum">Certainty {prediction.certainty_num}</p>
+      )}
+      <h1 class="claim__title">{prediction.certainty ?? prediction.id}</h1>
+      <p class="claim__claim">{prediction.claim}</p>
       <div class="claim__status-row">
         <StatusIndicator status={prediction.status as 'open' | 'pending' | 'closed' | 'confirmed' | 'refuted'} />
-        {prediction.last_reviewed && (
-          <span class="claim__reviewed">Last reviewed: {fmtDate(prediction.last_reviewed)}</span>
-        )}
+        <time class="claim__test" datetime={prediction.testable_by}>
+          <span class="claim__test-label">Testable by</span>
+          <span class="claim__test-value">{fmtDate(prediction.testable_by)}</span>
+        </time>
       </div>
     </header>
-
-    {prediction.source && (
-      <section class="claim__block">
-        <p class="kicker claim__kicker">Source</p>
-        <p class="claim__p">{prediction.source}</p>
-      </section>
-    )}
-
-    {prediction.resolution_criteria && (
-      <section class="claim__block">
-        <p class="kicker claim__kicker">Resolution criteria</p>
-        <p class="claim__p">{prediction.resolution_criteria}</p>
-      </section>
-    )}
 
     {prediction.evidence && prediction.evidence.length > 0 && (
       <section class="claim__block">
@@ -57,16 +48,9 @@ const fmtDate = (iso?: string) =>
       </section>
     )}
 
-    <section class="claim__share">
-      <p class="kicker claim__kicker">Share this claim</p>
-      <p class="claim__share-line">
-        <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(prediction.claim)}&url=https://hmm.ventures/research/data/scoreboard/${prediction.id.toLowerCase()}/`} target="_blank" rel="noopener">Twitter / X</a>
-        <span aria-hidden="true"> · </span>
-        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=https://hmm.ventures/research/data/scoreboard/${prediction.id.toLowerCase()}/`} target="_blank" rel="noopener">LinkedIn</a>
-        <span aria-hidden="true"> · </span>
-        <a href={`mailto:?subject=${encodeURIComponent(`hmm Scoreboard ${prediction.id}`)}&body=${encodeURIComponent(prediction.claim + '\n\nhttps://hmm.ventures/research/data/scoreboard/' + prediction.id.toLowerCase() + '/')}`}>Email</a>
-      </p>
-    </section>
+    <footer class="claim__foot">
+      <a class="claim__cta" href={betMailto}>Bet on this →</a>
+    </footer>
   </article>
 </Base>
 
@@ -91,6 +75,15 @@ const fmtDate = (iso?: string) =>
     color: var(--c-tomato);
     text-decoration: none;
   }
+  .claim__cnum {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--c-tomato);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0;
+  }
   .claim__title {
     font-family: var(--f-display);
     font-size: var(--fs-2xl);
@@ -99,19 +92,30 @@ const fmtDate = (iso?: string) =>
     margin: 0;
     max-width: 36ch;
   }
+  .claim__claim {
+    font-family: var(--f-body);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 64ch;
+    color: var(--fg);
+  }
   .claim__status-row {
     display: flex;
     gap: var(--s-4);
     align-items: baseline;
     flex-wrap: wrap;
+    margin-block-start: var(--s-2);
   }
-  .claim__reviewed {
+  .claim__test {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2);
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--fg-faint);
   }
+  .claim__test-label { text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-soft); }
+  .claim__test-value { color: var(--fg); font-weight: 600; }
 
   .claim__block {
     padding-block: var(--s-5);
@@ -121,8 +125,6 @@ const fmtDate = (iso?: string) =>
     gap: var(--s-2);
   }
   .claim__kicker { color: var(--c-tomato); margin: 0; }
-  .claim__p { margin: 0; line-height: 1.6; max-width: 56ch; }
-
   .claim__evidence {
     list-style: none;
     margin: 0;
@@ -140,19 +142,22 @@ const fmtDate = (iso?: string) =>
     padding-bottom: 1px;
   }
 
-  .claim__share {
+  .claim__foot {
     margin-block-start: var(--s-7);
-    padding-block: var(--s-5);
+    padding-block-start: var(--s-5);
     border-top: 2px solid var(--c-tomato);
   }
-  .claim__share-line {
-    margin: var(--s-2) 0 0;
+  .claim__cta {
+    display: inline-block;
+    padding: var(--s-3) var(--s-5);
+    background: var(--c-tomato);
+    color: var(--c-pearl);
     font-family: var(--f-mono);
     font-size: var(--fs-sm);
-  }
-  .claim__share-line a {
-    color: var(--c-tomato);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
     text-decoration: none;
-    border-bottom: 1px solid currentColor;
+    transition: background var(--dur-1) var(--ease);
   }
+  .claim__cta:hover { background: var(--c-mahogany); }
 </style>
