@@ -71,7 +71,7 @@ Most public research entries cite an Investment Memorandum (IM) section anchor a
 
 ## Doctrine references
 
-The hmm Necessity Doctrine is the long-form public companion to the IM. It is structured in ten chapters, with full citation footnotes published at /doctrine/references/. The doctrine is open-access; the IM is private.
+The hmm Necessity Doctrine is the long-form public companion to the IM. It is structured in ten chapters, with full citation footnotes published in the site-wide [References](/references/) page. The doctrine is open-access; the IM is private.
 
 ## Falsification commitments
 

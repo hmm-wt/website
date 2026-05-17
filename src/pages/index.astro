@@ -9,7 +9,7 @@ import RegClockStrip from '../components/charts/RegClockStrip.astro';
 import { getCollection } from 'astro:content';
 
 // Citation count is computed live from doctrine footnotes — same logic as
-// /doctrine/references/. Single source of truth across surfaces.
+// /references/. Single source of truth across surfaces.
 const doctrineEntries = await getCollection('doctrine');
 const footnoteRe = /^\[\^(\d+)\]:\s*.+?$/gm;
 const citationCount = doctrineEntries.reduce((acc, e) => {

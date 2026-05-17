@@ -182,6 +182,25 @@ const dateLabel = date
     max-width: 72ch;
   }
 
+  /* Footnotes live on the site-wide /references/ page. Hide the auto-rendered
+   * footnote sections inside each research entry so the prose reads clean.
+   * Inline [^N] markers still render. */
+  .research__prose :global(section[data-footnotes]),
+  .research__prose :global(aside.footnotes),
+  .research__prose :global(.footnotes) {
+    display: none;
+  }
+  .research__prose :global(a[data-footnote-ref]),
+  .research__prose :global(sup.footnote-ref a),
+  .research__prose :global(a.data-footnote-ref) {
+    color: var(--c-tomato);
+    font-family: var(--f-mono);
+    font-size: 0.78em;
+    text-decoration: none;
+    border-bottom: none;
+    padding: 0 0.1em;
+  }
+
   .research__collapse-toggle {
     display: flex;
     gap: var(--s-3);

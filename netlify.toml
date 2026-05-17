@@ -43,6 +43,21 @@
   status = 301
   force = true
 
+# References consolidation (2026-05-17). Doctrine references absorbed
+# into the site-wide /references/ route covering glossary + footnotes
+# from doctrine + markets + research.
+[[redirects]]
+  from = "/doctrine/references"
+  to = "/references/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/doctrine/references/*"
+  to = "/references/:splat"
+  status = 301
+  force = true
+
 # Force SPA-style 404 for client-side routes that don't exist as files.
 # Astro generates static .html per route, so 404s only hit for unknown URLs.
 [[redirects]]
