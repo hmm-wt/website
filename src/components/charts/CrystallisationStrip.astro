@@ -3,15 +3,39 @@
  * CrystallisationStrip. Pudding-style year axis with hero peak.
  *
  * Reads year_counts from crystallisation-window.json. Each year is a
- * cohort bar; the peak year (2027) is the hero.
+ * cohort bar; the peak year is the hero.
+ *
+ * Pass `market` to filter to a single jurisdiction; omit to show the
+ * four-market sum.
  */
 import data from '../../data/crystallisation-window.json';
 
-const yearCounts: Record<string, number> = data.year_counts as Record<string, number>;
-const years = Object.keys(yearCounts).sort();
-const peakYear = String(data.year_counts ? Object.keys(data.year_counts).reduce((a, b) => (yearCounts[a] > yearCounts[b] ? a : b)) : '2027');
+interface Props {
+  market?: 'AU' | 'JP' | 'NZ' | 'SG';
+}
 
-const max = Math.max(...years.map((y) => yearCounts[y]));
+const { market } = Astro.props;
+
+const yearRange = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+const yearCounts: Record<string, number> = {};
+yearRange.forEach((y) => { yearCounts[String(y)] = 0; });
+
+if (market) {
+  (data.regulations as any[]).forEach((r) => {
+    if (r.market === market && yearCounts[String(r.effective_year)] !== undefined) {
+      yearCounts[String(r.effective_year)] += 1;
+    }
+  });
+} else {
+  Object.entries(data.year_counts as Record<string, number>).forEach(([y, n]) => {
+    if (yearCounts[y] !== undefined) yearCounts[y] = n;
+  });
+}
+
+const years = Object.keys(yearCounts).sort();
+const peakYear = years.reduce((a, b) => (yearCounts[a] >= yearCounts[b] ? a : b));
+
+const max = Math.max(1, ...years.map((y) => yearCounts[y]));
 
 const width = 720;
 const height = 260;

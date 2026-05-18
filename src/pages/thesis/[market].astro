@@ -3,7 +3,8 @@ import { getCollection } from 'astro:content';
 import Essay from '../../layouts/Essay.astro';
 import EssayMeta from '../../components/EssayMeta.astro';
 import CrystallisationRail from '../../components/CrystallisationRail.astro';
-import CrystallisationTimeline from '../../components/charts/CrystallisationTimeline.astro';
+import CrystallisationStrip from '../../components/charts/CrystallisationStrip.astro';
+import ChartFrame from '../../components/ChartFrame.astro';
 import JurisdictionMark from '../../components/JurisdictionMark.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 
@@ -71,7 +72,14 @@ const { Content } = await entry.render();
   </Fragment>
 
   <section class="market-tl">
-    <CrystallisationTimeline market={market} />
+    <ChartFrame
+      kicker="The window"
+      title={`${fullName}. In-flight regulations by year.`}
+      caption={`Each bar counts effective dates in ${fullName} between 2024 and 2030. Hero bar marks the peak.`}
+      source="Source. hmm Ventures comprehensive regulatory dataset."
+    >
+      <CrystallisationStrip market={market} />
+    </ChartFrame>
   </section>
 
   <Content />
@@ -89,7 +97,7 @@ const { Content } = await entry.render();
         ))}
       </ul>
       <p class="market-foot__hub kicker">
-        <a href="/doctrine/">Back to the doctrine →</a>
+        <a href="/markets/">Back to the four markets &rarr;</a>
       </p>
     </nav>
   </Fragment>

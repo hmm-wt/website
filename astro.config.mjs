@@ -19,6 +19,12 @@ export default defineConfig({
     // Necessities promoted to top-level routes.
     '/research/necessities': '/necessities/',
     '/research/necessities/': '/necessities/',
+    // Doctrine retired 2026-05-18; public argument lives across
+    // /, /necessities/*, /markets/*, /research/*. Redirect to home.
+    '/doctrine': '/',
+    '/doctrine/': '/',
+    '/doctrine/download': '/',
+    '/doctrine/download/': '/',
     // Data hub promoted to top-level routes 2026-05-18.
     '/research/data/calendar': '/data/calendar/',
     '/research/data/calendar/': '/data/calendar/',

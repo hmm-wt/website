@@ -7,33 +7,51 @@ import ComparisonTable from '../../components/ComparisonTable.astro';
 import CTARail from '../../components/CTARail.astro';
 import necessityData from '../../data/necessity-index.json';
 
-const signatureMap: Record<string, string> = {
-  AU: 'Deepest signal cohort. Regulation, R&D capital, and super allocation intersect at scale.',
-  JP: 'Strongest financing access for T1. CVCs match operator-led regulated companies on terms unavailable elsewhere.',
-  NZ: 'High-conviction T1. Volpara to Lunit at $193M in 2024 is the exit pattern.',
-  SG: 'APAC regulatory innovation gateway. Frontier mandates ship first.',
+// IM-canonical per-market framing. Each row is parallel across markets;
+// each cell is one short line, IM-derived (chapters 4-7).
+const roleMap: Record<string, string> = {
+  AU: 'The capital base',
+  JP: 'The procurement budget',
+  NZ: 'The cost-efficient build',
+  SG: 'The regulatory translation layer',
+};
+
+const claimMap: Record<string, string> = {
+  AU: 'Regulatory architecture, R&D incentives, and superannuation capital intersect at a scale no comparable mid-sized economy matches.',
+  JP: 'Corporate architecture, regulatory posture, and capital structure are coupled in a way that creates seed-stage barriers stronger than any other developed market.',
+  NZ: 'The arithmetic of the regulated-seed thesis is at its sharpest. Smallest inputs in absolute terms. Persistent structural advantages in relative terms.',
+  SG: 'A single regulated entity domiciled in Singapore sells into ASEAN, Greater China, India, and the West with one compliance posture.',
+};
+
+const capitalMap: Record<string, string> = {
+  AU: 'A$4.3T superannuation pool. 43.5% R&D Tax Incentive offset.',
+  JP: '¥637T G7-leading retained earnings. CVC-led procurement channels.',
+  NZ: 'Callaghan to MBIE grant ecosystem. 15% R&D credit. Lower entry valuations.',
+  SG: 'MAS sandbox. ASEAN passporting. Sector-specific sandboxes 2024-2025.',
 };
 
 const regulatorMap: Record<string, string> = {
-  AU: 'APRA, ASIC, AEMO, TGA, FIRB, ASX',
-  JP: 'PMDA, MLIT, METI, FSA, TSE',
-  NZ: 'Medsafe WAND, Callaghan Innovation, Electricity Authority, MPI',
-  SG: 'HSA, MAS, EMA, IMDA, LTA, SFA',
+  AU: 'APRA · ASIC · AEMO · TGA · FIRB · ASX',
+  JP: 'PMDA · MLIT · METI · FSA · TSE',
+  NZ: 'Medsafe WAND · MBIE · Electricity Authority · MPI',
+  SG: 'HSA · MAS · IMDA · LTA · SFA · EMA',
 };
 
-const necessityMap: Record<string, string> = {
-  AU: 'Critical materials, Power, Biomedical, Food security',
-  JP: 'Biomedical, Autonomous, Power, Food security',
-  NZ: 'Biomedical, Food security, Power',
-  SG: 'Biomedical, Autonomous, Power, Food security',
+const proofMap: Record<string, string> = {
+  AU: 'Eucalyptus to Hims & Hers, 2026. Up to $1.15B. T1 Biomedical.',
+  JP: 'PMDA AI Medical Device Fast-Track. Effective 2027. T1.',
+  NZ: 'Volpara to Lunit, 2024. $193M. T1 Biomedical.',
+  SG: 'MAS AI Risk Management, all sectors. Effective 2028. T1.',
 };
 
 const orderedMarkets = ['AU', 'JP', 'NZ', 'SG'] as const;
 
 const comparisonRows = [
-  ['Necessities', ...orderedMarkets.map((m) => necessityMap[m])],
+  ['Role', ...orderedMarkets.map((m) => roleMap[m])],
+  ['The claim', ...orderedMarkets.map((m) => claimMap[m])],
+  ['Capital mechanism', ...orderedMarkets.map((m) => capitalMap[m])],
   ['Regulators', ...orderedMarkets.map((m) => regulatorMap[m])],
-  ['The signature', ...orderedMarkets.map((m) => signatureMap[m])],
+  ['Signature proof', ...orderedMarkets.map((m) => proofMap[m])],
 ];
 
 const per = necessityData.per_market as any[];

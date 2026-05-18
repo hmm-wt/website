@@ -19,7 +19,6 @@ const fmtDate = (iso?: string) =>
   title={`${prediction.certainty ?? prediction.id} · Scoreboard · hmm Ventures`}
   description={prediction.claim.slice(0, 200)}
 >
-  <div class="page-light">
   <article class="claim container">
     <header class="claim__head">
       <Breadcrumb
@@ -59,7 +58,6 @@ const fmtDate = (iso?: string) =>
       <p class="claim__foot-line">Falsifiable. Dated. Public. Scored on the dataset.</p>
     </footer>
   </article>
-  </div>
 </Base>
 
 <style>
