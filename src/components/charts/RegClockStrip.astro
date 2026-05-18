@@ -1,15 +1,17 @@
 ---
 /**
- * RegClockStrip — inline port of web_reg_clock_strip() from CIM/html/charts.py.
- * Single horizontal axis 2024–2030, four market markers, NOW marker.
- *
- * Motion hooks (consumed by src/motion/primitives later):
- *  - .wedge-draw on the axis line
- *  - .stagger-row data-i="0..3" on each market marker group
- *  - .now-pulse on the NOW dashed line + caption
- *  - .tape-print on the FIG-LEVEL axis years (handled by primitives.ts when present)
+ * RegClockStrip (WEB-H). 1:1 port of web_reg_clock_strip() in
+ * CIM/html/charts.py. Compact regulatory-clock strip for the home hero.
  */
 import IMFigure from '../IMFigure.astro';
+
+interface Marker { code: string; year: number; desc: string }
+const markers: Marker[] = [
+  { code: 'AUS', year: 2026.3, desc: 'TGA UDI · APRA CPS' },
+  { code: 'NZL', year: 2026.9, desc: 'Therapeutic Products Act' },
+  { code: 'JPN', year: 2027.0, desc: 'AI Promotion · PMDA SaMD' },
+  { code: 'SIN', year: 2027.5, desc: 'LTA AV Framework' }
+];
 
 const W = 800;
 const H = 110;
@@ -20,106 +22,49 @@ const axisY = mt + ih / 2;
 const yearMin = 2024;
 const yearMax = 2030;
 const sx = (yr: number) => ml + ((yr - yearMin) / (yearMax - yearMin)) * iw;
-
-const markers = [
-  { code: 'AUS', year: 2026.3 },
-  { code: 'NZL', year: 2026.9 },
-  { code: 'JPN', year: 2027.0 },
-  { code: 'SIN', year: 2027.5 },
-];
-
+const nowX = sx(2026.4);
 const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
-const nowYear = 2026.4;
-const nowX = sx(nowYear);
 ---
 <IMFigure
   fignum="WEB-H"
-  label="Crystallisation window · Four markets"
-  title='Necessities crystallise into law between <em>2026 and 2027</em>.'
-  sub="Peak-density events across the four markets, plotted on one axis. The fund deploys against this clock."
+  label="Regulatory clock · Crystallisation window"
+  title='Four markets crystallise between <em>2026 and 2027</em>.'
+  sub="Peak-density regulatory events across the four markets, plotted on a single axis. The fund deploys against this clock."
   metrics={[
     { label: 'AUS', value: '2026', ci: 'TGA UDI · APRA CPS' },
-    { label: 'NZL', value: '2026', ci: 'Climate-related Disclosures regime' },
+    { label: 'NZL', value: '2026', ci: 'Therapeutic Products Act' },
     { label: 'JPN', value: '2027', ci: 'PMDA SaMD · AI Promotion', accent: true },
-    { label: 'SIN', value: '2027', ci: 'LTA AV Framework' },
+    { label: 'SIN', value: '2027', ci: 'LTA AV Framework' }
   ]}
   source="hmm Ventures Comprehensive Regulatory Dataset · effective-date midpoints"
   basis="Peak density per market · Four-market scope · 2024 to 2030"
 >
   <svg
-    class="rc"
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="xMidYMid meet"
+    style="width:100%;height:auto;display:block;"
     role="img"
-    aria-label="Regulatory clock: AUS 2026, NZL 2026, JPN 2027, SIN 2027, NOW marker at 2026."
+    aria-label="Regulatory clock: AUS 2026, NZL 2026, JPN 2027, SIN 2027. NOW marker at 2026."
   >
-    {/* Axis line */}
-    <line
-      class="rc__axis wedge-draw"
-      x1={ml}
-      y1={axisY}
-      x2={ml + iw}
-      y2={axisY}
-      stroke="var(--c-mahogany)"
-      stroke-width="0.6"
-    />
+    <line x1={ml} y1={axisY} x2={ml + iw} y2={axisY} stroke="var(--mahogany)" stroke-width="0.6" />
+    {years.map((yr) => (
+      <g>
+        <line x1={sx(yr)} y1={axisY - 3} x2={sx(yr)} y2={axisY + 3} stroke="var(--mahogany)" stroke-width="0.6" />
+        <text x={sx(yr)} y={axisY + 18} text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="7">{yr}</text>
+      </g>
+    ))}
 
-    {/* Year ticks */}
-    {years.map((yr) => {
-      const x = sx(yr);
-      return (
-        <g class="rc__tick">
-          <line x1={x} y1={axisY - 3} x2={x} y2={axisY + 3} stroke="var(--c-mahogany)" stroke-width="0.6" />
-          <text x={x} y={axisY + 18} text-anchor="middle" font-family="var(--f-mono)" font-size="7" fill="var(--imfig-muted)">{yr}</text>
-        </g>
-      );
-    })}
+    <line x1={nowX} y1={mt - 4} x2={nowX} y2={axisY + 10} stroke="var(--tomato)" stroke-width="1.0" stroke-dasharray="3 3" />
+    <text x={nowX} y={mt - 8} text-anchor="middle" fill="var(--tomato)" font-family="var(--mono)" font-size="7" font-weight="700" letter-spacing="0.16em">NOW</text>
 
-    {/* NOW marker (dashed) */}
-    <line
-      class="rc__now-line now-pulse"
-      x1={nowX}
-      y1={mt - 4}
-      x2={nowX}
-      y2={axisY + 10}
-      stroke="var(--c-tomato)"
-      stroke-width="1"
-      stroke-dasharray="3 3"
-    />
-    <text
-      class="rc__now-label now-pulse"
-      x={nowX}
-      y={mt - 8}
-      text-anchor="middle"
-      font-family="var(--f-mono)"
-      font-size="7"
-      font-weight="700"
-      letter-spacing="0.16em"
-      fill="var(--c-tomato)"
-    >NOW</text>
-
-    {/* Market markers */}
-    {markers.map((m, i) => {
+    {markers.map((m) => {
       const x = sx(m.year);
       return (
-        <g class="rc__marker stagger-row" data-i={i}>
-          <circle cx={x} cy={axisY} r="4" fill="var(--c-tomato)" opacity="0.85" />
-          <text
-            x={x}
-            y={axisY - 12}
-            text-anchor="middle"
-            font-family="var(--f-mono)"
-            font-size="8.5"
-            font-weight="700"
-            letter-spacing="0.12em"
-            fill="var(--c-tomato)"
-          >{m.code}</text>
+        <g>
+          <circle cx={x} cy={axisY} r="4" fill="var(--tomato)" opacity="0.85" />
+          <text x={x} y={axisY - 12} text-anchor="middle" fill="var(--tomato)" font-family="var(--mono)" font-size="8.5" font-weight="700" letter-spacing="0.12em">{m.code}</text>
         </g>
       );
     })}
   </svg>
 </IMFigure>
-
-<style>
-  .rc { width: 100%; height: auto; display: block; }
-</style>

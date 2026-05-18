@@ -1,0 +1,204 @@
+---
+/**
+ * IMTable. 1:1 port of `table.data` from CIM/html/styles.css:1205-1276.
+ * Booktabs-style data table matching the IM print register.
+ *
+ * Usage:
+ *   <IMTable caption="..." columns={[{key,label,num}, ...]} rows={[...]} />
+ *
+ * For a row with the `total` flag, the row picks up the top + bottom rule
+ * and bold mahogany ink (IM total-row treatment). The `sub` flag muted
+ * row treatment. Cell-level: pass `{num: true}` for tabular-num right-align;
+ * pass a string with `<neg>...</neg>` to colour-flip to tomato.
+ */
+export interface Column {
+  key: string;
+  label: string;
+  num?: boolean;
+}
+
+export interface Row {
+  [key: string]: string | number | { value: string | number; neg?: boolean; tag?: boolean };
+  __kind?: 'data' | 'total' | 'sub';
+}
+
+interface Props {
+  caption?: string;
+  columns: Column[];
+  rows: Row[];
+  compact?: boolean;
+  source?: string;
+  basis?: string;
+}
+
+const { caption, columns, rows, compact, source, basis } = Astro.props as Props;
+
+function cellValue(cell: any): { value: string | number; neg?: boolean; tag?: boolean } {
+  if (cell && typeof cell === 'object' && 'value' in cell) return cell;
+  return { value: cell };
+}
+---
+<figure class={`imtable${compact ? ' imtable--compact' : ''}`}>
+  <table class={`data${compact ? ' compact' : ''}`}>
+    {caption && <caption>{caption}</caption>}
+    <thead>
+      <tr>
+        {columns.map((c) => (
+          <th class={c.num ? 'num' : undefined}>{c.label}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => {
+        const kind = row.__kind ?? 'data';
+        return (
+          <tr class={kind === 'total' ? 'total' : kind === 'sub' ? 'sub' : undefined}>
+            {columns.map((c) => {
+              const cell = cellValue((row as any)[c.key]);
+              const classes = [c.num ? 'num' : null].filter(Boolean).join(' ');
+              return (
+                <td class={classes || undefined}>
+                  {cell.tag
+                    ? <span class="tag">{cell.value}</span>
+                    : cell.neg
+                      ? <span class="neg">{cell.value}</span>
+                      : cell.value}
+                </td>
+              );
+            })}
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+  {(source || basis) && (
+    <figcaption class="imtable__foot">
+      {source && <><span class="imtable__k">Source</span><span>{source}</span></>}
+      {basis && <><span class="imtable__k">Basis</span><span>{basis}</span></>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .imtable {
+    margin: var(--s-5) 0;
+    --tab-ink: var(--c-mahogany);
+    --tab-muted: rgba(37, 0, 1, 0.66);
+    --tab-faint: rgba(37, 0, 1, 0.42);
+    --tab-rule: rgba(4, 47, 42, 0.18);
+    --tab-tomato: var(--c-tomato);
+    color: var(--tab-ink);
+  }
+  .imtable table.data {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .imtable table.data caption {
+    caption-side: top;
+    text-align: left;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tab-tomato);
+    font-weight: 700;
+    padding-bottom: var(--s-2);
+  }
+  .imtable table.data thead th {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--tab-ink);
+    text-align: left;
+    padding: var(--s-3) var(--s-3) var(--s-3) 0;
+    border-top: 1.5px solid var(--tab-ink);
+    border-bottom: 0.5px solid var(--tab-ink);
+    vertical-align: bottom;
+  }
+  .imtable table.data thead th.num { text-align: right; }
+  .imtable table.data tbody td {
+    padding: var(--s-2) var(--s-3) var(--s-2) 0;
+    border-bottom: 0.5px solid var(--tab-rule);
+    color: var(--tab-ink);
+    vertical-align: baseline;
+  }
+  .imtable table.data tbody td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .imtable table.data tbody tr.total td {
+    border-top: 0.5px solid var(--tab-ink);
+    border-bottom: 1.5px solid var(--tab-ink);
+    font-weight: 700;
+    color: var(--tab-ink);
+  }
+  .imtable table.data tbody tr.sub td {
+    color: var(--tab-muted);
+    font-size: calc(var(--fs-xs) * 1.05);
+  }
+  .imtable table.data .neg { color: var(--tab-tomato); }
+  .imtable table.data .tag {
+    font-size: var(--fs-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tab-muted);
+  }
+  .imtable table.data.compact thead th {
+    font-size: calc(var(--fs-xs) * 0.86);
+    padding: var(--s-2) var(--s-2) var(--s-1) 0;
+  }
+  .imtable table.data.compact tbody td {
+    padding: var(--s-1) var(--s-2) var(--s-1) 0;
+    font-size: calc(var(--fs-sm) * 0.95);
+    line-height: 1.22;
+  }
+  .imtable table.data.compact caption {
+    font-size: calc(var(--fs-xs) * 0.86);
+    padding-bottom: var(--s-1);
+  }
+  .imtable__foot {
+    border-top: 0.5px solid var(--tab-rule);
+    padding-top: var(--s-3);
+    margin-top: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: calc(var(--fs-xs) * 0.92);
+    line-height: 1.55;
+    color: var(--tab-muted);
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: var(--s-1) var(--s-3);
+    letter-spacing: 0.04em;
+  }
+  .imtable__k {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--tab-faint);
+    font-weight: 700;
+  }
+
+  /* On dark register, the IM table flips the ink to pearl. Surface-light
+     and page-light keep mahogany; bare dark surfaces use pearl. */
+  :global(.surface-light) .imtable,
+  :global(.surface-warm) .imtable,
+  :global(.page-light) .imtable { /* mahogany ink already set */ }
+  :global(:not(.surface-light):not(.surface-warm):not(.page-light)) > .imtable {
+    --tab-ink: var(--c-pearl);
+    --tab-muted: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+    --tab-faint: color-mix(in srgb, var(--c-pearl) 45%, transparent);
+    --tab-rule: color-mix(in srgb, var(--c-pearl) 22%, transparent);
+  }
+
+  @media (max-width: 720px) {
+    .imtable {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .imtable__foot { grid-template-columns: 3rem 1fr; }
+  }
+</style>

@@ -1,95 +1,72 @@
 ---
+/**
+ * RegulatoryAcceleration (WEB-D). 1:1 port of web_regulatory_timeline() in
+ * CIM/html/charts.py.
+ */
 import IMFigure from '../IMFigure.astro';
 
-interface Row {
-  title: string;
-  start: number;
-  end: number;
-  status: 'in_effect' | 'upcoming' | 'programme';
-}
+type Status = 'in-effect' | 'upcoming' | 'multi-year';
+interface Row { name: string; start: number; end: number; status: Status }
+interface Market { market: string; code: string; colour: string; rows: Row[] }
 
-interface MarketBlock {
-  market: string;
-  code: 'AU' | 'JP' | 'NZ' | 'SG';
-  rows: Row[];
-}
-
-const blocks: MarketBlock[] = [
-  {
-    market: 'Australia',
-    code: 'AU',
-    rows: [
-      { title: 'APRA CPS 230',         start: 2024.4, end: 2025.6, status: 'in_effect' },
-      { title: 'AEMO NEM Reform',       start: 2024.8, end: 2027.4, status: 'programme' },
-      { title: 'TGA ASDR',              start: 2024.8, end: 2026.4, status: 'in_effect' },
-      { title: 'TGA UDI (Class I)',     start: 2025.0, end: 2026.6, status: 'in_effect' },
-      { title: 'TGA UDI (Class III)',   start: 2026.8, end: 2027.6, status: 'upcoming' }
-    ]
-  },
-  {
-    market: 'Japan',
-    code: 'JP',
-    rows: [
-      { title: 'AI Promotion Act',          start: 2025.0, end: 2026.2, status: 'in_effect' },
-      { title: 'Building Standards Reform', start: 2025.4, end: 2026.6, status: 'in_effect' },
-      { title: 'GX-ETS Phase 2',            start: 2025.4, end: 2027.4, status: 'programme' },
-      { title: 'PMDA SaMD Framework',       start: 2025.4, end: 2027.4, status: 'programme' }
-    ]
-  },
-  {
-    market: 'New Zealand',
-    code: 'NZ',
-    rows: [
-      { title: 'Climate Disclosure Regime', start: 2024.0, end: 2025.6, status: 'in_effect' },
-      { title: 'AIP Visa Programme',        start: 2024.6, end: 2026.4, status: 'in_effect' },
-      { title: 'Therapeutic Products Act',  start: 2026.4, end: 2027.6, status: 'upcoming' }
-    ]
-  },
-  {
-    market: 'Singapore',
-    code: 'SG',
-    rows: [
-      { title: 'IMDA AI Governance',  start: 2025.0, end: 2026.2, status: 'in_effect' },
-      { title: 'HSA SaMD Guidance',   start: 2025.2, end: 2026.4, status: 'in_effect' },
-      { title: 'LTA AV Framework',    start: 2025.4, end: 2027.4, status: 'programme' },
-      { title: 'MAS AI Risk Mgmt',    start: 2025.4, end: 2026.6, status: 'in_effect' }
-    ]
-  }
+const markets: Market[] = [
+  { market: 'Australia', code: 'AU', colour: 'var(--tomato)', rows: [
+    { name: 'APRA CPS 230',         start: 2024.4, end: 2025.6, status: 'in-effect' },
+    { name: 'AEMO NEM Reform',      start: 2025.0, end: 2027.5, status: 'multi-year' },
+    { name: 'TGA ASDR',             start: 2025.0, end: 2026.3, status: 'in-effect' },
+    { name: 'TGA UDI (Class I)',    start: 2025.2, end: 2026.6, status: 'in-effect' },
+    { name: 'TGA UDI (Class III)',  start: 2026.5, end: 2027.4, status: 'upcoming' }
+  ]},
+  { market: 'Japan', code: 'JP', colour: '#B8863A', rows: [
+    { name: 'AI Promotion Act',          start: 2025.1, end: 2026.0, status: 'upcoming' },
+    { name: 'Building Standards Reform', start: 2025.4, end: 2026.6, status: 'upcoming' },
+    { name: 'GX-ETS Phase 2',            start: 2025.3, end: 2027.4, status: 'multi-year' },
+    { name: 'PMDA SaMD Framework',       start: 2025.4, end: 2027.4, status: 'multi-year' }
+  ]},
+  { market: 'New Zealand', code: 'NZ', colour: '#2E5F5A', rows: [
+    { name: 'Climate Disclosure Regime', start: 2024.0, end: 2025.6, status: 'in-effect' },
+    { name: 'AIP Visa Programme',        start: 2024.6, end: 2026.4, status: 'in-effect' },
+    { name: 'Therapeutic Products Act',  start: 2025.7, end: 2027.5, status: 'upcoming' }
+  ]},
+  { market: 'Singapore', code: 'SG', colour: '#5A7A6E', rows: [
+    { name: 'IMDA AI Governance', start: 2025.0, end: 2026.0, status: 'in-effect' },
+    { name: 'HSA SaMD Guidance',  start: 2025.0, end: 2026.2, status: 'in-effect' },
+    { name: 'LTA AV Framework',   start: 2025.4, end: 2027.5, status: 'multi-year' },
+    { name: 'MAS AI Risk Mgmt',   start: 2025.4, end: 2026.3, status: 'in-effect' }
+  ]}
 ];
 
 const W = 800;
-const H = 470;
-const ml = 110, mr = 50, mt = 30, mb = 60;
+const H = 380;
+const ml = 140, mr = 30, mt = 30, mb = 38;
 const iw = W - ml - mr;
 const ih = H - mt - mb;
+const yearMin = 2024.0;
+const yearMax = 2028.0;
+const sx = (yr: number) => ml + ((yr - yearMin) / (yearMax - yearMin)) * iw;
 
-const yearStart = 2024;
-const yearEnd = 2028;
-const xOf = (yr: number) => ml + ((yr - yearStart) / (yearEnd - yearStart)) * iw;
+const totalRows = markets.reduce((s, m) => s + m.rows.length, 0);
+const rowH = ih / Math.max(totalRows, 1);
+const barH = rowH * 0.55;
 
-const totalRows = blocks.reduce((acc, b) => acc + b.rows.length, 0);
-const rowH = ih / totalRows;
+const opOf = (s: Status) => s === 'in-effect' ? '0.78' : s === 'upcoming' ? '0.45' : '0.62';
 
-const marketColours: Record<string, { fill: string; fillEffect: string; ink: string }> = {
-  AU: { fill: 'var(--c-tomato)',          fillEffect: 'var(--c-tomato)',     ink: 'var(--c-tomato)' },
-  JP: { fill: '#C9A35F',                  fillEffect: '#C9A35F',             ink: '#C9A35F' },
-  NZ: { fill: '#5F8B7A',                  fillEffect: '#5F8B7A',             ink: '#5F8B7A' },
-  SG: { fill: '#7C9F8E',                  fillEffect: '#7C9F8E',             ink: '#7C9F8E' }
-};
-
-const nowYear = 2026.42;
-
-let rowIdx = 0;
-const renderRows = blocks.flatMap((b) => {
-  const start = rowIdx;
-  const rows = b.rows.map((r, i) => {
-    const y = mt + (rowIdx + 0.5) * rowH;
-    rowIdx++;
-    return { ...r, y, market: b.code };
-  });
-  const midY = mt + ((start + b.rows.length / 2) * rowH);
-  return [{ kind: 'label' as const, market: b.code, label: b.market, midY }, ...rows.map((r) => ({ kind: 'bar' as const, ...r }))];
+let cursor = mt;
+const blocks = markets.map((m) => {
+  const blockH = m.rows.length * rowH;
+  const midY = cursor + blockH / 2;
+  const start = cursor;
+  cursor += blockH;
+  const divider = cursor < mt + ih ? cursor : null;
+  return { ...m, blockH, midY, start, divider };
 });
+
+const nowX = sx(2026.4);
+const legend = [
+  { label: 'In effect',            op: '0.78' },
+  { label: 'Upcoming',             op: '0.45' },
+  { label: 'Multi-year programme', op: '0.62' }
+];
 ---
 <IMFigure
   fignum="WEB-D"
@@ -97,124 +74,59 @@ const renderRows = blocks.flatMap((b) => {
   title='Thirty-four in-flight regulations across the four markets. <em>Peak density 2026 to 2027.</em>'
   sub="Major regulatory events across Australia, Japan, New Zealand, and Singapore. The build is structural, not cyclical. Each market hardens the regulated-sector barrier on a different clock."
   metrics={[
-    { label: 'MARKETS', value: 'AU · JP · NZ · SG', ci: 'Four-market mandate' },
-    { label: 'IN-FLIGHT', value: '34', ci: '2024 to 2030 window', accent: true },
-    { label: 'PEAK YEAR', value: '2026', ci: 'Density peak' },
-    { label: 'DATASET', value: '174', ci: 'Four-market regulations' }
+    { label: 'MARKETS',  value: 'AU · JP · NZ · SG', ci: 'Four-market mandate' },
+    { label: 'IN-FLIGHT', value: '34',               ci: '2024 to 2030 window', accent: true },
+    { label: 'PEAK YEAR', value: '2026',             ci: 'Density peak' },
+    { label: 'DATASET',   value: '174',              ci: 'Four-market regulations' }
   ]}
   source="APRA · TGA · METI · MLIT · MAS · MOH · LTA · Medsafe · NZ official publications (2025-2028)"
   basis="Major regulatory events · 4-market dataset · Generated from hmm Comprehensive Regulatory Dataset"
 >
   <svg
-    class="ra"
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="xMidYMid meet"
+    style="width:100%;height:auto;display:block;"
     role="img"
-    aria-label="Gantt of major regulatory events across Australia, Japan, New Zealand, and Singapore from 2024 to 2028, peak density 2026 to 2027."
+    aria-label="Regulatory timeline 2024 to 2028 across Australia, Japan, New Zealand, and Singapore. 34 in-flight regulations, peak density 2026 to 2027."
   >
-    {/* Year gridlines */}
-    {[2024, 2025, 2026, 2027, 2028].map((y) => (
-      <g class="ra__grid">
-        <line
-          x1={xOf(y)} y1={mt}
-          x2={xOf(y)} y2={mt + ih}
-          stroke="var(--imfig-rule)"
-          stroke-width="0.6"
-          stroke-dasharray="1 3"
-        />
-        <text
-          x={xOf(y)}
-          y={mt + ih + 18}
-          text-anchor="middle"
-          fill="var(--imfig-muted)"
-          font-family="var(--f-mono)"
-          font-size="9"
-          letter-spacing="0.04em"
-        >{y}</text>
+    {[2024, 2025, 2026, 2027, 2028].map((yr) => (
+      <g>
+        <line x1={sx(yr)} y1={mt} x2={sx(yr)} y2={mt + ih} stroke="var(--rule)" stroke-width="0.4" stroke-dasharray="1 2" />
+        <text x={sx(yr)} y={mt + ih + 18} text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="8">{yr}</text>
       </g>
     ))}
 
-    {/* NOW vertical */}
-    <g class="ra__now">
-      <line
-        x1={xOf(nowYear)} y1={mt - 4}
-        x2={xOf(nowYear)} y2={mt + ih + 4}
-        stroke="var(--c-tomato)"
-        stroke-width="1"
-        stroke-dasharray="3 3"
-      />
-      <text
-        x={xOf(nowYear)}
-        y={mt - 8}
-        text-anchor="middle"
-        fill="var(--c-tomato)"
-        font-family="var(--f-mono)"
-        font-size="8"
-        font-weight="700"
-        letter-spacing="0.16em"
-      >NOW</text>
-    </g>
+    <line x1={nowX} y1={mt - 4} x2={nowX} y2={mt + ih + 4} stroke="var(--tomato)" stroke-width="0.9" stroke-dasharray="3 3" />
+    <text x={nowX} y={mt - 8} text-anchor="middle" fill="var(--tomato)" font-family="var(--mono)" font-size="7" font-weight="700" letter-spacing="0.16em">NOW</text>
 
-    {/* Market labels + bars */}
-    {renderRows.map((r) => {
-      if (r.kind === 'label') {
-        const col = marketColours[r.market].ink;
-        return (
-          <text
-            x={ml - 14}
-            y={r.midY + 3}
-            text-anchor="end"
-            fill={col}
-            font-family="var(--f-display)"
-            font-style="italic"
-            font-size="11"
-            font-weight="600"
-          >{r.label}</text>
-        );
-      }
-      const palette = marketColours[r.market];
-      const x = xOf(r.start);
-      const w = Math.max(xOf(r.end) - xOf(r.start), 6);
-      const barH = rowH * 0.62;
-      const yBar = r.y - barH / 2;
-      const opacity = r.status === 'upcoming' ? 0.45 : r.status === 'programme' ? 0.78 : 0.88;
+    {blocks.map((m) => (
+      <g>
+        <text x={ml - 12} y={m.midY + 3} text-anchor="end" fill={m.colour} font-family="var(--mono)" font-size="9" font-weight="700">{m.market}</text>
+        {m.rows.map((row, i) => {
+          const y = m.start + i * rowH + rowH / 2;
+          const x1 = sx(row.start);
+          const x2 = sx(row.end);
+          return (
+            <g>
+              <rect x={x1} y={y - barH / 2} width={x2 - x1} height={barH} fill={m.colour} opacity={opOf(row.status)} rx="1.5" />
+              <text x={x1 + 6} y={y + 2.5} fill="var(--paper)" font-family="var(--mono)" font-size="7" font-weight="600">{row.name}</text>
+            </g>
+          );
+        })}
+        {m.divider !== null && (
+          <line x1={ml - 30} y1={m.divider} x2={ml + iw} y2={m.divider} stroke="var(--rule)" stroke-width="0.3" />
+        )}
+      </g>
+    ))}
+
+    {legend.map((l, i) => {
+      const cursorX = ml + i * (14 + l.label.length * 4.6 + 16);
       return (
-        <g class="ra__bar">
-          <rect
-            x={x} y={yBar}
-            width={w} height={barH}
-            fill={palette.fill}
-            opacity={opacity}
-            rx="1"
-          />
-          <text
-            x={x + 6}
-            y={r.y + 3}
-            fill="var(--c-pearl)"
-            font-family="var(--f-mono)"
-            font-size="7.5"
-            font-weight="600"
-            letter-spacing="0.02em"
-          >{r.title}</text>
+        <g>
+          <rect x={cursorX} y={H - 15} width="10" height="6" fill="var(--mahogany)" opacity={l.op} />
+          <text x={cursorX + 14} y={H - 9} fill="var(--muted)" font-family="var(--mono)" font-size="7">{l.label}</text>
         </g>
       );
     })}
-
-    {/* Axis baseline */}
-    <line x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih} stroke="var(--c-mahogany)" stroke-width="0.6" />
-
-    {/* Legend */}
-    <g transform={`translate(${ml}, ${H - 14})`}>
-      <rect x="0" y="-6" width="10" height="8" fill="var(--c-mahogany)" opacity="0.88" />
-      <text x="14" y="2" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5" letter-spacing="0.06em">In effect</text>
-      <rect x="86" y="-6" width="10" height="8" fill="var(--c-mahogany)" opacity="0.45" />
-      <text x="100" y="2" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5" letter-spacing="0.06em">Upcoming</text>
-      <rect x="180" y="-6" width="10" height="8" fill="var(--c-mahogany)" opacity="0.78" />
-      <text x="194" y="2" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5" letter-spacing="0.06em">Multi-year programme</text>
-    </g>
   </svg>
 </IMFigure>
-
-<style>
-  .ra { width: 100%; height: auto; display: block; }
-</style>

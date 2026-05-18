@@ -1,242 +1,83 @@
 ---
 /**
- * ScrollyClassifierFunnel. Static funnel: 22,217 → 19,416 → 6,505 → 2,625.
- * Renders inside IMFigure chrome to match the WEB-D quality bar.
+ * ClassifiedFunnel (WEB-E). 1:1 port of web_classified_funnel() in
+ * CIM/html/charts.py. True trapezoid funnel.
+ *
+ * The file name stays ScrollyClassifierFunnel.astro for import compatibility;
+ * the scrolly mode was removed in the prior cleanup.
  */
 interface Props { inline?: boolean }
 const _props = Astro.props as Props;
 void _props;
 
 import IMFigure from '../IMFigure.astro';
-import necessity from '../../data/necessity-index.json';
 
-const totalCompanies = necessity.universe.total_companies;
-const fourMarketCount = necessity.universe.four_market_companies;
-const inThesis = necessity.tier_shares.conservative_classifier_count;
-const seedCount = necessity.stage_funnel[2].count;
-
-interface Stage {
-  idx: string;
-  count: number;
-  pct: string;
-  delta: string;
-  label: string;
-  annotation: string;
-}
-
-const stages: Stage[] = [
-  {
-    idx: '01',
-    count: totalCompanies,
-    pct: '100.0%',
-    delta: '—',
-    label: 'The APAC universe.',
-    annotation: 'Every APAC technology company in the classifier. Enriched from licensed commercial feeds. Product description, registry, and hiring signals.'
-  },
-  {
-    idx: '02',
-    count: fourMarketCount,
-    pct: ((fourMarketCount / totalCompanies) * 100).toFixed(1) + '%',
-    delta: '−' + (totalCompanies - fourMarketCount).toLocaleString('en-GB'),
-    label: 'Four-market filter.',
-    annotation: 'Australia, Japan, New Zealand, Singapore only. The mandate scope. The addressable base for every claim that follows.'
-  },
-  {
-    idx: '03',
-    count: inThesis,
-    pct: necessity.tier_shares.conservative_classifier_pct + '%',
-    delta: '−' + (fourMarketCount - inThesis).toLocaleString('en-GB'),
-    label: 'T1 / T2 screen.',
-    annotation: 'Conservative classifier applies the licence-or-compulsion test. T1: cannot legally ship without approval. T2: buyer is statutorily required to source compliant.'
-  },
-  {
-    idx: '04',
-    count: seedCount,
-    pct: necessity.stage_funnel[2].share_pct + '%',
-    delta: '−' + (inThesis - seedCount).toLocaleString('en-GB'),
-    label: 'Seed-stage cohort.',
-    annotation: 'Companies priced at seed. The live pipeline base. The addressable universe the fund draws from across the Crystallisation Window.'
-  }
+const steps = [
+  { label: 'Global universe',          count: 22217, ci: 'Crunchbase + Dealroom four-market base' },
+  { label: 'Four-market companies',    count: 19416, ci: 'Geographic filter applied' },
+  { label: 'In thesis (T1 + T2)',      count: 6505,  ci: 'Conservative classifier · 33.5%' },
+  { label: 'Seed-stage in thesis',     count: 2625,  ci: 'Stage filter · 13.5% of four-market' }
 ];
 
 const W = 800;
-const H = 360;
-const ml = 30, mr = 30, mt = 28, mb = 28;
+const H = 320;
+const ml = 180, mr = 220, mt = 30, mb = 30;
 const iw = W - ml - mr;
 const ih = H - mt - mb;
-const cx = W / 2;
-const rowH = ih / stages.length;
+const maxCount = steps[0].count;
+const n = steps.length;
+const rowH = ih / n;
 const gap = 6;
+const cx = ml + iw / 2;
 
-const maxCount = Math.max(...stages.map((s) => s.count));
-const minWidthPct = 0.10;
-const scale = (c: number) => Math.max(Math.sqrt(c / maxCount), minWidthPct);
-
-const rows = stages.map((s, i) => {
-  const topW = scale(s.count) * iw;
-  const nextScale = i + 1 < stages.length ? scale(stages[i + 1].count) : scale(s.count) * 0.88;
-  const botW = nextScale * iw;
+const rows = steps.map((s, i) => {
+  const isTerminal = i === n - 1;
+  const isThesis = i === n - 2;
+  const col = (isTerminal || isThesis) ? 'var(--tomato)' : 'var(--dark-teal)';
+  const op = isTerminal ? '0.85' : isThesis ? '0.55' : '0.30';
+  const topW = (s.count / maxCount) * iw;
+  const nextCount = i + 1 < n ? steps[i + 1].count : s.count * 0.7;
+  const botW = i + 1 < n ? (nextCount / maxCount) * iw : topW * 0.92;
   const y0 = mt + i * rowH + gap / 2;
   const y1 = mt + (i + 1) * rowH - gap / 2;
-  const labelY = (y0 + y1) / 2;
-  return {
-    ...s,
-    points: [
-      `${(cx - topW / 2).toFixed(1)},${y0.toFixed(1)}`,
-      `${(cx + topW / 2).toFixed(1)},${y0.toFixed(1)}`,
-      `${(cx + botW / 2).toFixed(1)},${y1.toFixed(1)}`,
-      `${(cx - botW / 2).toFixed(1)},${y1.toFixed(1)}`
-    ].join(' '),
-    labelY,
-    topW,
-    botW
-  };
+  const xtl = cx - topW / 2;
+  const xtr = cx + topW / 2;
+  const xbl = cx - botW / 2;
+  const xbr = cx + botW / 2;
+  const labelY = (y0 + y1) / 2 + 3;
+  const weight = (isTerminal || isThesis) ? '700' : '500';
+  const textCol = (isTerminal || isThesis) ? 'var(--tomato)' : 'var(--ink)';
+  return { ...s, isTerminal, isThesis, col, op, weight, textCol, points: `${xtl.toFixed(1)},${y0.toFixed(1)} ${xtr.toFixed(1)},${y0.toFixed(1)} ${xbr.toFixed(1)},${y1.toFixed(1)} ${xbl.toFixed(1)},${y1.toFixed(1)}`, labelY };
 });
 ---
 <IMFigure
   fignum="WEB-E"
-  label="Classifier funnel · Universe to in-thesis seed cohort"
-  title={`From <em>${totalCompanies.toLocaleString('en-GB')}</em> to <em>${seedCount.toLocaleString('en-GB')}.</em> Four mechanical filters.`}
-  sub="The classifier narrows the APAC universe to the seed-stage cohort the fund draws from. Each stage is a documented filter against the public reference dataset."
+  label="Classified universe · Four-step funnel"
+  title='From 22,217 global companies to <em>2,625</em> seed-stage in-thesis targets.'
+  sub="Geographic filter narrows to four-market base. Conservative classifier applies the T1/T2 test. Stage filter isolates seed-priced rounds."
   metrics={[
-    { label: '01 · UNIVERSE',        value: totalCompanies.toLocaleString('en-GB'),  ci: 'APAC technology base' },
-    { label: '02 · FOUR-MARKET',     value: fourMarketCount.toLocaleString('en-GB'), ci: 'AU · JP · NZ · SG' },
-    { label: '03 · IN-THESIS',       value: inThesis.toLocaleString('en-GB'),        ci: 'T1 / T2 screen' },
-    { label: '04 · SEED COHORT',     value: seedCount.toLocaleString('en-GB'),       ci: 'Live pipeline base', accent: true }
+    { label: 'GLOBAL UNIVERSE', value: '22,217', ci: 'Pre-filter base' },
+    { label: 'FOUR-MARKET',     value: '19,416', ci: 'Geographic filter' },
+    { label: 'IN THESIS',       value: '6,505',  ci: 'T1 + T2 · 33.5%' },
+    { label: 'SEED-STAGE',      value: '2,625',  ci: 'Pipeline base', accent: true }
   ]}
   source="hmm Ventures Comprehensive Classified Dataset"
-  basis="Mechanical filters · Conservative T1 / T2 classifier · Four-market base"
+  basis="Four-step funnel · Crunchbase + Dealroom four-market base"
 >
   <svg
-    class="scf__svg"
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="xMidYMid meet"
+    style="width:100%;height:auto;display:block;"
     role="img"
-    aria-label={`Classifier funnel: ${stages.map((s) => `${s.label} ${s.count.toLocaleString('en-GB')}`).join('; ')}.`}
+    aria-label="Classification funnel: 22,217 global companies narrow to 2,625 seed-stage four-market in-thesis targets."
   >
-    {rows.map((r, i) => {
-      const isLast = i === rows.length - 1;
-      const fill = isLast ? 'var(--c-tomato)' : 'var(--c-mahogany)';
-      const op = isLast ? 0.88 : 0.18 + i * 0.10;
-      const inkOnBar = isLast ? 'var(--c-pearl)' : 'var(--c-mahogany)';
-      return (
-        <g class="scf__row">
-          {/* Stage label left */}
-          <text
-            x={ml + 6}
-            y={r.labelY - 2}
-            fill="var(--imfig-muted)"
-            font-family="var(--f-mono)"
-            font-size="8"
-            font-weight="700"
-            letter-spacing="0.14em"
-          >{r.idx}</text>
-          <text
-            x={ml + 6}
-            y={r.labelY + 12}
-            fill="var(--c-mahogany)"
-            font-family="var(--f-display)"
-            font-style="italic"
-            font-size="11"
-          >{r.label}</text>
-
-          {/* Trapezoid */}
-          <polygon
-            points={r.points}
-            fill={fill}
-            opacity={op}
-            stroke={isLast ? 'var(--c-tomato)' : 'var(--c-mahogany)'}
-            stroke-opacity={isLast ? 1 : 0.4}
-            stroke-width="0.8"
-          />
-
-          {/* Count + share inside */}
-          <text
-            x={cx}
-            y={r.labelY + 1}
-            text-anchor="middle"
-            fill={inkOnBar}
-            font-family="var(--f-display)"
-            font-size="18"
-            font-weight={isLast ? 600 : 500}
-          >{r.count.toLocaleString('en-GB')}</text>
-          <text
-            x={cx}
-            y={r.labelY + 16}
-            text-anchor="middle"
-            fill={inkOnBar}
-            font-family="var(--f-mono)"
-            font-size="8"
-            letter-spacing="0.1em"
-            opacity={isLast ? 0.9 : 0.7}
-          >{r.pct}</text>
-
-          {/* Delta right */}
-          <text
-            x={W - mr - 6}
-            y={r.labelY - 2}
-            text-anchor="end"
-            fill="var(--imfig-muted)"
-            font-family="var(--f-mono)"
-            font-size="8"
-            letter-spacing="0.1em"
-          >DELTA</text>
-          <text
-            x={W - mr - 6}
-            y={r.labelY + 12}
-            text-anchor="end"
-            fill={r.delta === '—' ? 'var(--imfig-faint)' : 'var(--c-tomato)'}
-            font-family="var(--f-mono)"
-            font-size="10"
-            font-weight="600"
-          >{r.delta}</text>
-        </g>
-      );
-    })}
-  </svg>
-
-  <ol class="scf__notes" role="list">
-    {stages.map((s) => (
-      <li class="scf__note">
-        <span class="scf__note-idx">{s.idx}</span>
-        <p class="scf__note-text">{s.annotation}</p>
-      </li>
+    {rows.map((r) => (
+      <g>
+        <polygon points={r.points} fill={r.col} opacity={r.op} stroke={r.col} stroke-width="0.6" stroke-opacity="0.6" />
+        <text x={ml - 16} y={r.labelY} text-anchor="end" fill="var(--ink)" font-family="var(--mono)" font-size="9" font-weight="600">{r.label}</text>
+        <text x={ml + iw + 16} y={r.labelY - 3} fill={r.textCol} font-family="var(--mono)" font-size="12" font-weight={r.weight}>{r.count.toLocaleString('en-GB')}</text>
+        <text x={ml + iw + 16} y={r.labelY + 11} fill="var(--muted)" font-family="var(--mono)" font-size="7" letter-spacing="0.04em">{r.ci}</text>
+      </g>
     ))}
-  </ol>
+  </svg>
 </IMFigure>
-
-<style>
-  .scf__svg { width: 100%; height: auto; display: block; }
-
-  .scf__notes {
-    list-style: none;
-    margin: var(--s-4) 0 0;
-    padding: var(--s-4) 0 0;
-    border-top: 1px solid var(--imfig-rule);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--s-3) var(--s-4);
-  }
-  @media (max-width: 720px) {
-    .scf__notes { grid-template-columns: repeat(2, 1fr); }
-  }
-  .scf__note {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-  }
-  .scf__note-idx {
-    font-family: var(--f-mono);
-    font-size: calc(var(--fs-xs) * 0.92);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: var(--c-tomato);
-  }
-  .scf__note-text {
-    font-family: var(--f-body);
-    font-size: calc(var(--fs-sm) * 0.95);
-    line-height: 1.5;
-    color: var(--imfig-muted);
-    margin: 0;
-  }
-</style>
