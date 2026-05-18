@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro';
+import ChartFrame from '../../components/ChartFrame.astro';
+import PremiumBar from '../../components/charts/PremiumBar.astro';
+import SmallMultiples from '../../components/charts/SmallMultiples.astro';
+import ExitsUnitStrip from '../../components/ExitsUnitStrip.astro';
+import CTARail from '../../components/CTARail.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import necessityData from '../../data/necessity-index.json';
+import exitsData from '../../data/exits-named.json';
+
+const p = necessityData.premiums;
+const countByMarket = (exitsData.exits as any[]).reduce<Record<string, number>>((acc, e) => {
+  acc[e.market] = (acc[e.market] ?? 0) + 1;
+  return acc;
+}, {});
+
+const totalExits = (exitsData.exits as any[]).length;
+---
+<Base
+  title="The results"
+  description="Round-size premiums by stage. Exit incidence by tier. Named acquirer deals across the four markets."
+>
+  <header class="rsl-hero">
+    <div class="container">
+      <Breadcrumb
+        crumbs={[
+          { label: 'hmm', href: '/' },
+          { label: 'Research', href: '/research/' },
+          { label: 'Results' },
+        ]}
+      />
+      <p class="kicker rsl-hero__kicker">The results</p>
+      <h1 class="rsl-hero__title">Enter at parity. Exit at premium.</h1>
+      <p class="rsl-hero__sub">
+        Companies that pass the filter raise more at each round, graduate at a higher rate, and exit at a multiple of the unregulated cohort.
+      </p>
+    </div>
+  </header>
+
+  <section class="container rsl-premiums">
+    <ChartFrame
+      kicker="Round-size premium"
+      title="T1 companies raise larger rounds at every stage."
+      caption="Round-size premium relative to the unregulated cohort. Seed near parity; the gap widens by Series C."
+      source="Source. hmm Ventures four-market dataset."
+    >
+      <SmallMultiples cols={4}>
+        <PremiumBar label="Seed" value={p.round_size_seed} />
+        <PremiumBar label="Series A" value={p.round_size_series_a} />
+        <PremiumBar label="Series C" value={p.round_size_series_c} />
+        <PremiumBar label="Series D+" value={p.round_size_series_d_plus} />
+      </SmallMultiples>
+    </ChartFrame>
+  </section>
+
+  <section class="container rsl-exit">
+    <ChartFrame
+      kicker="Exit incidence"
+      title="T1 exits at 2.22x the unregulated rate."
+      caption={`Exit incidence: regulated cohort ${p.regulated_exit_rate_pct}% vs unregulated ${p.unregulated_exit_rate_pct}%. Multiple of ${p.exit_rate_multiple}x.`}
+      source="Source. hmm Ventures four-market dataset."
+    >
+      <SmallMultiples cols={1}>
+        <PremiumBar label="Exit rate, T1 vs unregulated" value={p.exit_rate_multiple} max={3} />
+      </SmallMultiples>
+    </ChartFrame>
+  </section>
+
+  <section class="container rsl-exits">
+    <ChartFrame
+      kicker="Named acquirer deals"
+      title="Strategic acquirers are already buying."
+      caption={`${totalExits} named developed-APAC regulated-company acquisitions, primary-source verified. Hero marks are T1 acquisitions.`}
+      source="Source. hmm Ventures exit dataset."
+    >
+      <ExitsUnitStrip />
+    </ChartFrame>
+    <p class="rsl-exits__note">
+      Coverage today: AUS {countByMarket['AU'] ?? 0}. NZL {countByMarket['NZ'] ?? 0}. JPN {countByMarket['JP'] ?? 0}. SGP {countByMarket['SG'] ?? 0}. Coverage expands as compliant cohorts mature 2026 to 2028.
+    </p>
+  </section>
+
+  <CTARail />
+</Base>
+
+<style>
+  .rsl-hero {
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    padding-block: var(--s-8) var(--s-6);
+  }
+  .rsl-hero__kicker { color: var(--c-tomato); margin: var(--s-3) 0 0; }
+  .rsl-hero__title {
+    font-family: var(--f-display);
+    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: var(--s-3) 0 var(--s-4);
+    font-weight: 400;
+    max-width: 22ch;
+  }
+  .rsl-hero__sub {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .rsl-premiums { padding-block: var(--s-7); }
+  .rsl-exit { padding-block: var(--s-6); max-width: 50rem; }
+  .rsl-exits {
+    padding-block: var(--s-7) var(--s-8);
+  }
+  .rsl-exits__note {
+    margin-block-start: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-faint);
+  }
+</style>
