@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import CTARail from '../../components/CTARail.astro';
 import { buildContactMailto } from '../../utils/mailto.ts';
 
 const operators = [
@@ -7,20 +8,20 @@ const operators = [
     idx: '01',
     name: 'Skalata Ventures',
     detail: 'Hired to take an organisation transitioning from non-profit accelerator to seed fund and build its outbound sourcing capability and national footprint. Inside one year, proprietary deal-flow networks across universities, accelerators, and co-working spaces in every Australian state, from Hobart and the Sunshine Coast to Sydney and Melbourne. Founders who, when he met them, did not realise the problem they were solving was global. Twelve months later they were hiring in Colorado after closing their largest contract. The period where the founding observation of hmm became unignorable: regulated-industry companies in developed APAC are systematically capital-scarce at seed relative to their eventual defensibility.',
-    bridge: 'This is the sourcing engine the fund is built on.'
+    bridge: 'This is the sourcing engine the fund is built on.',
   },
   {
     idx: '02',
     name: 'Paddle',
     detail: 'Joined ahead of the Series B in December 2017 at under 30 people. Stayed four years through to the $1.4B Series D. Team-of-one on whichever zero-to-one initiative the company needed: product validation, revenue building, post-sales function design, the APAC market build. By exit, APAC was around 20% of company revenue with China the primary contributor. Conventional advice on China was clear: do not expand without local presence, a Chinese-speaking team, or a playbook. The business had a single Chinese speaker, no local entity, and no playbook. Consensus said no. Wahid built the market anyway. Inside 12 months China was the third-largest revenue contributor to the entire company.',
-    bridge: 'Same posture, same evidence-over-consensus discipline, applied to fund deployment.'
+    bridge: 'Same posture, same evidence-over-consensus discipline, applied to fund deployment.',
   },
   {
     idx: '03',
     name: 'GoodFit',
     detail: 'VP Revenue from a founder-led, high-churn starting point through to Series A readiness. 5x revenue growth. First enterprise agreements. Operations, marketing, customer success, and sales built from scratch. $13M Series A led by Notion Capital, September 2025. The classifier methodology powering Layers 1 and 2 of hmm\'s sourcing engine was built and validated over four years inside GoodFit, now rebuilt against a regulated-T1/T2 ICP.',
-    bridge: 'This is the classifier infrastructure that surfaces companies before they pitch any investor.'
-  }
+    bridge: 'This is the classifier infrastructure that surfaces companies before they pitch any investor.',
+  },
 ];
 
 const gpBackgroundMailto = buildContactMailto('GP background');
@@ -29,10 +30,16 @@ const gpBackgroundMailto = buildContactMailto('GP background');
   title="The GP"
   description="hmm Ventures is Wahid Tashkandi, Founding GP. Cross-border operator. Seed-stage capital in developed APAC."
 >
+  <header class="ab-hero">
+    <div class="container">
+      <p class="kicker ab-hero__kicker">The GP</p>
+      <h1 class="ab-hero__title">Wahid Tashkandi</h1>
+      <p class="ab-hero__subline">Founding GP. hmm Ventures.</p>
+    </div>
+  </header>
+
   <section class="ab container">
     <header class="ab__head">
-      <h1 class="ab__title gavel-drop">Wahid Tashkandi</h1>
-      <p class="ab__subline">Founding GP · hmm Ventures</p>
       <p class="ab__lede">
         At an early age, his father, an anaesthetist, showed him how health systems reach past the patient to the family in the corridor, the team in theatre, and the people walking down the street. A school trip to Zealandia, the Wellington wildlife sanctuary held inside the world's first predator-proof fence, sparked a lifelong curiosity for how any system actually works. Every move since fed it: Sydney to Wellington as a child; Jeddah, Melbourne, and London as an operator; work reaching Shenzhen, Taipei, Chengdu, Kyiv, Barcelona, New York, the Bay Area, Montreal, Mexico City, South Africa, and beyond.
       </p>
@@ -45,13 +52,14 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     </header>
 
     <section class="ab__sec">
-      <h2 class="ab__sec-title gavel-drop">Why this GP, why this thesis.</h2>
+      <p class="kicker ab__sec-kicker">Why this GP, why this thesis</p>
+      <h2 class="ab__sec-title">A decade of work across three operating roles.</h2>
       <p class="ab__sec-lede">
-        A decade of work across three operating roles. Each maps onto a problem the fund has to solve.
+        Each maps onto a problem the fund has to solve.
       </p>
-      <ol class="ab__list motion-group" role="list">
-        {operators.map((op, i) => (
-          <li class="ab__card surface-warm stagger-row" data-i={i}>
+      <ol class="ab__list" role="list">
+        {operators.map((op) => (
+          <li class="ab__card">
             <header class="ab__card-head">
               <span class="ab__card-idx">[{op.idx}]</span>
             </header>
@@ -65,54 +73,64 @@ const gpBackgroundMailto = buildContactMailto('GP background');
 
     <footer class="ab__foot">
       <p class="ab__foot-line">
-        GP background, references, anything not in the IM: <a href={gpBackgroundMailto}>wt@hmm.ventures</a>
+        GP background, references, anything not in the IM. <a href={gpBackgroundMailto}>wt@hmm.ventures</a>
       </p>
     </footer>
   </section>
+
+  <CTARail />
 </Base>
 
 <style>
-  .ab { padding-block: var(--s-8) var(--s-9); max-width: 64rem; }
+  .ab-hero {
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    padding-block: var(--s-8) var(--s-6);
+  }
+  .ab-hero__kicker { color: var(--c-tomato); margin: 0; }
+  .ab-hero__title {
+    font-family: var(--f-display);
+    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: var(--s-3) 0 var(--s-3);
+    font-weight: 400;
+  }
+  .ab-hero__subline {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+    margin: 0;
+  }
 
+  .ab { padding-block: var(--s-7) var(--s-8); max-width: 64rem; }
   .ab__head {
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
     margin-block-end: var(--s-7);
-    padding-block-end: var(--s-5);
-    border-bottom: 1px solid var(--rule);
-  }
-  .ab__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-3xl);
-    line-height: var(--lh-tight);
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-  .ab__subline {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--fg-soft);
-    margin: 0;
+    padding-block-end: var(--s-6);
+    border-bottom: var(--hair) solid var(--hair-color);
   }
   .ab__lede {
     font-family: var(--f-body);
     font-size: var(--fs-md);
     line-height: var(--lh-body);
     color: var(--fg);
-    max-width: 60ch;
-    margin: var(--s-4) 0 0;
+    max-width: 64ch;
+    margin: 0;
   }
-  .ab__lede + .ab__lede { margin-top: var(--s-3); }
 
-  .ab__sec { margin-block-start: var(--s-8); }
+  .ab__sec { margin-block-start: var(--s-7); }
+  .ab__sec-kicker { color: var(--c-tomato); margin: 0; }
   .ab__sec-title {
     font-family: var(--f-display);
     font-size: var(--fs-2xl);
     line-height: var(--lh-tight);
-    margin: 0 0 var(--s-3);
+    margin: var(--s-3) 0 var(--s-3);
+    letter-spacing: -0.01em;
   }
   .ab__sec-lede {
     font-family: var(--f-display);
@@ -120,7 +138,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     line-height: var(--lh-snug);
     color: var(--fg-soft);
     max-width: 56ch;
-    margin: 0 0 var(--s-5);
+    margin: 0 0 var(--s-6);
   }
 
   .ab__list {
@@ -129,18 +147,22 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     margin: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--s-4);
-  }
-  @media (max-width: 900px) {
-    .ab__list { grid-template-columns: 1fr; }
+    gap: 0;
+    border-top: var(--hair) solid var(--hair-color);
+    border-bottom: var(--hair) solid var(--hair-color);
   }
   .ab__card {
-    background: var(--bg-warm);
     padding: var(--s-5);
-    border-left: 3px solid var(--c-tomato);
+    border-left: var(--hair) solid var(--hair-color);
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
+  }
+  .ab__card:first-child { border-left: 0; }
+  @media (max-width: 900px) {
+    .ab__list { grid-template-columns: 1fr; }
+    .ab__card { border-left: 0; border-top: var(--hair) solid var(--hair-color); }
+    .ab__card:first-child { border-top: 0; }
   }
   .ab__card-head {
     display: flex;
@@ -151,12 +173,13 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     text-transform: uppercase;
     letter-spacing: 0.14em;
   }
-  .ab__card-idx { color: var(--c-tomato); font-weight: 600; }
+  .ab__card-idx { color: var(--hero); }
   .ab__card-name {
     font-family: var(--f-display);
     font-size: var(--fs-xl);
     line-height: var(--lh-tight);
     margin: 0;
+    color: var(--fg);
   }
   .ab__card-detail {
     font-family: var(--f-body);
@@ -170,17 +193,17 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--c-tomato);
+    color: var(--hero);
     margin: var(--s-2) 0 0;
     padding-block-start: var(--s-3);
-    border-top: 1px dashed var(--rule);
+    border-top: var(--hair) solid var(--hair-color);
     line-height: 1.4;
   }
 
   .ab__foot {
     margin-block-start: var(--s-7);
     padding-block-start: var(--s-5);
-    border-top: 1px solid var(--rule);
+    border-top: var(--hair) solid var(--hair-color);
   }
   .ab__foot-line {
     font-family: var(--f-mono);
@@ -191,7 +214,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     margin: 0;
   }
   .ab__foot-line a {
-    color: var(--c-tomato);
+    color: var(--hero);
     text-decoration: none;
     border-bottom: 1px solid currentColor;
     padding-bottom: 1px;
