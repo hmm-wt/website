@@ -1,56 +1,68 @@
 ---
 import Base from '../../layouts/Base.astro';
-import NecessityPanelTeaser from '../../components/NecessityPanelTeaser.astro';
 import NecessityMark from '../../components/NecessityMark.astro';
 import CTARail from '../../components/CTARail.astro';
+import necessityData from '../../data/necessity-index.json';
 
-const necessities = [
+interface Necessity {
+  slug: string;
+  name: string;
+  shortName: string;
+  necessityKey: string;
+  markKind: 'food' | 'biomedical' | 'power' | 'autonomous' | 'materials';
+  oneLine: string;
+}
+
+const necessities: Necessity[] = [
   {
     slug: 'heal',
     name: 'Biomedical Systems',
     shortName: 'Heal',
     necessityKey: 'Biomedical Systems',
-    markKind: 'biomedical' as const,
-    inThesis: 1269,
-    claim: 'Clinical software, diagnostics, AI-assisted decisions. Cannot ship without regulator clearance.',
+    markKind: 'biomedical',
+    oneLine: 'Clinical software, diagnostics, AI-assisted decisions.',
   },
   {
     slug: 'power',
     name: 'Power Systems',
     shortName: 'Power',
     necessityKey: 'Power Systems',
-    markKind: 'power' as const,
-    inThesis: 581,
-    claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
+    markKind: 'power',
+    oneLine: 'Grid orchestration, storage, EV charging, distributed energy.',
   },
   {
     slug: 'move',
     name: 'Autonomous Systems',
     shortName: 'Move',
     necessityKey: 'Autonomous Systems',
-    markKind: 'autonomous' as const,
-    inThesis: 561,
-    claim: 'Road, logistics, public-path, maritime, aviation. Cannot operate without licence.',
+    markKind: 'autonomous',
+    oneLine: 'Road, logistics, public-path, maritime, aviation.',
   },
   {
     slug: 'supply',
     name: 'Critical Materials and Supply Integrity',
     shortName: 'Supply',
     necessityKey: 'Critical Materials and Supply Integrity',
-    markKind: 'materials' as const,
-    inThesis: 505,
-    claim: 'Provenance, chain of custody, processing history, ESG evidence. Cannot sell without traceability.',
+    markKind: 'materials',
+    oneLine: 'Provenance, chain of custody, processing history, ESG evidence.',
   },
   {
     slug: 'eat',
     name: 'Food Security Systems',
     shortName: 'Eat',
     necessityKey: 'Food Security Systems',
-    markKind: 'food' as const,
-    inThesis: 395,
-    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
+    markKind: 'food',
+    oneLine: 'Traceability, biosecurity, recall-readiness, import and export assurance.',
   },
 ];
+
+const statsByKey: Record<string, { inThesis: number; regs: number }> = {};
+(necessityData.per_necessity as any[]).forEach((n) => {
+  statsByKey[n.name] = {
+    inThesis: n.in_thesis_companies,
+    regs: (n.regulations_t1 ?? 0) + (n.regulations_t2 ?? 0),
+  };
+});
 ---
 <Base
   title="The five Necessities"
@@ -61,35 +73,39 @@ const necessities = [
       <p class="kicker nec-index-hero__kicker">The five Necessities</p>
       <h1 class="nec-index-hero__title">The systems society cannot allow to fail.</h1>
       <p class="nec-index-hero__sub">
-        Each Necessity is gated by regulation. Each gate identifies the companies that have to comply. Open a panel for the regulations, the cohort, and the four-market examples.
+        Each Necessity is gated by regulation. Each gate identifies the companies that have to comply.
       </p>
-      <ul class="nec-index-hero__marks" role="list" aria-label="The five marks">
-        {necessities.map((n) => (
-          <li class="nec-index-hero__markitem">
-            <a class="nec-index-hero__marklink" href={`/necessities/${n.slug}/`} aria-label={n.name}>
-              <NecessityMark kind={n.markKind} size={44} />
-              <span class="nec-index-hero__marklabel">{n.shortName}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   </header>
 
-  <section class="container nec-index-list" aria-label="Five Necessities">
-    <ol role="list" class="nec-index__list">
-      {necessities.map((n, i) => (
-        <NecessityPanelTeaser
-          slug={n.slug}
-          name={n.name}
-          shortName={n.shortName}
-          necessityKey={n.necessityKey}
-          markKind={n.markKind}
-          inThesis={n.inThesis}
-          claim={n.claim}
-          index={i}
-        />
-      ))}
+  <section class="container nec-index-grid" aria-label="Five Necessities">
+    <ol class="nec-index-grid__list" role="list">
+      {necessities.map((n) => {
+        const stats = statsByKey[n.necessityKey] ?? { inThesis: 0, regs: 0 };
+        return (
+          <li class="nec-card">
+            <a class="nec-card__link" href={`/necessities/${n.slug}/`} aria-label={`Open ${n.name}`}>
+              <span class="nec-card__mark" aria-hidden="true">
+                <NecessityMark kind={n.markKind} size={64} />
+              </span>
+              <p class="nec-card__short">{n.shortName}</p>
+              <h2 class="nec-card__name">{n.name}</h2>
+              <p class="nec-card__line">{n.oneLine}</p>
+              <dl class="nec-card__stats">
+                <div>
+                  <dt>In thesis</dt>
+                  <dd>{stats.inThesis.toLocaleString()}</dd>
+                </div>
+                <div>
+                  <dt>Regulations</dt>
+                  <dd>{stats.regs}</dd>
+                </div>
+              </dl>
+              <span class="nec-card__more">Open the panel &rarr;</span>
+            </a>
+          </li>
+        );
+      })}
     </ol>
   </section>
 
@@ -100,7 +116,7 @@ const necessities = [
   .nec-index-hero {
     background: var(--c-evergreen);
     color: var(--c-pearl);
-    padding-block: var(--s-8) var(--s-7);
+    padding-block: var(--s-8) var(--s-6);
   }
   .nec-index-hero__kicker { color: var(--c-tomato); margin: 0; }
   .nec-index-hero__title {
@@ -120,30 +136,117 @@ const necessities = [
     max-width: 60ch;
     margin: 0;
   }
-  .nec-index-hero__marks {
-    list-style: none;
-    margin: var(--s-6) 0 0;
-    padding: 0;
-    display: flex;
-    gap: var(--s-6);
-    flex-wrap: wrap;
+
+  .nec-index-grid {
+    padding-block: var(--s-7) var(--s-8);
   }
-  .nec-index-hero__marklink {
+  .nec-index-grid__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: var(--hair) solid var(--hair-color);
+    border-bottom: var(--hair) solid var(--hair-color);
+  }
+  .nec-card {
+    border-left: var(--hair) solid var(--hair-color);
+  }
+  .nec-card:first-child { border-left: 0; }
+  .nec-card:nth-child(n+4) {
+    border-top: var(--hair) solid var(--hair-color);
+  }
+
+  .nec-card__link {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: var(--s-2);
+    gap: var(--s-3);
+    padding: var(--s-6) var(--s-5);
+    height: 100%;
     text-decoration: none;
-    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+    color: var(--fg);
+    transition: background var(--mo-hold) var(--ease-golden);
+  }
+  .nec-card__link:hover { background: color-mix(in srgb, var(--c-tomato) 8%, transparent); }
+  .nec-card__mark {
+    color: var(--hero);
+    margin-block-end: var(--s-2);
     transition: color var(--mo-tick) var(--ease-golden);
   }
-  .nec-index-hero__marklink:hover { color: var(--c-tomato); }
-  .nec-index-hero__marklabel {
+  .nec-card__link:hover .nec-card__mark { color: var(--c-pearl); }
+
+  .nec-card__short {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
+    color: var(--fg-faint);
+    margin: 0;
   }
-  .nec-index-list { padding-block: var(--s-7) var(--s-8); }
-  .nec-index__list { list-style: none; margin: 0; padding: 0; }
+  .nec-card__name {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+    color: var(--fg);
+    transition: color var(--mo-tick) var(--ease-golden);
+  }
+  .nec-card__link:hover .nec-card__name { color: var(--c-tomato); }
+  .nec-card__line {
+    font-family: var(--f-display);
+    font-size: var(--fs-md);
+    line-height: var(--lh-snug);
+    color: var(--fg-soft);
+    margin: 0;
+    max-width: 36ch;
+  }
+  .nec-card__stats {
+    margin: var(--s-3) 0 0;
+    display: flex;
+    gap: var(--s-5);
+    border-top: var(--hair) solid var(--hair-color);
+    padding-block-start: var(--s-3);
+  }
+  .nec-card__stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-1);
+  }
+  .nec-card__stats dt {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-faint);
+    margin: 0;
+  }
+  .nec-card__stats dd {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    color: var(--fg);
+    margin: 0;
+    line-height: 1;
+  }
+  .nec-card__more {
+    margin-block-start: auto;
+    padding-block-start: var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--hero);
+  }
+
+  @media (max-width: 1000px) {
+    .nec-index-grid__list { grid-template-columns: repeat(2, 1fr); }
+    .nec-card { border-left: 0; border-top: 0; }
+    .nec-card:nth-child(2n) { border-left: var(--hair) solid var(--hair-color); }
+    .nec-card:nth-child(n+3) { border-top: var(--hair) solid var(--hair-color); }
+  }
+  @media (max-width: 600px) {
+    .nec-index-grid__list { grid-template-columns: 1fr; }
+    .nec-card { border-left: 0; }
+    .nec-card:not(:first-child) { border-top: var(--hair) solid var(--hair-color); }
+  }
 </style>
