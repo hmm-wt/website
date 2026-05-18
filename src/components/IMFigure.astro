@@ -22,11 +22,13 @@ interface Props {
   metrics?: Metric[];
   source?: string;
   basis?: string;
+  bleed?: 'narrow' | 'wide' | 'full';  // narrow=column (default), wide=72rem, full=viewport
 }
 
-const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
+const { fignum, label, title, sub, metrics = [], source, basis, bleed = 'narrow' } = Astro.props;
+const bleedClass = bleed === 'wide' ? 'imfig--bleed-wide' : bleed === 'full' ? 'imfig--bleed-full' : '';
 ---
-<figure class="imfig" role="figure" aria-label={label}>
+<figure class:list={['imfig', bleedClass]} role="figure" aria-label={label}>
   <span class="imfig__corner imfig__corner--tl" aria-hidden="true"></span>
   <span class="imfig__corner imfig__corner--tr" aria-hidden="true"></span>
   <span class="imfig__corner imfig__corner--bl" aria-hidden="true"></span>
@@ -56,7 +58,7 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
     <div class="imfig__plot" data-imfig-plot>
       <button type="button" class="imfig__zoom" data-chart-zoom aria-label="Expand chart to full screen">
         <span class="imfig__zoom-icon" aria-hidden="true">⤢</span>
-        <span class="imfig__zoom-label">Tap to expand</span>
+        <span class="imfig__zoom-label">Expand</span>
       </button>
       <div class="imfig__plot-inner" data-chart-zoom-content>
         <slot />
@@ -102,6 +104,23 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
   }
   .imfig:hover {
     box-shadow: 0 6px 18px rgba(4, 47, 42, 0.10), 0 1px 3px rgba(4, 47, 42, 0.08);
+  }
+  /* Bleed: escape the prose column without depending on parent grid.
+   * Viewport-centered breakout that lands cleanly inside any flow parent. */
+  .imfig--bleed-wide {
+    width: min(72rem, 100vw - 2rem);
+    margin-inline: calc(50% - min(36rem, 50vw - 1rem));
+  }
+  .imfig--bleed-full {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    max-width: none;
+  }
+  @media (max-width: 820px) {
+    .imfig--bleed-wide, .imfig--bleed-full {
+      width: 100%;
+      margin-inline: 0;
+    }
   }
   .imfig::before {
     content: "";
@@ -201,11 +220,31 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
   }
   .imfig__plot-inner { display: block; }
 
-  /* Mobile: allow horizontal scroll on charts so they render at native
-   * readable size, plus a tap-to-expand button that opens a fullscreen
-   * modal. Desktop: zoom button hidden, no scrolling needed. */
+  /* Staggered reveal on viewport entry. Chrome paints from load; the plot
+   * fades + lifts once the IntersectionObserver flags the figure visible.
+   * prefers-reduced-motion: imfig-reveal.ts marks every figure revealed at
+   * boot so the same selector applies the no-op state. */
+  .imfig__plot-inner {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 480ms var(--ease-golden, ease-out), transform 480ms var(--ease-golden, ease-out);
+  }
+  .imfig[data-imfig-revealed="true"] .imfig__plot-inner {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .imfig__plot-inner {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Expand button visible on every viewport. Mobile additionally lets the
+   * plot scroll horizontally so charts render at native readable size. */
   .imfig__zoom {
-    display: none;
+    display: inline-flex;
     position: absolute;
     top: var(--s-2);
     right: var(--s-2);
@@ -221,11 +260,13 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--mo-tick) var(--ease-golden), background var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
   }
-  .imfig__zoom:hover, .imfig__zoom:focus { background: var(--c-tomato); border-color: var(--c-tomato); outline: none; }
+  .imfig:hover .imfig__zoom { opacity: 1; }
+  .imfig__zoom:hover, .imfig__zoom:focus { background: var(--c-tomato); border-color: var(--c-tomato); outline: none; opacity: 1; }
   .imfig__zoom-icon { font-size: 1.05em; line-height: 1; }
   @media (max-width: 720px) {
-    .imfig__zoom { display: inline-flex; }
     .imfig__plot-inner {
       overflow-x: auto;
       overflow-y: hidden;
@@ -326,8 +367,16 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
     display: block;
     width: 100%;
     height: auto;
-    min-width: 60rem;
-    max-width: none;
+    max-width: 100%;
+    max-height: calc(100vh - 6rem);
+    margin-inline: auto;
+  }
+  @media (max-width: 720px) {
+    .chart-zoom-modal__body > svg,
+    .chart-zoom-modal__body > * > svg {
+      min-width: 32rem;
+      max-width: none;
+    }
   }
   .chart-zoom-modal__hint {
     margin: 0;
@@ -344,4 +393,5 @@ const { fignum, label, title, sub, metrics = [], source, basis } = Astro.props;
 
 <script>
   import '../scripts/chart-zoom';
+  import '../scripts/imfig-reveal';
 </script>

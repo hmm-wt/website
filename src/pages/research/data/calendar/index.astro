@@ -1,6 +1,7 @@
 ---
 import Base from '../../../../layouts/Base.astro';
 import CalendarTimeline from '../../../../components/CalendarTimeline.astro';
+import CrystallisationTimeline from '../../../../components/charts/CrystallisationTimeline.astro';
 import TagFilter from '../../../../components/TagFilter.astro';
 import calendar from '../../../../data/crystallisation-window.json';
 import { buildContactMailto } from '../../../../utils/mailto.ts';
@@ -28,11 +29,19 @@ const mailto = buildContactMailto('Crystallisation Window');
       </p>
     </header>
 
-    <div class="cal__filter">
-      <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
-    </div>
+    <section class="cal__scrolly" data-scrolly aria-label="Window walkthrough">
+      <div class="cal__viz" data-scrolly-viz>
+        <CrystallisationTimeline />
+      </div>
 
-    <CalendarTimeline />
+      <div class="cal__rail">
+        <div class="cal__filter">
+          <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
+        </div>
+
+        <CalendarTimeline />
+      </div>
+    </section>
 
     <footer class="cal__foot">
       <a class="cal__cta" href={mailto}>Talk through the window →</a>
@@ -65,6 +74,29 @@ const mailto = buildContactMailto('Crystallisation Window');
     color: var(--fg-soft);
     max-width: 56ch;
     margin: 0;
+  }
+  .cal__scrolly {
+    margin-block-start: var(--s-5);
+  }
+  .cal__viz {
+    position: sticky;
+    top: var(--s-5);
+    z-index: 5;
+    margin-block-end: var(--s-6);
+    padding-block-end: var(--s-5);
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+  }
+  .cal__rail {
+    /* prose-lane that scrolls past the sticky viz */
+  }
+  @media (max-width: 720px) {
+    .cal__viz {
+      position: static;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cal__viz { position: static; }
   }
   .cal__filter { margin-block-end: var(--s-5); }
   .cal__foot {

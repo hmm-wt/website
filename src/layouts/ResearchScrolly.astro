@@ -134,7 +134,7 @@ const { title, description, ogImage, headlineMetrics } = Astro.props;
    * normally; the left pin stays in view until the section's last stage. */
   :global(.rscroll__prose [data-scrolly]) {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 32rem);
     gap: var(--s-6);
     align-items: start;
     margin-block: var(--s-7);
@@ -163,13 +163,24 @@ const { title, description, ogImage, headlineMetrics } = Astro.props;
     padding: var(--s-5);
     border-left: 2px solid var(--rule);
     background: color-mix(in srgb, var(--c-pearl) 30%, transparent);
+    opacity: 0.58;
     transition: border-left-color var(--mo-tick) var(--ease-golden),
-                background var(--mo-tick) var(--ease-golden);
+                background var(--mo-tick) var(--ease-golden),
+                opacity var(--mo-tick) var(--ease-golden);
   }
-  :global(.rscroll__prose [data-active-stage] .scrolly__stage:not([data-stage=""])) { }
-  /* The active stage is highlighted by the engine via data-active-stage on
-   * the [data-scrolly] container. We then style the matching stage. The viz
-   * itself reads the active stage attribute and reacts. */
+  /* Active stage. Engine adds .scrolly__stage--active to the matching child
+   * stage on scrolly:enter; we lift it into focus while siblings stay dim. */
+  :global(.rscroll__prose .scrolly__stage--active) {
+    opacity: 1;
+    border-left-color: var(--c-tomato);
+    background: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.rscroll__prose .scrolly__stage) {
+      transition: none;
+      opacity: 1;
+    }
+  }
 
   @media (max-width: 900px) {
     :global(.rscroll__prose [data-scrolly]) {

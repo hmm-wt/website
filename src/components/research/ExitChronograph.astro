@@ -227,6 +227,19 @@ const dots = exits.exits.map((e, i) => {
         panel.dataset.open = 'false';
         root.querySelectorAll('.exc__dot').forEach((d) => d.classList.remove('is-pinned'));
       });
+
+      // Scrolly integration: when an ancestor [data-scrolly] fires
+      // scrolly:enter with a stage id matching an exit id, auto-fill the
+      // panel for that exit.
+      const scrollyRoot = root.closest('[data-scrolly]');
+      if (scrollyRoot) {
+        scrollyRoot.addEventListener('scrolly:enter', ((e: Event) => {
+          const detail = (e as CustomEvent).detail as { stage?: string };
+          const stage = detail?.stage ?? '';
+          const dot = root.querySelector<SVGCircleElement>(`.exc__dot[data-id="${stage}"]`);
+          if (dot) fill(dot as unknown as HTMLElement);
+        }) as EventListener);
+      }
     });
   }
   if (document.readyState === 'loading') {
@@ -268,12 +281,58 @@ const dots = exits.exits.map((e, i) => {
     stroke-width: 1.4;
     cursor: pointer;
     transition: fill-opacity var(--mo-tick) var(--ease-golden),
-                stroke-width var(--mo-tick) var(--ease-golden);
+                stroke-width var(--mo-tick) var(--ease-golden),
+                r 280ms var(--ease-golden);
   }
   .exc__dot:hover, .exc__dot:focus, .exc__dot.is-pinned {
     fill-opacity: 0.92;
     stroke-width: 2.2;
     outline: none;
+  }
+
+  /* Scrolly integration: when ancestor [data-scrolly] has an active stage
+   * whose id matches a dot's data-id, dim all other dots and highlight the
+   * match. Stage ids that don't match any dot (e.g. "exit-table") leave the
+   * chart at its default state. */
+  :global([data-active-stage="volpara-lunit"]) .exc__dot:not([data-id="volpara-lunit"]),
+  :global([data-active-stage="eucalyptus-hims"]) .exc__dot:not([data-id="eucalyptus-hims"]),
+  :global([data-active-stage="costa-paineschwartz"]) .exc__dot:not([data-id="costa-paineschwartz"]),
+  :global([data-active-stage="payapps-autodesk"]) .exc__dot:not([data-id="payapps-autodesk"]),
+  :global([data-active-stage="telecare-teladoc"]) .exc__dot:not([data-id="telecare-teladoc"]),
+  :global([data-active-stage="medtech-banyan"]) .exc__dot:not([data-id="medtech-banyan"]),
+  :global([data-active-stage="infigen-iberdrola"]) .exc__dot:not([data-id="infigen-iberdrola"]),
+  :global([data-active-stage="icon-accenture"]) .exc__dot:not([data-id="icon-accenture"]),
+  :global([data-active-stage="buildlogic-jdm"]) .exc__dot:not([data-id="buildlogic-jdm"]) {
+    fill-opacity: 0.12;
+    stroke-opacity: 0.3;
+  }
+  :global([data-active-stage="volpara-lunit"]) .exc__dot[data-id="volpara-lunit"],
+  :global([data-active-stage="eucalyptus-hims"]) .exc__dot[data-id="eucalyptus-hims"],
+  :global([data-active-stage="costa-paineschwartz"]) .exc__dot[data-id="costa-paineschwartz"],
+  :global([data-active-stage="payapps-autodesk"]) .exc__dot[data-id="payapps-autodesk"],
+  :global([data-active-stage="telecare-teladoc"]) .exc__dot[data-id="telecare-teladoc"],
+  :global([data-active-stage="medtech-banyan"]) .exc__dot[data-id="medtech-banyan"],
+  :global([data-active-stage="infigen-iberdrola"]) .exc__dot[data-id="infigen-iberdrola"],
+  :global([data-active-stage="icon-accenture"]) .exc__dot[data-id="icon-accenture"],
+  :global([data-active-stage="buildlogic-jdm"]) .exc__dot[data-id="buildlogic-jdm"] {
+    fill-opacity: 0.95;
+    stroke-width: 2.4;
+  }
+  /* "Five further" stage: highlight all five remaining dots. */
+  :global([data-active-stage="exit-others"]) .exc__dot[data-id="telecare-teladoc"],
+  :global([data-active-stage="exit-others"]) .exc__dot[data-id="medtech-banyan"],
+  :global([data-active-stage="exit-others"]) .exc__dot[data-id="infigen-iberdrola"],
+  :global([data-active-stage="exit-others"]) .exc__dot[data-id="icon-accenture"],
+  :global([data-active-stage="exit-others"]) .exc__dot[data-id="buildlogic-jdm"] {
+    fill-opacity: 0.92;
+    stroke-width: 2;
+  }
+  :global([data-active-stage="exit-others"]) .exc__dot:not([data-id="telecare-teladoc"]):not([data-id="medtech-banyan"]):not([data-id="infigen-iberdrola"]):not([data-id="icon-accenture"]):not([data-id="buildlogic-jdm"]) {
+    fill-opacity: 0.12;
+    stroke-opacity: 0.3;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .exc__dot { transition: none; }
   }
   .exc__dot-label {
     font-family: var(--f-mono);

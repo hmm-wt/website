@@ -18,7 +18,7 @@ const yearItems = years.map((year) => ({
 ---
 <div class="cal-timeline">
   {yearItems.map((item) => (
-    <section class="cal-year" id={`year-${item.year}`}>
+    <section class="cal-year scrolly__stage" id={`year-${item.year}`} data-stage={String(item.year)}>
       <header class="cal-year__head">
         <h2 class="cal-year__num">{item.year}</h2>
         <span class="cal-year__count">{item.regs.length} {item.regs.length === 1 ? 'regulation' : 'regulations'}</span>

@@ -88,6 +88,14 @@ const { groups, target } = Astro.props;
         }
         const qs = params.toString();
         history.replaceState(null, '', qs ? `?${qs}${location.hash}` : location.pathname + location.hash);
+
+        // Fire a change event so peer visualisations (e.g. CrystallisationTimeline)
+        // can dim non-matching markers in step with the filter.
+        const detail: Record<string, string[]> = {};
+        for (const [key, values] of active.entries()) {
+          detail[key] = Array.from(values);
+        }
+        root.dispatchEvent(new CustomEvent('tagfilter:change', { detail, bubbles: true }));
       }
 
       chips.forEach((chip) => {

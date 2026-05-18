@@ -34,13 +34,13 @@ const stats = [
   }
 ];
 ---
-<section class="ss" aria-label="The shape of the four-market universe">
+<section class="ss motion-group" aria-label="The shape of the four-market universe">
   <header class="ss__head">
     <p class="kicker ss__kicker">The shape</p>
   </header>
   <ol class="ss__list" role="list">
     {stats.map((s, i) => (
-      <li class="ss__cell">
+      <li class="ss__cell stagger-row" data-i={i}>
         <span class="ss__idx">[{String(i + 1).padStart(2, '0')}]</span>
         <p class="ss__value" data-count-up={s.value}>{s.value}</p>
         <p class="ss__label">{s.label}</p>

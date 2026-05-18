@@ -32,6 +32,7 @@ function initScrolly(container: HTMLElement) {
   if (reduced) {
     const last = stages[stages.length - 1];
     container.setAttribute('data-active-stage', last.dataset.stage ?? '');
+    stages.forEach((s) => s.classList.add('scrolly__stage--active'));
     if (progressEl) progressEl.style.width = '100%';
     return;
   }
@@ -40,6 +41,7 @@ function initScrolly(container: HTMLElement) {
     const id = stage.dataset.stage ?? String(index);
     if (container.getAttribute('data-active-stage') === id) return;
     container.setAttribute('data-active-stage', id);
+    stages.forEach((s) => s.classList.toggle('scrolly__stage--active', s === stage));
     const detail: ScrollyDetail = { stage: id, index, total: stages.length };
     container.dispatchEvent(new CustomEvent('scrolly:enter', { detail, bubbles: true }));
   };

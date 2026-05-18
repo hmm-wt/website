@@ -23,7 +23,7 @@ const { title = 'Chart', minWidthRem = 32 } = Astro.props;
 <div class="cz" data-chart-zoom-root data-zoom-title={title} style={`--cz-min: ${minWidthRem}rem;`}>
   <button type="button" class="cz__btn" data-chart-zoom aria-label={`Expand ${title} to full screen`}>
     <span class="cz__icon" aria-hidden="true">⤢</span>
-    <span class="cz__label">Tap to expand</span>
+    <span class="cz__label">Expand</span>
   </button>
   <div class="cz__content" data-chart-zoom-content>
     <slot />
@@ -39,7 +39,7 @@ const { title = 'Chart', minWidthRem = 32 } = Astro.props;
     position: relative;
   }
   .cz__btn {
-    display: none;
+    display: inline-flex;
     position: absolute;
     top: var(--s-2);
     right: var(--s-2);
@@ -55,16 +55,19 @@ const { title = 'Chart', minWidthRem = 32 } = Astro.props;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--mo-tick) var(--ease-golden), background var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
   }
+  .cz:hover .cz__btn { opacity: 1; }
   .cz__btn:hover, .cz__btn:focus {
     background: var(--c-tomato);
     border-color: var(--c-tomato);
     outline: none;
+    opacity: 1;
   }
   .cz__icon { font-size: 1.05em; line-height: 1; }
 
   @media (max-width: 720px) {
-    .cz__btn { display: inline-flex; }
     .cz__content {
       overflow-x: auto;
       overflow-y: hidden;

@@ -19,7 +19,7 @@ The paradox is that the same feature has been described as Japan's structural pr
 > - **AI Promotion Act:** passed 28 May 2025; most provisions in force 4 June 2025; AI Strategy Headquarters chaired by the Prime Minister, established 1 September 2025.[^1]
 > - **Enforcement model:** no fines, no bans, no mandates. Cooperative compliance with public name-and-shame for non-compliance. METI Guidelines for Business v1.1 (March 2025); v1.2 in preparation addressing EU AI Act interoperability.[^2]
 > - **Economic Security Promotion Act:** in force 2023; eleven specified critical materials including semiconductors and pharmaceuticals; supply chain inspection regime active.
-> - **Corporate balance sheets:** approximately ¥230 trillion in retained earnings on aggregate, the highest ratio of any G7 economy.[^3]
+> - **Corporate balance sheets:** approximately ¥637 trillion in retained earnings on aggregate, the highest ratio of any G7 economy.[^3]
 
 ---
 
@@ -89,5 +89,5 @@ That profile is rare. The candidates that match it sit at lower entry valuations
 
 [^1]: Government of Japan, Act on the Promotion of Research, Development and Utilization of AI-Related Technologies (AI Promotion Act), enacted 28 May 2025. Most provisions effective 4 June 2025; AI Strategy Headquarters effective 1 September 2025.
 [^2]: Ministry of Economy, Trade and Industry (METI) and Ministry of Internal Affairs and Communications (MIC), AI Guidelines for Business v1.1 (March 2025); v1.2 reportedly in preparation per industry briefings, METI confirmation pending.
-[^3]: Bank of Japan, Tankan business sentiment survey and corporate balance sheet aggregates, Q4 2025 release. Aggregate retained earnings figure subject to revision in subsequent releases.
+[^3]: Ministry of Finance, Financial Statements Statistics of Corporations by Industry (法人企業統計), FY2024 annual release, September 2025. Thirteenth consecutive year of record aggregate internal reserves; excludes finance and insurance.
 [^4]: Author's compilation from corporate venture vehicle disclosures and CB Insights Japan CVC tracker, 2025 calendar year. Specific deployment volumes and inside-Japan share require independent verification.

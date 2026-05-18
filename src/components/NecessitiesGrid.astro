@@ -46,6 +46,7 @@ const maxCount = Math.max(...data.per_necessity.map((n) => n.in_thesis_companies
       return (
         <article
           class="ng__cell reveal"
+          data-kind={n.kind}
           style={`--cell-intensity: ${intensity}`}
         >
           <header class="ng__cell-head">
@@ -95,6 +96,26 @@ const maxCount = Math.max(...data.per_necessity.map((n) => n.in_thesis_companies
     max-width: 56ch;
   }
   .ng__kicker { color: var(--c-tomato); margin: 0; }
+
+  /* Scrolly integration: when this grid lives inside a [data-scrolly]
+   * container with an active stage matching a cell's kind, that cell
+   * stays full opacity and others dim. */
+  :global([data-active-stage]:not([data-active-stage=""])) .ng__cell {
+    opacity: 0.42;
+    transition: opacity 280ms var(--ease-golden, ease-out);
+  }
+  :global([data-active-stage="biomedical"]) .ng__cell[data-kind="biomedical"],
+  :global([data-active-stage="power"]) .ng__cell[data-kind="power"],
+  :global([data-active-stage="food"]) .ng__cell[data-kind="food"],
+  :global([data-active-stage="autonomous"]) .ng__cell[data-kind="autonomous"],
+  :global([data-active-stage="materials"]) .ng__cell[data-kind="materials"] {
+    opacity: 1;
+    outline: 2px solid var(--c-tomato);
+    outline-offset: -2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global([data-active-stage]:not([data-active-stage=""])) .ng__cell { transition: none; }
+  }
   .ng__title {
     font-family: var(--f-display);
     font-size: var(--fs-2xl);

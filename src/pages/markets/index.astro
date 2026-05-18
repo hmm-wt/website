@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import JurisdictionMark from '../../components/JurisdictionMark.astro';
+import CrystallisationTimeline from '../../components/charts/CrystallisationTimeline.astro';
 import { buildContactMailto } from '../../utils/mailto.ts';
 
 const markets = (await getCollection('markets')).sort(
@@ -28,7 +29,7 @@ const summary: Record<string, {
     allocation: '35%',
     necessities: 'Critical materials, Power, Biomedical, Food security',
     regulators: 'APRA, ASIC, AEMO, TGA, FIRB, ASX',
-    capitalShape: 'A$3.7T superannuation pool turning toward unlisted growth. R&D Tax Incentive 43.5% refundable offset under A$20M turnover.',
+    capitalShape: 'A$4.3T superannuation pool turning toward unlisted growth. R&D Tax Incentive 43.5% refundable offset under A$20M turnover.',
     signature: 'The deepest signal cohort. Where regulation, R&D capital, and super allocation intersect at scale.'
   },
   JP: {
@@ -71,6 +72,10 @@ const mailto = buildContactMailto('Markets · talk through the allocation');
         Developed APAC at emerging-market entry prices. Each market is built around a different necessity, enforced by a different regulator, exited through a different acquirer set.
       </p>
     </header>
+
+    <section class="mk__overview" aria-label="Crystallisation window across the four markets">
+      <CrystallisationTimeline />
+    </section>
 
     <section class="mk__compare" aria-label="Four-market comparison">
       <table class="mk__table">
@@ -163,6 +168,11 @@ const mailto = buildContactMailto('Markets · talk through the allocation');
     margin: 0;
   }
 
+  .mk__overview {
+    margin-block: var(--s-7);
+    padding-block: var(--s-5);
+    border-block: 1px solid var(--rule);
+  }
   .mk__compare {
     margin-block: var(--s-7);
     overflow-x: auto;

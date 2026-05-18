@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import ShapeStats from '../components/ShapeStats.astro';
 import NecessitiesGrid from '../components/NecessitiesGrid.astro';
 import MarketBlock from '../components/MarketBlock.astro';
-import RegClockStrip from '../components/charts/RegClockStrip.astro';
 import { getCollection } from 'astro:content';
 import { buildContactMailto, buildIMRequestMailto } from '../utils/mailto.ts';
 
@@ -38,10 +37,6 @@ const founderMailto = buildContactMailto('Founder intro');
         Seed-stage capital into the companies people need to heal, power, eat, move, and supply. Four markets in developed APAC, on a regulatory clock.
       </p>
 
-      <div class="hero__clock">
-        <RegClockStrip />
-      </div>
-
       <p class="hero__actions">
         <a class="hero__primary" href="/doctrine/">Read the doctrine →</a>
         <a class="hero__secondary" href="/research/">See the research →</a>
@@ -71,28 +66,28 @@ const founderMailto = buildContactMailto('Founder intro');
     <p class="evidence__readmore"><a href="/research/results/">The graduation rates →</a></p>
   </section>
 
-  <section class="paths container" aria-label="Where next">
+  <section class="paths container motion-group" aria-label="Where next">
     <header class="paths__head">
       <p class="kicker paths__kicker">Where next</p>
       <h2 class="paths__title gavel-drop">Pick the door.</h2>
     </header>
 
     <ol class="paths__list" role="list">
-      <li class="paths__cell">
+      <li class="paths__cell stagger-row" data-i="0">
         <a href="#lps" class="paths__link">
           <span class="paths__when">If you allocate capital</span>
           <h3 class="paths__h">For LPs →</h3>
           <p class="paths__body">Request the IM. Single email, short template.</p>
         </a>
       </li>
-      <li class="paths__cell">
+      <li class="paths__cell stagger-row" data-i="1">
         <a href="#founders" class="paths__link">
           <span class="paths__when">If you build what people need</span>
           <h3 class="paths__h">For founders →</h3>
           <p class="paths__body">What the fund backs, what it does not, the cheque.</p>
         </a>
       </li>
-      <li class="paths__cell">
+      <li class="paths__cell stagger-row" data-i="2">
         <a href="/doctrine/" class="paths__link">
           <span class="paths__when">Read</span>
           <h3 class="paths__h">The Doctrine</h3>
@@ -100,7 +95,7 @@ const founderMailto = buildContactMailto('Founder intro');
           <p class="paths__stat">{chapterCount} chapters · {citationCount} cited sources</p>
         </a>
       </li>
-      <li class="paths__cell">
+      <li class="paths__cell stagger-row" data-i="3">
         <a href="/research/" class="paths__link">
           <span class="paths__when">Study</span>
           <h3 class="paths__h">The Research</h3>
@@ -108,7 +103,7 @@ const founderMailto = buildContactMailto('Founder intro');
           <p class="paths__stat">3 long-form pages · 3 live data products</p>
         </a>
       </li>
-      <li class="paths__cell">
+      <li class="paths__cell stagger-row" data-i="4">
         <a href="/research/data/scoreboard/" class="paths__link">
           <span class="paths__when">Watch</span>
           <h3 class="paths__h">The Scoreboard</h3>
@@ -231,11 +226,6 @@ const founderMailto = buildContactMailto('Founder intro');
     color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
     max-width: 56ch;
     margin: var(--s-3) 0 0;
-  }
-
-  .hero__clock {
-    margin: var(--s-5) 0 0;
-    max-width: 56rem;
   }
 
   .hero__actions {

@@ -18,23 +18,47 @@ interface EvidenceLink {
   href: string;
 }
 
-const predictions = scoreboard.predictions as Array<{
+interface Prediction {
   id: string;
   certainty_num?: number;
   certainty?: string;
   claim: string;
   testable_by: string;
+  last_reviewed?: string;
+  resolution_criteria?: string;
+  source?: string;
   status: Status;
   evidence?: EvidenceLink[];
   bets: Bet[];
-}>;
+}
+
+const predictions = scoreboard.predictions as Prediction[];
+
+// Each tile shows a horizontal progress bar from "inception" (the earliest
+// last_reviewed across the scoreboard, or a 2026-01-01 floor) to testable_by.
+// NOW marker shows today's position. Caller may pass `?dryrun` for testing.
+const DAY = 24 * 60 * 60 * 1000;
+const inceptionFloor = new Date('2026-01-01').getTime();
+const inception = Math.min(
+  inceptionFloor,
+  ...predictions
+    .map((p) => (p.last_reviewed ? new Date(p.last_reviewed).getTime() : Number.POSITIVE_INFINITY))
+    .filter((t) => Number.isFinite(t))
+);
+const today = Date.now();
 ---
 <section class="sb">
   <ol class="sb__list" role="list">
     {predictions.map((p) => {
-      const testLabel = new Date(p.testable_by).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
+      const testDate = new Date(p.testable_by);
+      const testLabel = testDate.toLocaleDateString('en-GB', { year: 'numeric', month: 'long' });
       const totalStake = p.bets.reduce((sum, b) => sum + b.amount_usd, 0);
       const certaintyMailto = buildContactMailto(`Scoreboard · ${p.certainty ?? p.id}`);
+      const totalMs = testDate.getTime() - inception;
+      const elapsedMs = Math.max(0, today - inception);
+      const elapsedPct = totalMs > 0 ? Math.max(0, Math.min(100, (elapsedMs / totalMs) * 100)) : 0;
+      const daysRemaining = Math.max(0, Math.ceil((testDate.getTime() - today) / DAY));
+      const inceptionLabel = new Date(inception).toLocaleDateString('en-GB', { year: 'numeric', month: 'short' });
       return (
         <li class="sb__item" id={p.id}>
           <header class="sb__item-head">
@@ -50,6 +74,18 @@ const predictions = scoreboard.predictions as Array<{
               <span class="sb__item-test-label">Testable by</span>
               <span class="sb__item-test-value">{testLabel}</span>
             </time>
+          </div>
+
+          <div class="sb__item-progress" style={`--sb-pct: ${elapsedPct.toFixed(2)}%`}>
+            <div class="sb__bar" aria-hidden="true">
+              <span class="sb__bar-fill"></span>
+              <span class="sb__bar-now" title={`Today · ${daysRemaining} days remaining`}></span>
+            </div>
+            <p class="sb__bar-meta">
+              <span class="sb__bar-anchor">{inceptionLabel}</span>
+              <span class="sb__bar-remaining">{daysRemaining.toLocaleString('en-GB')} days remaining</span>
+              <span class="sb__bar-anchor">{testLabel}</span>
+            </p>
           </div>
 
           {p.evidence && p.evidence.length > 0 && (
@@ -155,6 +191,72 @@ const predictions = scoreboard.predictions as Array<{
     font-weight: 600;
   }
 
+  .sb__item-progress {
+    margin-block-start: var(--s-4);
+    padding-block-start: var(--s-3);
+    border-top: 1px dashed var(--rule);
+  }
+  .sb__bar {
+    position: relative;
+    height: 8px;
+    background: color-mix(in srgb, var(--c-tomato) 10%, transparent);
+    border: 1px solid var(--rule);
+    overflow: visible;
+  }
+  .sb__bar-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg,
+      color-mix(in srgb, var(--c-evergreen) 88%, var(--c-tomato)),
+      color-mix(in srgb, var(--c-evergreen) 65%, var(--c-tomato)));
+    transition: width 880ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .sb__item[data-imfig-revealed="true"] .sb__bar-fill {
+    width: var(--sb-pct, 0%);
+  }
+  .sb__bar-now {
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    left: var(--sb-pct, 0%);
+    width: 2px;
+    background: var(--c-tomato);
+    transform: translateX(-1px);
+  }
+  .sb__bar-now::after {
+    content: "NOW";
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    font-family: var(--f-mono);
+    font-size: calc(var(--fs-xs) * 0.8);
+    letter-spacing: 0.15em;
+    padding: 0.1rem 0.35rem;
+    white-space: nowrap;
+  }
+  .sb__bar-meta {
+    margin: var(--s-3) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--f-mono);
+    font-size: calc(var(--fs-xs) * 0.92);
+    color: var(--fg-soft);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+  }
+  .sb__bar-anchor { color: var(--fg-soft); }
+  .sb__bar-remaining { color: var(--c-tomato); font-weight: 700; }
+  @media (prefers-reduced-motion: reduce) {
+    .sb__bar-fill { transition: none; width: var(--sb-pct, 0%); }
+  }
+
   .sb__item-evidence {
     margin-block-start: var(--s-3);
     font-family: var(--f-mono);
@@ -199,3 +301,7 @@ const predictions = scoreboard.predictions as Array<{
   }
   .sb__bets-cta:hover { color: var(--c-mahogany); border-bottom-color: var(--c-mahogany); }
 </style>
+
+<script>
+  import '../scripts/imfig-reveal';
+</script>

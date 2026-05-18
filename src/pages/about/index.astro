@@ -49,9 +49,9 @@ const gpBackgroundMailto = buildContactMailto('GP background');
       <p class="ab__sec-lede">
         A decade of work across three operating roles. Each maps onto a problem the fund has to solve.
       </p>
-      <ol class="ab__list" role="list">
-        {operators.map((op) => (
-          <li class="ab__card surface-warm">
+      <ol class="ab__list motion-group" role="list">
+        {operators.map((op, i) => (
+          <li class="ab__card surface-warm stagger-row" data-i={i}>
             <header class="ab__card-head">
               <span class="ab__card-idx">[{op.idx}]</span>
             </header>

@@ -10,14 +10,14 @@ rail_market: AU
 
 ---
 
-Australia is where regulatory architecture, R&D incentives, and superannuation capital intersect at a scale that no comparable mid-sized economy matches. The R&D Tax Incentive moves the cost-of-capital line down for early-stage R&D businesses. The A$3.7 trillion superannuation pool is being slowly redirected toward unlisted growth equity by both regulatory pressure and political reform. The four sectors with the deepest regulatory architecture (mining, financial services, healthcare, and energy) are the four sectors where the country's industrial capability is greatest.
+Australia is where regulatory architecture, R&D incentives, and superannuation capital intersect at a scale that no comparable mid-sized economy matches. The R&D Tax Incentive moves the cost-of-capital line down for early-stage R&D businesses. The A$4.3 trillion superannuation pool is being slowly redirected toward unlisted growth equity by both regulatory pressure and political reform. The four sectors with the deepest regulatory architecture (mining, financial services, healthcare, and energy) are the four sectors where the country's industrial capability is greatest.
 
 The thesis here is the simplest of the four markets. Australia is a regulated-economy beneficiary because the structural pieces line up: subsidised R&D, a domestic capital pool large enough to absorb a series-stage market, and statutory regulatory perimeters in every Necessity-aligned sector. The risk is execution at the LP-allocator level. Superannuation funds are slow to commit, and political volatility can change the R&D incentive parameters between vintages.
 
 > **Australia, current state**
 >
 > - **R&D Tax Incentive:** 43.5% refundable offset for companies with aggregated turnover under A$20M; non-refundable offset for larger companies, up to an A$150M expenditure threshold.[^1]
-> - **Superannuation pool:** approximately A$3.7 trillion; allocation to unlisted growth assets in the high single digits to low double digits across major industry funds.[^2]
+> - **Superannuation pool:** approximately A$4.3 trillion; allocation to unlisted growth assets in the high single digits to low double digits across major industry funds.[^2]
 > - **Concessional tax cap:** 30% concessional rate applies to superannuation balances above A$3M from 1 July 2026, following Better Targeted Superannuation Concessions passage in 2025.[^3]
 > - **Regulatory architecture:** APRA, ASIC, AEMO, TGA, FIRB, ASX cover the four Necessity-aligned regulated sectors. Each has discrete compliance and approval pathways.
 
@@ -37,11 +37,11 @@ The risk is not abolition. The risk is parameter drift. A tightening of the elig
 
 ## The superannuation pool and the slow turn
 
-Australia's superannuation system holds A$3.7 trillion in retirement assets.[^2] The legal mandate to invest in retirement savers' best financial interests has historically been read as a preference for liquid, listed, low-cost beta. That reading is changing.
+Australia's superannuation system holds A$4.3 trillion in retirement assets.[^2] The legal mandate to invest in retirement savers' best financial interests has historically been read as a preference for liquid, listed, low-cost beta. That reading is changing.
 
 Regulatory pressure from APRA, political pressure from successive governments, and competitive pressure between large industry funds have combined to push allocations into unlisted assets, including private equity and venture capital. Industry fund allocation to unlisted growth assets sits in the high single digits to low double digits across the major funds.[^2] A 1% incremental allocation to venture and growth equity across the system is multiples of the entire current Australian VC market.
 
-The political reform is two-sided. The 2025 superannuation tax change applied a 30% concessional rate to balances above A$3M from the 2025-26 financial year, with parameters still under negotiation.[^3] The same review process recommended easing the regulatory barriers to superannuation investment in high-growth firms.[^4] The net direction is toward more, not less, super capital available for venture deployment.
+The political reform is two-sided. The 2025 superannuation tax change applied a 30% concessional rate to balances above A$3M from 1 July 2026, with parameters still under negotiation.[^3] The same review process recommended easing the regulatory barriers to superannuation investment in high-growth firms.[^4] The net direction is toward more, not less, super capital available for venture deployment.
 
 The implication for seed-stage funds is structural. The LP base is increasing, not contracting. The fund-level competition for capital is intensifying. The commercial relationships that determine whether an industry-fund allocator commits to a vintage are forming now.
 
@@ -53,7 +53,7 @@ Four Necessity-aligned regulated sectors, each with a mature statutory perimeter
 
 Financial services: APRA prudential standards for ADIs; ASIC market and conduct supervision; recent additions covering crypto and stablecoin licensing; the new operational resilience standard CPS 230 effective 1 July 2025.[^5] T2 vendors selling into APRA-regulated entities have a multi-year procurement horizon and a structural switching-cost advantage.
 
-Energy: AEMO Integrated System Plan committing A$122 billion in transmission investment by 2050; AER regulatory revenue determinations on five-year cycles; ARENA grant programmes targeting renewables R&D.[^6] The transition pipeline is funded and binding.
+Energy: AEMO Integrated System Plan committing A$122 billion across generation, storage, and transmission investment by 2050; AER regulatory revenue determinations on five-year cycles; ARENA grant programmes targeting renewables R&D.[^6] The transition pipeline is funded and binding.
 
 Healthcare and biotech: TGA software-as-medical-device framework; PBS reimbursement pathway; clinical trial sponsor requirements harmonised with ICH GCP. Medical device manufacturers and diagnostic AI vendors operating inside the TGA perimeter have certified pathways into Asia-Pacific markets.
 

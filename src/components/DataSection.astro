@@ -17,9 +17,10 @@ interface Props {
   sub?: string;
   source?: string;
   basis?: string;
+  expandable?: boolean; // shows expand-to-modal button + wraps body in zoom-content
 }
 
-const { fignum, label, title, sub, source, basis } = Astro.props;
+const { fignum, label, title, sub, source, basis, expandable = false } = Astro.props;
 ---
 <section class="ds">
   <header class="ds__head">
@@ -31,8 +32,16 @@ const { fignum, label, title, sub, source, basis } = Astro.props;
     {sub && <p class="ds__sub">{sub}</p>}
   </header>
 
-  <div class="ds__body">
-    <slot />
+  <div class="ds__body" data-chart-zoom-root data-zoom-title={label}>
+    {expandable && (
+      <button type="button" class="ds__zoom" data-chart-zoom aria-label="Expand chart to full screen">
+        <span class="ds__zoom-icon" aria-hidden="true">⤢</span>
+        <span class="ds__zoom-label">Expand</span>
+      </button>
+    )}
+    <div class="ds__body-inner" data-chart-zoom-content>
+      <slot />
+    </div>
   </div>
 
   {(source || basis) && (
@@ -98,7 +107,57 @@ const { fignum, label, title, sub, source, basis } = Astro.props;
     margin: 0;
   }
 
-  .ds__body { margin-block-start: var(--s-5); }
+  .ds__body { margin-block-start: var(--s-5); position: relative; }
+  .ds__body-inner { display: block; }
+
+  /* Expand button — dark-surface twin of .imfig__zoom. */
+  .ds__zoom {
+    display: inline-flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.6rem;
+    background: color-mix(in srgb, var(--c-pearl) 12%, transparent);
+    color: var(--c-pearl);
+    border: 1px solid color-mix(in srgb, var(--c-pearl) 28%, transparent);
+    font-family: var(--f-mono);
+    font-size: calc(var(--fs-xs) * 0.92);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--mo-tick) var(--ease-golden), background var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
+  }
+  .ds:hover .ds__zoom { opacity: 1; }
+  .ds__zoom:hover, .ds__zoom:focus {
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    border-color: var(--c-tomato);
+    outline: none;
+    opacity: 1;
+  }
+  .ds__zoom-icon { font-size: 1.05em; line-height: 1; }
+
+  /* Staggered reveal — mirrors IMFigure pattern; observer adds the flag. */
+  .ds__body-inner {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 480ms var(--ease-golden, ease-out), transform 480ms var(--ease-golden, ease-out);
+  }
+  .ds[data-imfig-revealed="true"] .ds__body-inner {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ds__body-inner {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
 
   .ds__source {
     margin-block-start: var(--s-5);
@@ -126,3 +185,8 @@ const { fignum, label, title, sub, source, basis } = Astro.props;
     .ds__source { grid-template-columns: 3rem 1fr; gap: var(--s-1) var(--s-3); }
   }
 </style>
+
+<script>
+  import '../scripts/chart-zoom';
+  import '../scripts/imfig-reveal';
+</script>
