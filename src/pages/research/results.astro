@@ -10,12 +10,25 @@ import necessityData from '../../data/necessity-index.json';
 import exitsData from '../../data/exits-named.json';
 
 const p = necessityData.premiums;
-const countByMarket = (exitsData.exits as any[]).reduce<Record<string, number>>((acc, e) => {
+const exits = exitsData.exits as any[];
+const totalExits = exits.length;
+const countByMarket = exits.reduce<Record<string, number>>((acc, e) => {
   acc[e.market] = (acc[e.market] ?? 0) + 1;
   return acc;
 }, {});
 
-const totalExits = (exitsData.exits as any[]).length;
+const namedExitValues = exits.filter((e) => e.value_usd_m_high).map((e) => e.value_usd_m_high as number);
+const minExit = Math.min(...namedExitValues);
+const maxExit = Math.max(...namedExitValues);
+
+const fmtUsd = (m: number) => m >= 1000 ? `$${(m / 1000).toFixed(2)}B` : `$${m}M`;
+
+const stats = [
+  { n: `${p.exit_rate_multiple.toFixed(2)}x`, label: 'T1 exit-rate edge over unregulated cohort' },
+  { n: `${p.round_size_series_c.toFixed(2)}x`, label: 'Round-size premium at Series C' },
+  { n: `${p.cumulative_series_d_plus.toFixed(2)}x`, label: 'Cumulative funding premium by Series D+' },
+  { n: String(totalExits), label: 'Named acquirer deals 2020 to 2026' },
+];
 ---
 <Base
   title="The results"
@@ -38,11 +51,36 @@ const totalExits = (exitsData.exits as any[]).length;
     </div>
   </header>
 
+  <section class="rsl-stats container" aria-label="Headline numbers">
+    <ol class="rsl-stats__list">
+      {stats.map((s) => (
+        <li class="rsl-stats__cell">
+          <span class="rsl-stats__n ticker-roll">{s.n}</span>
+          <span class="rsl-stats__l">{s.label}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="container rsl-exits">
+    <ChartFrame
+      kicker="Named acquirer deals"
+      title="Strategic acquirers are already buying."
+      caption={`${totalExits} named developed-APAC regulated-company acquisitions, primary-source verified. Hero marks are T1 acquisitions. Disclosed values range ${fmtUsd(minExit)} to ${fmtUsd(maxExit)}.`}
+      source="Source. hmm Ventures exit dataset."
+    >
+      <ExitsUnitStrip />
+    </ChartFrame>
+    <p class="rsl-exits__note">
+      Coverage today: AUS {countByMarket['AU'] ?? 0}. NZL {countByMarket['NZ'] ?? 0}. JPN {countByMarket['JP'] ?? 0}. SGP {countByMarket['SG'] ?? 0}. Coverage expands as compliant cohorts mature 2026 to 2028.
+    </p>
+  </section>
+
   <section class="container rsl-premiums">
     <ChartFrame
       kicker="Round-size premium"
       title="T1 companies raise larger rounds at every stage."
-      caption="Round-size premium relative to the unregulated cohort. Seed near parity; the gap widens by Series C."
+      caption="Round-size premium relative to the unregulated cohort. Seed near parity. The gap widens by Series C."
       source="Source. hmm Ventures four-market dataset."
     >
       <SmallMultiples cols={4}>
@@ -54,31 +92,17 @@ const totalExits = (exitsData.exits as any[]).length;
     </ChartFrame>
   </section>
 
-  <section class="container rsl-exit">
+  <section class="container rsl-exit-rate">
     <ChartFrame
       kicker="Exit incidence"
       title="T1 exits at 2.22x the unregulated rate."
-      caption={`Exit incidence: regulated cohort ${p.regulated_exit_rate_pct}% vs unregulated ${p.unregulated_exit_rate_pct}%. Multiple of ${p.exit_rate_multiple}x.`}
+      caption={`Exit incidence: regulated cohort ${p.regulated_exit_rate_pct}% vs unregulated ${p.unregulated_exit_rate_pct}%.`}
       source="Source. hmm Ventures four-market dataset."
     >
       <SmallMultiples cols={1}>
         <PremiumBar label="Exit rate, T1 vs unregulated" value={p.exit_rate_multiple} max={3} />
       </SmallMultiples>
     </ChartFrame>
-  </section>
-
-  <section class="container rsl-exits">
-    <ChartFrame
-      kicker="Named acquirer deals"
-      title="Strategic acquirers are already buying."
-      caption={`${totalExits} named developed-APAC regulated-company acquisitions, primary-source verified. Hero marks are T1 acquisitions.`}
-      source="Source. hmm Ventures exit dataset."
-    >
-      <ExitsUnitStrip />
-    </ChartFrame>
-    <p class="rsl-exits__note">
-      Coverage today: AUS {countByMarket['AU'] ?? 0}. NZL {countByMarket['NZ'] ?? 0}. JPN {countByMarket['JP'] ?? 0}. SGP {countByMarket['SG'] ?? 0}. Coverage expands as compliant cohorts mature 2026 to 2028.
-    </p>
   </section>
 
   <CTARail />
@@ -108,10 +132,57 @@ const totalExits = (exitsData.exits as any[]).length;
     max-width: 60ch;
     margin: 0;
   }
-  .rsl-premiums { padding-block: var(--s-7); }
-  .rsl-exit { padding-block: var(--s-6); max-width: 50rem; }
+
+  .rsl-stats {
+    padding-block: var(--s-7);
+  }
+  .rsl-stats__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: var(--hair) solid var(--hair-color);
+    border-bottom: var(--hair) solid var(--hair-color);
+  }
+  .rsl-stats__cell {
+    padding: var(--s-5) var(--s-4);
+    border-left: var(--hair) solid var(--hair-color);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
+  }
+  .rsl-stats__cell:first-child { border-left: 0; }
+  .rsl-stats__n {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: 1;
+    color: var(--hero);
+    letter-spacing: -0.02em;
+  }
+  .rsl-stats__l {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-soft);
+    line-height: 1.4;
+    max-width: 24ch;
+  }
+  @media (max-width: 900px) {
+    .rsl-stats__list { grid-template-columns: repeat(2, 1fr); }
+    .rsl-stats__cell:nth-child(2n+1) { border-left: 0; }
+    .rsl-stats__cell:nth-child(n+3) { border-top: var(--hair) solid var(--hair-color); }
+  }
+  @media (max-width: 560px) {
+    .rsl-stats__list { grid-template-columns: 1fr; }
+    .rsl-stats__cell { border-left: 0; border-top: var(--hair) solid var(--hair-color); }
+    .rsl-stats__cell:first-child { border-top: 0; }
+  }
+
   .rsl-exits {
-    padding-block: var(--s-7) var(--s-8);
+    padding-block: var(--s-7);
   }
   .rsl-exits__note {
     margin-block-start: var(--s-3);
@@ -120,5 +191,8 @@ const totalExits = (exitsData.exits as any[]).length;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--fg-faint);
+    max-width: 64ch;
   }
+  .rsl-premiums { padding-block: var(--s-7); }
+  .rsl-exit-rate { padding-block: var(--s-6) var(--s-8); max-width: 50rem; }
 </style>
