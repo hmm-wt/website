@@ -101,7 +101,6 @@ const today = Date.now();
 
           <footer class="sb__item-bets">
             <p class="sb__bets-line sb__bets-line--empty">Scored on the dataset.</p>
-            <a class="sb__bets-cta" href={`/data/scoreboard/${(p.id as string).toLowerCase()}/`}>Open the claim &rarr;</a>
           </footer>
         </li>
       );
@@ -123,15 +122,18 @@ const today = Date.now();
 
   .sb__item {
     padding: var(--s-5) var(--s-5) var(--s-4);
-    background: var(--c-light-tint);
+    background: var(--surface);
     border-left: 3px solid var(--c-tomato);
+    border-top: var(--hair) solid var(--hair-color);
+    border-right: var(--hair) solid var(--hair-color);
+    border-bottom: var(--hair) solid var(--hair-color);
     scroll-margin-top: var(--s-7);
   }
 
   .sb__item-head {
     margin-block-end: var(--s-4);
     padding-block-end: var(--s-3);
-    border-bottom: 1px solid var(--rule);
+    border-bottom: var(--hair) solid var(--hair-color);
   }
   .sb__item-cnum {
     font-family: var(--f-mono);

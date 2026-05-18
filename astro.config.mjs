@@ -25,6 +25,10 @@ export default defineConfig({
     '/doctrine/': '/',
     '/doctrine/download': '/',
     '/doctrine/download/': '/',
+    // /research/method retired 2026-05-18. The home filter scrolly carries
+    // the visual; the classifier detail lives on /data/necessity-index/.
+    '/research/method': '/data/necessity-index/methodology/',
+    '/research/method/': '/data/necessity-index/methodology/',
     // Data hub promoted to top-level routes 2026-05-18.
     '/research/data/calendar': '/data/calendar/',
     '/research/data/calendar/': '/data/calendar/',
