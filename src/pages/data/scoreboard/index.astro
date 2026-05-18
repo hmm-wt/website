@@ -10,10 +10,12 @@ import BettingWindow from '../../../components/BettingWindow.astro';
   <div class="page-light">
   <section class="sb-page container">
     <header class="sb-page__head">
-      <h1 class="sb-page__title gavel-drop">Five certainties. Five bets.</h1>
+      <p class="kicker sb-page__kicker">The scoreboard</p>
+      <h1 class="sb-page__title">Five certainties. Five claims.</h1>
       <p class="sb-page__lede">
-        The thesis rests on five structural certainties. Each carries a falsifiable prediction, dated and testable against a public dataset. Charity-bound bets accepted within the open window.
+        The thesis rests on five structural certainties. Each carries a falsifiable prediction, dated and testable against a public dataset.
       </p>
+      <p class="sb-page__strap">Falsifiable. Dated. Public.</p>
       <div class="sb-page__window">
         <BettingWindow />
       </div>
@@ -39,12 +41,21 @@ import BettingWindow from '../../../components/BettingWindow.astro';
     line-height: var(--lh-tight);
     margin: 0;
   }
+  .sb-page__kicker { color: var(--c-tomato); margin: 0; }
   .sb-page__lede {
     font-size: var(--fs-lg);
     font-family: var(--f-display);
     line-height: var(--lh-snug);
     color: var(--fg-soft);
     max-width: 56ch;
+  }
+  .sb-page__strap {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--c-tomato);
+    margin: 0;
   }
   .sb-page__window { margin-block-start: var(--s-4); max-width: 36rem; }
 </style>

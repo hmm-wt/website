@@ -1,9 +1,12 @@
 ---
 /**
- * SparkBar. Hairline sparkline for Necessity teasers + per-year strips.
+ * SparkBar. Hairline bar series for per-year strips + Necessity teasers.
  *
- * Takes an array of values; renders a single-line bar series with
- * cohort-tier fill and an optional hero index.
+ * Two render modes via the `weight` prop:
+ *   - 'mini'  (default): compact, small labels, used inside teasers.
+ *   - 'full': taller bars, axis floor, value labels above each non-zero
+ *     bar, four-digit year labels. Used on per-Necessity panels and
+ *     anywhere the chart needs to read as a primary visual.
  */
 interface Props {
   values: number[];
@@ -13,6 +16,7 @@ interface Props {
   width?: number;
   height?: number;
   showAxis?: boolean;
+  weight?: 'mini' | 'full';
   ariaLabel?: string;
 }
 
@@ -21,54 +25,85 @@ const {
   labels,
   heroIndex = -1,
   width = 360,
-  height = 80,
-  showAxis = false,
+  height,
+  showAxis,
+  weight = 'mini',
   ariaLabel,
 } = Astro.props;
 
+const full = weight === 'full';
+const h = height ?? (full ? 200 : 80);
+const showFloor = showAxis ?? full;
+const labelBand = full ? 28 : 14;
+const valueBand = full ? 22 : 0;
+
 const n = values.length;
 const max = Math.max(1, ...values);
-const gap = 2;
+const gap = full ? 6 : 2;
 const barW = (width - (n - 1) * gap) / n;
-const axisY = height - 12;
-const usableH = axisY - 4;
+const axisY = h - labelBand;
+const usableH = axisY - valueBand - 4;
 ---
 <svg
-  class="sparkbar"
-  viewBox={`0 0 ${width} ${height}`}
+  class={`sparkbar sparkbar--${weight}`}
+  viewBox={`0 0 ${width} ${h}`}
   width="100%"
-  height={height}
+  height={h}
   preserveAspectRatio="xMinYMin meet"
   role="img"
   aria-label={ariaLabel}
 >
   {values.map((v, i) => {
-    const h = (v / max) * usableH;
+    const bh = (v / max) * usableH;
     const x = i * (barW + gap);
-    const y = axisY - h;
+    const y = axisY - bh;
     const isHero = i === heroIndex;
     const fill = isHero ? 'var(--hero)' : 'var(--cohort-3)';
-    return <rect x={x} y={y} width={barW} height={h} fill={fill} />;
+    return <rect x={x} y={y} width={barW} height={bh} fill={fill} />;
   })}
-  {showAxis && (
+  {showFloor && (
     <line x1="0" y1={axisY} x2={width} y2={axisY} stroke="var(--hair-color)" stroke-width="0.75" />
   )}
+  {full && values.map((v, i) => {
+    if (v === 0) return null;
+    const bh = (v / max) * usableH;
+    const x = i * (barW + gap) + barW / 2;
+    const y = axisY - bh - 8;
+    const isHero = i === heroIndex;
+    const cls = isHero ? 'sparkbar__value sparkbar__value--hero' : 'sparkbar__value';
+    return <text x={x} y={y} text-anchor="middle" class={cls}>{v}</text>;
+  })}
   {labels && labels.map((l, i) => {
     if (!l) return null;
     const x = i * (barW + gap) + barW / 2;
+    const cls = i === heroIndex ? 'sparkbar__label sparkbar__label--hero' : 'sparkbar__label';
     return (
-      <text x={x} y={height - 2} text-anchor="middle" class="sparkbar__label">{l}</text>
+      <text x={x} y={h - 6} text-anchor="middle" class={cls}>{l}</text>
     );
   })}
 </svg>
 
 <style>
-  .sparkbar {
-    display: block;
-  }
+  .sparkbar { display: block; }
   .sparkbar :global(.sparkbar__label) {
     font-family: var(--f-annot);
     font-size: var(--fs-annot);
     fill: var(--fg-faint);
+  }
+  .sparkbar :global(.sparkbar__label--hero) {
+    fill: var(--hero);
+    font-weight: 500;
+  }
+  .sparkbar :global(.sparkbar__value) {
+    font-family: var(--f-display);
+    font-size: 12px;
+    fill: var(--fg-faint);
+  }
+  .sparkbar :global(.sparkbar__value--hero) {
+    fill: var(--hero);
+    font-size: 13px;
+  }
+  .sparkbar--full :global(.sparkbar__label) {
+    font-size: calc(var(--fs-annot) * 1.05);
   }
 </style>

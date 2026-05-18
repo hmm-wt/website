@@ -100,16 +100,8 @@ const today = Date.now();
           )}
 
           <footer class="sb__item-bets">
-            {p.bets.length > 0 ? (
-              <p class="sb__bets-line">
-                <span class="sb__bets-count">{p.bets.length} {p.bets.length === 1 ? 'bet' : 'bets'}</span>
-                <span class="sb__bets-sep">·</span>
-                <span class="sb__bets-stake">${totalStake.toLocaleString('en-US')} staked</span>
-              </p>
-            ) : (
-              <p class="sb__bets-line sb__bets-line--empty">Open for bets.</p>
-            )}
-            <a class="sb__bets-cta" href={certaintyMailto}>Bet on this →</a>
+            <p class="sb__bets-line sb__bets-line--empty">Scored on the dataset.</p>
+            <a class="sb__bets-cta" href={`/data/scoreboard/${(p.id as string).toLowerCase()}/`}>Open the claim &rarr;</a>
           </footer>
         </li>
       );

@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import NecessityPanelTeaser from '../../components/NecessityPanelTeaser.astro';
+import NecessityMark from '../../components/NecessityMark.astro';
 import CTARail from '../../components/CTARail.astro';
 
 const necessities = [
@@ -9,6 +10,7 @@ const necessities = [
     name: 'Biomedical Systems',
     shortName: 'Heal',
     necessityKey: 'Biomedical Systems',
+    markKind: 'biomedical' as const,
     inThesis: 1269,
     claim: 'Clinical software, diagnostics, AI-assisted decisions. Cannot ship without regulator clearance.',
   },
@@ -17,6 +19,7 @@ const necessities = [
     name: 'Power Systems',
     shortName: 'Power',
     necessityKey: 'Power Systems',
+    markKind: 'power' as const,
     inThesis: 581,
     claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
   },
@@ -25,6 +28,7 @@ const necessities = [
     name: 'Autonomous Systems',
     shortName: 'Move',
     necessityKey: 'Autonomous Systems',
+    markKind: 'autonomous' as const,
     inThesis: 561,
     claim: 'Road, logistics, public-path, maritime, aviation. Cannot operate without licence.',
   },
@@ -33,6 +37,7 @@ const necessities = [
     name: 'Critical Materials and Supply Integrity',
     shortName: 'Supply',
     necessityKey: 'Critical Materials and Supply Integrity',
+    markKind: 'materials' as const,
     inThesis: 505,
     claim: 'Provenance, chain of custody, processing history, ESG evidence. Cannot sell without traceability.',
   },
@@ -41,6 +46,7 @@ const necessities = [
     name: 'Food Security Systems',
     shortName: 'Eat',
     necessityKey: 'Food Security Systems',
+    markKind: 'food' as const,
     inThesis: 395,
     claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
   },
@@ -48,15 +54,25 @@ const necessities = [
 ---
 <Base
   title="The five Necessities"
-  description="Heal, power, move, supply, eat. Five non-discretionary needs gated by regulation across the four target markets."
+  description="Five non-discretionary needs gated by regulation across the four target markets."
 >
   <header class="nec-index-hero">
     <div class="container">
       <p class="kicker nec-index-hero__kicker">The five Necessities</p>
-      <h1 class="nec-index-hero__title">Heal. Power. Move. Supply. Eat.</h1>
+      <h1 class="nec-index-hero__title">The systems society cannot allow to fail.</h1>
       <p class="nec-index-hero__sub">
-        Five non-discretionary needs. Each is gated by regulation. Each gate creates the cohort. Open the panel for the regulations, the companies, and the named exit.
+        Each Necessity is gated by regulation. Each gate identifies the companies that have to comply. Open a panel for the regulations, the cohort, and the four-market examples.
       </p>
+      <ul class="nec-index-hero__marks" role="list" aria-label="The five marks">
+        {necessities.map((n) => (
+          <li class="nec-index-hero__markitem">
+            <a class="nec-index-hero__marklink" href={`/necessities/${n.slug}/`} aria-label={n.name}>
+              <NecessityMark kind={n.markKind} size={44} />
+              <span class="nec-index-hero__marklabel">{n.shortName}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </header>
 
@@ -68,6 +84,7 @@ const necessities = [
           name={n.name}
           shortName={n.shortName}
           necessityKey={n.necessityKey}
+          markKind={n.markKind}
           inThesis={n.inThesis}
           claim={n.claim}
           index={i}
@@ -93,6 +110,7 @@ const necessities = [
     letter-spacing: -0.02em;
     margin: var(--s-3) 0 var(--s-4);
     font-weight: 400;
+    max-width: 22ch;
   }
   .nec-index-hero__sub {
     font-family: var(--f-display);
@@ -101,6 +119,30 @@ const necessities = [
     color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
     max-width: 60ch;
     margin: 0;
+  }
+  .nec-index-hero__marks {
+    list-style: none;
+    margin: var(--s-6) 0 0;
+    padding: 0;
+    display: flex;
+    gap: var(--s-6);
+    flex-wrap: wrap;
+  }
+  .nec-index-hero__marklink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s-2);
+    text-decoration: none;
+    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+    transition: color var(--mo-tick) var(--ease-golden);
+  }
+  .nec-index-hero__marklink:hover { color: var(--c-tomato); }
+  .nec-index-hero__marklabel {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
   .nec-index-list { padding-block: var(--s-7) var(--s-8); }
   .nec-index__list { list-style: none; margin: 0; padding: 0; }

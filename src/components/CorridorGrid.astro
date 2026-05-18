@@ -12,22 +12,21 @@ interface MarketCell {
   regulations: number;
   t1: number;
   t2: number;
-  allocation: number;
   slug: string;
 }
-
-const allocationMap: Record<string, number> = {
-  AU: 35,
-  JP: 30,
-  NZ: 20,
-  SG: 15,
-};
 
 const slugMap: Record<string, string> = {
   AU: 'australia',
   JP: 'japan',
   NZ: 'new-zealand',
   SG: 'singapore',
+};
+
+const codeMap: Record<string, string> = {
+  AU: 'AUS',
+  JP: 'JPN',
+  NZ: 'NZL',
+  SG: 'SGP',
 };
 
 const markets: MarketCell[] = (data.per_market as any[]).map((m) => ({
@@ -37,11 +36,10 @@ const markets: MarketCell[] = (data.per_market as any[]).map((m) => ({
   regulations: m.regulations,
   t1: m.t1,
   t2: m.t2,
-  allocation: allocationMap[m.market] ?? 0,
   slug: slugMap[m.market] ?? m.market.toLowerCase(),
 }));
 
-const maxAlloc = Math.max(...markets.map((m) => m.allocation));
+const maxRegulations = Math.max(...markets.map((m) => m.regulations));
 ---
 <section class="corridor container" aria-label="Four-market corridor">
   <ol class="corridor__list">
@@ -49,15 +47,11 @@ const maxAlloc = Math.max(...markets.map((m) => m.allocation));
       <li class="corridor__cell">
         <a class="corridor__link" href={`/thesis/${m.slug}/`}>
           <header class="corridor__head">
-            <span class="corridor__code">{m.code}</span>
-            <span class="corridor__alloc">{m.allocation}%</span>
+            <span class="corridor__codeline">
+              <span class="corridor__code">{codeMap[m.market]}</span>
+              <span class="corridor__name">{m.code}</span>
+            </span>
           </header>
-          <div class="corridor__bar" aria-hidden="true">
-            <span
-              class="corridor__fill"
-              style={`width: ${(m.allocation / maxAlloc) * 100}%`}
-            ></span>
-          </div>
           <dl class="corridor__stats">
             <div class="corridor__stat">
               <dt>Companies</dt>
@@ -114,26 +108,23 @@ const maxAlloc = Math.max(...markets.map((m) => m.allocation));
     justify-content: space-between;
     gap: var(--s-3);
   }
+  .corridor__codeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-1);
+  }
   .corridor__code {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--hero);
+  }
+  .corridor__name {
     font-family: var(--f-display);
     font-size: var(--fs-xl);
     line-height: 1;
-  }
-  .corridor__alloc {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: 1;
-    color: var(--hero);
-  }
-  .corridor__bar {
-    height: 4px;
-    background: var(--cohort-1);
-    overflow: hidden;
-  }
-  .corridor__fill {
-    display: block;
-    height: 100%;
-    background: var(--hero);
+    color: var(--fg);
   }
   .corridor__stats {
     margin: 0;

@@ -5,6 +5,7 @@ import EssayMeta from '../../components/EssayMeta.astro';
 import CrystallisationRail from '../../components/CrystallisationRail.astro';
 import CrystallisationTimeline from '../../components/charts/CrystallisationTimeline.astro';
 import JurisdictionMark from '../../components/JurisdictionMark.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 
 const marketSlugs: Record<string, string> = {
   JP: 'japan',
@@ -51,6 +52,13 @@ const { Content } = await entry.render();
   description={`Why ${fullName} is one of the four target markets for hmm Ventures. The regulatory architecture, the company universe, the exit pathway.`}
 >
   <Fragment slot="meta">
+    <Breadcrumb
+      crumbs={[
+        { label: 'hmm', href: '/' },
+        { label: 'Markets', href: '/markets/' },
+        { label: fullName },
+      ]}
+    />
     <div class="market-hero">
       <span class="market-hero__mark"><JurisdictionMark market={market} size={56} /></span>
       <EssayMeta

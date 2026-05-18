@@ -1,8 +1,8 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import StatusIndicator from '../../../components/StatusIndicator.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
 import scoreboard from '../../../data/scoreboard.json';
-import { buildContactMailto } from '../../../utils/mailto.ts';
 
 export async function getStaticPaths() {
   return scoreboard.predictions.map((p) => ({
@@ -14,7 +14,6 @@ export async function getStaticPaths() {
 const { prediction } = Astro.props;
 const fmtDate = (iso?: string) =>
   iso ? new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: '2-digit' }) : '';
-const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? prediction.id}`);
 ---
 <Base
   title={`${prediction.certainty ?? prediction.id} · Scoreboard · hmm Ventures`}
@@ -23,7 +22,14 @@ const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? pr
   <div class="page-light">
   <article class="claim container">
     <header class="claim__head">
-      <p class="claim__crumbs"><a href="/data/scoreboard/">← All certainties</a></p>
+      <Breadcrumb
+        crumbs={[
+          { label: 'hmm', href: '/' },
+          { label: 'Data', href: '/data/scoreboard/' },
+          { label: 'Scoreboard', href: '/data/scoreboard/' },
+          { label: `Certainty ${prediction.certainty_num ?? prediction.id}` },
+        ]}
+      />
       {prediction.certainty_num && (
         <p class="claim__cnum">Certainty {prediction.certainty_num}</p>
       )}
@@ -50,7 +56,7 @@ const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? pr
     )}
 
     <footer class="claim__foot">
-      <a class="claim__cta" href={betMailto}>Bet on this →</a>
+      <p class="claim__foot-line">Falsifiable. Dated. Public. Scored on the dataset.</p>
     </footer>
   </article>
   </div>
@@ -147,19 +153,14 @@ const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? pr
   .claim__foot {
     margin-block-start: var(--s-7);
     padding-block-start: var(--s-5);
-    border-top: 2px solid var(--c-tomato);
+    border-top: var(--hair) solid var(--c-tomato);
   }
-  .claim__cta {
-    display: inline-block;
-    padding: var(--s-3) var(--s-5);
-    background: var(--c-tomato);
-    color: var(--c-pearl);
+  .claim__foot-line {
     font-family: var(--f-mono);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    text-decoration: none;
-    transition: background var(--dur-1) var(--ease);
+    color: var(--c-tomato);
+    margin: 0;
   }
-  .claim__cta:hover { background: var(--c-mahogany); }
 </style>

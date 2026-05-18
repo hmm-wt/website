@@ -1,10 +1,11 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import CrystallisationStrip from '../../../components/charts/CrystallisationStrip.astro';
 import CalendarTimeline from '../../../components/CalendarTimeline.astro';
-import CrystallisationTimeline from '../../../components/charts/CrystallisationTimeline.astro';
 import TagFilter from '../../../components/TagFilter.astro';
+import ChartFrame from '../../../components/ChartFrame.astro';
+import CTARail from '../../../components/CTARail.astro';
 import calendar from '../../../data/crystallisation-window.json';
-import { buildContactMailto } from '../../../utils/mailto.ts';
 
 const necessityList = Array.from(new Set(calendar.regulations.map((r) => r.necessity))).sort();
 
@@ -13,108 +14,86 @@ const filterGroups = [
   { key: 'necessity', label: 'Necessity', options: necessityList },
   { key: 'tier', label: 'Tier', options: ['T1', 'T2'] }
 ];
-
-const mailto = buildContactMailto('Crystallisation Window');
 ---
 <Base
   title="The Crystallisation Window"
   description="Thirty-four regulations crystallising what people need into law across Australia, Japan, New Zealand, and Singapore, dated 2024 to 2030."
 >
-  <div class="page-light">
-  <section class="cal container">
-    <header class="cal__head">
-      <h1 class="cal__title gavel-drop">When necessities crystallise into law.</h1>
-      <p class="cal__lede">
-        Thirty-four regulations across four markets, dated 2024 to 2030. Each one turns a necessity people cannot do without into a category of work that did not previously exist. Density peaks 2026 to 2027.
+  <header class="cal-hero">
+    <div class="container">
+      <p class="kicker cal-hero__kicker">The window</p>
+      <h1 class="cal-hero__title">Effective dates concentrate at 2027.</h1>
+      <p class="cal-hero__sub">
+        Thirty-four regulations across four markets, dated 2024 to 2030. Each one turns a necessity into a category of work that did not previously exist.
       </p>
-    </header>
+    </div>
+  </header>
 
-    <section class="cal__scrolly" data-scrolly aria-label="Window walkthrough">
-      <div class="cal__viz" data-scrolly-viz>
-        <CrystallisationTimeline />
-      </div>
-
-      <div class="cal__rail">
-        <div class="cal__filter">
-          <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
-        </div>
-
-        <CalendarTimeline />
-      </div>
-    </section>
-
-    <footer class="cal__foot">
-      <a class="cal__cta" href={mailto}>Talk through the window →</a>
-    </footer>
+  <section class="container cal-chart">
+    <ChartFrame
+      kicker="Effective dates"
+      title="In-flight regulations by year."
+      caption="All thirty-four in-flight regulations across the four target markets. Hero bar marks the peak."
+      source="Source. hmm Ventures comprehensive regulatory dataset."
+    >
+      <CrystallisationStrip />
+    </ChartFrame>
   </section>
-  </div>
+
+  <section class="container cal-list">
+    <header class="cal-list__head">
+      <p class="kicker cal-list__kicker">The list</p>
+      <h2 class="cal-list__title">Every regulation, grouped by year.</h2>
+    </header>
+    <div class="cal-list__filter">
+      <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
+    </div>
+    <CalendarTimeline />
+  </section>
+
+  <CTARail />
 </Base>
 
 <style>
-  .cal { padding-block: var(--s-8) var(--s-9); max-width: 64rem; }
-  .cal__head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    margin-block-end: var(--s-7);
-    padding-block-end: var(--s-5);
-    border-bottom: 1px solid var(--rule);
+  .cal-hero {
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    padding-block: var(--s-8) var(--s-6);
   }
-  .cal__title {
+  .cal-hero__kicker { color: var(--c-tomato); margin: 0; }
+  .cal-hero__title {
     font-family: var(--f-display);
-    font-size: var(--fs-3xl);
-    line-height: var(--lh-tight);
+    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
+    line-height: 1;
     letter-spacing: -0.02em;
-    margin: 0;
+    margin: var(--s-3) 0 var(--s-4);
+    font-weight: 400;
+    max-width: 22ch;
   }
-  .cal__lede {
+  .cal-hero__sub {
     font-family: var(--f-display);
     font-size: var(--fs-xl);
     line-height: var(--lh-snug);
-    color: var(--fg-soft);
-    max-width: 56ch;
+    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
+    max-width: 60ch;
     margin: 0;
   }
-  .cal__scrolly {
-    margin-block-start: var(--s-5);
+  .cal-chart { padding-block: var(--s-7); }
+  .cal-list {
+    padding-block: var(--s-7) var(--s-8);
+    max-width: 64rem;
   }
-  .cal__viz {
-    position: sticky;
-    top: var(--s-5);
-    z-index: 5;
-    margin-block-end: var(--s-6);
-    padding-block-end: var(--s-5);
-    background: var(--bg);
-    border-bottom: 1px solid var(--rule);
+  .cal-list__head {
+    margin-block-end: var(--s-5);
+    max-width: 56ch;
   }
-  .cal__rail {
-    /* prose-lane that scrolls past the sticky viz */
+  .cal-list__head .kicker { color: var(--c-tomato); margin: 0; }
+  .cal-list__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: var(--s-3) 0 0;
+    letter-spacing: -0.01em;
   }
-  @media (max-width: 720px) {
-    .cal__viz {
-      position: static;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .cal__viz { position: static; }
-  }
-  .cal__filter { margin-block-end: var(--s-5); }
-  .cal__foot {
-    margin-block-start: var(--s-8);
-    padding-block-start: var(--s-5);
-    border-top: 1px solid var(--rule);
-  }
-  .cal__cta {
-    display: inline-block;
-    padding: var(--s-3) var(--s-5);
-    background: var(--c-tomato);
-    color: var(--c-pearl);
-    font-family: var(--f-mono);
-    font-size: var(--fs-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-    transition: background var(--dur-1) var(--ease);
-  }
-  .cal__cta:hover { background: var(--c-mahogany); }
+  .cal-list__filter { margin-block-end: var(--s-5); }
 </style>

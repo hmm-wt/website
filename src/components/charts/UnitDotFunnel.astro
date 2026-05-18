@@ -104,14 +104,17 @@ const dots = Array.from({ length: totalDots }, (_, i) => {
 
   /* Default state: stage 1. All cohort. */
 
-  /* Stage 2: in-thesis subset becomes hero, rest fade to cohort-1 */
-  [data-active-stage='s2'] .funnel__dot { fill: var(--cohort-1); opacity: 0.55; }
-  [data-active-stage='s2'] .funnel__dot--s2 { fill: var(--hero); opacity: 1; }
+  /* Stage 2: in-thesis subset becomes hero, rest fade to cohort-1.
+     :global() wraps the parent attribute selector so the rule survives
+     Astro's scoped-style transform and matches the data-active-stage set
+     on a parent <section data-scrolly> in a different component scope. */
+  :global([data-active-stage='s2']) .funnel__dot { fill: var(--cohort-1); opacity: 0.55; }
+  :global([data-active-stage='s2']) .funnel__dot--s2 { fill: var(--hero); opacity: 1; }
 
   /* Stage 3: seed-stage subset becomes hero, rest fade out further */
-  [data-active-stage='s3'] .funnel__dot { fill: var(--cohort-1); opacity: 0.28; }
-  [data-active-stage='s3'] .funnel__dot--s2 { fill: var(--hero-soft); opacity: 0.45; }
-  [data-active-stage='s3'] .funnel__dot--s3 { fill: var(--hero); opacity: 1; }
+  :global([data-active-stage='s3']) .funnel__dot { fill: var(--cohort-1); opacity: 0.28; }
+  :global([data-active-stage='s3']) .funnel__dot--s2 { fill: var(--hero-soft); opacity: 0.45; }
+  :global([data-active-stage='s3']) .funnel__dot--s3 { fill: var(--hero); opacity: 1; }
 
   @media (prefers-reduced-motion: reduce) {
     .funnel__dot { transition: none; }

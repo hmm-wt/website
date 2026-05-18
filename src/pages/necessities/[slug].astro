@@ -5,6 +5,8 @@ import SparkBar from '../../components/charts/SparkBar.astro';
 import UnitDotGrid from '../../components/charts/UnitDotGrid.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
 import CTARail from '../../components/CTARail.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import NecessityMark from '../../components/NecessityMark.astro';
 import necessityData from '../../data/necessity-index.json';
 import crystallisation from '../../data/crystallisation-window.json';
 import exitsData from '../../data/exits-named.json';
@@ -24,6 +26,7 @@ interface NecessityConfig {
   name: string;
   shortName: string;
   necessityKey: string;
+  markKind: 'food' | 'biomedical' | 'power' | 'autonomous' | 'materials';
   claim: string;
   why: string;
   examples: string;
@@ -36,8 +39,9 @@ const configs: Record<string, NecessityConfig> = {
     name: 'Biomedical Systems',
     shortName: 'Heal',
     necessityKey: 'Biomedical Systems',
-    claim: 'Clinical software, diagnostics, digital therapeutics, AI-assisted decision support.',
-    why: 'A diagnostic tool cannot reach a patient until the regulator says it can. A new therapy cannot earn reimbursement without evidence on file. Health systems do not buy software without TGA, PMDA, MHLW, or HSA on the label.',
+    markKind: 'biomedical',
+    claim: 'Clinical software, diagnostics, AI-assisted decisions. Cannot ship without regulator clearance.',
+    why: 'Ageing populations, clinical-labour constraints, and software-mediated care make regulated clinical infrastructure non-discretionary. A scan is misread. A treatable condition is caught late. An AI tool is deployed in a clinic without evidence that it works, and a patient pays the price.',
     examples: 'Tier 1: device licensing, clinical software clearance, digital health frameworks. Tier 2: clinical safety reporting, AI risk management for medical devices.',
     exitFilter: 'Biomedical',
   },
@@ -46,8 +50,9 @@ const configs: Record<string, NecessityConfig> = {
     name: 'Power Systems',
     shortName: 'Power',
     necessityKey: 'Power Systems',
-    claim: 'Grid orchestration, storage, demand response, EV charging, distributed energy.',
-    why: 'A new generator cannot connect to the grid without licensing. A storage system cannot earn capacity payments without compliance proof. Carbon-priced utilities cannot procure without traceable inputs.',
+    markKind: 'power',
+    claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
+    why: 'Storage, EVs, buildings, and distributed assets become grid participants, not passive loads. A heatwave hits. Rooftop solar floods the grid with no coordination. Batteries sit idle because nobody filed the dispatch paperwork. The blackout was avoidable.',
     examples: 'Tier 1: grid connection licensing, renewable targets, building energy codes. Tier 2: carbon pricing, embodied carbon disclosure.',
     exitFilter: 'Power',
   },
@@ -56,8 +61,9 @@ const configs: Record<string, NecessityConfig> = {
     name: 'Autonomous Systems',
     shortName: 'Move',
     necessityKey: 'Autonomous Systems',
-    claim: 'Road, logistics, public-path, maritime, aviation, dual-use autonomy.',
-    why: 'A self-driving stack cannot operate on a public road without a deployment licence. A drone cannot fly commercial routes without remote ID. A logistics vessel cannot enter port without classification approval.',
+    markKind: 'autonomous',
+    claim: 'Road, logistics, public-path, maritime, aviation. Cannot operate without licence.',
+    why: 'Autonomy enters public space only when safety, supervision, incident evidence, and operating-domain proof can be accepted by regulators. A driverless shuttle runs without safety certification. A freight drone operates in shared airspace without transponder evidence. The first serious incident grounds the entire sector for years.',
     examples: 'Tier 1: AV deployment frameworks, remote ID for UAS, autonomous vessel classification. Tier 2: transport data sharing, fleet safety reporting.',
     exitFilter: 'Autonomous',
   },
@@ -66,8 +72,9 @@ const configs: Record<string, NecessityConfig> = {
     name: 'Critical Materials and Supply Integrity',
     shortName: 'Supply',
     necessityKey: 'Critical Materials and Supply Integrity',
-    claim: 'Provenance, chain of custody, processing history, ESG evidence.',
-    why: 'A buyer in a regulated market cannot import unverified materials. A construction payment cannot release without compliance documentation. Customs cannot clear shipments without digital declarations.',
+    markKind: 'materials',
+    claim: 'Provenance, chain of custody, processing history, ESG evidence. Cannot sell without traceability.',
+    why: 'Strategic buyers increasingly require verified origin, processing, ESG status, and eligibility proof before procurement. An EV manufacturer loses its tax credit because it cannot prove where the cobalt came from. An OEM is shut out of a procurement framework because its supplier chain fails the country-of-origin attestation.',
     examples: 'Tier 1: critical minerals traceability, digital customs automation. Tier 2: construction payment compliance, modern slavery due diligence.',
     exitFilter: 'Critical Materials',
   },
@@ -76,8 +83,9 @@ const configs: Record<string, NecessityConfig> = {
     name: 'Food Security Systems',
     shortName: 'Eat',
     necessityKey: 'Food Security Systems',
-    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance.',
-    why: 'A food producer cannot sell into a regulated market without traceability records. An importer cannot clear customs without provenance evidence. A processor cannot launch a recall without machine-readable inventory.',
+    markKind: 'food',
+    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
+    why: 'Food safety depends on repeatable proof, not occasional inspection. A contaminated batch reaches shelves. The recall takes weeks instead of hours. People get sick from food that should have been traced and pulled before it left the warehouse.',
     examples: 'Tier 1: food labelling laws, AI traceability extensions, food security regulations. Tier 2: small-business compliance phase-ins.',
     exitFilter: 'Food',
   },
@@ -102,7 +110,7 @@ relevantRegs.forEach((r) => {
 });
 
 const yearValues = years.map((y) => regsByYear[y]);
-const yearLabels = years.map((y) => String(y).slice(-2));
+const yearLabels = years.map((y) => String(y));
 let heroIndex = -1;
 let heroMax = 0;
 yearValues.forEach((v, i) => { if (v > heroMax) { heroMax = v; heroIndex = i; } });
@@ -113,7 +121,7 @@ const matchingExits = (exitsData.exits as any[]).filter((e) => e.necessity === c
 
 const cohortMarks = (() => {
   const total = Math.min(inThesis, 1200);
-  const heroCount = matchingExits.length || 1;
+  const heroCount = Math.max(matchingExits.length, 1);
   const marks = Array.from({ length: total }, (_, i) => ({ id: String(i), hero: false }));
   const stride = total / heroCount;
   for (let i = 0; i < heroCount; i++) {
@@ -129,6 +137,51 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
   r.tier,
   String(r.effective_year),
 ]);
+
+// Fix 6: Across the four markets four-cell grid.
+// For each market, find one named exit (if any), else one representative regulation.
+const orderedMarkets = ['AU', 'JP', 'NZ', 'SG'] as const;
+const marketLongName: Record<string, string> = {
+  AU: 'Australia',
+  JP: 'Japan',
+  NZ: 'New Zealand',
+  SG: 'Singapore',
+};
+
+const acrossFourMarkets = orderedMarkets.map((mk) => {
+  const exit = matchingExits.find((e) => e.market === mk);
+  if (exit) {
+    return {
+      market: mk,
+      kind: 'exit' as const,
+      headline: exit.company,
+      meta: `${exit.tier}. Acquired by ${exit.acquirer}. ${exit.year}.`,
+      sub: exit.value_display,
+      barrier: exit.barrier,
+    };
+  }
+  const reg = relevantRegs
+    .filter((r: any) => r.market === mk)
+    .sort((a: any, b: any) => a.effective_year - b.effective_year)[0];
+  if (reg) {
+    return {
+      market: mk,
+      kind: 'regulation' as const,
+      headline: reg.title,
+      meta: `${reg.tier}. Effective ${reg.effective_year}.`,
+      sub: 'Regulator: in flight.',
+      barrier: null,
+    };
+  }
+  return {
+    market: mk,
+    kind: 'watching' as const,
+    headline: 'Watching',
+    meta: 'No named exit or in-flight regulation in this Necessity.',
+    sub: '',
+    barrier: null,
+  };
+});
 ---
 <Base
   title={`${cfg.shortName}. ${cfg.name}`}
@@ -136,9 +189,23 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
 >
   <header class="nec-hero">
     <div class="container">
-      <p class="kicker nec-hero__kicker">{cfg.shortName}</p>
-      <h1 class="nec-hero__title">{cfg.name}</h1>
-      <p class="nec-hero__sub">{cfg.claim}</p>
+      <Breadcrumb
+        crumbs={[
+          { label: 'hmm', href: '/' },
+          { label: 'Necessities', href: '/necessities/' },
+          { label: cfg.shortName },
+        ]}
+      />
+      <div class="nec-hero__head">
+        <div class="nec-hero__mark" aria-hidden="true">
+          <NecessityMark kind={cfg.markKind} size={72} />
+        </div>
+        <div class="nec-hero__text">
+          <p class="kicker nec-hero__kicker">{cfg.shortName}</p>
+          <h1 class="nec-hero__title">{cfg.name}</h1>
+          <p class="nec-hero__sub">{cfg.claim}</p>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -147,7 +214,7 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
       <p class="nec-stage__kicker">Stage 1. The need</p>
       <h2 id="need-h" class="nec-stage__h">{cfg.shortName}.</h2>
       <p class="nec-stage__body">{cfg.why}</p>
-      <p class="nec-stage__body">{cfg.examples}</p>
+      <p class="nec-stage__body nec-stage__body--soft">{cfg.examples}</p>
     </article>
 
     <article class="nec-stage" aria-labelledby="reg-h">
@@ -164,9 +231,20 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
       </p>
       {totalInFlight > 0 && (
         <ChartFrame
-          caption="In-flight regulations by effective year. Hero bar is the peak."
+          kicker="Effective dates"
+          title="When the filter takes effect."
+          caption="In-flight regulations across the four markets, by effective year. Hero bar marks the peak."
+          source="Source. hmm Ventures comprehensive regulatory dataset."
         >
-          <SparkBar values={yearValues} labels={yearLabels} heroIndex={heroIndex} height={120} ariaLabel={`${cfg.name} regulations by year`} />
+          <SparkBar
+            values={yearValues}
+            labels={yearLabels}
+            heroIndex={heroIndex}
+            weight="full"
+            height={220}
+            width={720}
+            ariaLabel={`${cfg.name} regulations by year`}
+          />
         </ChartFrame>
       )}
       {regRows.length > 0 && (
@@ -184,29 +262,43 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
         <span class="nec-stage__bignum">{inThesis.toLocaleString()}</span> in-thesis companies.
       </h2>
       <p class="nec-stage__body">
-        Each mark below is one company in the four-market dataset. Hero marks are the named exits already on the dataset.
+        Each mark is one company in the four-market dataset. Hero marks are the named exits already on the dataset.
       </p>
       <ChartFrame
         caption={`${inThesis.toLocaleString()} ${cfg.name} companies. Hero marks: named regulated-company acquisitions.`}
       >
-        <UnitDotGrid marks={cohortMarks} cols={50} markSize={6} gap={2} shape="squares" ariaLabel={`${cfg.name} in-thesis cohort with named exits`} />
+        <UnitDotGrid
+          marks={cohortMarks}
+          cols={50}
+          markSize={6}
+          gap={2}
+          shape="squares"
+          ariaLabel={`${cfg.name} in-thesis cohort with named exits`}
+        />
       </ChartFrame>
 
-      {matchingExits.length > 0 && (
-        <div class="nec-exits">
-          <h3 class="nec-exits__h">Named exits in this Necessity</h3>
-          <ul class="nec-exits__list">
-            {matchingExits.map((e) => (
-              <li class="nec-exits__item">
-                <span class="nec-exits__name">{e.company}</span>
-                <span class="nec-exits__meta">
-                  {e.market}. {e.tier}. {e.year}. Acquirer: {e.acquirer}. {e.value_display}.
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <section class="nec-four" aria-labelledby="four-h">
+        <header class="nec-four__head">
+          <p class="kicker nec-four__kicker">Across the four markets</p>
+          <h3 id="four-h" class="nec-four__h">Australia. Japan. New Zealand. Singapore.</h3>
+        </header>
+        <ol class="nec-four__list" role="list">
+          {acrossFourMarkets.map((cell) => (
+            <li class={`nec-four__cell nec-four__cell--${cell.kind}`}>
+              <span class="nec-four__market">{marketLongName[cell.market]}</span>
+              <span class="nec-four__tag">
+                {cell.kind === 'exit' && 'Named exit'}
+                {cell.kind === 'regulation' && 'In-flight regulation'}
+                {cell.kind === 'watching' && 'Watching'}
+              </span>
+              <h4 class="nec-four__headline">{cell.headline}</h4>
+              <p class="nec-four__meta">{cell.meta}</p>
+              {cell.sub && <p class="nec-four__sub">{cell.sub}</p>}
+              {cell.barrier && <p class="nec-four__barrier">{cell.barrier}</p>}
+            </li>
+          ))}
+        </ol>
+      </section>
     </article>
   </section>
 
@@ -217,7 +309,23 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
   .nec-hero {
     background: var(--c-evergreen);
     color: var(--c-pearl);
-    padding-block: var(--s-8) var(--s-6);
+    padding-block: var(--s-6) var(--s-6);
+  }
+  .nec-hero__head {
+    display: flex;
+    gap: var(--s-6);
+    align-items: flex-start;
+    margin-block-start: var(--s-4);
+  }
+  .nec-hero__mark {
+    color: var(--c-tomato);
+    flex-shrink: 0;
+    padding-block-start: var(--s-2);
+  }
+  .nec-hero__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
   }
   .nec-hero__kicker { color: var(--c-tomato); margin: 0; }
   .nec-hero__title {
@@ -225,7 +333,7 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
     font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
     line-height: 1;
     letter-spacing: -0.02em;
-    margin: var(--s-3) 0 var(--s-4);
+    margin: 0;
     font-weight: 400;
     max-width: 18ch;
   }
@@ -236,6 +344,9 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
     color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
     max-width: 56ch;
     margin: 0;
+  }
+  @media (max-width: 640px) {
+    .nec-hero__head { flex-direction: column; gap: var(--s-4); }
   }
 
   .nec-stages {
@@ -269,9 +380,7 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
     letter-spacing: -0.01em;
     max-width: 22ch;
   }
-  .nec-stage__bignum {
-    color: var(--hero);
-  }
+  .nec-stage__bignum { color: var(--hero); }
   .nec-stage__subnum {
     display: block;
     margin-block-start: var(--s-2);
@@ -285,49 +394,101 @@ const regRows = relevantRegs.slice(0, 6).map((r) => [
     line-height: var(--lh-snug);
     color: var(--fg-soft);
     margin: 0;
-    max-width: 56ch;
+    max-width: 60ch;
   }
+  .nec-stage__body--soft { color: var(--fg-faint); font-size: var(--fs-md); }
 
-  .nec-exits {
-    margin-block-start: var(--s-5);
+  /* Across the four markets */
+  .nec-four {
+    margin-block-start: var(--s-6);
     border-top: var(--hair) solid var(--hair-color);
     padding-block-start: var(--s-5);
   }
-  .nec-exits__h {
+  .nec-four__head { margin-block-end: var(--s-4); }
+  .nec-four__kicker { color: var(--c-tomato); margin: 0; }
+  .nec-four__h {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-tight);
+    margin: var(--s-2) 0 0;
+    color: var(--fg);
+  }
+  .nec-four__list {
+    list-style: none;
+    margin: var(--s-4) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: var(--hair) solid var(--hair-color);
+    border-bottom: var(--hair) solid var(--hair-color);
+  }
+  .nec-four__cell {
+    border-left: var(--hair) solid var(--hair-color);
+    padding: var(--s-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    min-height: 14rem;
+  }
+  .nec-four__cell:first-child { border-left: 0; }
+  .nec-four__cell--watching { opacity: 0.55; }
+  .nec-four__market {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--fg-faint);
-    margin: 0 0 var(--s-4);
-    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--fg);
   }
-  .nec-exits__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-4);
-  }
-  .nec-exits__item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-1);
-    padding-block-end: var(--s-3);
-    border-bottom: var(--hair) solid var(--hair-color);
-  }
-  .nec-exits__item:last-child { border-bottom: 0; }
-  .nec-exits__name {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
+  .nec-four__tag {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--hero);
-    line-height: 1.1;
   }
-  .nec-exits__meta {
+  .nec-four__cell--regulation .nec-four__tag { color: var(--fg-faint); }
+  .nec-four__cell--watching .nec-four__tag { color: var(--fg-faint); }
+  .nec-four__headline {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-tight);
+    margin: 0;
+    color: var(--fg);
+  }
+  .nec-four__cell--exit .nec-four__headline { color: var(--hero); }
+  .nec-four__meta {
     font-family: var(--f-body);
     font-size: var(--fs-sm);
     color: var(--fg-soft);
-    line-height: 1.5;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .nec-four__sub {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg);
+    margin: 0;
+  }
+  .nec-four__barrier {
+    font-family: var(--f-body);
+    font-size: var(--fs-xs);
+    color: var(--fg-faint);
+    margin-block-start: auto;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 960px) {
+    .nec-four__list { grid-template-columns: repeat(2, 1fr); }
+    .nec-four__cell:nth-child(2n+1) { border-left: 0; }
+    .nec-four__cell { border-top: var(--hair) solid var(--hair-color); }
+    .nec-four__cell:nth-child(-n+2) { border-top: 0; }
+  }
+  @media (max-width: 540px) {
+    .nec-four__list { grid-template-columns: 1fr; }
+    .nec-four__cell { border-left: 0; border-top: var(--hair) solid var(--hair-color); }
+    .nec-four__cell:first-child { border-top: 0; }
   }
 </style>

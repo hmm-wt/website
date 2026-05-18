@@ -6,6 +6,7 @@
  * Links into /necessities/[slug]/.
  */
 import SparkBar from './charts/SparkBar.astro';
+import NecessityMark from './NecessityMark.astro';
 import crystallisation from '../data/crystallisation-window.json';
 
 interface Props {
@@ -15,10 +16,11 @@ interface Props {
   inThesis: number;
   claim: string;
   necessityKey: string;
+  markKind: 'food' | 'biomedical' | 'power' | 'autonomous' | 'materials';
   index?: number;
 }
 
-const { slug, name, shortName, inThesis, claim, necessityKey, index = 0 } = Astro.props;
+const { slug, name, shortName, inThesis, claim, necessityKey, markKind, index = 0 } = Astro.props;
 
 const years = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
@@ -32,7 +34,7 @@ years.forEach((y) => { regsByYear[y] = 0; });
 });
 
 const values = years.map((y) => regsByYear[y]);
-const labels = years.map((y) => String(y).slice(-2));
+const labels = years.map((y) => String(y));
 
 let heroIndex = -1;
 let heroMax = 0;
@@ -50,6 +52,7 @@ const totalRegs = values.reduce((a, b) => a + b, 0);
     </div>
     <div class="npt__contentside">
       <header class="npt__head">
+        <span class="npt__mark" aria-hidden="true"><NecessityMark kind={markKind} size={28} /></span>
         <p class="kicker npt__kicker">{shortName}</p>
         <h3 class="npt__name">{name}</h3>
       </header>
@@ -109,6 +112,19 @@ const totalRegs = values.reduce((a, b) => a + b, 0);
     flex-direction: column;
     gap: var(--s-3);
   }
+  .npt__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+  }
+  .npt__mark {
+    color: var(--c-tomato);
+    flex-shrink: 0;
+    align-self: center;
+    transition: color var(--mo-tick) var(--ease-golden);
+  }
+  .npt__link:hover .npt__mark { color: var(--c-pearl); }
   .npt__kicker { color: var(--fg-faint); margin: 0; }
   .npt__name {
     font-family: var(--f-display);

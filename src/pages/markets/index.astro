@@ -7,13 +7,6 @@ import ComparisonTable from '../../components/ComparisonTable.astro';
 import CTARail from '../../components/CTARail.astro';
 import necessityData from '../../data/necessity-index.json';
 
-const allocationMap: Record<string, string> = {
-  AU: '35%',
-  JP: '30%',
-  NZ: '20%',
-  SG: '15%',
-};
-
 const signatureMap: Record<string, string> = {
   AU: 'Deepest signal cohort. Regulation, R&D capital, and super allocation intersect at scale.',
   JP: 'Strongest financing access for T1. CVCs match operator-led regulated companies on terms unavailable elsewhere.',
@@ -38,7 +31,6 @@ const necessityMap: Record<string, string> = {
 const orderedMarkets = ['AU', 'JP', 'NZ', 'SG'] as const;
 
 const comparisonRows = [
-  ['Allocation', ...orderedMarkets.map((m) => allocationMap[m])],
   ['Necessities', ...orderedMarkets.map((m) => necessityMap[m])],
   ['Regulators', ...orderedMarkets.map((m) => regulatorMap[m])],
   ['The signature', ...orderedMarkets.map((m) => signatureMap[m])],

@@ -30,10 +30,12 @@ const dialogId = `cf-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
 <script>
   function initChartFigures() {
     document.querySelectorAll<HTMLButtonElement>('[data-cf-open]').forEach((btn) => {
+      if (btn.dataset.cfWired === 'true') return;
       const id = btn.dataset.cfOpen;
       if (!id) return;
       const dialog = document.getElementById(id) as HTMLDialogElement | null;
       if (!dialog) return;
+      btn.dataset.cfWired = 'true';
       let lastFocused: HTMLElement | null = null;
 
       btn.addEventListener('click', () => {
@@ -71,12 +73,19 @@ const dialogId = `cf-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { initChartFigures(); initImageSkeletons(); });
-  } else {
+  function bootChartFigures() {
     initChartFigures();
     initImageSkeletons();
   }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootChartFigures);
+  } else {
+    bootChartFigures();
+  }
+  // Astro View Transitions re-fires this event after every soft-navigation.
+  // Without it the modal trigger stops working after the first navigation.
+  document.addEventListener('astro:page-load', bootChartFigures);
 </script>
 
 <style>

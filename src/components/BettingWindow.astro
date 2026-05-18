@@ -40,7 +40,7 @@ if (open) {
 <aside class={`bw ${open ? 'is-open' : 'is-closed'}`} data-window-closes={closes} data-window-open={open ? 'true' : 'false'}>
   <header class="bw__head">
     <span class="bw__dot" aria-hidden="true"></span>
-    <span class="bw__label">Betting window · {open ? 'open' : 'closed'}</span>
+    <span class="bw__label">Scoring window. {open ? 'open' : 'closed'}</span>
   </header>
 
   <div class="bw__body">
@@ -51,13 +51,12 @@ if (open) {
           <span class="bw__count-unit" data-bw-unit>{ssrUnit}</span>
         </p>
         <p class="bw__close">
-          Window closes <time datetime={closes}>{closeLabel}</time>.
-          Charity-bound bets accepted at <a href="mailto:wt@hmm.ventures?subject=Scoreboard%20bet">wt@hmm.ventures</a>.
+          Window closes <time datetime={closes}>{closeLabel}</time>. Each claim is scored on the dataset at its dated test.
         </p>
       </>
     ) : (
       <p class="bw__close">
-        The betting window closed on <time datetime={closes}>{closeLabel}</time>. Predictions stand and are scored annually.
+        The scoring window closed on <time datetime={closes}>{closeLabel}</time>. Predictions stand and are scored annually.
       </p>
     )}
   </div>

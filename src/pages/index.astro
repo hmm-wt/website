@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import ShapeRow from '../components/ShapeRow.astro';
 import UnitDotFunnel from '../components/charts/UnitDotFunnel.astro';
 import NecessityPanelTeaser from '../components/NecessityPanelTeaser.astro';
+import NecessityMark from '../components/NecessityMark.astro';
 import CorridorGrid from '../components/CorridorGrid.astro';
 import CrystallisationStrip from '../components/charts/CrystallisationStrip.astro';
 import ExitsUnitStrip from '../components/ExitsUnitStrip.astro';
@@ -15,6 +16,7 @@ const necessities = [
     name: 'Biomedical Systems',
     shortName: 'Heal',
     necessityKey: 'Biomedical Systems',
+    markKind: 'biomedical' as const,
     inThesis: 1269,
     claim: 'Clinical software, diagnostics, AI-assisted decisions. Cannot ship without regulator clearance.',
   },
@@ -23,6 +25,7 @@ const necessities = [
     name: 'Power Systems',
     shortName: 'Power',
     necessityKey: 'Power Systems',
+    markKind: 'power' as const,
     inThesis: 581,
     claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
   },
@@ -31,6 +34,7 @@ const necessities = [
     name: 'Autonomous Systems',
     shortName: 'Move',
     necessityKey: 'Autonomous Systems',
+    markKind: 'autonomous' as const,
     inThesis: 561,
     claim: 'Road, logistics, public-path, maritime, aviation. Cannot operate without licence.',
   },
@@ -39,6 +43,7 @@ const necessities = [
     name: 'Critical Materials and Supply Integrity',
     shortName: 'Supply',
     necessityKey: 'Critical Materials and Supply Integrity',
+    markKind: 'materials' as const,
     inThesis: 505,
     claim: 'Provenance, chain of custody, processing history, ESG evidence. Cannot sell without traceability.',
   },
@@ -47,6 +52,7 @@ const necessities = [
     name: 'Food Security Systems',
     shortName: 'Eat',
     necessityKey: 'Food Security Systems',
+    markKind: 'food' as const,
     inThesis: 395,
     claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
   },
@@ -124,8 +130,18 @@ const necessities = [
       <p class="kicker">The five Necessities</p>
       <h2 class="necessities-section__title">Heal. Power. Move. Supply. Eat.</h2>
       <p class="necessities-section__sub">
-        Five non-discretionary needs. Each is gated by regulation. Each gate creates the cohort.
+        The AI revolution becomes investable when it leaves the desk and enters the systems society cannot allow to fail.
       </p>
+      <ul class="necessities-section__marks" role="list" aria-label="The five marks">
+        {necessities.map((n) => (
+          <li class="necessities-section__markitem">
+            <a href={`/necessities/${n.slug}/`} class="necessities-section__marklink" aria-label={n.name}>
+              <NecessityMark kind={n.markKind} size={36} />
+              <span class="necessities-section__marklabel">{n.shortName}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </header>
     <ol class="necessities-section__list" role="list">
       {necessities.map((n, i) => (
@@ -134,6 +150,7 @@ const necessities = [
           name={n.name}
           shortName={n.shortName}
           necessityKey={n.necessityKey}
+          markKind={n.markKind}
           inThesis={n.inThesis}
           claim={n.claim}
           index={i}
@@ -408,6 +425,31 @@ const necessities = [
     list-style: none;
     margin: var(--s-6) 0 0;
     padding: 0;
+  }
+  .necessities-section__marks {
+    list-style: none;
+    margin: var(--s-6) 0 0;
+    padding: 0;
+    display: flex;
+    gap: var(--s-5);
+    flex-wrap: wrap;
+  }
+  .necessities-section__markitem { display: inline-block; }
+  .necessities-section__marklink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s-2);
+    text-decoration: none;
+    color: var(--fg-faint);
+    transition: color var(--mo-tick) var(--ease-golden);
+  }
+  .necessities-section__marklink:hover { color: var(--hero); }
+  .necessities-section__marklabel {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
   /* WINDOW. */

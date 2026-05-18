@@ -1,0 +1,72 @@
+---
+/**
+ * Breadcrumb. Small top-of-page navigation primitive.
+ *
+ * Renders a mono-caps row of crumbs separated by dots. Last item is
+ * non-linked and aria-current. Used on every leaf page under a parent.
+ */
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  crumbs: Crumb[];
+}
+
+const { crumbs } = Astro.props;
+---
+<nav class="bc" aria-label="Breadcrumb">
+  <ol class="bc__list">
+    {crumbs.map((c, i) => (
+      <li class="bc__item">
+        {c.href
+          ? <a class="bc__link" href={c.href}>{c.label}</a>
+          : <span class="bc__current" aria-current="page">{c.label}</span>
+        }
+        {i < crumbs.length - 1 && <span class="bc__sep" aria-hidden="true">·</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .bc {
+    margin-block-end: var(--s-3);
+  }
+  .bc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--s-2);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .bc__item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--s-2);
+  }
+  .bc__link {
+    color: color-mix(in srgb, currentColor 65%, transparent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1px;
+    transition: color var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
+  }
+  .bc__link:hover {
+    color: var(--c-tomato);
+    border-bottom-color: currentColor;
+  }
+  .bc__current {
+    color: currentColor;
+  }
+  .bc__sep {
+    color: color-mix(in srgb, currentColor 35%, transparent);
+  }
+</style>
