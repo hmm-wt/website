@@ -1,0 +1,151 @@
+---
+import IMFigure from '../IMFigure.astro';
+
+const W = 800;
+const H = 480;
+const cx = W / 2;
+const cy = H / 2 + 10;
+const r = 165;
+
+const nodes = [
+  { num: '01', label: 'Regulation passes',         angle: -90,  accent: true  },
+  { num: '02', label: 'Buyer must comply',         angle: -30,  accent: false },
+  { num: '03', label: 'Compliant vendor required', angle:  30,  accent: false },
+  { num: '04', label: 'Vendor embeds in stack',    angle:  90,  accent: false },
+  { num: '05', label: 'Switching cost = legal risk', angle: 150, accent: false },
+  { num: '06', label: 'Regulation updates',        angle: 210,  accent: true  }
+];
+
+const toRad = (deg: number) => (deg * Math.PI) / 180;
+const positioned = nodes.map((n) => {
+  const a = toRad(n.angle);
+  return {
+    ...n,
+    x: cx + r * Math.cos(a),
+    y: cy + r * Math.sin(a)
+  };
+});
+
+const boxW = 156;
+const boxH = 46;
+---
+<IMFigure
+  fignum="WEB-C"
+  label="Compliance cycle · How regulation creates the barrier"
+  title='Each loop hardens the <em>barrier.</em>'
+  sub="Regulation passes. The buyer is compelled to comply. Only a compliant vendor will do. The vendor embeds in the buyer stack. Switching becomes a legal risk, not a procurement decision. Then the regulation updates and the loop repeats."
+  metrics={[
+    { label: 'STEP 01', value: 'Regulation',     ci: 'Compulsion event' },
+    { label: 'STEP 03', value: 'Vendor lock',    ci: 'Compliant only', accent: true },
+    { label: 'STEP 05', value: 'Switching',      ci: '= legal risk' },
+    { label: 'LOOP',    value: 'Self-reinforcing', ci: 'Per regulatory update' }
+  ]}
+  source="hmm Ventures Comprehensive Regulatory Dataset · 174 four-market regulations"
+  basis="Cycle structure · Same loop holds across all Five Necessities"
+>
+  <svg
+    class="cc"
+    viewBox={`0 0 ${W} ${H}`}
+    preserveAspectRatio="xMidYMid meet"
+    role="img"
+    aria-label="Six-step compliance cycle: regulation passes, buyer must comply, compliant vendor required, vendor embeds in stack, switching cost equals legal risk, regulation updates. The loop repeats and hardens the regulated-sector barrier."
+  >
+    {/* Cycle ring */}
+    <circle
+      cx={cx}
+      cy={cy}
+      r={r}
+      fill="none"
+      stroke="var(--imfig-rule)"
+      stroke-width="0.6"
+      stroke-dasharray="2 4"
+    />
+
+    {/* Arrow arcs between consecutive nodes */}
+    {positioned.map((n, i) => {
+      const next = positioned[(i + 1) % positioned.length];
+      const aStart = toRad(n.angle + 14);
+      const aEnd = toRad(next.angle - 14);
+      const x1 = cx + r * Math.cos(aStart);
+      const y1 = cy + r * Math.sin(aStart);
+      const x2 = cx + r * Math.cos(aEnd);
+      const y2 = cy + r * Math.sin(aEnd);
+      const isAccent = n.accent;
+      return (
+        <path
+          d={`M ${x1.toFixed(1)},${y1.toFixed(1)} A ${r},${r} 0 0 1 ${x2.toFixed(1)},${y2.toFixed(1)}`}
+          fill="none"
+          stroke={isAccent ? 'var(--c-tomato)' : 'var(--c-mahogany)'}
+          stroke-width={isAccent ? 1.4 : 0.9}
+          opacity={isAccent ? 0.85 : 0.55}
+        />
+      );
+    })}
+
+    {/* Centre label */}
+    <g>
+      <text
+        x={cx}
+        y={cy - 8}
+        text-anchor="middle"
+        fill="var(--imfig-muted)"
+        font-family="var(--f-mono)"
+        font-size="9"
+        letter-spacing="0.16em"
+      >Self-reinforcing</text>
+      <text
+        x={cx}
+        y={cy + 12}
+        text-anchor="middle"
+        fill="var(--c-tomato)"
+        font-family="var(--f-display)"
+        font-style="italic"
+        font-size="20"
+        font-weight="500"
+        letter-spacing="0.04em"
+      >BARRIER</text>
+    </g>
+
+    {/* Nodes */}
+    {positioned.map((n) => {
+      const stroke = n.accent ? 'var(--c-tomato)' : 'var(--c-mahogany)';
+      const inkLabel = n.accent ? 'var(--c-tomato)' : 'var(--c-mahogany)';
+      return (
+        <g>
+          <rect
+            x={n.x - boxW / 2}
+            y={n.y - boxH / 2}
+            width={boxW}
+            height={boxH}
+            fill="var(--c-pearl)"
+            stroke={stroke}
+            stroke-width={n.accent ? 1.4 : 1}
+            rx="2"
+          />
+          <text
+            x={n.x - boxW / 2 + 8}
+            y={n.y - 8}
+            fill="var(--imfig-muted)"
+            font-family="var(--f-mono)"
+            font-size="7.5"
+            font-weight="700"
+            letter-spacing="0.14em"
+          >{n.num}</text>
+          <text
+            x={n.x}
+            y={n.y + 9}
+            text-anchor="middle"
+            fill={inkLabel}
+            font-family="var(--f-mono)"
+            font-size="9"
+            font-weight="600"
+          >{n.label}</text>
+        </g>
+      );
+    })}
+  </svg>
+</IMFigure>
+
+<style>
+  .cc { width: 100%; height: auto; display: block; }
+</style>
