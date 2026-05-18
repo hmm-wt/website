@@ -30,7 +30,7 @@
       "last_reviewed": "2026-05-17",
       "resolution_criteria": "Resolved YES if T1+T2 share of the four-market 19,416 universe is ≥ 33% on the 2028-12-31 re-query. Resolved NO if < 33%.",
       "evidence": [
-        { "label": "Necessity Index", "href": "/research/data/necessity-index/" }
+        { "label": "Necessity Index", "href": "/data/necessity-index/" }
       ],
       "bets": []
     },
@@ -73,7 +73,7 @@
       "last_reviewed": "2026-05-17",
       "resolution_criteria": "Resolved YES if 3+ of the 34 in-flight regulations have published their final operational compliance documentation by 2028-12-31. Resolved NO if ≤ 2.",
       "evidence": [
-        { "label": "Crystallisation Window", "href": "/research/data/calendar/" }
+        { "label": "Crystallisation Window", "href": "/data/calendar/" }
       ],
       "bets": []
     }

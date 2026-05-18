@@ -1,8 +1,8 @@
 ---
-import Base from '../../../../layouts/Base.astro';
-import StatusIndicator from '../../../../components/StatusIndicator.astro';
-import scoreboard from '../../../../data/scoreboard.json';
-import { buildContactMailto } from '../../../../utils/mailto.ts';
+import Base from '../../../layouts/Base.astro';
+import StatusIndicator from '../../../components/StatusIndicator.astro';
+import scoreboard from '../../../data/scoreboard.json';
+import { buildContactMailto } from '../../../utils/mailto.ts';
 
 export async function getStaticPaths() {
   return scoreboard.predictions.map((p) => ({
@@ -23,7 +23,7 @@ const betMailto = buildContactMailto(`Scoreboard · ${prediction.certainty ?? pr
   <div class="page-light">
   <article class="claim container">
     <header class="claim__head">
-      <p class="claim__crumbs"><a href="/research/data/scoreboard/">← All certainties</a></p>
+      <p class="claim__crumbs"><a href="/data/scoreboard/">← All certainties</a></p>
       {prediction.certainty_num && (
         <p class="claim__cnum">Certainty {prediction.certainty_num}</p>
       )}

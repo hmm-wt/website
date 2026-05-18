@@ -19,6 +19,15 @@ export default defineConfig({
     // Necessities promoted to top-level routes.
     '/research/necessities': '/necessities/',
     '/research/necessities/': '/necessities/',
+    // Data hub promoted to top-level routes 2026-05-18.
+    '/research/data/calendar': '/data/calendar/',
+    '/research/data/calendar/': '/data/calendar/',
+    '/research/data/necessity-index': '/data/necessity-index/',
+    '/research/data/necessity-index/': '/data/necessity-index/',
+    '/research/data/necessity-index/methodology': '/data/necessity-index/methodology/',
+    '/research/data/necessity-index/methodology/': '/data/necessity-index/methodology/',
+    '/research/data/scoreboard': '/data/scoreboard/',
+    '/research/data/scoreboard/': '/data/scoreboard/',
     // 13 research articles consolidated into 3 long-form pages.
     '/research/five-necessities-primer': '/necessities/',
     '/research/five-necessities-primer/': '/necessities/',
@@ -38,8 +47,8 @@ export default defineConfig({
     '/research/compliance-cycle-clock/': '/research/method/',
     '/research/regulatory-landscape': '/research/method/',
     '/research/regulatory-landscape/': '/research/method/',
-    '/research/crystallisation-window-2024-2030': '/research/data/calendar/',
-    '/research/crystallisation-window-2024-2030/': '/research/data/calendar/',
+    '/research/crystallisation-window-2024-2030': '/data/calendar/',
+    '/research/crystallisation-window-2024-2030/': '/data/calendar/',
     '/research/t1-graduation-rates': '/research/results/',
     '/research/t1-graduation-rates/': '/research/results/',
     '/research/what-we-fund-pre-product': '/#founders',

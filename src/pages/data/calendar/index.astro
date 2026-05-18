@@ -1,10 +1,10 @@
 ---
-import Base from '../../../../layouts/Base.astro';
-import CalendarTimeline from '../../../../components/CalendarTimeline.astro';
-import CrystallisationTimeline from '../../../../components/charts/CrystallisationTimeline.astro';
-import TagFilter from '../../../../components/TagFilter.astro';
-import calendar from '../../../../data/crystallisation-window.json';
-import { buildContactMailto } from '../../../../utils/mailto.ts';
+import Base from '../../../layouts/Base.astro';
+import CalendarTimeline from '../../../components/CalendarTimeline.astro';
+import CrystallisationTimeline from '../../../components/charts/CrystallisationTimeline.astro';
+import TagFilter from '../../../components/TagFilter.astro';
+import calendar from '../../../data/crystallisation-window.json';
+import { buildContactMailto } from '../../../utils/mailto.ts';
 
 const necessityList = Array.from(new Set(calendar.regulations.map((r) => r.necessity))).sort();
 

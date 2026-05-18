@@ -13,15 +13,15 @@ The fund's public research is citable. This page documents recommended citation 
 
 ### The Necessity Index
 
-> hmm Ventures, *The Necessity Index*, hmm.ventures/research/data/necessity-index/. APAC technology companies classified against the T1 / T2 framework across Australia, Japan, New Zealand, and Singapore.
+> hmm Ventures, *The Necessity Index*, hmm.ventures/data/necessity-index/. APAC technology companies classified against the T1 / T2 framework across Australia, Japan, New Zealand, and Singapore.
 
 ### The Crystallisation Window calendar
 
-> hmm Ventures, *The Crystallisation Window*, hmm.ventures/research/data/calendar/. Thirty-four in-flight regulations across the four target markets, 2024 to 2030.
+> hmm Ventures, *The Crystallisation Window*, hmm.ventures/data/calendar/. Thirty-four in-flight regulations across the four target markets, 2024 to 2030.
 
 ### The Scoreboard
 
-> hmm Ventures, *The Scoreboard*, hmm.ventures/research/data/scoreboard/. Five falsifiable predictions, dated and sourced.
+> hmm Ventures, *The Scoreboard*, hmm.ventures/data/scoreboard/. Five falsifiable predictions, dated and sourced.
 
 ### Research entries
 
@@ -52,7 +52,7 @@ The hmm Necessity Doctrine is the long-form public companion to the fund's thesi
 
 ## Falsification commitments
 
-The Scoreboard at /research/data/scoreboard/ publishes five falsifiable claims, each dated, sourced, and bound to a public resolution criterion. Charity-bound bets are accepted within the open betting window. The fund publishes resolution outcomes as each claim closes.
+The Scoreboard at /data/scoreboard/ publishes five falsifiable claims, each dated, sourced, and bound to a public resolution criterion. Charity-bound bets are accepted within the open betting window. The fund publishes resolution outcomes as each claim closes.
 
 ## Sources for this page
 
