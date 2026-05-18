@@ -5,8 +5,6 @@ import UnitDotFunnel from '../components/charts/UnitDotFunnel.astro';
 import NecessityPanelTeaser from '../components/NecessityPanelTeaser.astro';
 import NecessityMark from '../components/NecessityMark.astro';
 import CorridorGrid from '../components/CorridorGrid.astro';
-import CrystallisationStrip from '../components/charts/CrystallisationStrip.astro';
-import ExitsUnitStrip from '../components/ExitsUnitStrip.astro';
 import ChartFrame from '../components/ChartFrame.astro';
 import CTARail from '../components/CTARail.astro';
 
@@ -158,37 +156,22 @@ const necessities = [
     </ol>
   </section>
 
-  <section class="window container">
-    <ChartFrame
-      kicker="The window"
-      title="Effective dates concentrate at 2027."
-      caption="Thirty-four in-flight regulations across the Five Necessities in the four target markets. Peak crystallisation 2027."
-      source="Source. hmm Ventures comprehensive regulatory dataset."
-    >
-      <CrystallisationStrip />
-    </ChartFrame>
-  </section>
-
   <section class="markets-section container">
     <header class="markets-section__head">
       <p class="kicker">The four markets</p>
-      <h2 class="markets-section__title">Allocated to developed APAC.</h2>
+      <h2 class="markets-section__title">Developed APAC, on a regulatory clock.</h2>
     </header>
   </section>
 
   <CorridorGrid />
 
   <section class="evidence container">
-    <ChartFrame
-      kicker="The evidence"
-      title="Strategic acquirers are already buying."
-      caption="Nine named developed-APAC regulated-company acquisitions, primary-source verified. Hero marks are T1 acquisitions."
-      source="Source. hmm Ventures exit dataset."
-    >
-      <ExitsUnitStrip />
-    </ChartFrame>
+    <p class="kicker evidence__kicker">The evidence</p>
+    <p class="evidence__line">
+      Nine named developed-APAC regulated-company acquisitions 2020 to 2026. Round-size premium 1.12x at seed, 1.53x at Series C. Exit incidence at 2.22x the unregulated rate.
+    </p>
     <p class="evidence__readmore">
-      <a href="/research/results/">The graduation rates &rarr;</a>
+      <a href="/research/results/">See the graduation rates &rarr;</a>
     </p>
   </section>
 
@@ -475,13 +458,24 @@ const necessities = [
   /* EVIDENCE. */
   .evidence {
     padding-block: var(--s-7);
+    border-top: var(--hair) solid var(--hair-color);
+    max-width: 64rem;
+  }
+  .evidence__kicker { color: var(--c-tomato); margin: 0; }
+  .evidence__line {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+    max-width: 56ch;
+    margin: var(--s-3) 0 var(--s-4);
   }
   .evidence__readmore {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    margin: var(--s-4) 0 0;
+    margin: 0;
   }
   .evidence__readmore a {
     color: var(--c-tomato);
