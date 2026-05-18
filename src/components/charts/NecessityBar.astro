@@ -1,189 +1,80 @@
 ---
 /**
- * NecessityBar (WEB-F). Companies by Necessity, in-thesis cohort.
- * Per-row encoding: company-count bar + T1/T2 regulation strip + total cell.
+ * NecessityBar (WEB-F). 1:1 port of web_necessity_bar() in CIM/html/charts.py.
+ * Per-Necessity in-thesis company count. Tomato on the leader (Biomedical).
  */
 import IMFigure from '../IMFigure.astro';
-import data from '../../data/necessity-index.json';
 
-const rowsRaw = data.per_necessity.map((n) => ({
-  label: n.name
-    .replace('Critical Materials and Supply Integrity', 'Critical Materials')
-    .replace(' Systems', ''),
-  full: n.name,
-  count: n.in_thesis_companies,
-  t1: n.regulations_t1,
-  t2: n.regulations_t2,
-  totalReg: n.regulations_t1 + n.regulations_t2
-}));
-
-const rows = [...rowsRaw].sort((a, b) => b.count - a.count);
-const leader = rows[0];
-const maxCount = Math.max(...rows.map((r) => r.count));
-const maxX = 1400;
-const ticks = [250, 500, 750, 1000, 1250];
+interface Row { label: string; count: number }
+const rows: Row[] = [
+  { label: 'Biomedical Systems',           count: 1269 },
+  { label: 'Power Systems',                count: 581 },
+  { label: 'Autonomous Systems',           count: 561 },
+  { label: 'Critical Materials & Supply',  count: 505 },
+  { label: 'Food Security Systems',        count: 395 }
+];
 
 const W = 800;
-const H = 360;
-const ml = 160, mr = 200, mt = 40, mb = 56;
+const H = 280;
+const ml = 200, mr = 90, mt = 30, mb = 40;
 const iw = W - ml - mr;
 const ih = H - mt - mb;
+const maxX = Math.max(...rows.map((r) => r.count)) * 1.10;
 const rowH = ih / rows.length;
-const xOf = (v: number) => ml + (v / maxX) * iw;
-
-const t1Total = rows.reduce((s, r) => s + r.t1, 0);
-const t2Total = rows.reduce((s, r) => s + r.t2, 0);
-const companyTotal = rows.reduce((s, r) => s + r.count, 0);
+const ticks = [250, 500, 750, 1000, 1250];
+const maxCount = Math.max(...rows.map((r) => r.count));
 ---
 <IMFigure
   fignum="WEB-F"
   label="Companies by Necessity · In-thesis cohort"
-  title={`<em>${leader.label}</em> leads the cohort. ${rows[1].label} and ${rows[2].label} follow.`}
-  sub="In-thesis company count by Necessity across the four-market base. T1 + T2 classifier applied. Bars read company count. The strip on the right reads regulation density per Necessity."
+  title='<em>Biomedical Systems</em> leads at 1,269. Four others between 395 and 581.'
+  sub="In-thesis company count by Necessity across the four-market base. T1 + T2 classifier applied. The Biomedical concentration anchors the heal Necessity."
   metrics={[
-    { label: leader.label.toUpperCase(),  value: leader.count.toLocaleString('en-GB'), ci: 'Largest cohort', accent: true },
-    { label: 'TOTAL IN-THESIS',           value: companyTotal.toLocaleString('en-GB'), ci: 'Four-market base' },
-    { label: 'T1 REGULATIONS',            value: String(t1Total),                       ci: 'Licence barrier' },
-    { label: 'T2 REGULATIONS',            value: String(t2Total),                       ci: 'Compliance barrier' }
+    { label: 'BIOMEDICAL',        value: '1,269', ci: 'Heal · largest cohort', accent: true },
+    { label: 'POWER',             value: '581',   ci: 'Grid + storage + DER' },
+    { label: 'AUTONOMOUS',        value: '561',   ci: 'Move + logistics' },
+    { label: 'FOOD + MATERIALS',  value: '900',   ci: 'Eat + supply combined' }
   ]}
   source="hmm Ventures Comprehensive Classified Dataset"
   basis="In-thesis companies · T1 + T2 classifier · Four-market base"
 >
   <svg
-    class="nb"
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="xMidYMid meet"
+    style="width:100%;height:auto;display:block;"
     role="img"
-    aria-label={`In-thesis companies by Necessity: ${rows.map((r) => `${r.label} ${r.count} companies, ${r.t1} T1 regulations, ${r.t2} T2 regulations`).join('; ')}.`}
+    aria-label="In-thesis companies by Necessity: Biomedical leads at 1,269; Power, Autonomous, Critical Materials, and Food Security each between 395 and 581."
   >
-    {/* Y axis baseline */}
-    <line x1={ml} y1={mt} x2={ml} y2={mt + ih} stroke="var(--c-mahogany)" stroke-width="0.6" />
-    <line x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih} stroke="var(--c-mahogany)" stroke-width="0.6" />
+    <line x1={ml} y1={mt} x2={ml} y2={mt + ih} stroke="var(--mahogany)" stroke-width="0.6" />
+    <line x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih} stroke="var(--mahogany)" stroke-width="0.6" />
 
-    {/* Tick lines + labels */}
-    {ticks.map((v) => (
-      <g class="nb__tick">
-        <line
-          x1={xOf(v)} y1={mt}
-          x2={xOf(v)} y2={mt + ih}
-          stroke="var(--imfig-rule)"
-          stroke-width="0.4"
-          stroke-dasharray="1 3"
-        />
-        <text
-          x={xOf(v)}
-          y={mt + ih + 14}
-          text-anchor="middle"
-          fill="var(--imfig-muted)"
-          font-family="var(--f-mono)"
-          font-size="8"
-        >{v.toLocaleString('en-GB')}</text>
-      </g>
-    ))}
-
-    {/* Column headers */}
-    <text x={ml - 12} y={mt - 12} text-anchor="end" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5" letter-spacing="0.14em" font-weight="700">NECESSITY</text>
-    <text x={ml + 4} y={mt - 12} fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5" letter-spacing="0.14em" font-weight="700">COMPANIES</text>
-    <text x={ml + iw + 18} y={mt - 12} fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7.5" letter-spacing="0.14em" font-weight="700">T1 / T2</text>
-
-    {rows.map((r, i) => {
-      const y = mt + i * rowH + rowH / 2;
-      const barH = rowH * 0.46;
-      const bw = (r.count / maxX) * iw;
-      const isTop = r.count === maxCount;
-      const col = isTop ? 'var(--c-tomato)' : 'var(--c-mahogany)';
-      const op = isTop ? 0.88 : 0.32;
-      const weight = isTop ? 700 : 500;
-      const stripX = ml + iw + 18;
-      const stripMax = 28;
-      const t1W = Math.max((r.t1 / 60) * stripMax, r.t1 > 0 ? 4 : 0);
-      const t2W = Math.max((r.t2 / 60) * stripMax, r.t2 > 0 ? 4 : 0);
+    {ticks.map((v) => {
+      const x = ml + (v / maxX) * iw;
       return (
-        <g class="nb__row">
-          {/* Necessity label */}
-          <text
-            x={ml - 12}
-            y={y + 3}
-            text-anchor="end"
-            fill={col}
-            font-family="var(--f-mono)"
-            font-size="9"
-            font-weight={weight}
-          >{r.label}</text>
-
-          {/* Bar */}
-          <rect
-            x={ml}
-            y={y - barH / 2}
-            width={bw}
-            height={barH}
-            fill={col}
-            opacity={op}
-          />
-
-          {/* Count to the right of bar */}
-          <text
-            x={ml + bw + 8}
-            y={y + 3}
-            fill={col}
-            font-family="var(--f-mono)"
-            font-size="10"
-            font-weight={weight}
-          >{r.count.toLocaleString('en-GB')}</text>
-
-          {/* T1/T2 strip on the right rail */}
-          <rect
-            x={stripX}
-            y={y - 8}
-            width={t1W}
-            height={6}
-            fill="var(--c-tomato)"
-            opacity={isTop ? 0.85 : 0.55}
-          />
-          <text
-            x={stripX + 36}
-            y={y - 2}
-            fill="var(--c-mahogany)"
-            font-family="var(--f-mono)"
-            font-size="7.5"
-            font-weight="600"
-          >{r.t1} <tspan fill="var(--imfig-muted)">T1</tspan></text>
-
-          <rect
-            x={stripX}
-            y={y + 2}
-            width={t2W}
-            height={6}
-            fill="var(--c-mahogany)"
-            opacity={isTop ? 0.7 : 0.32}
-          />
-          <text
-            x={stripX + 36}
-            y={y + 8}
-            fill="var(--c-mahogany)"
-            font-family="var(--f-mono)"
-            font-size="7.5"
-            font-weight="500"
-            opacity="0.8"
-          >{r.t2} <tspan fill="var(--imfig-muted)">T2</tspan></text>
+        <g>
+          <line x1={x} y1={mt} x2={x} y2={mt + ih} stroke="var(--rule)" stroke-width="0.4" stroke-dasharray="1 2" />
+          <text x={x} y={mt + ih + 14} text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="7">{v.toLocaleString('en-GB')}</text>
         </g>
       );
     })}
 
-    {/* Axis label */}
-    <text
-      x={ml + iw / 2}
-      y={H - 14}
-      text-anchor="middle"
-      fill="var(--imfig-muted)"
-      font-family="var(--f-mono)"
-      font-size="7.5"
-      letter-spacing="0.16em"
-      font-weight="700"
-    >IN-THESIS COMPANIES · FOUR-MARKET</text>
+    {rows.map((r, i) => {
+      const y = mt + i * rowH + rowH / 2;
+      const barH = rowH * 0.50;
+      const bw = (r.count / maxX) * iw;
+      const isTop = r.count === maxCount;
+      const col = isTop ? 'var(--tomato)' : 'var(--dark-teal)';
+      const op = isTop ? '0.80' : '0.30';
+      const weight = isTop ? '700' : '500';
+      return (
+        <g>
+          <text x={ml - 10} y={y + 3} text-anchor="end" fill={col} font-family="var(--mono)" font-size="8.5" font-weight={weight}>{r.label}</text>
+          <rect x={ml} y={y - barH / 2} width={bw} height={barH} fill={col} opacity={op} />
+          <text x={ml + bw + 8} y={y + 3} fill={col} font-family="var(--mono)" font-size="9" font-weight={weight}>{r.count.toLocaleString('en-GB')}</text>
+        </g>
+      );
+    })}
+
+    <text x={ml + iw / 2} y={mt + ih + 30} text-anchor="middle" fill="var(--ink)" font-family="var(--mono)" font-size="7" letter-spacing="0.16em" font-weight="700">IN-THESIS COMPANIES · FOUR-MARKET</text>
   </svg>
 </IMFigure>
-
-<style>
-  .nb { width: 100%; height: auto; display: block; }
-</style>

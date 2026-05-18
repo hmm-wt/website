@@ -1,28 +1,17 @@
 ---
 /**
- * MarketRegulationBar — inline port of web_market_regulation_bar() from CIM/html/charts.py.
- * Horizontal bar chart: per-market regulation count, split between enacted and projected.
- *
- * Data binds to src/data/necessity-index.json data.per_market.
- *
- * Motion hooks:
- *  - .bar-row.stagger-row data-i="0..3" per row
- *  - .wedge-draw on each rect (scaleX from 0)
- *  - .ticker-roll on value labels
+ * MarketRegulationBar (WEB-G). 1:1 port of web_market_regulation_bar()
+ * in CIM/html/charts.py. Per-market regulation count: enacted + projected.
  */
 import IMFigure from '../IMFigure.astro';
-import data from '../../data/necessity-index.json';
 
-// Sort markets by total regulations descending so the leader sits on top
-const rows = [...data.per_market]
-  .map((m) => ({
-    label: m.code, // "Australia", "Japan", etc.
-    code: m.market,
-    total: m.regulations,
-    enacted: m.enacted,
-    projected: m.projected,
-  }))
-  .sort((a, b) => b.total - a.total);
+interface Row { label: string; total: number; enacted: number; projected: number }
+const rows: Row[] = [
+  { label: 'Australia',    total: 47, enacted: 35, projected: 12 },
+  { label: 'Japan',        total: 43, enacted: 33, projected: 10 },
+  { label: 'Singapore',    total: 33, enacted: 25, projected: 8  },
+  { label: 'New Zealand',  total: 24, enacted: 22, projected: 2  }
+];
 
 const W = 800;
 const H = 260;
@@ -31,121 +20,67 @@ const iw = W - ml - mr;
 const ih = H - mt - mb;
 const maxX = 50;
 const rowH = ih / rows.length;
-const maxTotal = Math.max(...rows.map((r) => r.total));
-const totalAll = rows.reduce((s, r) => s + r.total, 0);
-
 const ticks = [10, 20, 30, 40, 50];
+const maxReg = Math.max(...rows.map((r) => r.total));
 ---
 <IMFigure
   fignum="WEB-G"
   label="Regulations by market · In-mandate dataset"
-  title={`<em>${rows[0].label}</em> leads at ${rows[0].total}. ${totalAll} total across four markets.`}
+  title='<em>Australia</em> leads at 47. 147 total across four markets.'
   sub="In-mandate regulations by market, split between enacted and projected. Australia and Japan lead density; New Zealand smaller but with the highest enacted share."
-  metrics={rows.map((r, i) => ({
-    label: r.label.toUpperCase(),
-    value: String(r.total),
-    ci: `${r.enacted} enacted · ${r.projected} projected`,
-    accent: i === 0,
-  }))}
-  source="hmm Ventures Comprehensive Regulatory Dataset"
-  basis={`${totalAll} in-mandate regulations · Four-market scope`}
+  metrics={[
+    { label: 'AUSTRALIA',   value: '47', ci: '35 enacted · 12 projected', accent: true },
+    { label: 'JAPAN',       value: '43', ci: '33 enacted · 10 projected' },
+    { label: 'SINGAPORE',   value: '33', ci: '25 enacted · 8 projected' },
+    { label: 'NEW ZEALAND', value: '24', ci: '22 enacted · 2 projected' }
+  ]}
+  source="hmm Ventures Comprehensive Regulatory Dataset · v1.1"
+  basis="147 in-mandate regulations · Four-market scope · 2026-Q2 snapshot"
 >
   <svg
-    class="mrb"
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="xMidYMid meet"
+    style="width:100%;height:auto;display:block;"
     role="img"
-    aria-label={`Per-market regulation count: ${rows.map((r) => `${r.label} ${r.total}`).join(', ')}. ${totalAll} total in-mandate regulations across the four markets.`}
+    aria-label="Per-market regulation count: Australia 47, Japan 43, Singapore 33, New Zealand 24. 147 total in-mandate regulations across the four markets."
   >
-    {/* Axes */}
-    <line x1={ml} y1={mt} x2={ml} y2={mt + ih} stroke="var(--c-mahogany)" stroke-width="0.6" />
-    <line x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih} stroke="var(--c-mahogany)" stroke-width="0.6" />
+    <line x1={ml} y1={mt} x2={ml} y2={mt + ih} stroke="var(--mahogany)" stroke-width="0.6" />
+    <line x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih} stroke="var(--mahogany)" stroke-width="0.6" />
 
-    {/* Tick grid */}
     {ticks.map((v) => {
       const x = ml + (v / maxX) * iw;
       return (
-        <g class="mrb__tick">
-          <line x1={x} y1={mt} x2={x} y2={mt + ih} stroke="var(--imfig-rule)" stroke-width="0.4" stroke-dasharray="1 2" />
-          <text x={x} y={mt + ih + 14} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7">{v}</text>
+        <g>
+          <line x1={x} y1={mt} x2={x} y2={mt + ih} stroke="var(--rule)" stroke-width="0.4" stroke-dasharray="1 2" />
+          <text x={x} y={mt + ih + 14} text-anchor="middle" fill="var(--muted)" font-family="var(--mono)" font-size="7">{v}</text>
         </g>
       );
     })}
 
-    {/* Bars */}
     {rows.map((r, i) => {
       const y = mt + i * rowH + rowH / 2;
       const barH = rowH * 0.46;
       const xEnacted = ml + (r.enacted / maxX) * iw;
       const xTotal = ml + (r.total / maxX) * iw;
-      const isTop = r.total === maxTotal;
-      const col = isTop ? 'var(--c-tomato)' : 'var(--c-dark-teal)';
-      const enactedOp = isTop ? 0.78 : 0.35;
-      const projectedOp = isTop ? 0.42 : 0.18;
-      const weight = isTop ? 700 : 500;
-
+      const isTop = r.total === maxReg;
+      const col = isTop ? 'var(--tomato)' : 'var(--dark-teal)';
+      const enactedOp = isTop ? '0.78' : '0.35';
+      const projectedOp = isTop ? '0.42' : '0.18';
+      const weight = isTop ? '700' : '500';
       return (
-        <g class="mrb__row stagger-row" data-i={i}>
-          <text
-            x={ml - 10}
-            y={y + 3}
-            text-anchor="end"
-            fill={col}
-            font-family="var(--f-mono)"
-            font-size="9"
-            font-weight={weight}
-          >{r.label}</text>
-          <rect
-            class="wedge-draw"
-            x={ml}
-            y={y - barH / 2}
-            width={xEnacted - ml}
-            height={barH}
-            fill={col}
-            opacity={enactedOp}
-          />
-          <rect
-            class="wedge-draw"
-            x={xEnacted}
-            y={y - barH / 2}
-            width={xTotal - xEnacted}
-            height={barH}
-            fill={col}
-            opacity={projectedOp}
-          />
-          <text
-            class="ticker-roll"
-            x={xTotal + 8}
-            y={y + 3}
-            fill={col}
-            font-family="var(--f-mono)"
-            font-size="9"
-            font-weight={weight}
-          >{r.total} ({r.enacted}+{r.projected})</text>
+        <g>
+          <text x={ml - 10} y={y + 3} text-anchor="end" fill={col} font-family="var(--mono)" font-size="9" font-weight={weight}>{r.label}</text>
+          <rect x={ml} y={y - barH / 2} width={xEnacted - ml} height={barH} fill={col} opacity={enactedOp} />
+          <rect x={xEnacted} y={y - barH / 2} width={xTotal - xEnacted} height={barH} fill={col} opacity={projectedOp} />
+          <text x={xTotal + 8} y={y + 3} fill={col} font-family="var(--mono)" font-size="9" font-weight={weight}>{r.total} ({r.enacted}+{r.projected})</text>
         </g>
       );
     })}
 
-    {/* Legend */}
-    <g class="mrb__legend">
-      <rect x={ml} y={H - 19} width="10" height="6" fill="var(--c-mahogany)" opacity="0.78" />
-      <text x={ml + 14} y={H - 13} fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7">Enacted</text>
-      <rect x={ml + 74} y={H - 19} width="10" height="6" fill="var(--c-mahogany)" opacity="0.42" />
-      <text x={ml + 88} y={H - 13} fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7">Projected</text>
-    </g>
-    <text
-      x={ml + iw / 2}
-      y={mt + ih + 30}
-      text-anchor="middle"
-      fill="var(--c-mahogany)"
-      font-family="var(--f-mono)"
-      font-size="7"
-      letter-spacing="0.16em"
-      font-weight="700"
-    >REGULATIONS IN MANDATE · ENACTED + PROJECTED</text>
+    <rect x={ml} y={H - 19} width="10" height="6" fill="var(--mahogany)" opacity="0.78" />
+    <text x={ml + 14} y={H - 13} fill="var(--muted)" font-family="var(--mono)" font-size="7">Enacted</text>
+    <rect x={ml + 74} y={H - 19} width="10" height="6" fill="var(--mahogany)" opacity="0.42" />
+    <text x={ml + 88} y={H - 13} fill="var(--muted)" font-family="var(--mono)" font-size="7">Projected</text>
+    <text x={ml + iw / 2} y={mt + ih + 30} text-anchor="middle" fill="var(--ink)" font-family="var(--mono)" font-size="7" letter-spacing="0.16em" font-weight="700">REGULATIONS IN MANDATE · ENACTED + PROJECTED</text>
   </svg>
 </IMFigure>
-
-<style>
-  .mrb { width: 100%; height: auto; display: block; }
-</style>

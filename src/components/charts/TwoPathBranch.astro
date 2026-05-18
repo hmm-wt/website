@@ -1,156 +1,68 @@
 ---
 /**
- * TwoPathBranch (WEB-I). Two parallel tracks from today to 2028.
- * Path A: Crystallisation (Fund I plays). Path B: Fragmentation (falsifies).
- * Each track carries dated observable signals.
+ * TwoPathBranch (WEB-I). 1:1 port of web_two_path_branch() in
+ * CIM/html/charts.py. Two-path branching: Crystallisation vs Fragmentation.
  */
 import IMFigure from '../IMFigure.astro';
 
 const W = 800;
-const H = 380;
-const ml = 100, mr = 60, mt = 78, mb = 60;
-const iw = W - ml - mr;
-const ih = H - mt - mb;
-
-const yearStart = 2026;
-const yearEnd = 2028.4;
-const xOf = (y: number) => ml + ((y - yearStart) / (yearEnd - yearStart)) * iw;
-
-const pathA = {
-  label: 'Crystallisation',
-  outcome: 'Fund I plays here',
-  trackY: mt + ih * 0.28,
-  signals: [
-    { year: 2026.4, label: 'Four-market regulator alignment cadence holds' },
-    { year: 2027.0, label: '17 of 34 in-flight regulations take effect' },
-    { year: 2027.6, label: 'T1 cohort survives first enforcement cycle' },
-    { year: 2028.0, label: '2,625-company in-thesis universe priced' }
-  ]
-};
-
-const pathB = {
-  label: 'Fragmentation',
-  outcome: 'Doctrine falsified',
-  trackY: mt + ih * 0.78,
-  signals: [
-    { year: 2026.6, label: 'Major regime repealed in one of four markets' },
-    { year: 2027.2, label: 'Compliance work commoditised under AI' },
-    { year: 2027.8, label: 'Exit market closes to regulated venture' },
-    { year: 2028.0, label: 'Scoreboard publishes failure' }
-  ]
-};
+const H = 360;
+const rootX = W / 2;
+const rootY = 70;
+const branchY = 200;
+const leftX = 200;
+const rightX = 600;
+const endY = 300;
 ---
 <IMFigure
   fignum="WEB-I"
   label="Two paths · Crystallisation vs Fragmentation"
-  title='Fund I bets <em>Path A.</em> Path B falsifies the doctrine.'
-  sub="The regulatory build is in flight across four markets. Either the regimes converge enough to form a tradeable T1 / T2 universe, or they fragment. Both paths are publicly tracked on the Scoreboard."
+  title='Fund I bets <em>Path A</em>. Path B falsifies the doctrine.'
+  sub="The regulatory build is in flight across four markets. Either the regimes converge enough to form a tradeable T1/T2 universe, or they fragment. Fund I plays Crystallisation; the Scoreboard makes Fragmentation falsifiable."
   metrics={[
     { label: 'PATH A', value: 'Crystallisation', ci: 'Fund I deploys', accent: true },
-    { label: 'PATH B', value: 'Fragmentation',  ci: 'Doctrine fails' },
-    { label: 'TEST',   value: 'By 2028',        ci: 'Scoreboard window' },
-    { label: 'BASE',   value: '2,625 cos',      ci: 'Seed-stage in-thesis' }
+    { label: 'PATH B', value: 'Fragmentation',   ci: 'Doctrine fails' },
+    { label: 'TEST',   value: 'By 2028',         ci: 'Scoreboard window' },
+    { label: 'BASE',   value: '2,625 cos',       ci: 'Seed-stage in-thesis' }
   ]}
   source="The Necessity Doctrine · Chapter 09 (Path A) · Chapter 10 (Path B)"
   basis="Binary outcome · Both paths publicly tracked on the Scoreboard"
 >
   <svg
-    class="tpb"
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="xMidYMid meet"
+    style="width:100%;height:auto;display:block;"
     role="img"
-    aria-label="Two paths from today to 2028. Path A (Crystallisation): Fund I plays here, with four observable signals. Path B (Fragmentation): doctrine falsified, with four observable signals. Both paths tracked on the Scoreboard."
+    aria-label="Two-path branching: Crystallisation (Fund I plays here) versus Fragmentation (falsified by 2028 if regimes diverge)."
   >
-    {/* Today origin node */}
-    <g>
-      <rect x={20} y={mt + ih * 0.50 - 26} width={64} height={52} rx="2" fill="var(--c-pearl)" stroke="var(--c-mahogany)" stroke-width="1.2" />
-      <text x={52} y={mt + ih * 0.50 - 10} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7" letter-spacing="0.16em" font-weight="700">TODAY</text>
-      <text x={52} y={mt + ih * 0.50 + 6} text-anchor="middle" fill="var(--c-mahogany)" font-family="var(--f-display)" font-size="14" font-style="italic">2026</text>
-      <text x={52} y={mt + ih * 0.50 + 20} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="6.5" letter-spacing="0.12em">IN FLIGHT</text>
-    </g>
+    <path d={`M ${rootX},${rootY + 30} Q ${rootX},${branchY - 20} ${leftX},${branchY - 10}`} fill="none" stroke="var(--tomato)" stroke-width="2" opacity="0.85" />
+    <path d={`M ${rootX},${rootY + 30} Q ${rootX},${branchY - 20} ${rightX},${branchY - 10}`} fill="none" stroke="var(--mahogany)" stroke-width="1.2" opacity="0.30" stroke-dasharray="4 3" />
 
-    {/* Year axis */}
-    {[2026, 2027, 2028].map((y) => (
-      <g class="tpb__axis">
-        <line x1={xOf(y)} y1={mt - 6} x2={xOf(y)} y2={mt + ih + 6} stroke="var(--imfig-rule)" stroke-width="0.4" stroke-dasharray="1 3" />
-        <text x={xOf(y)} y={mt + ih + 22} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="9">{y}</text>
-      </g>
-    ))}
+    <line x1={leftX}  y1={branchY + 44} x2={leftX}  y2={endY - 10} stroke="var(--tomato)"   stroke-width="2"   opacity="0.85" />
+    <line x1={rightX} y1={branchY + 44} x2={rightX} y2={endY - 10} stroke="var(--mahogany)" stroke-width="1.2" opacity="0.30" stroke-dasharray="4 3" />
 
-    {/* Branch from origin into both tracks */}
-    <path
-      d={`M ${84},${mt + ih * 0.50} C ${ml - 20},${mt + ih * 0.50} ${ml - 20},${pathA.trackY} ${ml},${pathA.trackY}`}
-      fill="none"
-      stroke="var(--c-tomato)"
-      stroke-width="2"
-      opacity="0.85"
-    />
-    <path
-      d={`M ${84},${mt + ih * 0.50} C ${ml - 20},${mt + ih * 0.50} ${ml - 20},${pathB.trackY} ${ml},${pathB.trackY}`}
-      fill="none"
-      stroke="var(--c-mahogany)"
-      stroke-width="1.2"
-      opacity="0.35"
-      stroke-dasharray="4 3"
-    />
+    <rect x={rootX - 130} y={rootY - 22} width="260" height="56" rx="3" fill="var(--paper)" stroke="var(--ink)" stroke-width="1.2" />
+    <text x={rootX} y={rootY - 4}  text-anchor="middle" fill="var(--muted)" font-family="var(--mono)"  font-size="7"  letter-spacing="0.14em" font-weight="700">TODAY · 2026</text>
+    <text x={rootX} y={rootY + 15} text-anchor="middle" fill="var(--ink)"   font-family="var(--serif)" font-style="italic" font-size="12">The regulatory build is in flight</text>
 
-    {/* Path A track */}
-    <g>
-      <text x={ml - 8} y={pathA.trackY - 26} text-anchor="end" fill="var(--c-tomato)" font-family="var(--f-mono)" font-size="7" font-weight="700" letter-spacing="0.16em">PATH A</text>
-      <text x={ml - 8} y={pathA.trackY - 12} text-anchor="end" fill="var(--c-tomato)" font-family="var(--f-display)" font-style="italic" font-size="14" font-weight="600">{pathA.label}</text>
-      <line x1={ml} y1={pathA.trackY} x2={ml + iw} y2={pathA.trackY} stroke="var(--c-tomato)" stroke-width="2" opacity="0.85" />
-      {pathA.signals.map((s, i) => (
-        <g>
-          <circle cx={xOf(s.year)} cy={pathA.trackY} r="4.5" fill="var(--c-tomato)" />
-          <line x1={xOf(s.year)} y1={pathA.trackY - 8} x2={xOf(s.year)} y2={pathA.trackY - 18} stroke="var(--c-tomato)" stroke-width="0.6" opacity="0.55" />
-          <text
-            x={xOf(s.year)}
-            y={pathA.trackY - 22}
-            text-anchor={i === pathA.signals.length - 1 ? 'end' : 'middle'}
-            fill="var(--c-mahogany)"
-            font-family="var(--f-mono)"
-            font-size="6.8"
-            font-weight="600"
-          >{s.label}</text>
-        </g>
-      ))}
-      {/* Terminal */}
-      <rect x={ml + iw - 4} y={pathA.trackY - 14} width="50" height="28" rx="2" fill="var(--c-tomato)" opacity="0.92" />
-      <text x={ml + iw + 21} y={pathA.trackY - 2} text-anchor="middle" fill="var(--c-pearl)" font-family="var(--f-mono)" font-size="6" letter-spacing="0.14em" font-weight="700">FUND I</text>
-      <text x={ml + iw + 21} y={pathA.trackY + 9} text-anchor="middle" fill="var(--c-pearl)" font-family="var(--f-mono)" font-size="6" letter-spacing="0.14em" font-weight="700">PLAYS</text>
-    </g>
+    <rect x={leftX - 90} y={branchY - 10} width="180" height="54" rx="3" fill="var(--paper)" stroke="var(--tomato)" stroke-width="1.4" />
+    <text x={leftX} y={branchY + 6}  text-anchor="middle" fill="var(--tomato)" font-family="var(--mono)"  font-size="8"  letter-spacing="0.14em" font-weight="700">PATH A</text>
+    <text x={leftX} y={branchY + 24} text-anchor="middle" fill="var(--tomato)" font-family="var(--serif)" font-style="italic" font-size="13" font-weight="700">Crystallisation</text>
+    <text x={leftX} y={branchY + 38} text-anchor="middle" fill="var(--ink)"    font-family="var(--mono)"  font-size="7.5">Four markets harden</text>
 
-    {/* Path B track */}
-    <g>
-      <text x={ml - 8} y={pathB.trackY - 4} text-anchor="end" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7" font-weight="700" letter-spacing="0.16em">PATH B</text>
-      <text x={ml - 8} y={pathB.trackY + 10} text-anchor="end" fill="var(--imfig-muted)" font-family="var(--f-display)" font-style="italic" font-size="14" font-weight="500">{pathB.label}</text>
-      <line x1={ml} y1={pathB.trackY} x2={ml + iw} y2={pathB.trackY} stroke="var(--c-mahogany)" stroke-width="1.2" opacity="0.35" stroke-dasharray="4 3" />
-      {pathB.signals.map((s, i) => (
-        <g>
-          <circle cx={xOf(s.year)} cy={pathB.trackY} r="4" fill="var(--c-pearl)" stroke="var(--c-mahogany)" stroke-width="1" opacity="0.7" />
-          <line x1={xOf(s.year)} y1={pathB.trackY + 8} x2={xOf(s.year)} y2={pathB.trackY + 18} stroke="var(--c-mahogany)" stroke-width="0.5" opacity="0.4" stroke-dasharray="1 2" />
-          <text
-            x={xOf(s.year)}
-            y={pathB.trackY + 28}
-            text-anchor={i === pathB.signals.length - 1 ? 'end' : 'middle'}
-            fill="var(--imfig-muted)"
-            font-family="var(--f-mono)"
-            font-size="6.8"
-            font-weight="500"
-          >{s.label}</text>
-        </g>
-      ))}
-      {/* Terminal */}
-      <rect x={ml + iw - 4} y={pathB.trackY - 14} width="50" height="28" rx="2" fill="var(--c-pearl)" stroke="var(--c-mahogany)" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.55" />
-      <text x={ml + iw + 21} y={pathB.trackY - 2} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="6" letter-spacing="0.14em" font-weight="700">DOCTRINE</text>
-      <text x={ml + iw + 21} y={pathB.trackY + 9} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="6" letter-spacing="0.14em" font-weight="700">FAILS</text>
-    </g>
+    <rect x={leftX - 90} y={endY - 10} width="180" height="54" rx="3" fill="var(--tomato)" opacity="0.92" />
+    <text x={leftX} y={endY + 6}  text-anchor="middle" fill="var(--pearl)" font-family="var(--mono)"  font-size="7"  letter-spacing="0.14em" font-weight="700">FUND I PLAYS HERE</text>
+    <text x={leftX} y={endY + 24} text-anchor="middle" fill="var(--pearl)" font-family="var(--serif)" font-style="italic" font-size="12">T1 / T2 in-thesis</text>
+    <text x={leftX} y={endY + 38} text-anchor="middle" fill="var(--pearl)" font-family="var(--mono)"  font-size="7.5" opacity="0.9">2,625 seed-stage targets</text>
 
-    {/* Scoreboard tag */}
-    <text x={ml + iw / 2} y={H - 12} text-anchor="middle" fill="var(--imfig-muted)" font-family="var(--f-mono)" font-size="7" letter-spacing="0.16em" font-weight="700">BOTH PATHS · PUBLICLY TRACKED ON THE SCOREBOARD</text>
+    <rect x={rightX - 90} y={branchY - 10} width="180" height="54" rx="3" fill="var(--paper)" stroke="var(--mahogany)" stroke-width="1" stroke-dasharray="3 2" />
+    <text x={rightX} y={branchY + 6}  text-anchor="middle" fill="var(--muted)" font-family="var(--mono)"  font-size="8"  letter-spacing="0.14em" font-weight="700">PATH B</text>
+    <text x={rightX} y={branchY + 24} text-anchor="middle" fill="var(--muted)" font-family="var(--serif)" font-style="italic" font-size="13" font-weight="500">Fragmentation</text>
+    <text x={rightX} y={branchY + 38} text-anchor="middle" fill="var(--muted)" font-family="var(--mono)"  font-size="7.5">Regimes diverge · mandate breaks</text>
+
+    <rect x={rightX - 90} y={endY - 10} width="180" height="54" rx="3" fill="var(--paper)" stroke="var(--mahogany)" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.50" />
+    <text x={rightX} y={endY + 6}  text-anchor="middle" fill="var(--muted)" font-family="var(--mono)"  font-size="7"  letter-spacing="0.14em" font-weight="700">SCOREBOARD TEST</text>
+    <text x={rightX} y={endY + 24} text-anchor="middle" fill="var(--muted)" font-family="var(--serif)" font-style="italic" font-size="12">Falsifiable by 2028</text>
+    <text x={rightX} y={endY + 38} text-anchor="middle" fill="var(--muted)" font-family="var(--mono)"  font-size="7.5">Five public claims</text>
   </svg>
 </IMFigure>
-
-<style>
-  .tpb { width: 100%; height: auto; display: block; }
-</style>
