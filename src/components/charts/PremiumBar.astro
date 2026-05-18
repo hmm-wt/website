@@ -1,0 +1,112 @@
+---
+/**
+ * PremiumBar. Single cohort+hero bar. Used inside SmallMultiples on
+ * /research/results/ to show the round-size premium per stage.
+ *
+ * Shows: baseline 1.0x cohort + hero bar at value, with a label and a
+ * leader-line annotation pulling out the multiplier number.
+ */
+interface Props {
+  label: string;
+  value: number;
+  /** Baseline (always 1.0 for premium charts). */
+  baseline?: number;
+  /** Max value on the chart axis. */
+  max?: number;
+  height?: number;
+}
+
+const {
+  label,
+  value,
+  baseline = 1.0,
+  max = 2.5,
+  height = 200,
+} = Astro.props;
+
+const width = 160;
+const barW = 40;
+const margin = { top: 16, bottom: 36 };
+const usableH = height - margin.top - margin.bottom;
+
+const baselineH = (baseline / max) * usableH;
+const valueH = (value / max) * usableH;
+
+const baselineX = (width - barW * 2 - 12) / 2;
+const valueX = baselineX + barW + 12;
+const baselineY = height - margin.bottom - baselineH;
+const valueY = height - margin.bottom - valueH;
+const groundY = height - margin.bottom;
+---
+<div class="premiumbar">
+  <svg
+    class="premiumbar__svg"
+    viewBox={`0 0 ${width} ${height}`}
+    width="100%"
+    height={height}
+    preserveAspectRatio="xMidYMin meet"
+    role="img"
+    aria-label={`${label}: ${value.toFixed(2)}x versus baseline`}
+  >
+    {/* Ground hairline */}
+    <line x1="0" y1={groundY} x2={width} y2={groundY} stroke="var(--hair-color)" stroke-width="0.75" />
+    {/* Baseline bar */}
+    <rect x={baselineX} y={baselineY} width={barW} height={baselineH} fill="var(--cohort-2)" />
+    {/* Hero bar */}
+    <rect x={valueX} y={valueY} width={barW} height={valueH} fill="var(--hero)" />
+    {/* Value label above hero */}
+    <text
+      x={valueX + barW / 2}
+      y={valueY - 6}
+      text-anchor="middle"
+      class="premiumbar__value"
+    >{value.toFixed(2)}x</text>
+    {/* Baseline label */}
+    <text
+      x={baselineX + barW / 2}
+      y={groundY + 16}
+      text-anchor="middle"
+      class="premiumbar__cohortlabel"
+    >Unreg</text>
+    <text
+      x={valueX + barW / 2}
+      y={groundY + 16}
+      text-anchor="middle"
+      class="premiumbar__herolabel"
+    >T1</text>
+  </svg>
+  <p class="premiumbar__caption">{label}</p>
+</div>
+
+<style>
+  .premiumbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--s-3);
+  }
+  .premiumbar__svg { display: block; width: 100%; }
+  .premiumbar :global(.premiumbar__value) {
+    font-family: var(--f-display);
+    font-size: 1.125rem;
+    fill: var(--hero);
+    font-weight: 400;
+  }
+  .premiumbar :global(.premiumbar__cohortlabel),
+  .premiumbar :global(.premiumbar__herolabel) {
+    font-family: var(--f-annot);
+    font-size: var(--fs-annot);
+    fill: var(--fg-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .premiumbar__caption {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    margin: 0;
+    text-align: center;
+  }
+</style>

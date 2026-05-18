@@ -96,6 +96,40 @@
   --c07: #5A7A6E;
   --c08: #A83B2E;
 
+  /* ---------- Cohort + hero ramp (Pudding-style, dark-first) ----------
+     Every new chart uses cohort tones for the population and `--hero` for
+     the single anchored mark (peak year, named exit, T1, funnel terminus).
+     Floor is 0.10 so the dimmest cohort tier stays visible on Evergreen. */
+  --cohort-1:   rgba(242, 236, 201, 0.10);
+  --cohort-2:   rgba(242, 236, 201, 0.22);
+  --cohort-3:   rgba(242, 236, 201, 0.40);
+  --cohort-4:   rgba(242, 236, 201, 0.58);
+  --cohort-ink: rgba(242, 236, 201, 0.78);
+  --hero:       var(--c-tomato);
+  --hero-soft:  color-mix(in srgb, var(--c-tomato) 32%, transparent);
+  --hero-faint: color-mix(in srgb, var(--c-tomato) 14%, transparent);
+
+  /* Light-register cohort/hero (used inside .surface-light blocks) */
+  --cohort-1-on-light:   rgba(37, 0, 1, 0.08);
+  --cohort-2-on-light:   rgba(37, 0, 1, 0.18);
+  --cohort-3-on-light:   rgba(37, 0, 1, 0.34);
+  --cohort-4-on-light:   rgba(37, 0, 1, 0.52);
+  --cohort-ink-on-light: rgba(37, 0, 1, 0.74);
+
+  /* ---------- Hairline ----------
+     One stroke weight on every chart axis. No gridlines. No chart border. */
+  --hair:           0.75px;
+  --hair-color:     rgba(242, 236, 201, 0.22);
+  --hair-strong:    rgba(242, 236, 201, 0.42);
+  --hair-on-light:  rgba(37, 0, 1, 0.22);
+
+  /* ---------- Annotation type ----------
+     Small sans for in-chart leader-line labels. Distinct from .kicker so it
+     reads as annotation, not label. */
+  --f-annot:  'DM Sans', system-ui, sans-serif;
+  --fs-annot: clamp(0.6875rem, 0.65rem + 0.15vw, 0.8125rem);
+  --lh-annot: 1.32;
+
   /* ---------- Type stack ---------- */
   --f-display: 'Instrument Serif', 'Times New Roman', Georgia, serif;
   --f-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;

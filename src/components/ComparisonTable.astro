@@ -1,0 +1,86 @@
+---
+/**
+ * ComparisonTable. Institutional comparison table with hairline rules.
+ * Replaces ad-hoc IMTable usage on data and research pages.
+ *
+ * Pass rows as a 2D array; optionally mark a row index as hero.
+ */
+interface Props {
+  headers: string[];
+  rows: (string | number)[][];
+  /** Optional row index to highlight as hero (tomato). */
+  heroRowIndex?: number;
+  /** Caption above the table (set as H2). */
+  caption?: string;
+  /** Note below the table (small sans). */
+  note?: string;
+}
+
+const { headers, rows, heroRowIndex, caption, note } = Astro.props;
+---
+<figure class="cmptable">
+  {caption && <figcaption class="cmptable__cap">{caption}</figcaption>}
+  <table class="cmptable__table">
+    <thead>
+      <tr>
+        {headers.map((h) => <th>{h}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, ri) => (
+        <tr class={ri === heroRowIndex ? 'is-hero' : ''}>
+          {row.map((cell) => <td>{cell}</td>)}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  {note && <p class="cmptable__note">{note}</p>}
+</figure>
+
+<style>
+  .cmptable {
+    margin: var(--s-6) 0;
+    max-width: var(--container);
+  }
+  .cmptable__cap {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-tight);
+    margin: 0 0 var(--s-4);
+    color: var(--fg);
+  }
+  .cmptable__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--f-body);
+    font-size: var(--fs-base);
+  }
+  .cmptable__table th {
+    text-align: left;
+    padding: var(--s-3) var(--s-3);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--fg-faint);
+    border-bottom: var(--hair) solid var(--hair-strong);
+  }
+  .cmptable__table td {
+    padding: var(--s-3) var(--s-3);
+    border-bottom: var(--hair) solid var(--hair-color);
+    color: var(--fg);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .cmptable__table tr.is-hero td {
+    color: var(--hero);
+  }
+  .cmptable__note {
+    margin: var(--s-3) 0 0;
+    font-family: var(--f-annot);
+    font-size: var(--fs-annot);
+    color: var(--fg-faint);
+    line-height: 1.45;
+  }
+</style>

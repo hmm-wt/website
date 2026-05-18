@@ -1,0 +1,119 @@
+---
+/**
+ * UnitDotFunnel. Pudding-grade scroll-driven funnel.
+ *
+ * Three stages by default. Each stage shows the same canvas with a
+ * cumulative cut: cohort marks fade, hero marks crystallise.
+ *
+ * Stage 1: 19,416 four-market classified universe (all cohort, no hero).
+ * Stage 2: 6,505 in-thesis after T1+T2 filter (hero subset, rest fade out).
+ * Stage 3: 2,625 seed-stage in-thesis (hero subset further narrowed).
+ *
+ * Consumes scrolly.ts engine: emits `scrolly:enter` events that switch
+ * data-active-stage on the container; CSS handles the visual transition.
+ */
+interface Props {
+  /** Total cohort dots to render (compressed for visual density). */
+  totalDots?: number;
+  /** Share of total that becomes hero in stage 2 (0..1). */
+  stage2Share?: number;
+  /** Share of total that becomes hero in stage 3 (0..1). */
+  stage3Share?: number;
+  /** SVG width. */
+  width?: number;
+  /** Grid columns. */
+  cols?: number;
+  ariaLabel?: string;
+}
+
+const {
+  totalDots = 1600,
+  stage2Share = 0.335,
+  stage3Share = 0.135,
+  width = 960,
+  cols = 80,
+  ariaLabel = 'Classifier funnel from universe to seed-stage in-thesis cohort',
+} = Astro.props;
+
+const gap = 1;
+const ms = Math.max(2, Math.floor((width - (cols - 1) * gap) / cols));
+const rows = Math.ceil(totalDots / cols);
+const height = rows * (ms + gap);
+
+const heroCount2 = Math.round(totalDots * stage2Share);
+const heroCount3 = Math.round(totalDots * stage3Share);
+
+// Distribute hero indices evenly across the grid so the pattern reads as a
+// random sample of the population, not a contiguous block.
+function distributedIndices(n: number, k: number): Set<number> {
+  const s = new Set<number>();
+  const stride = n / k;
+  for (let i = 0; i < k; i++) s.add(Math.floor(i * stride));
+  return s;
+}
+
+const stage2Set = distributedIndices(totalDots, heroCount2);
+const stage3Set = distributedIndices(totalDots, heroCount3);
+
+const dots = Array.from({ length: totalDots }, (_, i) => {
+  const col = i % cols;
+  const row = Math.floor(i / cols);
+  const x = col * (ms + gap) + ms / 2;
+  const y = row * (ms + gap) + ms / 2;
+  return {
+    i,
+    x,
+    y,
+    inStage2: stage2Set.has(i),
+    inStage3: stage3Set.has(i),
+  };
+});
+---
+<div class="funnel" data-funnel>
+  <svg
+    class="funnel__svg"
+    viewBox={`0 0 ${width} ${height}`}
+    width="100%"
+    height={height}
+    preserveAspectRatio="xMinYMin meet"
+    role="img"
+    aria-label={ariaLabel}
+  >
+    {dots.map((d) => {
+      const classes = ['funnel__dot'];
+      if (d.inStage3) classes.push('funnel__dot--s3');
+      else if (d.inStage2) classes.push('funnel__dot--s2');
+      return <circle cx={d.x} cy={d.y} r={ms / 2} class={classes.join(' ')} />;
+    })}
+  </svg>
+</div>
+
+<style>
+  .funnel {
+    width: 100%;
+    container-type: inline-size;
+  }
+  .funnel__svg { display: block; }
+
+  .funnel__dot {
+    fill: var(--cohort-2);
+    transition:
+      fill var(--mo-hold) var(--ease-golden),
+      opacity var(--mo-hold) var(--ease-golden);
+  }
+
+  /* Default state: stage 1. All cohort. */
+
+  /* Stage 2: in-thesis subset becomes hero, rest fade to cohort-1 */
+  [data-active-stage='s2'] .funnel__dot { fill: var(--cohort-1); opacity: 0.55; }
+  [data-active-stage='s2'] .funnel__dot--s2 { fill: var(--hero); opacity: 1; }
+
+  /* Stage 3: seed-stage subset becomes hero, rest fade out further */
+  [data-active-stage='s3'] .funnel__dot { fill: var(--cohort-1); opacity: 0.28; }
+  [data-active-stage='s3'] .funnel__dot--s2 { fill: var(--hero-soft); opacity: 0.45; }
+  [data-active-stage='s3'] .funnel__dot--s3 { fill: var(--hero); opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .funnel__dot { transition: none; }
+  }
+</style>

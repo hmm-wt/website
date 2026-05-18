@@ -1,0 +1,82 @@
+---
+/**
+ * LeaderLineAnnotation. Pudding-style in-SVG annotation.
+ *
+ * Renders a 1px hairline from an anchor mark to a small sans label.
+ * Replaces every chart legend across the site.
+ *
+ * Usage inside an <svg> element:
+ *   <LeaderLineAnnotation
+ *     x={120} y={40}           // label position (svg coords)
+ *     toX={60} toY={120}        // anchor mark position (svg coords)
+ *     label="2027 peak"
+ *     anchor="start"            // label text-anchor
+ *   />
+ */
+interface Props {
+  x: number;
+  y: number;
+  toX: number;
+  toY: number;
+  label: string;
+  sublabel?: string;
+  anchor?: 'start' | 'middle' | 'end';
+  variant?: 'cohort' | 'hero';
+}
+
+const {
+  x,
+  y,
+  toX,
+  toY,
+  label,
+  sublabel,
+  anchor = 'start',
+  variant = 'cohort',
+} = Astro.props;
+
+const stroke = variant === 'hero' ? 'var(--hero)' : 'var(--cohort-ink)';
+const fill = variant === 'hero' ? 'var(--hero)' : 'var(--cohort-ink)';
+---
+<g class="annot">
+  <line
+    x1={x}
+    y1={y}
+    x2={toX}
+    y2={toY}
+    stroke={stroke}
+    stroke-width="0.75"
+    fill="none"
+  />
+  <circle cx={toX} cy={toY} r="2" fill={fill} />
+  <text
+    x={x}
+    y={y - 4}
+    text-anchor={anchor}
+    class="annot__label"
+    fill={fill}
+  >{label}</text>
+  {sublabel && (
+    <text
+      x={x}
+      y={y + 12}
+      text-anchor={anchor}
+      class="annot__sub"
+    >{sublabel}</text>
+  )}
+</g>
+
+<style is:global>
+  .annot__label {
+    font-family: var(--f-annot);
+    font-size: var(--fs-annot);
+    font-weight: 500;
+    letter-spacing: 0.005em;
+  }
+  .annot__sub {
+    font-family: var(--f-annot);
+    font-size: calc(var(--fs-annot) * 0.86);
+    letter-spacing: 0.005em;
+    fill: var(--fg-faint);
+  }
+</style>

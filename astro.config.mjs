@@ -16,11 +16,14 @@ export default defineConfig({
     '/lps/': '/#lps',
     '/founders': '/#founders',
     '/founders/': '/#founders',
+    // Necessities promoted to top-level routes.
+    '/research/necessities': '/necessities/',
+    '/research/necessities/': '/necessities/',
     // 13 research articles consolidated into 3 long-form pages.
-    '/research/five-necessities-primer': '/research/necessities/',
-    '/research/five-necessities-primer/': '/research/necessities/',
-    '/research/why-now-explainer': '/research/necessities/',
-    '/research/why-now-explainer/': '/research/necessities/',
+    '/research/five-necessities-primer': '/necessities/',
+    '/research/five-necessities-primer/': '/necessities/',
+    '/research/why-now-explainer': '/necessities/',
+    '/research/why-now-explainer/': '/necessities/',
     '/research/t1-vs-t2-binary': '/research/method/',
     '/research/t1-vs-t2-binary/': '/research/method/',
     '/research/how-we-read-regulatory-exposure': '/research/method/',

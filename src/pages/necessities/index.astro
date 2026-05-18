@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import NecessityPanelTeaser from '../../components/NecessityPanelTeaser.astro';
+import CTARail from '../../components/CTARail.astro';
+
+const necessities = [
+  {
+    slug: 'heal',
+    name: 'Biomedical Systems',
+    shortName: 'Heal',
+    necessityKey: 'Biomedical Systems',
+    inThesis: 1269,
+    claim: 'Clinical software, diagnostics, AI-assisted decisions. Cannot ship without regulator clearance.',
+  },
+  {
+    slug: 'power',
+    name: 'Power Systems',
+    shortName: 'Power',
+    necessityKey: 'Power Systems',
+    inThesis: 581,
+    claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
+  },
+  {
+    slug: 'move',
+    name: 'Autonomous Systems',
+    shortName: 'Move',
+    necessityKey: 'Autonomous Systems',
+    inThesis: 561,
+    claim: 'Road, logistics, public-path, maritime, aviation. Cannot operate without licence.',
+  },
+  {
+    slug: 'supply',
+    name: 'Critical Materials and Supply Integrity',
+    shortName: 'Supply',
+    necessityKey: 'Critical Materials and Supply Integrity',
+    inThesis: 505,
+    claim: 'Provenance, chain of custody, processing history, ESG evidence. Cannot sell without traceability.',
+  },
+  {
+    slug: 'eat',
+    name: 'Food Security Systems',
+    shortName: 'Eat',
+    necessityKey: 'Food Security Systems',
+    inThesis: 395,
+    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
+  },
+];
+---
+<Base
+  title="The five Necessities"
+  description="Heal, power, move, supply, eat. Five non-discretionary needs gated by regulation across the four target markets."
+>
+  <header class="nec-index-hero">
+    <div class="container">
+      <p class="kicker nec-index-hero__kicker">The five Necessities</p>
+      <h1 class="nec-index-hero__title">Heal. Power. Move. Supply. Eat.</h1>
+      <p class="nec-index-hero__sub">
+        Five non-discretionary needs. Each is gated by regulation. Each gate creates the cohort. Open the panel for the regulations, the companies, and the named exit.
+      </p>
+    </div>
+  </header>
+
+  <section class="container nec-index-list" aria-label="Five Necessities">
+    <ol role="list" class="nec-index__list">
+      {necessities.map((n, i) => (
+        <NecessityPanelTeaser
+          slug={n.slug}
+          name={n.name}
+          shortName={n.shortName}
+          necessityKey={n.necessityKey}
+          inThesis={n.inThesis}
+          claim={n.claim}
+          index={i}
+        />
+      ))}
+    </ol>
+  </section>
+
+  <CTARail />
+</Base>
+
+<style>
+  .nec-index-hero {
+    background: var(--c-evergreen);
+    color: var(--c-pearl);
+    padding-block: var(--s-8) var(--s-7);
+  }
+  .nec-index-hero__kicker { color: var(--c-tomato); margin: 0; }
+  .nec-index-hero__title {
+    font-family: var(--f-display);
+    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: var(--s-3) 0 var(--s-4);
+    font-weight: 400;
+  }
+  .nec-index-hero__sub {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .nec-index-list { padding-block: var(--s-7) var(--s-8); }
+  .nec-index__list { list-style: none; margin: 0; padding: 0; }
+</style>

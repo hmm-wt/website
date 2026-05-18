@@ -1,0 +1,106 @@
+---
+/**
+ * ChartFrame. Pudding-style chart frame for inline SVG charts.
+ *
+ * Title is a prose <h2> above the SVG, not inside it.
+ * Caption sits below as small annotation type.
+ * Source line at bottom, optional.
+ *
+ * For static PNG charts that need lightbox zoom, use the older
+ * ChartFigure.astro instead.
+ */
+interface Props {
+  title?: string;
+  kicker?: string;
+  caption?: string;
+  source?: string;
+  /** Center-align the title (used on home + Necessity panels). */
+  centered?: boolean;
+  /** Maximum container width override. */
+  maxWidth?: string;
+}
+
+const {
+  title,
+  kicker,
+  caption,
+  source,
+  centered = false,
+  maxWidth,
+} = Astro.props;
+
+const align = centered ? 'center' : 'start';
+---
+<figure class="chartfrm" style={maxWidth ? `--cf-max: ${maxWidth};` : ''} data-align={align}>
+  {(kicker || title) && (
+    <header class="chartfrm__head">
+      {kicker && <p class="chartfrm__kicker kicker">{kicker}</p>}
+      {title && <h2 class="chartfrm__title">{title}</h2>}
+    </header>
+  )}
+  <div class="chartfrm__body">
+    <slot />
+  </div>
+  {(caption || source) && (
+    <figcaption class="chartfrm__foot">
+      {caption && <p class="chartfrm__caption">{caption}</p>}
+      {source && <p class="chartfrm__source">{source}</p>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .chartfrm {
+    max-width: var(--cf-max, var(--container));
+    margin-inline: auto;
+    margin-block: var(--s-7);
+  }
+  .chartfrm[data-align='center'] {
+    text-align: center;
+  }
+  .chartfrm__head {
+    margin-block-end: var(--s-5);
+    max-width: 56ch;
+  }
+  .chartfrm[data-align='center'] .chartfrm__head {
+    margin-inline: auto;
+  }
+  .chartfrm__kicker {
+    color: var(--c-tomato);
+    margin: 0 0 var(--s-2);
+  }
+  .chartfrm__title {
+    font-family: var(--f-display);
+    font-size: var(--fs-2xl);
+    line-height: var(--lh-tight);
+    margin: 0;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+  .chartfrm__body {
+    width: 100%;
+  }
+  .chartfrm__foot {
+    margin-block-start: var(--s-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+  .chartfrm__caption {
+    font-family: var(--f-body);
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--fg-soft);
+    margin: 0;
+    max-width: 64ch;
+  }
+  .chartfrm[data-align='center'] .chartfrm__caption { margin-inline: auto; }
+  .chartfrm__source {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-faint);
+    margin: 0;
+  }
+</style>

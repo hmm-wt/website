@@ -1,0 +1,74 @@
+---
+/**
+ * SparkBar. Hairline sparkline for Necessity teasers + per-year strips.
+ *
+ * Takes an array of values; renders a single-line bar series with
+ * cohort-tier fill and an optional hero index.
+ */
+interface Props {
+  values: number[];
+  labels?: string[];
+  /** Index of the hero bar. -1 to disable. */
+  heroIndex?: number;
+  width?: number;
+  height?: number;
+  showAxis?: boolean;
+  ariaLabel?: string;
+}
+
+const {
+  values,
+  labels,
+  heroIndex = -1,
+  width = 360,
+  height = 80,
+  showAxis = false,
+  ariaLabel,
+} = Astro.props;
+
+const n = values.length;
+const max = Math.max(1, ...values);
+const gap = 2;
+const barW = (width - (n - 1) * gap) / n;
+const axisY = height - 12;
+const usableH = axisY - 4;
+---
+<svg
+  class="sparkbar"
+  viewBox={`0 0 ${width} ${height}`}
+  width="100%"
+  height={height}
+  preserveAspectRatio="xMinYMin meet"
+  role="img"
+  aria-label={ariaLabel}
+>
+  {values.map((v, i) => {
+    const h = (v / max) * usableH;
+    const x = i * (barW + gap);
+    const y = axisY - h;
+    const isHero = i === heroIndex;
+    const fill = isHero ? 'var(--hero)' : 'var(--cohort-3)';
+    return <rect x={x} y={y} width={barW} height={h} fill={fill} />;
+  })}
+  {showAxis && (
+    <line x1="0" y1={axisY} x2={width} y2={axisY} stroke="var(--hair-color)" stroke-width="0.75" />
+  )}
+  {labels && labels.map((l, i) => {
+    if (!l) return null;
+    const x = i * (barW + gap) + barW / 2;
+    return (
+      <text x={x} y={height - 2} text-anchor="middle" class="sparkbar__label">{l}</text>
+    );
+  })}
+</svg>
+
+<style>
+  .sparkbar {
+    display: block;
+  }
+  .sparkbar :global(.sparkbar__label) {
+    font-family: var(--f-annot);
+    font-size: var(--fs-annot);
+    fill: var(--fg-faint);
+  }
+</style>
