@@ -220,13 +220,13 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
     <article class="nec-stage" aria-labelledby="reg-h">
       <p class="nec-stage__kicker">Stage 2. The filter</p>
       <h2 id="reg-h" class="nec-stage__h">
-        <span class="nec-stage__bignum">{t1Count + t2Count}</span> regulations.
+        <span class="nec-stage__bignum">{t1Count + t2Count}</span> regulations mapped.
         <span class="nec-stage__subnum">{t1Count} T1. {t2Count} T2.</span>
       </h2>
       <p class="nec-stage__body">
         {totalInFlight > 0
-          ? `${totalInFlight} effective dates land between 2024 and 2030.`
-          : 'No in-flight regulations on the current calendar.'}
+          ? `Of those, ${totalInFlight} have effective dates between 2024 and 2030.`
+          : 'No effective dates on the current calendar between 2024 and 2030.'}
         Each one identifies the companies that have to comply.
       </p>
       {totalInFlight > 0 && (
