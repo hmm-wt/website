@@ -62,7 +62,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
     <button type="button" class="back-to-top" aria-label="Back to top" data-back-to-top>↑</button>
 
     <script is:inline>
-      // HMM-CADENCE — wordmark types itself once per session. After the
+      // HMM-CADENCE . wordmark types itself once per session. After the
       // first cold-load animation completes, set a flag so SPA navigations
       // (Astro View Transitions) render the wordmark in final state.
       (function () {
@@ -134,14 +134,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
        *
        * Class hooks expected:
        *  - .shutter-wipe / .gavel-drop / .stamp / .dossier-turn / .clamp /
-       *    .heavy-drop / .redaction-reveal — toggle data-played on the
+       *    .heavy-drop / .redaction-reveal . toggle data-played on the
        *    element itself.
-       *  - .stagger-row inside a .motion-group — toggle data-played on the
+       *  - .stagger-row inside a .motion-group . toggle data-played on the
        *    group; children inherit via CSS selectors.
-       *  - .wedge-draw inside an SVG inside a .motion-group — same pattern.
-       *  - .ticker-roll — JS rolls digit text from 0 to its final numeric
+       *  - .wedge-draw inside an SVG inside a .motion-group . same pattern.
+       *  - .ticker-roll . JS rolls digit text from 0 to its final numeric
        *    value over ~360ms.
-       *  - .tape-print — JS types characters left-to-right at 60ch/sec.
+       *  - .tape-print . JS types characters left-to-right at 60ch/sec.
        *
        * Continuous animations (.now-pulse, .breathe) loop independently and
        * do not need this driver.
