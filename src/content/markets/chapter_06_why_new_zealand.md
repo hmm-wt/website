@@ -10,9 +10,9 @@ rail_market: NZ
 
 ---
 
-New Zealand is the doctrine's capital-efficiency case. The smallest of the four markets by GDP, by population, by venture deployment, and by domestic addressable market. Also the smallest by entry valuation, the highest by failure rate, and the most concentrated by sector specialisation. The arithmetic of the regulated-sector seed thesis is at its sharpest here because the inputs are smallest in absolute terms but the structural advantages persist in relative terms.
+New Zealand is the doctrine's capital-efficiency case. The smallest market in the portfolio by GDP, population, venture deployment, and domestic addressable market. That is the risk. It is also why entry valuations are lower and the capital-efficiency test is sharper.
 
-The country's R&D and grant ecosystem (Callaghan Innovation transitioning to MBIE Innovation Services, NZGCP, the R&D Tax Incentive) does at the micro scale what Australia's RDTI and superannuation capital do at the meso scale. The regulatory perimeter is concentrated in three Necessity-aligned domains: agritech and food security, biomedical, and renewable energy. Companies that build at the intersection of these and the international export channel have a thesis-aligned profile that is not replicable in larger jurisdictions.
+The country's R&D and grant ecosystem (Callaghan Innovation transitioning to MBIE Innovation Services, NZGCP, the R&D Tax Incentive) plays a smaller-scale version of the Australian capital-efficiency role. The regulatory perimeter is concentrated in three Necessity-aligned domains: agritech and food security, biomedical, and renewable energy. Companies that build at the intersection of these and the international export channel have a thesis-aligned profile that is harder to replicate in larger jurisdictions.
 
 > **New Zealand, current state**
 >
@@ -25,11 +25,11 @@ The country's R&D and grant ecosystem (Callaghan Innovation transitioning to MBI
 
 ## Capital efficiency: smallest inputs, persistent structural advantage
 
-The NZ seed cheque is smaller than the AU equivalent. The seed valuation is lower than the SG equivalent. The runway is shorter than the JP equivalent. None of those is a feature in isolation. Together they compress capital deployment per dollar of regulatory advantage gained.
+The NZ seed cheque is smaller than the AU equivalent. The seed valuation is lower than the SG equivalent. The runway is shorter than the JP equivalent. None of those is a feature in isolation. Together they reduce the capital required to build a valuable regulatory asset.
 
-A T1 medtech company in Auckland that books TGA approval and FDA 510(k) clearance has the same regulatory asset as the Sydney equivalent and the San Francisco equivalent. The difference is the cost of building it. Auckland engineering and clinical talent costs less, the Callaghan/MBIE grant ecosystem subsidises early R&D, and the seed entry valuation reflects the smaller domestic market rather than the international optionality.
+A T1 medtech company in Auckland that books TGA approval and FDA 510(k) clearance can build a regulatory asset that travels internationally, even if the company was formed in a smaller market. The difference is the cost of building it. Auckland engineering and clinical talent costs less, the Callaghan/MBIE grant ecosystem subsidises early R&D, and the seed entry valuation reflects the smaller domestic market rather than the international optionality.
 
-The implication is that the regulatory asset, once built, has the same export value as in any larger jurisdiction. The capital required to build it is smaller.
+The implication is that the regulatory asset, once built, can have export value that is not proportional to the size of the domestic market. The capital required to build it is smaller.
 
 ---
 
@@ -37,9 +37,9 @@ The implication is that the regulatory asset, once built, has the same export va
 
 New Zealand's R&D ecosystem is grant-led to a degree no other comparable economy matches. Callaghan Innovation, before its transition, distributed material annual funding across direct grants, R&D project funding, and the R&D Tax Incentive process.[^4] MBIE Innovation Services is now absorbing those functions through 2025-2026.
 
-The relevant figure for the doctrine is the regulated share of that grant funding. The majority of grant recipients sit in T1 or T2 categories: agritech, medtech, renewable energy, environmental monitoring, food traceability. The grants are not directed at regulation; they happen to flow disproportionately to companies whose product touches regulatory perimeters because those are the companies New Zealand industrial policy supports.
+The relevant figure for the doctrine is the regulated share of that grant funding. Internal analysis suggests a majority of relevant grant-funded technology companies sit in T1 or T2 categories: agritech, medtech, renewable energy, environmental monitoring, food traceability. The grants are not directed at regulation; they happen to flow disproportionately to companies whose product touches regulatory perimeters because those are the companies New Zealand industrial policy supports. This requires independent verification before being used as an external proof point.
 
-That alignment is not accidental. The country's economic specialisation in primary production, biomedical research, and clean energy aligns with three of the Five Necessities. The grant programme directs cheap capital toward T1 and T2 work.
+That alignment is not accidental. The country's economic specialisation in primary production, biomedical research, and clean energy aligns with three of the Five Necessities. The grant ecosystem appears to subsidise many companies operating near T1 and T2 regulatory perimeters.
 
 ---
 
@@ -51,7 +51,7 @@ Agritech and food security: Ministry for Primary Industries; AsureQuality verifi
 
 Biomedical and medtech: Medsafe approval; Health and Disability Services Standards; SoMD framework aligning with TGA. The medtech export channel through Australia and onward to Asia and North America is established and well-trodden.
 
-Renewable energy: Electricity Authority code; Climate Change Response Act emissions trading scheme; Emissions Reduction Plan; renewable generation deployment policy. The country runs near-100% renewable electricity generation, which makes it a natural test bed for grid-edge technologies that export back into larger grid markets.
+Renewable energy: Electricity Authority code; Climate Change Response Act emissions trading scheme; Emissions Reduction Plan; renewable generation deployment policy. The country runs a very high share of renewable electricity generation, which makes it a natural test bed for grid-edge technologies that export back into larger grid markets.
 
 Adjacent verticals (financial services, consumer software, advertising technology) lack the same depth and the same grant alignment.
 

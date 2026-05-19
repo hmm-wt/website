@@ -7,7 +7,7 @@
     {
       "id": "C1",
       "certainty_num": 1,
-      "certainty": "Seed entry is at near-parity. Exit is at premium.",
+      "certainty": "Seed entry remains near parity; later-stage outcomes show a premium.",
       "claim": "By end-2027, the cumulative T1-to-unregulated funding premium widens from 2.12x (2026) to at least 2.30x at Series D+ in the four target markets.",
       "testable_by": "2027-12-31",
       "status": "open",
@@ -22,7 +22,7 @@
     {
       "id": "C2",
       "certainty_num": 2,
-      "certainty": "Regulation is the sieve for defensible returns at every stage.",
+      "certainty": "The T1/T2 screen continues to identify a durable regulated cohort.",
       "claim": "By end-2028, the T1+T2 share of the four-market 19,416-company dataset re-query holds at or above 33%.",
       "testable_by": "2028-12-31",
       "status": "open",
@@ -37,7 +37,7 @@
     {
       "id": "C3",
       "certainty_num": 3,
-      "certainty": "Regulation absorbs capital at an accelerating rate.",
+      "certainty": "Regulated companies capture a rising share of later-stage capital.",
       "claim": "By end-2028, regulated companies' share of four-market Series C funding holds at or above 60%.",
       "testable_by": "2028-12-31",
       "status": "open",
@@ -52,7 +52,7 @@
     {
       "id": "C4",
       "certainty_num": 4,
-      "certainty": "A global strategic-acquirer buyer set exists and is active.",
+      "certainty": "Strategic acquirers in NA and EMEA remain active buyers of developed-APAC regulated companies.",
       "claim": "By end-2028, at least two additional named acquisitions of developed-APAC regulated-technology companies by NA or EMEA strategic acquirers close at EV at or above $100M.",
       "testable_by": "2028-12-31",
       "status": "open",
@@ -65,7 +65,7 @@
     {
       "id": "C5",
       "certainty_num": 5,
-      "certainty": "Developed APAC sets frontier regulation in the Necessity categories.",
+      "certainty": "Developed APAC continues to produce investable regulatory change in the Necessity categories.",
       "claim": "By end-2028, at least three of the thirty-four in-flight regulations crystallise as enacted operational frameworks.",
       "testable_by": "2028-12-31",
       "status": "open",

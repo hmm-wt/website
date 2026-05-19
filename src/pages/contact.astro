@@ -8,9 +8,9 @@ import Base from '../layouts/Base.astro';
   <header class="contact-hero">
     <div class="container">
       <p class="kicker contact-hero__kicker">Get in touch</p>
-      <h1 class="contact-hero__title">Two doors. One form.</h1>
+      <h1 class="contact-hero__title">Get in touch.</h1>
       <p class="contact-hero__sub">
-        If you allocate capital, request the IM. If you build what people need, send the deck. Read the doctrine first.
+        If you allocate capital, request the IM. If you build what people need, send the deck. Read the doctrine first so the message can be specific.
       </p>
     </div>
   </header>
@@ -25,23 +25,23 @@ import Base from '../layouts/Base.astro';
       netlify-honeypot="bot-field"
     >
       <input type="hidden" name="form-name" value="contact" />
-      <p class="contact-form__hp" aria-hidden="true">
+      <p class="contact-form__hp" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
         <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
       </p>
 
       <fieldset class="contact-form__role">
-        <legend class="contact-form__legend">Which door</legend>
+        <legend class="contact-form__legend">Reason for contact</legend>
         <label class="contact-form__radio">
           <input type="radio" name="role" value="lp" required />
-          <span>If you allocate capital</span>
+          <span>Capital allocator</span>
         </label>
         <label class="contact-form__radio">
           <input type="radio" name="role" value="founder" />
-          <span>If you build what people need</span>
+          <span>Founder / operator</span>
         </label>
         <label class="contact-form__radio">
           <input type="radio" name="role" value="other" />
-          <span>Something else</span>
+          <span>Other</span>
         </label>
       </fieldset>
 

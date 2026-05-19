@@ -10,17 +10,17 @@ import necessityData from '../../data/necessity-index.json';
 // IM-canonical per-market framing. Each row is parallel across markets;
 // each cell is one short line, IM-derived (chapters 4-7).
 const roleMap: Record<string, string> = {
-  AU: 'The capital base',
-  JP: 'The procurement budget',
-  NZ: 'The cost-efficient build',
-  SG: 'The regulatory translation layer',
+  AU: 'Capital depth',
+  JP: 'Corporate procurement',
+  NZ: 'Lower-cost validation',
+  SG: 'Regulatory bridge',
 };
 
 const claimMap: Record<string, string> = {
   AU: 'A$4.3T superannuation pool turning toward unlisted growth through 2025-2026 reform.',
   JP: 'G7-leading corporate cash position. Procurement deployed through CVC channels.',
   NZ: 'Same regulatory asset as Sydney or San Francisco. Smaller capital to build it.',
-  SG: 'One MAS or HSA licence passports into ASEAN, Greater China, India, and the West.',
+  SG: 'One MAS or HSA licence reduces the regulatory cost of entering ASEAN, Greater China, India, and Western markets.',
 };
 
 const capitalMap: Record<string, string> = {
@@ -34,14 +34,14 @@ const regulatorMap: Record<string, string> = {
   AU: 'APRA · ASIC · AEMO · TGA · FIRB · ASX',
   JP: 'PMDA · MLIT · METI · FSA · TSE',
   NZ: 'Medsafe WAND · MBIE · Electricity Authority · MPI',
-  SG: 'MAS · HSA · IMDA · LTA · SFA · EMA Singapore',
+  SG: 'MAS · HSA · IMDA · LTA · SFA · EMA',
 };
 
 const proofMap: Record<string, string> = {
-  AU: 'Eucalyptus to Hims & Hers, 2026. Up to $1.15B. T1 Biomedical.',
-  JP: 'PMDA AI Medical Device Fast-Track. Effective 2027. T1.',
-  NZ: 'Volpara to Lunit, 2024. $193M. T1 Biomedical.',
-  SG: 'MAS AI Risk Management, all sectors. Effective 2028. T1.',
+  AU: 'Eucalyptus to Hims & Hers, 2026. Up to $1.15B. Tier 1 biomedical.',
+  JP: 'PMDA AI Medical Device Fast-Track. Effective 2027. Tier 1.',
+  NZ: 'Volpara to Lunit, 2024. $193M. Tier 1 biomedical.',
+  SG: 'MAS AI Risk Management, all sectors. Effective 2028. Tier 1.',
 };
 
 const orderedMarkets = ['AU', 'JP', 'NZ', 'SG'] as const;
@@ -51,7 +51,7 @@ const comparisonRows = [
   ['The claim', ...orderedMarkets.map((m) => claimMap[m])],
   ['Capital mechanism', ...orderedMarkets.map((m) => capitalMap[m])],
   ['Regulators', ...orderedMarkets.map((m) => regulatorMap[m])],
-  ['Signature proof', ...orderedMarkets.map((m) => proofMap[m])],
+  ['Lead indicator', ...orderedMarkets.map((m) => proofMap[m])],
 ];
 
 const per = necessityData.per_market as any[];
@@ -71,7 +71,7 @@ const totals = {
       <p class="kicker mk-hero__kicker">The four markets</p>
       <h1 class="mk-hero__title">Four markets. One window.</h1>
       <p class="mk-hero__sub">
-        Developed APAC at emerging-market entry prices. Each market is built around a different Necessity, enforced by a different regulator, exited through a different acquirer set.
+        Developed APAC at entry prices. Each market plays a different role.
       </p>
     </div>
   </header>
@@ -104,7 +104,7 @@ const totals = {
       kicker="The window"
       title="One crystallisation window across all four markets."
       caption="In-flight regulations by effective year, summed across the four target markets. Peak crystallisation 2027."
-      source="Source. hmm Ventures comprehensive regulatory dataset."
+      source="Source: hmm Ventures regulatory dataset."
     >
       <CrystallisationStrip />
     </ChartFrame>

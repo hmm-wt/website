@@ -31,7 +31,7 @@ The fund's public research is citable. This page documents recommended citation 
 
 **Classified company universe.** 22,217 APAC technology companies; 19,416 in the four target markets. Enriched from licensed commercial data feeds. Classified against the T1 / T2 framework via a two-stage pipeline. Source file: `reference_dataset_classified.csv`.
 
-**Comprehensive regulations dataset.** 725 regulations across 64 countries and 13 sectors. Sourced from public legislation portals, regulator publications, and parliamentary records. Source file: `regulations_comprehensive.json`.
+**Regulations dataset.** 725 regulations across 64 countries and 13 sectors. Sourced from public legislation portals, regulator publications, and parliamentary records. Source file: `regulations_comprehensive.json`.
 
 **Four-market sector-tier breakdown.** 174 four-market regulations reconciled by sector and tier. Source file: `four_market_sector_tier_breakdown.csv`.
 

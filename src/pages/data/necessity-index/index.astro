@@ -2,7 +2,6 @@
 import Index from '../../../layouts/Index.astro';
 import IndexCard from '../../../components/IndexCard.astro';
 import IndexMatrix from '../../../components/IndexMatrix.astro';
-import StatusIndicator from '../../../components/StatusIndicator.astro';
 import DataSection from '../../../components/DataSection.astro';
 import CiteThis from '../../../components/CiteThis.astro';
 import ScrollyClassifierFunnel from '../../../components/research/ScrollyClassifierFunnel.astro';
@@ -19,9 +18,8 @@ import data from '../../../data/necessity-index.json';
       <div class="ip__meta">
         <span class="ip__reg" aria-hidden="true"></span>
         <span class="ip__kicker">Necessity Index</span>
-        <StatusIndicator status="live" />
       </div>
-      <h1 class="ip__title">The classified universe.</h1>
+      <h1 class="ip__title">The company universe.</h1>
       <p class="ip__lede">
         Twenty-two thousand APAC technology companies, classified against the T1 / T2 thesis. Cross-referenced against 174 four-market regulations.
       </p>
@@ -46,8 +44,8 @@ import data from '../../../data/necessity-index.json';
     <DataSection
       fignum="NI-02"
       label="T1 / T2 screen · Conservative classifier"
-      title='One in three four-market companies <em>passes the screen</em>.'
-      sub="Conservative T1 / T2 classifier across the four-market universe. T1 = licence-as-barrier."
+      title='One in three four-market companies <em>meets the T1/T2 screen</em>.'
+      sub="Conservative T1 / T2 classifier across the four-market universe. T1 = licence-as-barrier. T2 = compliance-demand-as-barrier."
       source="hmm Ventures conservative classifier"
       basis="T1 + T2 union · four-market subset"
     >
@@ -80,8 +78,8 @@ import data from '../../../data/necessity-index.json';
       fignum="NI-06"
       label="Detail tables · Per market and per Necessity"
       title='Drill-down: <em>regulation, tier, and cohort detail</em>.'
-      sub="Per-market and per-Necessity counts for the four-market universe. Heat-tinted by intensity. Per-market companies + regulations + tier breakdown verified against the classified dataset."
-      source="hmm Ventures classified universe + Comprehensive Regulatory Dataset"
+      sub="Per-market and per-Necessity counts for the four-market universe. Counts are shown by market and Necessity. Per-market companies + regulations + tier breakdown verified against the classified dataset."
+      source="hmm Ventures classified dataset + regulatory dataset"
       basis="Per-market + per-Necessity joins · four-market filter"
     >
       <IndexMatrix perMarket={data.per_market} perNecessity={data.per_necessity} />
@@ -91,7 +89,7 @@ import data from '../../../data/necessity-index.json';
       fignum="NI-07"
       label="Round-size premiums · T1 vs unregulated"
       title='Cumulative funding multiple widens to <em>2.12x</em> by Series D+.'
-      sub="T1 round-size premium relative to unregulated peers at each stage. Compounds across the funding ladder."
+      sub="T1 round-size uplift relative to unregulated peers at each stage. The cumulative funding gap is widest by Series D+."
       source="hmm Ventures funding-premium analysis · 2024 four-market deal data"
       basis="T1 / unregulated · last_funding_amount · round-size median"
     >
@@ -118,8 +116,8 @@ import data from '../../../data/necessity-index.json';
       fignum="NI-08"
       label="The crystallisation window · 2024 to 2030"
       title='Thirty-four in-flight regulations. Peak density in <em>2027</em>.'
-      sub="The window where regulator publications convert into operational compliance demand. Each market on a different clock."
-      source="hmm Ventures Comprehensive Regulatory Dataset"
+      sub="The period when new rules become active and companies need operational tools to comply. Each market on a different clock."
+      source="hmm Ventures regulatory dataset"
       basis="In-flight 2024 to 2030 · four-market subset"
     >
       <div class="ip__grid ip__grid--3">

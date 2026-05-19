@@ -31,6 +31,7 @@ interface NecessityConfig {
   why: string;
   examples: string;
   exitFilter: string;
+  monitoring?: string;
 }
 
 const configs: Record<string, NecessityConfig> = {
@@ -41,7 +42,7 @@ const configs: Record<string, NecessityConfig> = {
     necessityKey: 'Biomedical Systems',
     markKind: 'biomedical',
     claim: 'Clinical software, diagnostics, AI-assisted decisions. Cannot ship without regulator clearance.',
-    why: 'Ageing populations, clinical-labour constraints, and software-mediated care make regulated clinical infrastructure non-discretionary. A scan is misread. A treatable condition is caught late. An AI tool is deployed in a clinic without evidence that it works, and a patient pays the price.',
+    why: 'Ageing populations and clinical-labour shortages are pushing more care into clinical software, diagnostics, and AI-assisted decision tools. A scan is misread. A treatable condition is caught late. An AI tool is deployed in a clinic without evidence that it works, and a patient pays the price.',
     examples: 'Tier 1: device licensing, clinical software clearance, digital health frameworks. Tier 2: clinical safety reporting, AI risk management for medical devices.',
     exitFilter: 'Biomedical',
   },
@@ -52,7 +53,7 @@ const configs: Record<string, NecessityConfig> = {
     necessityKey: 'Power Systems',
     markKind: 'power',
     claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
-    why: 'Storage, EVs, buildings, and distributed assets become grid participants, not passive loads. A heatwave hits. Rooftop solar floods the grid with no coordination. Batteries sit idle because nobody filed the dispatch paperwork. The blackout was avoidable.',
+    why: 'Storage, EVs, buildings, and distributed assets are becoming active grid participants, not passive loads. A heatwave hits. Rooftop solar floods the grid with no coordination. Batteries sit idle because nobody filed the dispatch paperwork. The blackout was avoidable.',
     examples: 'Tier 1: grid connection licensing, renewable targets, building energy codes. Tier 2: carbon pricing, embodied carbon disclosure.',
     exitFilter: 'Power',
   },
@@ -63,7 +64,7 @@ const configs: Record<string, NecessityConfig> = {
     necessityKey: 'Autonomous Systems',
     markKind: 'autonomous',
     claim: 'Road, logistics, public-path, maritime, aviation. Cannot operate without licence.',
-    why: 'Autonomy enters public space only when safety, supervision, incident evidence, and operating-domain proof can be accepted by regulators. A driverless shuttle runs without safety certification. A freight drone operates in shared airspace without transponder evidence. The first serious incident grounds the entire sector for years.',
+    why: 'Autonomous systems enter public space only when their safety, supervision, and incident evidence can be accepted by regulators. A driverless shuttle runs without safety certification. A freight drone operates in shared airspace without transponder evidence. The first serious incident grounds the entire sector for years.',
     examples: 'Tier 1: AV deployment frameworks, remote ID for UAS, autonomous vessel classification. Tier 2: transport data sharing, fleet safety reporting.',
     exitFilter: 'Autonomous',
   },
@@ -74,9 +75,10 @@ const configs: Record<string, NecessityConfig> = {
     necessityKey: 'Critical Materials and Supply Integrity',
     markKind: 'materials',
     claim: 'Provenance, chain of custody, processing history, ESG evidence. Cannot sell without traceability.',
-    why: 'Strategic buyers increasingly require verified origin, processing, ESG status, and eligibility proof before procurement. An EV manufacturer loses its tax credit because it cannot prove where the cobalt came from. An OEM is shut out of a procurement framework because its supplier chain fails the country-of-origin attestation.',
+    why: 'Strategic buyers now require proof of origin, processing, ESG status, and eligibility before they buy. An EV manufacturer loses its tax credit because it cannot prove where the cobalt came from. An OEM is shut out of a procurement framework because its supplier chain fails the country-of-origin attestation.',
     examples: 'Tier 1: critical minerals traceability, digital customs automation. Tier 2: construction payment compliance, modern slavery due diligence.',
     exitFilter: 'Critical Materials',
+    monitoring: 'Monitored for customs automation, trade documentation, modern-slavery, and supply-chain assurance obligations.',
   },
   eat: {
     slug: 'eat',
@@ -85,9 +87,10 @@ const configs: Record<string, NecessityConfig> = {
     necessityKey: 'Food Security Systems',
     markKind: 'food',
     claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
-    why: 'Food safety depends on repeatable proof, not occasional inspection. A contaminated batch reaches shelves. The recall takes weeks instead of hours. People get sick from food that should have been traced and pulled before it left the warehouse.',
-    examples: 'Tier 1: food labelling laws, AI traceability extensions, food security regulations. Tier 2: small-business compliance phase-ins.',
+    why: 'Food safety is moving from periodic inspection to continuous, traceable proof. A contaminated batch reaches shelves. The recall takes weeks instead of hours. People get sick from food that should have been traced and pulled before it left the warehouse.',
+    examples: 'Tier 1: food labelling laws, AI traceability extension (Japan), food security regulations. Tier 2: small-business compliance phase-ins.',
     exitFilter: 'Food',
+    monitoring: 'Monitored for biosecurity, food-export assurance, and recall-readiness obligations.',
   },
 };
 
@@ -121,12 +124,14 @@ const matchingExits = (exitsData.exits as any[]).filter((e) => e.necessity === c
 
 const cohortMarks = (() => {
   const total = Math.min(inThesis, 1200);
-  const heroCount = Math.max(matchingExits.length, 1);
+  const heroCount = matchingExits.length;
   const marks = Array.from({ length: total }, (_, i) => ({ id: String(i), hero: false }));
-  const stride = total / heroCount;
-  for (let i = 0; i < heroCount; i++) {
-    const idx = Math.floor(i * stride);
-    if (marks[idx]) marks[idx].hero = true;
+  if (heroCount > 0) {
+    const stride = total / heroCount;
+    for (let i = 0; i < heroCount; i++) {
+      const idx = Math.floor(i * stride);
+      if (marks[idx]) marks[idx].hero = true;
+    }
   }
   return marks;
 })();
@@ -151,11 +156,13 @@ const marketLongName: Record<string, string> = {
 const acrossFourMarkets = orderedMarkets.map((mk) => {
   const exit = matchingExits.find((e) => e.market === mk);
   if (exit) {
+    const tierLong = exit.tier === 'T1' ? 'Tier 1' : exit.tier === 'T2' ? 'Tier 2' : exit.tier;
+    const acquirerClean = String(exit.acquirer).replace(/\.$/, '');
     return {
       market: mk,
       kind: 'exit' as const,
       headline: exit.company,
-      meta: `${exit.tier}. Acquired by ${exit.acquirer}. ${exit.year}.`,
+      meta: `${tierLong}. Acquired by ${acquirerClean}. ${exit.year}.`,
       sub: exit.value_display,
       barrier: exit.barrier,
     };
@@ -164,20 +171,21 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
     .filter((r: any) => r.market === mk)
     .sort((a: any, b: any) => a.effective_year - b.effective_year)[0];
   if (reg) {
+    const tierLong = reg.tier === 'T1' ? 'Tier 1' : reg.tier === 'T2' ? 'Tier 2' : reg.tier;
     return {
       market: mk,
       kind: 'regulation' as const,
       headline: reg.title,
-      meta: `${reg.tier}. Effective ${reg.effective_year}.`,
-      sub: 'Regulator: in flight.',
+      meta: `${tierLong}. Effective ${reg.effective_year}.`,
+      sub: 'Status: in flight.',
       barrier: null,
     };
   }
   return {
     market: mk,
     kind: 'watching' as const,
-    headline: 'Watching',
-    meta: 'No named exit or in-flight regulation in this Necessity.',
+    headline: 'Watchlist market',
+    meta: cfg.monitoring ?? 'No dated regulatory trigger in the current dataset.',
     sub: '',
     barrier: null,
   };
@@ -211,14 +219,14 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
 
   <section class="container nec-stages">
     <article class="nec-stage" aria-labelledby="need-h">
-      <p class="nec-stage__kicker">Stage 1. The need</p>
+      <p class="nec-stage__kicker">The need</p>
       <h2 id="need-h" class="nec-stage__h">{cfg.shortName}.</h2>
       <p class="nec-stage__body">{cfg.why}</p>
       <p class="nec-stage__body nec-stage__body--soft">{cfg.examples}</p>
     </article>
 
     <article class="nec-stage" aria-labelledby="reg-h">
-      <p class="nec-stage__kicker">Stage 2. The filter</p>
+      <p class="nec-stage__kicker">The filter</p>
       <h2 id="reg-h" class="nec-stage__h">
         <span class="nec-stage__bignum">{t1Count + t2Count}</span> regulations mapped.
         <span class="nec-stage__subnum">{t1Count} T1. {t2Count} T2.</span>
@@ -227,14 +235,13 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
         {totalInFlight > 0
           ? `Of those, ${totalInFlight} have effective dates between 2024 and 2030.`
           : 'No effective dates on the current calendar between 2024 and 2030.'}
-        Each one identifies the companies that have to comply.
       </p>
       {totalInFlight > 0 && (
         <ChartFrame
           kicker="Effective dates"
           title="When the filter takes effect."
-          caption="In-flight regulations across the four markets, by effective year. Hero bar marks the peak."
-          source="Source. hmm Ventures comprehensive regulatory dataset."
+          caption="In-flight regulations across the four markets, by effective year."
+          source="Source: hmm Ventures regulatory dataset."
         >
           <SparkBar
             values={yearValues}
@@ -251,21 +258,25 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
         <ComparisonTable
           headers={['Market', 'Regulation', 'Tier', 'Effective']}
           rows={regRows}
-          note="Source. hmm Ventures comprehensive regulatory dataset."
+          note="Source: hmm Ventures regulatory dataset."
         />
       )}
     </article>
 
     <article class="nec-stage" aria-labelledby="coh-h">
-      <p class="nec-stage__kicker">Stage 3. The cohort</p>
+      <p class="nec-stage__kicker">The cohort</p>
       <h2 id="coh-h" class="nec-stage__h">
-        <span class="nec-stage__bignum">{inThesis.toLocaleString()}</span> in-thesis companies.
+        <span class="nec-stage__bignum">{inThesis.toLocaleString()}</span> companies mapped to the {cfg.name} thesis.
       </h2>
       <p class="nec-stage__body">
-        Each mark is one company in the four-market dataset. Hero marks are the named exits already on the dataset.
+        {matchingExits.length > 0
+          ? 'Each mark is one company in the four-market dataset. Highlighted marks are the named exits already on the dataset.'
+          : 'Each mark is one company in the four-market dataset.'}
       </p>
       <ChartFrame
-        caption={`${inThesis.toLocaleString()} ${cfg.name} companies. Hero marks: named regulated-company acquisitions.`}
+        caption={matchingExits.length > 0
+          ? `${inThesis.toLocaleString()} ${cfg.name} companies. Highlighted marks: named regulated-company acquisitions.`
+          : `${inThesis.toLocaleString()} ${cfg.name} companies.`}
       >
         <UnitDotGrid
           marks={cohortMarks}
@@ -277,10 +288,9 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
         />
       </ChartFrame>
 
-      <section class="nec-four" aria-labelledby="four-h">
+      <section class="nec-four" aria-label="Across the four markets">
         <header class="nec-four__head">
           <p class="kicker nec-four__kicker">Across the four markets</p>
-          <h3 id="four-h" class="nec-four__h">Australia. Japan. New Zealand. Singapore.</h3>
         </header>
         <ol class="nec-four__list" role="list">
           {acrossFourMarkets.map((cell) => (
@@ -289,7 +299,7 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
               <span class="nec-four__tag">
                 {cell.kind === 'exit' && 'Named exit'}
                 {cell.kind === 'regulation' && 'In-flight regulation'}
-                {cell.kind === 'watching' && 'Watching'}
+                {cell.kind === 'watching' && 'Monitoring'}
               </span>
               <h4 class="nec-four__headline">{cell.headline}</h4>
               <p class="nec-four__meta">{cell.meta}</p>

@@ -24,10 +24,10 @@ const maxExit = Math.max(...namedExitValues);
 const fmtUsd = (m: number) => m >= 1000 ? `$${(m / 1000).toFixed(2)}B` : `$${m}M`;
 
 const stats = [
-  { n: `${p.exit_rate_multiple.toFixed(2)}x`, label: 'T1 exit-rate edge over unregulated cohort' },
-  { n: `${p.round_size_series_c.toFixed(2)}x`, label: 'Round-size premium at Series C' },
-  { n: `${p.cumulative_series_d_plus.toFixed(2)}x`, label: 'Cumulative funding premium by Series D+' },
-  { n: String(totalExits), label: 'Named acquirer deals 2020 to 2026' },
+  { n: `${p.exit_rate_multiple.toFixed(2)}x`, label: 'Observed T1 exit incidence vs unregulated cohort' },
+  { n: `${p.round_size_series_c.toFixed(2)}x`, label: 'Series C round-size uplift' },
+  { n: `${p.cumulative_series_d_plus.toFixed(2)}x`, label: 'Cumulative funding uplift by Series D+' },
+  { n: String(totalExits), label: 'Named acquirer deals, 2020-2026' },
 ];
 ---
 <Base
@@ -44,9 +44,9 @@ const stats = [
         ]}
       />
       <p class="kicker rsl-hero__kicker">The results</p>
-      <h1 class="rsl-hero__title">Enter at parity. Exit at premium.</h1>
+      <h1 class="rsl-hero__title">Near-parity at seed. Premiums appear later.</h1>
       <p class="rsl-hero__sub">
-        Companies that pass the filter raise more at each round, graduate at a higher rate, and exit at a multiple of the unregulated cohort.
+        In the four-market dataset, T1 companies show larger later-stage rounds, higher observed graduation, and higher exit incidence than the unregulated cohort. The pattern is strongest from Series C onward.
       </p>
     </div>
   </header>
@@ -66,22 +66,22 @@ const stats = [
     <ChartFrame
       kicker="Named acquirer deals"
       title="Strategic acquirers are already buying."
-      caption={`${totalExits} named developed-APAC regulated-company acquisitions, primary-source verified. Hero marks are T1 acquisitions. Disclosed values range ${fmtUsd(minExit)} to ${fmtUsd(maxExit)}.`}
-      source="Source. hmm Ventures exit dataset."
+      caption={`${totalExits} named developed-APAC regulated-company acquisitions, source-verified. Highlighted marks show T1 acquisitions. Disclosed values range ${fmtUsd(minExit)} to ${fmtUsd(maxExit)}.`}
+      source="Source: hmm Ventures exit dataset."
     >
       <ExitsUnitStrip />
     </ChartFrame>
     <p class="rsl-exits__note">
-      Coverage today: AUS {countByMarket['AU'] ?? 0}. NZL {countByMarket['NZ'] ?? 0}. JPN {countByMarket['JP'] ?? 0}. SGP {countByMarket['SG'] ?? 0}. Coverage expands as compliant cohorts mature 2026 to 2028.
+      Coverage today: AUS {countByMarket['AU'] ?? 0}. NZL {countByMarket['NZ'] ?? 0}. JPN {countByMarket['JP'] ?? 0}. SGP {countByMarket['SG'] ?? 0}. Current coverage is uneven. More data is expected as 2026-2028 compliant cohorts mature.
     </p>
   </section>
 
   <section class="container rsl-premiums">
     <ChartFrame
-      kicker="Round-size premium"
-      title="T1 companies raise larger rounds at every stage."
-      caption="Round-size premium relative to the unregulated cohort. Seed near parity. The gap widens by Series C."
-      source="Source. hmm Ventures four-market dataset."
+      kicker="Round-size uplift"
+      title="T1 companies show larger observed rounds at every stage."
+      caption="Round-size uplift relative to the unregulated cohort. Seed near parity. The gap opens by Series C."
+      source="Source: hmm Ventures four-market dataset."
     >
       <SmallMultiples cols={4}>
         <PremiumBar label="Seed" value={p.round_size_seed} />
@@ -95,9 +95,9 @@ const stats = [
   <section class="container rsl-exit-rate">
     <ChartFrame
       kicker="Exit incidence"
-      title="T1 exits at 2.22x the unregulated rate."
+      title="T1 companies show 2.22x the observed exit incidence of the unregulated cohort."
       caption={`Exit incidence: regulated cohort ${p.regulated_exit_rate_pct}% vs unregulated ${p.unregulated_exit_rate_pct}%.`}
-      source="Source. hmm Ventures four-market dataset."
+      source="Source: hmm Ventures four-market dataset."
     >
       <SmallMultiples cols={1}>
         <PremiumBar label="Exit rate, T1 vs unregulated" value={p.exit_rate_multiple} max={3} />

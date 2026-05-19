@@ -78,11 +78,6 @@ const sourceGroups: SourceGroup[] = [
   group('research', 'Research', 'research', research)
 ];
 
-const totalFootnotes = sourceGroups.reduce(
-  (acc, g) => acc + g.items.reduce((a, it) => a + it.footnotes.length, 0),
-  0
-);
-const totalTerms = glossary.categories.reduce((acc, c) => acc + c.terms.length, 0);
 ---
 <Base
   title="References"
@@ -93,7 +88,7 @@ const totalTerms = glossary.categories.reduce((acc, c) => acc + c.terms.length, 
       <p class="kicker refs-hero__kicker">References</p>
       <h1 class="refs-hero__title">Glossary and citations.</h1>
       <p class="refs-hero__sub">
-        {totalTerms} terms across {glossary.categories.length} categories. {totalFootnotes} footnotes across the Necessity Doctrine, the four market chapters, and the research library.
+        Definitions and source notes for the doctrine, market chapters, and research library.
       </p>
       <nav class="refs-hero__toc" aria-label="On this page">
         <a href="#glossary">Glossary</a>
@@ -117,7 +112,7 @@ const totalTerms = glossary.categories.reduce((acc, c) => acc + c.terms.length, 
       <header class="refs__sec-head">
         <p class="kicker refs__sec-kicker">Glossary</p>
         <h2 class="refs__sec-title">Terms across the doctrine, the IM, the research.</h2>
-        <p class="refs__sec-sub">Definitions written for a junior analyst. Senior readers can skip.</p>
+        <p class="refs__sec-sub">Definitions are written plainly so the assumptions and metrics can be reviewed without specialist context.</p>
       </header>
 
       {glossary.categories.map((cat) => (

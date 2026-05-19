@@ -53,15 +53,15 @@ const rows = steps.map((s, i) => {
 <IMFigure
   fignum="WEB-E"
   label="Classified universe · Four-step funnel"
-  title='From 22,217 global companies to <em>2,625</em> seed-stage in-thesis targets.'
+  title='From 22,217 APAC technology companies to <em>2,625</em> seed-stage in-thesis targets.'
   sub="Geographic filter narrows to four-market base. Conservative classifier applies the T1/T2 test. Stage filter isolates seed-priced rounds."
   metrics={[
-    { label: 'GLOBAL UNIVERSE', value: '22,217', ci: 'Pre-filter base' },
+    { label: 'APAC UNIVERSE',   value: '22,217', ci: 'Pre-filter base' },
     { label: 'FOUR-MARKET',     value: '19,416', ci: 'Geographic filter' },
     { label: 'IN THESIS',       value: '6,505',  ci: 'T1 + T2 · 33.5%' },
     { label: 'SEED-STAGE',      value: '2,625',  ci: 'Pipeline base', accent: true }
   ]}
-  source="hmm Ventures Comprehensive Classified Dataset"
+  source="hmm Ventures classified dataset"
   basis="Four-step funnel · Crunchbase + Dealroom four-market base"
 >
   <svg

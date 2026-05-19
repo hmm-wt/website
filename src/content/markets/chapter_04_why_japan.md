@@ -10,9 +10,9 @@ rail_market: JP
 
 ---
 
-Japan is the cleanest test of the doctrine. The country's corporate architecture, its regulatory posture, and its capital structure are coupled in a way that creates seed-stage barriers stronger than any other developed market. The cross-shareholding system that has historically blocked outside disruption is the channel through which regulated venture capital now flows.
+Japan is the clearest test of whether regulated corporate procurement can drive seed-stage venture outcomes. The country's corporate architecture, its regulatory posture, and its capital structure are coupled in a way that creates some of the strongest seed-stage barriers in developed markets. The cross-shareholding system that has historically blocked outside disruption can route capital, procurement, and validation toward regulated startups.
 
-The paradox is that the same feature has been described as Japan's structural problem for thirty years and is now its structural advantage. The driver is the AI Promotion Act 2025, the broader Economic Security Promotion architecture, and a generational handover at the corporate level that is releasing capital and decision rights for the first time since the 1980s.
+The paradox is that the same feature Western investors have criticised for decades may now create an advantage in regulated procurement. The driver is the AI Promotion Act 2025, the broader Economic Security Promotion architecture, and a generational handover at the corporate level that is beginning to loosen capital allocation and procurement decisions.
 
 > **Japan, current state**
 >
@@ -39,11 +39,11 @@ The implication for seed-stage investors is direct. Companies that build for the
 
 Japan's AI Promotion Act took an explicitly different design choice from the EU AI Act. There are no penalties, no prohibitions, no mandatory categorisations. Compliance is voluntary in form and reputational in enforcement.
 
-That choice matters for the doctrine. The EU framework creates an enforcement perimeter; companies on the wrong side face €35 million fines. The Japanese framework creates a participation perimeter; companies inside the perimeter receive procurement preference, regulatory cooperation, and access to the AI Strategy Headquarters coordination process. Companies outside it receive nothing punitive, but lose the procurement preference.
+That choice matters for the doctrine. The EU framework creates an enforcement perimeter; companies on the wrong side face €35 million fines. The Japanese framework creates a participation perimeter; companies inside the perimeter are more likely to receive procurement attention, regulatory cooperation, and access to the AI Strategy Headquarters coordination process. Companies outside it receive nothing punitive, but lose that advantage.
 
-For T1 and T2 companies, the participation perimeter is the asset. METI's AI Governance Guidelines for Business v1.1 set practical expectations: documented risk assessment, transparency to users, monitoring infrastructure, lifecycle records.[^2] Companies that build to these expectations qualify as preferred suppliers to Japanese regulated buyers. Companies that do not, do not.
+For T1 and T2 companies, the participation perimeter is the asset. METI's AI Governance Guidelines for Business v1.1 set practical expectations: documented risk assessment, transparency to users, monitoring infrastructure, lifecycle records.[^2] Companies that build to these expectations are easier for regulated Japanese buyers to approve. Companies that do not, are harder.
 
-A v1.2 update is reportedly in preparation, addressing cross-border data flows and EU AI Act interoperability. METI has not publicly confirmed scope or timing. The interoperability move, if it lands, is significant. It implies a future in which a single compliance posture allows a Japanese T2 vendor to sell into both Japanese and European regulated buyers without retooling.
+A v1.2 update is reportedly in preparation, addressing cross-border data flows and EU AI Act interoperability. METI has not publicly confirmed scope or timing. The interoperability move, if it lands, is significant. It may reduce the amount of retooling required for a Japanese T2 vendor to sell into both Japanese and European regulated buyers.
 
 ---
 

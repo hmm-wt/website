@@ -10,9 +10,9 @@ rail_market: AU
 
 ---
 
-Australia is where regulatory architecture, R&D incentives, and superannuation capital intersect at a scale that no comparable mid-sized economy matches. The R&D Tax Incentive moves the cost-of-capital line down for early-stage R&D businesses. The A$4.3 trillion superannuation pool is being slowly redirected toward unlisted growth equity by both regulatory pressure and political reform. The four sectors with the deepest regulatory architecture (mining, financial services, healthcare, and energy) are the four sectors where the country's industrial capability is greatest.
+Australia is where regulatory architecture, R&D incentives, and superannuation capital intersect. The R&D Tax Incentive reduces the effective cost of eligible technical work for early-stage R&D businesses. The A$4.3 trillion superannuation pool is being slowly redirected toward unlisted growth equity by both regulatory pressure and political reform. The four sectors with the deepest regulatory architecture (mining, financial services, healthcare, and energy) are the four sectors where the country's industrial capability is greatest.
 
-The thesis here is the simplest of the four markets. Australia is a regulated-economy beneficiary because the structural pieces line up: subsidised R&D, a domestic capital pool large enough to absorb a series-stage market, and statutory regulatory perimeters in every Necessity-aligned sector. The risk is execution at the LP-allocator level. Superannuation funds are slow to commit, and political volatility can change the R&D incentive parameters between vintages.
+The thesis here is the simplest of the four markets. Australia is attractive because regulation, incentives, and capital formation reinforce each other: subsidised R&D, a domestic capital pool large enough to absorb a series-stage market, and mature regulatory regimes in every Necessity-aligned sector. The risk is execution at the LP-allocator level. Superannuation funds are slow to commit, and political volatility can change the R&D incentive parameters between vintages.
 
 > **Australia, current state**
 >
@@ -25,9 +25,9 @@ The thesis here is the simplest of the four markets. Australia is a regulated-ec
 
 ## The R&D Tax Incentive as a cost-of-capital line
 
-The Australian R&D Tax Incentive (RDTI) reduces the post-tax cost of an Australian-incorporated company's eligible R&D expenditure by 43.5 cents on the dollar for sub-A$20M turnover companies.[^1] For a seed-stage T1 or T2 company, that turns A$1 of R&D spend into A$1.43 of effective capital, claimed back through the tax system 12-18 months after deployment.
+The Australian R&D Tax Incentive (RDTI) returns 43.5 cents per dollar of eligible R&D expenditure for sub-A$20M turnover companies, claimed back through the tax system 12-18 months after deployment.[^1] The eligible-spend definition narrows what counts: technical R&D activities, not the full burn.
 
-The mechanic matters at the deal level. A company that would burn A$3M over twelve months in unregulated Sydney runway is burning approximately A$1.7M of after-incentive cash. The same company in California is burning A$3M with no equivalent offset. The implied valuation arbitrage at seed entry is real and persistent.
+The mechanic matters at the deal level. If most of a seed-stage company's A$3M annual burn qualifies as eligible R&D, the post-offset cash cost can be materially lower than the headline number, subject to eligibility and the 12-18 month timing lag. A comparable California company can access federal §41 and §174 R&D credits and SBIR/STTR programmes, but not a directly comparable refundable offset at the same scale for early-stage losses. That creates a real entry-price advantage when the Australian company is building for global revenue, not only the domestic market.
 
 A 2025 government review recommended strengthening the RDTI rather than weakening it.[^4] The review recommended both broader eligibility for software-driven R&D and longer-tenured eligibility for companies that scale beyond the A$20M turnover threshold. The political consensus around the RDTI has held across changes of government for over a decade.
 
@@ -39,23 +39,23 @@ The risk is not abolition. The risk is parameter drift. A tightening of the elig
 
 Australia's superannuation system holds A$4.3 trillion in retirement assets.[^2] The legal mandate to invest in retirement savers' best financial interests has historically been read as a preference for liquid, listed, low-cost beta. That reading is changing.
 
-Regulatory pressure from APRA, political pressure from successive governments, and competitive pressure between large industry funds have combined to push allocations into unlisted assets, including private equity and venture capital. Industry fund allocation to unlisted growth assets sits in the high single digits to low double digits across the major funds.[^2] A 1% incremental allocation to venture and growth equity across the system is multiples of the entire current Australian VC market.
+Regulatory pressure from APRA, political pressure from successive governments, and competitive pressure between large industry funds have combined to push allocations into unlisted assets, including private equity and venture capital. Industry fund allocation to unlisted growth assets sits in the high single digits to low double digits across the major funds.[^2] A 1% incremental allocation to venture and growth equity across the system is large relative to the current Australian VC market.
 
-The political reform is two-sided. The 2025 superannuation tax change applied a 30% concessional rate to balances above A$3M from 1 July 2026, with parameters still under negotiation.[^3] The same review process recommended easing the regulatory barriers to superannuation investment in high-growth firms.[^4] The net direction is toward more, not less, super capital available for venture deployment.
+The political reform is two-sided. The 2025 superannuation tax change applied a 30% concessional rate to balances above A$3M from 1 July 2026, with parameters still under negotiation.[^3] The same review process recommended easing the regulatory barriers to superannuation investment in high-growth firms.[^4] The policy direction appears more supportive of private-market and growth-company exposure, but the route into venture remains allocator-specific and slow.
 
-The implication for seed-stage funds is structural. The LP base is increasing, not contracting. The fund-level competition for capital is intensifying. The commercial relationships that determine whether an industry-fund allocator commits to a vintage are forming now.
+The implication for seed-stage funds is structural. The potential domestic LP base is widening, but access remains concentrated and relationship-driven. The fund-level competition for capital is intensifying. The commercial relationships that determine whether an industry-fund allocator commits to a vintage are forming now.
 
 ---
 
 ## Where the regulatory architecture lives
 
-Four Necessity-aligned regulated sectors, each with a mature statutory perimeter.
+Four Necessity-aligned regulated sectors, each with a mature statutory regime.
 
 Financial services: APRA prudential standards for ADIs; ASIC market and conduct supervision; recent additions covering crypto and stablecoin licensing; the new operational resilience standard CPS 230 effective 1 July 2025.[^5] T2 vendors selling into APRA-regulated entities have a multi-year procurement horizon and a structural switching-cost advantage.
 
-Energy: AEMO Integrated System Plan committing A$122 billion across generation, storage, and transmission investment by 2050; AER regulatory revenue determinations on five-year cycles; ARENA grant programmes targeting renewables R&D.[^6] The transition pipeline is funded and binding.
+Energy: AEMO Integrated System Plan committing A$122 billion across generation, storage, and transmission investment by 2050; AER regulatory revenue determinations on five-year cycles; ARENA grant programmes targeting renewables R&D.[^6] The transition pipeline is funded, regulated, and hard to reverse, even if individual projects slip.
 
-Healthcare and biotech: TGA software-as-medical-device framework; PBS reimbursement pathway; clinical trial sponsor requirements harmonised with ICH GCP. Medical device manufacturers and diagnostic AI vendors operating inside the TGA perimeter have certified pathways into Asia-Pacific markets.
+Healthcare and biotech: TGA software-as-medical-device framework; PBS reimbursement pathway; clinical trial sponsor requirements harmonised with ICH GCP. TGA-regulated companies can build a credible approval record that supports later entry into selected Asia-Pacific markets.
 
 Critical minerals: A$4 billion Critical Minerals Strategy 2023-2030; Critical Minerals Office at the Department of Industry; FIRB review thresholds reduced for sensitive sector transactions in 2024. Australia's resource base in lithium, rare earths, and copper sits inside a tightening export-control architecture aligned with allied economies.
 
@@ -63,9 +63,9 @@ Critical minerals: A$4 billion Critical Minerals Strategy 2023-2030; Critical Mi
 
 ## What the doctrine looks for
 
-A specific deal profile. An Australian-domiciled company eligible for RDTI claiming. A T1 or T2 product positioned inside one of the four regulated perimeters. A go-to-market sequence that books the regulated-buyer revenue first, then expands the deal size as the buyer's regulatory burden grows. A cap table that anticipates a Series B or C lead from a North American or European investor at the pivot to ex-Australia revenue concentration.
+A specific deal profile. An Australian-domiciled company eligible for RDTI claiming. A T1 or T2 product positioned inside one of the four regulated sectors. A go-to-market sequence that wins regulated-buyer revenue first, then expands the deal size as the buyer's regulatory burden grows. A cap table that anticipates a Series B or C lead from a North American or European investor once revenue starts shifting outside Australia.
 
-The Australian companies that match this profile are not numerous. The pool is constrained by domestic talent supply in regulated-sector engineering and product roles. But the entry valuations are competitive against U.S. comparables, the RDTI offset extends runway, and the local regulatory familiarity produces faster T1 licensing or T2 procurement traction than equivalent companies in the United States face on entry.
+The Australian companies that match this profile are not numerous. The pool is constrained by domestic talent supply in regulated-sector engineering and product roles. But the entry valuations are competitive against U.S. comparables, the RDTI offset extends runway, and the local regulatory familiarity can produce faster early T1 licensing or T2 procurement traction than a comparable U.S. company would face in a larger, more fragmented market.
 
 ---
 
