@@ -76,12 +76,35 @@ const necessities = [
         Seed-stage capital into the companies people need to heal, power, eat, move, and supply. Four markets in developed APAC, on a regulatory clock.
       </p>
 
+      <ul class="hero__marks" role="list" aria-label="The five Necessities">
+        {necessities.map((n) => (
+          <li class="hero__markitem">
+            <a href={`/necessities/${n.slug}/`} class="hero__marklink" aria-label={n.name}>
+              <NecessityMark kind={n.markKind} size={28} />
+              <span class="hero__marklabel">{n.shortName}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
       <p class="hero__actions">
         <a class="hero__primary" href="#necessities">See the five Necessities &darr;</a>
         <a class="hero__secondary" href="/research/">See the research &rarr;</a>
       </p>
     </div>
 
+  </section>
+
+  <section class="gp-opener">
+    <div class="container gp-opener__inner">
+      <p class="kicker gp-opener__kicker">The GP</p>
+      <p class="gp-opener__line">
+        At an early age, his father, an anaesthetist, showed him how health systems reach past the patient to the family in the corridor, the team in theatre, and the people walking down the street. A school trip to Zealandia, the Wellington wildlife sanctuary held inside the world's first predator-proof fence, sparked a lifelong curiosity for how any system actually works.
+      </p>
+      <p class="gp-opener__readmore">
+        <a href="/about/">Read more about the GP &rarr;</a>
+      </p>
+    </div>
   </section>
 
   <ShapeRow />
@@ -129,16 +152,6 @@ const necessities = [
       <p class="necessities-section__sub">
         The AI revolution becomes investable when it leaves the desk and enters the systems society cannot allow to fail.
       </p>
-      <ul class="necessities-section__marks" role="list" aria-label="The five marks">
-        {necessities.map((n) => (
-          <li class="necessities-section__markitem">
-            <a href={`/necessities/${n.slug}/`} class="necessities-section__marklink" aria-label={n.name}>
-              <NecessityMark kind={n.markKind} size={36} />
-              <span class="necessities-section__marklabel">{n.shortName}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </header>
     <ol class="necessities-section__list" role="list">
       {necessities.map((n, i) => (
@@ -295,6 +308,70 @@ const necessities = [
   }
   .hero__secondary:hover { color: var(--c-tomato); border-color: var(--c-tomato); }
 
+  .hero__marks {
+    list-style: none;
+    margin: var(--s-3) 0 0;
+    padding: 0;
+    display: flex;
+    gap: var(--s-4);
+    flex-wrap: wrap;
+  }
+  .hero__markitem { display: inline-block; }
+  .hero__marklink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: 0.5rem 0.7rem;
+    text-decoration: none;
+    color: color-mix(in srgb, var(--c-pearl) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
+    transition: color var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
+  }
+  .hero__marklink:hover {
+    color: var(--c-pearl);
+    border-color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
+  }
+  .hero__marklabel {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  @media (max-width: 720px) {
+    .hero__marks { gap: var(--s-3); }
+    .hero__marklink { padding: 0.4rem 0.55rem; }
+  }
+
+  /* GP OPENER. Human anchor before the data sections. */
+  .gp-opener {
+    padding-block: var(--s-7);
+    border-bottom: var(--hair) solid var(--hair-color);
+  }
+  .gp-opener__inner { max-width: 64rem; }
+  .gp-opener__kicker { color: var(--c-tomato); margin: 0; }
+  .gp-opener__line {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--fg);
+    max-width: 68ch;
+    margin: var(--s-3) 0 var(--s-4);
+  }
+  .gp-opener__readmore {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0;
+  }
+  .gp-opener__readmore a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+  .gp-opener__readmore a:hover { color: var(--fg); }
+
   /* FILTER. The scrolly. */
   .filter {
     display: grid;
@@ -407,35 +484,6 @@ const necessities = [
     list-style: none;
     margin: var(--s-6) 0 0;
     padding: 0;
-  }
-  .necessities-section__marks {
-    list-style: none;
-    margin: var(--s-6) 0 0;
-    padding: 0;
-    display: flex;
-    gap: var(--s-5);
-    flex-wrap: wrap;
-  }
-  .necessities-section__markitem { display: inline-block; }
-  .necessities-section__marklink {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--s-2);
-    min-width: var(--tap-min);
-    min-height: var(--tap-min);
-    padding: 0.25rem 0.5rem;
-    text-decoration: none;
-    color: var(--fg-faint);
-    transition: color var(--mo-tick) var(--ease-golden);
-  }
-  .necessities-section__marklink:hover { color: var(--hero); }
-  .necessities-section__marklabel {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
   }
 
   /* WINDOW. */

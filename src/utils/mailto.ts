@@ -7,7 +7,7 @@ const IM_REQUEST_BODY = [
   'Mandate fit (one line):',
   '',
   'Anything else you would like me to know before I send:'
-].join('\n');
+].join('\r\n');
 
 export function buildContactMailto(subject: string, body?: string): string {
   // RFC 6068: spaces must be %20, not +. URLSearchParams uses + (form
