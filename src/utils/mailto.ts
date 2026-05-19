@@ -10,10 +10,12 @@ const IM_REQUEST_BODY = [
 ].join('\n');
 
 export function buildContactMailto(subject: string, body?: string): string {
-  const params = new URLSearchParams();
-  params.set('subject', subject);
-  if (body) params.set('body', body);
-  return `mailto:${GP_EMAIL}?${params.toString()}`;
+  // RFC 6068: spaces must be %20, not +. URLSearchParams uses + (form
+  // encoding), which some mail clients render literally. Use
+  // encodeURIComponent directly.
+  const parts = [`subject=${encodeURIComponent(subject)}`];
+  if (body) parts.push(`body=${encodeURIComponent(body)}`);
+  return `mailto:${GP_EMAIL}?${parts.join('&')}`;
 }
 
 export function buildIMRequestMailto(): string {
