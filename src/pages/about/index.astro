@@ -13,7 +13,6 @@ interface Operator {
   years: string;
   detail: string;
   bridge: string;
-  takeaway: string;
 }
 
 const operators: Operator[] = [
@@ -27,7 +26,6 @@ const operators: Operator[] = [
     years: '2017. 2021',
     detail: 'Joined ahead of the Series B in December 2017 at under 30 people. Stayed four years through to the $1.4B Series D. Team-of-one: product validation, revenue building, post-sales function design, the APAC market build. By exit, APAC was around 20% of company revenue with China the primary contributor. The business had a single Chinese speaker, no local entity, and no playbook. He built China to the third-largest revenue contributor to the entire company inside 12 months.',
     bridge: '',
-    takeaway: 'Cross-border operator',
   },
   {
     idx: '02',
@@ -39,7 +37,6 @@ const operators: Operator[] = [
     years: '2021. 2022',
     detail: 'Hired to take an organisation transitioning from non-profit accelerator to seed fund and build its outbound sourcing capability. Inside one year, deal-flow networks across universities, accelerators, and co-working spaces in every Australian state, from Hobart and the Sunshine Coast to Sydney and Melbourne. Founders who, when he met them, did not realise the problem they were solving was global. Twelve months later they were hiring in Colorado after closing their largest contract. Regulated-industry companies in developed APAC are systematically capital-scarce at seed relative to their eventual defensibility.',
     bridge: '',
-    takeaway: 'National sourcing build',
   },
   {
     idx: '03',
@@ -51,7 +48,6 @@ const operators: Operator[] = [
     years: '2021. 2025',
     detail: 'VP Revenue from a founder-led, high-churn starting point. 5x revenue growth. First enterprise agreements. Operations, marketing, customer success, and sales built from scratch. $13M Series A led by Notion Capital, September 2025. The classifier methodology powering Layers 1 and 2 of hmm\'s sourcing engine was built and validated over four years inside GoodFit, now rebuilt against a regulated-T1/T2 ICP. hmm\'s classifier is independently developed against public registry data and licensed commercial feeds. No GoodFit code, dataset, or proprietary IP transferred to hmm. GoodFit leadership is a reference for the underlying methodology and is reachable via the data room.',
     bridge: '',
-    takeaway: 'Revenue function build',
   },
 ];
 
@@ -95,7 +91,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
           <span class="ab-journey__logo">
             <img src={op.logo} alt={op.name} loading="lazy" />
           </span>
-          <span class="ab-journey__takeaway">{op.takeaway}</span>
+          <span class="ab-journey__takeaway">{op.role}</span>
         </li>
       ))}
     </ol>

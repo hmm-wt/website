@@ -58,7 +58,7 @@ const necessities = [
 ---
 <Base
   title="hmm Ventures"
-  description="Necessity is the thesis. Seed-stage capital into the companies people need to heal, power, eat, move, and supply. Four markets in developed APAC."
+  description="Necessity is the thesis. Seed-stage capital into the companies people need to heal, power, move, supply, and eat. Four markets in developed APAC."
 >
   <section class="hero">
     <div class="container hero__inner">
@@ -73,7 +73,7 @@ const necessities = [
       </h1>
 
       <p class="hero__sub">
-        Seed-stage capital into the companies people need to heal, power, eat, move, and supply. Four markets in developed APAC, on a regulatory clock.
+        Seed-stage capital into the companies people need to heal, power, move, supply, and eat. Four markets in developed APAC, on a regulatory clock.
       </p>
 
       <ul class="hero__marks" role="list" aria-label="The five Necessities">
@@ -93,18 +93,6 @@ const necessities = [
       </p>
     </div>
 
-  </section>
-
-  <section class="gp-opener">
-    <div class="container gp-opener__inner">
-      <p class="kicker gp-opener__kicker">The GP</p>
-      <p class="gp-opener__line">
-        At an early age, his father, an anaesthetist, showed him how health systems reach past the patient to the family in the corridor, the team in theatre, and the people walking down the street. A school trip to Zealandia, the Wellington wildlife sanctuary held inside the world's first predator-proof fence, sparked a lifelong curiosity for how any system actually works.
-      </p>
-      <p class="gp-opener__readmore">
-        <a href="/about/">Read more about the GP &rarr;</a>
-      </p>
-    </div>
   </section>
 
   <ShapeRow />
@@ -169,24 +157,7 @@ const necessities = [
     </ol>
   </section>
 
-  <section class="markets-section container">
-    <header class="markets-section__head">
-      <p class="kicker">The four markets</p>
-      <h2 class="markets-section__title">Developed APAC, on a regulatory clock.</h2>
-    </header>
-  </section>
-
   <CorridorGrid />
-
-  <section class="evidence container">
-    <p class="kicker evidence__kicker">The evidence</p>
-    <p class="evidence__line">
-      Nine named developed-APAC regulated-company acquisitions 2020 to 2026. Round-size premium 1.12x at seed, 1.53x at Series C. Exit incidence at 2.22x the unregulated rate.
-    </p>
-    <p class="evidence__readmore">
-      <a href="/research/results/">See the graduation rates &rarr;</a>
-    </p>
-  </section>
 
   <CTARail />
 </Base>
@@ -343,36 +314,6 @@ const necessities = [
     .hero__marklink { padding: 0.4rem 0.55rem; }
   }
 
-  /* GP OPENER. Human anchor before the data sections. */
-  .gp-opener {
-    padding-block: var(--s-7);
-    border-bottom: var(--hair) solid var(--hair-color);
-  }
-  .gp-opener__inner { max-width: 64rem; }
-  .gp-opener__kicker { color: var(--c-tomato); margin: 0; }
-  .gp-opener__line {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--fg);
-    max-width: 68ch;
-    margin: var(--s-3) 0 var(--s-4);
-  }
-  .gp-opener__readmore {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin: 0;
-  }
-  .gp-opener__readmore a {
-    color: var(--c-tomato);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 2px;
-  }
-  .gp-opener__readmore a:hover { color: var(--fg); }
-
   /* FILTER. The scrolly. */
   .filter {
     display: grid;
@@ -487,56 +428,6 @@ const necessities = [
     padding: 0;
   }
 
-  /* WINDOW. */
-  .window {
-    padding-block: var(--s-7);
-  }
-
-  /* MARKETS. */
-  .markets-section {
-    padding-block: var(--s-7) 0;
-  }
-  .markets-section__head {
-    max-width: 56ch;
-  }
-  .markets-section__head .kicker { color: var(--c-tomato); margin: 0; }
-  .markets-section__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-tight);
-    margin: var(--s-3) 0 0;
-    letter-spacing: -0.01em;
-  }
-
-  /* EVIDENCE. */
-  .evidence {
-    padding-block: var(--s-7);
-    border-top: var(--hair) solid var(--hair-color);
-    max-width: 64rem;
-  }
-  .evidence__kicker { color: var(--c-tomato); margin: 0; }
-  .evidence__line {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--fg);
-    max-width: 56ch;
-    margin: var(--s-3) 0 var(--s-4);
-  }
-  .evidence__readmore {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin: 0;
-  }
-  .evidence__readmore a {
-    color: var(--c-tomato);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 2px;
-  }
-  .evidence__readmore a:hover { color: var(--fg); }
 </style>
 
 <script>
