@@ -184,8 +184,8 @@ const dialogId = `cf-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: var(--tap-min);
+    height: var(--tap-min);
     background: var(--c-tomato);
     color: var(--c-pearl);
     border: 0;
@@ -194,5 +194,6 @@ const dialogId = `cf-${src.replace(/[^a-zA-Z0-9]/g, '-')}`;
     cursor: pointer;
     z-index: 1;
   }
-  .cf__close:hover { background: var(--c-pearl); color: var(--c-evergreen); }
+  .cf__close:hover,
+  .cf__close:active { background: var(--c-pearl); color: var(--c-evergreen); }
 </style>

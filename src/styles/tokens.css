@@ -177,6 +177,27 @@
   --radius: 0;
   --radius-sm: 2px;
 
+  /* ---------- Touch target (WCAG 2.5.5 AA = 24px, AAA = 44px) ----------
+     Every interactive control (buttons, icon controls, CTAs, PDF links,
+     filter chips, close buttons) lands on --tap-min as min-height
+     and/or min-width. Inline text links inside paragraphs are exempt. */
+  --tap-min: 44px;
+
+  /* ---------- Breakpoints (max-width) ----------
+     Canonical 3-step responsive ladder. Replaces the prior ad-hoc set
+     (480/520/640/720/800/820/980). CSS custom properties don't work
+     inside @media () queries — so the values double as documentation
+     for the literal pixel values used in component @media blocks.
+
+       --bp-sm: ≤480px   — small phones / iPhone SE / Galaxy S24
+       --bp-md: ≤720px   — large phones, tablets in portrait
+       --bp-lg: ≤1024px  — tablets in landscape / small laptops
+
+     Component CSS uses the matching literal: @media (max-width: 480px). */
+  --bp-sm: 480px;
+  --bp-md: 720px;
+  --bp-lg: 1024px;
+
   /* ---------- Motion (canonical) ----------
      Design System v1.0 section Q: two short beats + one held beat.
      --mo-tick:  beat 1/2 (linear).

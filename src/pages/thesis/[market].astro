@@ -126,10 +126,13 @@ const { Content } = await entry.render();
     font-size: var(--fs-lg);
   }
   .market-foot__list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding-block: 0.5rem;
     text-decoration: none;
     color: var(--fg);
     border-bottom: 1px solid var(--rule);
-    padding-block-end: 2px;
   }
   .market-foot__list a:hover {
     color: var(--c-tomato);

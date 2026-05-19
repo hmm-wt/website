@@ -145,13 +145,16 @@ const headerLabel = title ?? (market ? `Crystallisation Window · ${marketLabel[
     border-top: 1px solid color-mix(in srgb, var(--c-pearl) 15%, transparent);
   }
   .cw__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding-block: 0.5rem;
     color: var(--c-tomato);
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: 600;
     border-bottom: 1px solid currentColor;
-    padding-bottom: 1px;
   }
   .cw__link:hover { color: var(--c-pearl); }
 </style>

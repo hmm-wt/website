@@ -212,10 +212,13 @@ const totalTerms = glossary.categories.reduce((acc, c) => acc + c.terms.length, 
     letter-spacing: 0.12em;
   }
   .refs-hero__toc a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding-block: 0.5rem;
     color: var(--c-tomato);
     text-decoration: none;
     border-bottom: 1px solid currentColor;
-    padding-bottom: 1px;
   }
   .refs-hero__toc a:hover { color: var(--c-pearl); border-bottom-color: var(--c-pearl); }
 

@@ -27,3 +27,12 @@ pnpm-debug.log*
 
 # Optional npm cache directory
 .npm
+
+# Playwright
+test-results/
+playwright-report/
+
+# Mobile audit output — keep findings.md, drop screenshots/json
+_mobile-audit/**
+!_mobile-audit/**/findings.md
+!_mobile-audit/**/reports.json

@@ -73,7 +73,10 @@ const founderMailto = buildContactMailto('Founder intro');
   }
   .cta-rail__cta {
     align-self: flex-start;
-    padding: var(--s-3) var(--s-5);
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0.875rem var(--s-5);
     background: var(--c-tomato);
     color: var(--c-pearl);
     font-family: var(--f-mono);
@@ -84,7 +87,8 @@ const founderMailto = buildContactMailto('Founder intro');
     transition: background var(--mo-tick) var(--ease-golden);
     margin-block-start: var(--s-3);
   }
-  .cta-rail__cta:hover { background: var(--c-mahogany); }
+  .cta-rail__cta:hover,
+  .cta-rail__cta:active { background: var(--c-mahogany); }
 
   @media (max-width: 800px) {
     .cta-rail {

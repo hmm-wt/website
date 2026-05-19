@@ -74,7 +74,14 @@ const pubLabel = published
 
     <div class="bh__graphic">
       {image ? (
-        <img src={image} alt={imageAlt ?? `${regulator} pathway graphic`} />
+        <img
+          src={image}
+          alt={imageAlt ?? `${regulator} pathway graphic`}
+          width="1200"
+          height="900"
+          loading="eager"
+          decoding="async"
+        />
       ) : (
         <div class="bh__graphic-placeholder" aria-hidden="true">
           <span class="bh__graphic-mark"></span>
@@ -172,18 +179,22 @@ const pubLabel = published
 
   .bh__pdf {
     align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--c-evergreen);
     background: var(--c-pearl);
-    padding: 0.75rem 1.2rem;
+    padding: 0.875rem 1.25rem;
     text-decoration: none;
     font-weight: 600;
     transition: background var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
   }
-  .bh__pdf:hover {
+  .bh__pdf:hover,
+  .bh__pdf:active {
     background: var(--c-tomato);
     color: var(--c-pearl);
   }

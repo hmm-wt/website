@@ -1,22 +1,79 @@
 ---
 import Base from '../layouts/Base.astro';
-import CTARail from '../components/CTARail.astro';
 ---
 <Base
   title="Contact"
-  description="Direct email. For LPs and founders."
+  description="Direct contact. For LPs and founders."
 >
   <header class="contact-hero">
     <div class="container">
       <p class="kicker contact-hero__kicker">Get in touch</p>
-      <h1 class="contact-hero__title">Two doors. One email each.</h1>
+      <h1 class="contact-hero__title">Two doors. One form.</h1>
       <p class="contact-hero__sub">
         If you allocate capital, request the IM. If you build what people need, send the deck. Read the doctrine first.
       </p>
     </div>
   </header>
 
-  <CTARail />
+  <section class="contact-form-wrap container">
+    <form
+      class="contact-form"
+      name="contact"
+      method="POST"
+      action="/contact/thanks/"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="contact-form__hp" aria-hidden="true">
+        <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
+
+      <fieldset class="contact-form__role">
+        <legend class="contact-form__legend">Which door</legend>
+        <label class="contact-form__radio">
+          <input type="radio" name="role" value="lp" required />
+          <span>If you allocate capital</span>
+        </label>
+        <label class="contact-form__radio">
+          <input type="radio" name="role" value="founder" />
+          <span>If you build what people need</span>
+        </label>
+        <label class="contact-form__radio">
+          <input type="radio" name="role" value="other" />
+          <span>Something else</span>
+        </label>
+      </fieldset>
+
+      <div class="contact-form__row">
+        <label class="contact-form__field">
+          <span class="contact-form__label">Name</span>
+          <input type="text" name="name" autocomplete="name" required />
+        </label>
+        <label class="contact-form__field">
+          <span class="contact-form__label">Email</span>
+          <input type="email" name="email" inputmode="email" autocomplete="email" required />
+        </label>
+      </div>
+
+      <label class="contact-form__field">
+        <span class="contact-form__label">Organisation</span>
+        <input type="text" name="organisation" autocomplete="organization" />
+      </label>
+
+      <label class="contact-form__field">
+        <span class="contact-form__label">Message</span>
+        <textarea name="message" rows="6" required placeholder="A few lines on the office, the mandate, and what you have already read."></textarea>
+      </label>
+
+      <div class="contact-form__foot">
+        <button type="submit" class="contact-form__submit">Send</button>
+        <p class="contact-form__note">
+          Direct email also fine: <a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a>
+        </p>
+      </div>
+    </form>
+  </section>
 
   <section class="contact-trail container">
     <p class="contact-trail__line">
@@ -49,8 +106,155 @@ import CTARail from '../components/CTARail.astro';
     max-width: 60ch;
     margin: 0;
   }
+
+  .contact-form-wrap {
+    padding-block: var(--s-7) var(--s-7);
+    max-width: 48rem;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+  }
+  .contact-form__hp {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .contact-form__role {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .contact-form__legend {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-soft);
+    padding: 0;
+    margin-block-end: var(--s-3);
+  }
+  .contact-form__radio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    min-height: var(--tap-min);
+    padding: 0.5rem 0.875rem;
+    border: 1px solid var(--rule);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    cursor: pointer;
+    transition: border-color var(--mo-tick) var(--ease-golden),
+                color var(--mo-tick) var(--ease-golden);
+  }
+  .contact-form__radio:hover,
+  .contact-form__radio:focus-within { border-color: var(--c-tomato); color: var(--fg); }
+  .contact-form__radio input {
+    accent-color: var(--c-tomato);
+    width: 16px;
+    height: 16px;
+  }
+
+  .contact-form__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-4);
+  }
+  @media (max-width: 480px) {
+    .contact-form__row { grid-template-columns: 1fr; }
+  }
+  .contact-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+  .contact-form__label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-soft);
+  }
+  .contact-form__field input,
+  .contact-form__field textarea {
+    font-family: var(--f-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-body);
+    color: var(--fg);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 0.75rem var(--s-3);
+    min-height: var(--tap-min);
+    transition: border-color var(--mo-tick) var(--ease-golden),
+                background var(--mo-tick) var(--ease-golden);
+  }
+  .contact-form__field textarea {
+    resize: vertical;
+    line-height: 1.55;
+    min-height: 8rem;
+  }
+  .contact-form__field input:focus,
+  .contact-form__field textarea:focus {
+    outline: none;
+    border-color: var(--c-tomato);
+    background: color-mix(in srgb, var(--c-pearl) 4%, var(--surface));
+  }
+  .contact-form__field input::placeholder,
+  .contact-form__field textarea::placeholder { color: var(--fg-faint); }
+
+  .contact-form__foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    align-items: center;
+    margin-block-start: var(--s-2);
+  }
+  .contact-form__submit {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-min);
+    padding: 0.875rem 1.5rem;
+    background: var(--c-tomato);
+    color: var(--c-pearl);
+    border: 0;
+    font-family: var(--f-mono);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: background var(--mo-tick) var(--ease-golden);
+  }
+  .contact-form__submit:hover,
+  .contact-form__submit:active { background: var(--c-mahogany); }
+  .contact-form__note {
+    margin: 0;
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+  }
+  .contact-form__note a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+  .contact-form__note a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
   .contact-trail {
-    padding-block: var(--s-6) var(--s-8);
+    padding-block: var(--s-4) var(--s-8);
   }
   .contact-trail__line {
     font-family: var(--f-mono);

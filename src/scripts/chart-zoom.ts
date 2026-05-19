@@ -28,7 +28,7 @@ function ensureModal(): HTMLDialogElement {
       <button type="button" class="chart-zoom-modal__close" data-zoom-close aria-label="Close">×</button>
     </header>
     <div class="chart-zoom-modal__body" data-zoom-body></div>
-    <p class="chart-zoom-modal__hint">Pinch or scroll to inspect · tap outside to close</p>
+    <p class="chart-zoom-modal__hint">Scroll to inspect · tap outside or press Esc to close</p>
   `;
   document.body.appendChild(modal);
   modal.querySelector('[data-zoom-close]')?.addEventListener('click', () => modal!.close());

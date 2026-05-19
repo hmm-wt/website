@@ -53,10 +53,15 @@ const { crumbs } = Astro.props;
     gap: var(--s-2);
   }
   .bc__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap-min);
+    min-width: var(--tap-min);
+    padding: 0.5rem 0.25rem;
     color: color-mix(in srgb, currentColor 65%, transparent);
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    padding-bottom: 1px;
     transition: color var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
   }
   .bc__link:hover {

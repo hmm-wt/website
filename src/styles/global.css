@@ -108,28 +108,7 @@ h4 {
 .page-light a:hover { color: var(--c-tomato); }
 .page-light .kicker { color: var(--fg-light-soft); }
 
-/* Skip-to-content link. Hidden until focused via Tab. */
-.skip-link {
-  position: absolute;
-  top: -100px;
-  left: var(--s-3);
-  padding: var(--s-3) var(--s-4);
-  background: var(--c-tomato);
-  color: var(--c-pearl);
-  font-family: var(--f-mono);
-  font-size: var(--fs-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  text-decoration: none;
-  z-index: 200;
-  transition: top var(--mo-tick) var(--ease-golden);
-}
-.skip-link:focus,
-.skip-link:focus-visible {
-  top: var(--s-3);
-  outline: 2px solid var(--c-pearl);
-  outline-offset: 2px;
-}
+/* Skip-to-content link. Visually hidden until focus. Final rules below at line ~395. */
 
 /* Focus-visible ring across all interactive elements. Tomato outline,
    2px offset. Keyboard parity with hover. */
@@ -400,15 +379,24 @@ button[disabled],
   height: 1px;
   overflow: hidden;
 }
-.skip-link:focus {
+.skip-link:focus,
+.skip-link:focus-visible {
   position: fixed;
   top: 0.5rem;
   left: 0.5rem;
   width: auto;
   height: auto;
-  padding: 0.5rem 0.75rem;
+  min-height: var(--tap-min);
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
   background: var(--c-pearl);
   color: var(--c-evergreen);
+  font-family: var(--f-mono);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
   z-index: 1000;
 }
 

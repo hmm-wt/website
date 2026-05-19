@@ -164,6 +164,9 @@ const H = 220;
   }
   .dtb__node[data-branch]:focus { outline: none; }
   .dtb__node[data-branch]:focus rect { stroke-width: 2; }
+  @media (prefers-reduced-motion: reduce) {
+    .dtb__node[data-branch] rect { transition: none; }
+  }
 
   .dtb__node-h {
     font-family: var(--f-mono);
