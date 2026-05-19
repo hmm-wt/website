@@ -5,7 +5,6 @@
  * Layout: stamped number on the left, claim + regulation sparkline on the right.
  * Links into /necessities/[slug]/.
  */
-import SparkBar from './charts/SparkBar.astro';
 import NecessityMark from './NecessityMark.astro';
 import crystallisation from '../data/crystallisation-window.json';
 
@@ -34,12 +33,11 @@ years.forEach((y) => { regsByYear[y] = 0; });
 });
 
 const values = years.map((y) => regsByYear[y]);
-const labels = years.map((y) => String(y));
 
-let heroIndex = -1;
-let heroMax = 0;
+let peakYear: number | null = null;
+let peakCount = 0;
 values.forEach((v, i) => {
-  if (v > heroMax) { heroMax = v; heroIndex = i; }
+  if (v > peakCount) { peakCount = v; peakYear = years[i]; }
 });
 
 const totalRegs = values.reduce((a, b) => a + b, 0);
@@ -58,10 +56,9 @@ const totalRegs = values.reduce((a, b) => a + b, 0);
       </header>
       <p class="npt__claim">{claim}</p>
       {totalRegs > 0 && (
-        <div class="npt__regs">
-          <SparkBar values={values} labels={labels} heroIndex={heroIndex} height={48} ariaLabel={`${name} regulations by year`} />
-          <span class="npt__regnote">{totalRegs} regulation{totalRegs === 1 ? '' : 's'} in flight</span>
-        </div>
+        <p class="npt__regnote">
+          {totalRegs} regulation{totalRegs === 1 ? '' : 's'} in flight{peakYear ? <>, peak <span class="npt__peak">{peakYear}</span></> : null}
+        </p>
       )}
       <span class="npt__more">Open the panel &rarr;</span>
     </div>
@@ -141,20 +138,15 @@ const totalRegs = values.reduce((a, b) => a + b, 0);
     margin: var(--s-2) 0;
     max-width: 50ch;
   }
-  .npt__regs {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-    max-width: 360px;
-    margin-block-start: var(--s-3);
-  }
   .npt__regnote {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--fg-faint);
+    margin: var(--s-3) 0 0;
   }
+  .npt__peak { color: var(--c-tomato); }
   .npt__more {
     margin-block-start: var(--s-4);
     font-family: var(--f-mono);
