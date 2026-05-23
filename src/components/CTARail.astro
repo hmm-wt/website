@@ -5,19 +5,19 @@
  * Two columns: allocator action + founder action. Replaces the old paths
  * grid and the duplicated /#lps + /#founders sections.
  */
-import { buildContactMailto, buildIMRequestMailto } from '../utils/mailto.ts';
+import { buildContactMailto, buildLpMeetingMailto } from '../utils/mailto.ts';
 
-const lpMailto = buildIMRequestMailto();
+const lpMailto = buildLpMeetingMailto();
 const founderMailto = buildContactMailto('Founder intro');
 ---
 <section class="cta-rail container" aria-label="Get in touch">
   <div class="cta-rail__col" id="lps">
     <p class="kicker cta-rail__kicker">If you allocate capital</p>
-    <h2 class="cta-rail__title">Request the IM.</h2>
+    <h2 class="cta-rail__title">Learn more.</h2>
     <p class="cta-rail__lede">
-      A few lines on the office, the mandate, and what you have already read.
+      A short note on the office, the mandate, and what you have read.
     </p>
-    <a class="cta-rail__cta" href={lpMailto}>Learn more &rarr;</a>
+    <a class="cta-rail__cta" href={lpMailto}>Request a meeting &rarr;</a>
   </div>
 
   <div class="cta-rail__divider" aria-hidden="true"></div>

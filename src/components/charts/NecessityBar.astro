@@ -26,9 +26,9 @@ const maxCount = Math.max(...rows.map((r) => r.count));
 ---
 <IMFigure
   fignum="WEB-F"
-  label="Companies by Necessity · In-thesis cohort"
+  label="Companies by Necessity · Cohort view"
   title='<em>Biomedical Systems</em> leads at 1,269. Four others between 395 and 581.'
-  sub="In-thesis company count by Necessity across the four-market base. T1 + T2 classifier applied. The Biomedical concentration anchors the heal Necessity."
+  sub="Company count by Necessity across the four-market base. T1 + T2 classifier applied. The Biomedical concentration anchors the heal Necessity."
   metrics={[
     { label: 'BIOMEDICAL',        value: '1,269', ci: 'Heal · largest cohort', accent: true },
     { label: 'POWER',             value: '581',   ci: 'Grid + storage + DER' },
@@ -36,14 +36,14 @@ const maxCount = Math.max(...rows.map((r) => r.count));
     { label: 'FOOD + MATERIALS',  value: '900',   ci: 'Eat + supply combined' }
   ]}
   source="hmm Ventures classified dataset"
-  basis="In-thesis companies · T1 + T2 classifier · Four-market base"
+  basis="Companies by Necessity · T1 + T2 classifier · Four-market base"
 >
   <svg
     viewBox={`0 0 ${W} ${H}`}
     preserveAspectRatio="xMidYMid meet"
     style="width:100%;height:auto;display:block;"
     role="img"
-    aria-label="In-thesis companies by Necessity: Biomedical leads at 1,269; Power, Autonomous, Critical Materials, and Food Security each between 395 and 581."
+    aria-label="Companies by Necessity: Biomedical leads at 1,269; Power, Autonomous, Critical Materials, and Food Security each between 395 and 581."
   >
     <line x1={ml} y1={mt} x2={ml} y2={mt + ih} stroke="var(--mahogany)" stroke-width="0.6" />
     <line x1={ml} y1={mt + ih} x2={ml + iw} y2={mt + ih} stroke="var(--mahogany)" stroke-width="0.6" />

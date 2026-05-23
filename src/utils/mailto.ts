@@ -1,12 +1,10 @@
 const GP_EMAIL = 'wt@hmm.ventures';
 
-const IM_REQUEST_BODY = [
-  'Fund or office:',
+const LP_INTRO_BODY = [
+  'Office or fund:',
   'Website:',
   'Your role:',
-  'Mandate fit (one line):',
-  '',
-  'Anything else you would like me to know before I send:'
+  'A few lines on the mandate and what you have read:'
 ].join('\r\n');
 
 export function buildContactMailto(subject: string, body?: string): string {
@@ -18,8 +16,8 @@ export function buildContactMailto(subject: string, body?: string): string {
   return `mailto:${GP_EMAIL}?${parts.join('&')}`;
 }
 
-export function buildIMRequestMailto(): string {
-  return buildContactMailto('IM request', IM_REQUEST_BODY);
+export function buildLpMeetingMailto(): string {
+  return buildContactMailto('Request a meeting', LP_INTRO_BODY);
 }
 
 export const CONTACT_EMAIL = GP_EMAIL;

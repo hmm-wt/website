@@ -47,7 +47,7 @@ const maxNecCos = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
           return (
             <tr style={`--bg-intensity: ${intensity}`}>
               <td><span class="im__market-code">{m.market}</span> <span class="im__market-name">{m.code}</span></td>
-              <td class="num">{m.companies ? m.companies.toLocaleString('en-US') : 'n/a'}</td>
+              <td class="num">{m.companies ? m.companies.toLocaleString('en-US') : '—'}</td>
               <td class="num tomato">{m.regulations}</td>
               <td class="num">{m.t1}</td>
               <td class="num">{m.t2}</td>
@@ -66,7 +66,7 @@ const maxNecCos = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
       <thead>
         <tr>
           <th>Necessity</th>
-          <th class="num">In-thesis cos</th>
+          <th class="num">Cohort cos</th>
           <th class="num">Regs T1</th>
           <th class="num">Regs T2</th>
         </tr>
