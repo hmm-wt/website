@@ -12,7 +12,7 @@ import TagFilter from '../TagFilter.astro';
 import calendar from '../../data/crystallisation-window.json';
 
 const MARKETS = ['AU', 'JP', 'NZ', 'SG'] as const;
-const MARKET_NAMES: Record<string, string> = { AU: 'AUS', JP: 'JPN', NZ: 'NZL', SG: 'SGP' };
+const MARKET_NAMES: Record<string, string> = { AU: 'AUS', JP: 'JPN', NZ: 'NZL', SG: 'SIN' };
 const yearList = Array.from(new Set(calendar.regulations.map((r) => r.effective_year))).sort();
 const minYear = yearList[0];
 const maxYear = yearList[yearList.length - 1];

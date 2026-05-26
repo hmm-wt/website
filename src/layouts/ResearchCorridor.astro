@@ -15,7 +15,7 @@ const markets = [
   { code: 'AUS', name: 'Australia', fauna: '/fauna/hmm-fauna-au-wattle.svg' },
   { code: 'JPN', name: 'Japan',     fauna: '/fauna/hmm-fauna-jp-chrysanthemum.svg' },
   { code: 'NZL', name: 'New Zealand', fauna: '/fauna/hmm-fauna-nz-koru.svg' },
-  { code: 'SGP', name: 'Singapore', fauna: '/fauna/hmm-fauna-sg-vanda.svg' }
+  { code: 'SIN', name: 'Singapore', fauna: '/fauna/hmm-fauna-sg-vanda.svg' }
 ];
 ---
 <Base title={title} description={description} ogImage={ogImage}>
@@ -176,7 +176,7 @@ const markets = [
 
   /* Per-market sub-section pattern: <section class="corridor-market">
    * with a fauna glyph aligned left and the market content right. Each
-   * uses one of the four anchors AUS / JPN / NZL / SGP. */
+   * uses one of the four anchors AUS / JPN / NZL / SIN. */
   :global(.rcorr__prose .corridor-market) {
     display: grid;
     grid-template-columns: 4rem minmax(0, 1fr);

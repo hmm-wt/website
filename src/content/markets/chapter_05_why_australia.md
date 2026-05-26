@@ -12,7 +12,7 @@ rail_market: AU
 
 Australia is where regulatory architecture, R&D incentives, and superannuation capital intersect. The R&D Tax Incentive reduces the effective cost of eligible technical work for early-stage R&D businesses. The A$4.3 trillion superannuation pool is being slowly redirected toward unlisted growth equity by both regulatory pressure and political reform. The four sectors with the deepest regulatory architecture (mining, financial services, healthcare, and energy) are the four sectors where the country's industrial capability is greatest.
 
-The thesis here is the simplest of the four markets. Australia is attractive because regulation, incentives, and capital formation reinforce each other: subsidised R&D, a domestic capital pool large enough to absorb a series-stage market, and mature regulatory regimes in every Necessity-aligned sector. The risk is execution at the LP-allocator level. Superannuation funds are slow to commit, and political volatility can change the R&D incentive parameters between vintages.
+The Necessities here is the simplest of the four markets. Australia is attractive because regulation, incentives, and capital formation reinforce each other: subsidised R&D, a domestic capital pool large enough to absorb a series-stage market, and mature regulatory regimes in every Necessity-aligned sector. The risk is execution at the LP-allocator level. Superannuation funds are slow to commit, and political volatility can change the R&D incentive parameters between vintages.
 
 > **Australia, current state**
 >
@@ -27,7 +27,7 @@ The thesis here is the simplest of the four markets. Australia is attractive bec
 
 The Australian R&D Tax Incentive (RDTI) returns 43.5 cents per dollar of eligible R&D expenditure for sub-A$20M turnover companies, claimed back through the tax system 12-18 months after deployment.[^1] The eligible-spend definition narrows what counts: technical R&D activities, not the full burn.
 
-The mechanic matters at the deal level. If most of a seed-stage company's A$3M annual burn qualifies as eligible R&D, the post-offset cash cost can be materially lower than the headline number, subject to eligibility and the 12-18 month timing lag. A comparable California company can access federal §41 and §174 R&D credits and SBIR/STTR programmes, but not a directly comparable refundable offset at the same scale for early-stage losses. That creates a real entry-price advantage when the Australian company is building for global revenue, not only the domestic market.
+The mechanic matters at the deal level. If most of a seed-stage company's A$3M annual burn qualifies as eligible R&D, the post-offset cash cost can be materially lower than the headline number, subject to eligibility and the 12-18 month timing lag. A comparable California company can access federal Section 41 and Section 174 R&D credits and SBIR/STTR programmes, but not a directly comparable refundable offset at the same scale for early-stage losses. That creates a real entry-price advantage when the Australian company is building for global revenue, not only the domestic market.
 
 A 2025 government review recommended strengthening the RDTI rather than weakening it.[^4] The review recommended both broader eligibility for software-driven R&D and longer-tenured eligibility for companies that scale beyond the A$20M turnover threshold. The political consensus around the RDTI has held across changes of government for over a decade.
 
@@ -79,7 +79,7 @@ The exit path is thinner than in the United States. ASX micro-cap listings exist
 
 ---
 
-*Chapter 6 turns to New Zealand, where the entry valuation discount is largest, the failure rate is highest, and the capital efficiency of the regulated-sector seed thesis is at its sharpest.*
+*Chapter 6 turns to New Zealand, where the entry valuation discount is largest, the failure rate is highest, and the capital efficiency of the regulated-sector Necessities is at its sharpest.*
 
 ---
 
