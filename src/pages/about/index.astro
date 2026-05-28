@@ -5,14 +5,14 @@ import { buildContactMailto } from '../../utils/mailto.ts';
 
 interface Operator {
   idx: string;
-  slug: 'paddle' | 'goodfit' | 'skalata';
+  slug: 'paddle' | 'skalata' | 'goodfit';
   name: string;
   logo: string;
   url: string;
   role: string;
   years: string;
-  detail: string;
-  bridge: string;
+  heading: string;
+  details: string[];
 }
 
 const operators: Operator[] = [
@@ -22,10 +22,14 @@ const operators: Operator[] = [
     name: 'Paddle',
     logo: '/logos/paddle.png',
     url: 'https://paddle.com',
-    role: 'Cross-border operator',
+    role: 'Cross-border GTM',
     years: '2017 – 2021',
-    detail: 'Joined ahead of the Series B in December 2017 at under 30 people. Stayed four years through to the $1.4B Series D. Inside twelve months he had built China revenue from a single Chinese-speaking team member, no local entity, and no existing playbook into the third-largest country contribution to total company revenue, and the result persisted long after he had left. The cross-border GTM playbook the fund now transfers at seed was first executed at Paddle: pricing architecture, the first commercial hire, the enterprise sales motion, the decision set that bridges bootstrapped operations into a VC-backed growth posture.',
-    bridge: '',
+    heading: 'Paddle (2017 to 2021, Series B through Series D run-up)',
+    details: [
+      'Joined Paddle ahead of the Series B in December 2017, when the company was under thirty people. Stayed four years. Departed in 2021 with the Series D round in motion; KKR closed the round at $200M and a $1.4B valuation in May 2022, shortly after departure. The seat covered product validation, revenue building, post-sales function design, and the APAC market build.',
+      'China is the underwriting proof point. Paddle had a single Chinese speaker, no local entity, and no playbook. Inside twelve months, China was the third-largest country revenue contributor to the entire company. The result persisted long after the GP left.',
+      'Paddle is also where the cross-border GTM playbook the fund now transfers at seed was first executed. Pricing architecture, first commercial hire, enterprise sales motion, the bootstrapped-to-VC-backed decision set, cross-border market entry without local presence or language. Founders who take hmm’s cheque get the playbook from day one as a GTM input.',
+    ],
   },
   {
     idx: '02',
@@ -33,10 +37,14 @@ const operators: Operator[] = [
     name: 'Skalata Ventures',
     logo: '/logos/skalata.png',
     url: 'https://skalata.vc',
-    role: 'National sourcing build',
+    role: 'Sourcing rebuild',
     years: '2021 – 2022',
-    detail: 'Hired to take an organisation transitioning from non-profit accelerator to seed fund and build its outbound sourcing capability. The repositioning mandate rebuilt sourcing throughput from approximately 300 to 1,200 companies per quarter. Across that volume of regulated-technology companies the same pattern showed up market after market: companies whose eventual defensibility justified a Series A round were systematically under-capitalised at seed.',
-    bridge: '',
+    heading: 'Skalata Ventures (sourcing rebuild, 2021 to 2022)',
+    details: [
+      'After Paddle, the GP was hired to take Skalata through the transition from non-profit accelerator to institutional seed fund. Within six months the firm had moved through the strategic pivot. Sourcing throughput moved from approximately 300 to 1,200 companies per quarter. Deal-flow networks were built across universities, accelerators, and co-working spaces in every Australian state, from Hobart and the Sunshine Coast to Sydney and Melbourne. Skalata raised Fund III after the GP’s departure, the external validation that the repositioning worked.',
+      'Closed deals sourced during the period include Foremind (workforce mental health, 150 B2B clients, third Skalata follow-on May 2025), Lewi Software (water/waste engineering software; Rio Tinto, Urban Utilities), Omni Biotech (industrial safety sensors; Woodside pilot, Monash validation), NetNada, NOLA, and Lanterne. All six operating as of Q1 2026.',
+      'Regulated-industry companies in developed APAC were systematically capital-scarce at seed relative to their eventual defensibility. The same pattern appeared in every market and every Necessity. The founding observation behind hmm became unignorable in this seat.',
+    ],
   },
   {
     idx: '03',
@@ -44,10 +52,14 @@ const operators: Operator[] = [
     name: 'GoodFit',
     logo: '/logos/goodfit.png',
     url: 'https://goodfit.io',
-    role: 'Revenue function build',
+    role: 'Classifier methodology',
     years: '2022 – 2026',
-    detail: 'VP Revenue from a founder-led, high-churn starting point. 5x revenue growth. First enterprise agreements. Operations, marketing, customer success, and sales built from scratch. $13M Series A led by Notion Capital, September 2025. The classifier methodology powering Layers 1 and 2 of hmm\'s sourcing engine was developed and validated across four years inside GoodFit. The architectural pattern most first-time funds spend their first eighteen months building is already running, rebuilt for hmm against a regulated-T1/T2 ICP. hmm\'s classifier is independently developed against public registry data and licensed commercial feeds. No GoodFit code, dataset, or proprietary IP transferred to hmm. GoodFit leadership is a reference for the underlying methodology and is reachable on request.',
-    bridge: '',
+    heading: 'GoodFit (classifier methodology, 2022 to 2026)',
+    details: [
+      'As VP Revenue, the GP built GoodFit’s commercial function from a founder-led, high-churn starting point: 5x revenue growth, first enterprise agreements, operations, marketing, customer success, and sales built from scratch. GoodFit closed a $13M Series A led by Notion Capital in September 2025. The GP has since departed to go full-time on hmm.',
+      'The infrastructure underneath those outcomes is the substance for hmm. The classifier methodology that powers Layers 1 and 2 of hmm’s sourcing engine was built and validated across four years inside GoodFit. The architectural pattern has been rebuilt for hmm against a regulated-T1/T2 ICP rather than a SaaS-revenue ICP.',
+      'hmm’s classifier is independently developed against public registry data (ASIC, IP Australia, ACRA, MAS, METI, NZBN, and sector-specific equivalents) and licensed commercial feeds. No GoodFit code, dataset, or proprietary IP transferred to hmm. GoodFit leadership is available as a reference for the underlying methodology and is reachable on request. Most first-time funds spend their first 18 months building the architectural pattern hmm starts with on day one.',
+    ],
   },
 ];
 
@@ -55,19 +67,41 @@ const gpBackgroundMailto = buildContactMailto('GP background');
 ---
 <Base
   title="The GP"
-  description="hmm Ventures is Wahid Tashkandi, Founding GP. Cross-border operator. Seed-stage capital in developed APAC."
+  description="hmm Ventures is Wahid Tashkandi, Founding GP. A solo GP whose career has been pointed at the Necessities for a decade."
 >
   <header class="ab-hero">
     <div class="container">
       <p class="kicker ab-hero__kicker">The GP</p>
       <h1 class="ab-hero__title">Wahid Tashkandi</h1>
       <p class="ab-hero__subline">Founding GP. hmm Ventures.</p>
+      <p class="ab-hero__lede">A solo GP whose career has been pointed at the Necessities for a decade.</p>
     </div>
   </header>
+
+  <section class="container ab-posture">
+    <header class="ab-posture__head">
+      <p class="kicker ab-posture__kicker">The posture</p>
+    </header>
+    <p class="ab-posture__opener">
+      There is a way of looking at regulated companies in developed APAC that treats Japan, Australia, New Zealand, and Singapore as four separate problems, and the GP has spent a decade not doing that.
+    </p>
+    <p class="ab-posture__line">
+      A critical mineral mined in Western Australia, processed in Shenzhen, and assembled into a medical handset sold to a hospital in Tokyo passes through three regulators on one product, and the compliance question each regulator asks is a version of the same question. Medical device pathways in Sydney (TGA) and Tokyo (PMDA) sit on different statutes but ask the founder to close the same underlying gap. Grid-connection regimes in Singapore and New Zealand differ in mechanism but converge on the same missing piece. The vocabulary changes from jurisdiction to jurisdiction; the underlying problem does not.
+    </p>
+    <p class="ab-posture__line">
+      The four markets do look heterogeneous from the outside. Japanese seed is dominated by corporate venture; Australian Series A is largely super-backed; New Zealand runs a regulator-as-partner posture that is unusual globally; and Singapore is explicitly designed around regulatory arbitrage. None of those differences determine which companies build durable advantage. The filter that does is the same in every market: which company carries the approval the regulator is going to require.
+    </p>
+    <p class="ab-posture__line">
+      That filter is the founding observation behind hmm.
+    </p>
+  </section>
 
   <section class="container ab-journey">
     <header class="ab-journey__head">
       <p class="kicker ab-journey__kicker">The journey</p>
+      <p class="ab-journey__lede">
+        Lived across Australia, New Zealand, Saudi Arabia, and the UK by twenty one. Operating cross-border was the default before it was the work.
+      </p>
     </header>
     <ol class="ab-journey__timeline" role="list">
       {operators.map((op) => (
@@ -85,7 +119,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
   <section class="container ab-roles">
     <header class="ab-roles__head">
       <p class="kicker ab-roles__kicker">The roles</p>
-      <h2 class="ab-roles__title">A decade of work across three operating roles.</h2>
+      <h2 class="ab-roles__title">Three operating seats. One thread.</h2>
     </header>
     <ol class="ab-roles__list" role="list">
       {operators.map((op) => (
@@ -97,29 +131,13 @@ const gpBackgroundMailto = buildContactMailto('GP background');
             </a>
             <span class="ab-role__role">{op.role}</span>
           </header>
-          <p class="ab-role__detail">{op.detail}</p>
-          {op.bridge && <p class="ab-role__bridge">{op.bridge}</p>}
+          <h3 class="ab-role__heading">{op.heading}</h3>
+          {op.details.map((para) => (
+            <p class="ab-role__detail">{para}</p>
+          ))}
         </li>
       ))}
     </ol>
-  </section>
-
-  <section class="container ab-origin">
-    <header class="ab-origin__head">
-      <p class="kicker ab-origin__kicker">The origin</p>
-    </header>
-    <p class="ab-origin__opener">
-      At an early age, his father, an anaesthetist, showed him how health systems reach past the patient to the family in the corridor and the team in theatre. A school trip to Zealandia, the Wellington wildlife sanctuary held inside the world's first predator-proof fence.
-    </p>
-    <p class="ab-origin__line">
-      Sydney to Wellington as a child. Jeddah, Melbourne, and London as an operator. Work reaching Shenzhen, Taipei, Chengdu, Kyiv, Barcelona, New York, the Bay Area, Montreal, Mexico City, and South Africa.
-    </p>
-    <p class="ab-origin__line">
-      Cross-border operating exposes seams others treat as separate problems. Critical minerals mined in Western Australia, assembled in Shenzhen, sold to a hospital in Tokyo. Each jurisdiction carries its own regulator and its own compliance posture, and a single product crosses all three.
-    </p>
-    <p class="ab-origin__line">
-      Developed APAC reads as one market from outside and operates as four from inside. Japan runs on CVC dominance. Australia runs on super-backed Series A. New Zealand runs a regulator-as-partner pathway. Singapore runs regulatory arbitrage.
-    </p>
   </section>
 
   <section class="container ab-closer">
@@ -158,19 +176,27 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
+    margin: 0 0 var(--s-5);
+  }
+  .ab-hero__lede {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: var(--lh-snug);
+    color: var(--c-pearl);
+    max-width: 56ch;
     margin: 0;
   }
 
-  .ab-origin {
+  .ab-posture {
     padding-block: var(--s-7);
     border-top: var(--hair) solid var(--hair-color);
     display: flex;
     flex-direction: column;
     gap: var(--s-4);
   }
-  .ab-origin__head { max-width: 56ch; margin-block-end: var(--s-3); }
-  .ab-origin__head .kicker { color: var(--c-tomato); margin: 0; }
-  .ab-origin__opener {
+  .ab-posture__head { max-width: 56ch; margin-block-end: var(--s-3); }
+  .ab-posture__head .kicker { color: var(--c-tomato); margin: 0; }
+  .ab-posture__opener {
     font-family: var(--f-display);
     font-size: var(--fs-xl);
     line-height: var(--lh-snug);
@@ -178,7 +204,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     max-width: 64ch;
     margin: 0;
   }
-  .ab-origin__line {
+  .ab-posture__line {
     font-family: var(--f-body);
     font-size: var(--fs-md);
     line-height: var(--lh-body);
@@ -193,15 +219,18 @@ const gpBackgroundMailto = buildContactMailto('GP background');
   }
   .ab-journey__head {
     margin-block-end: var(--s-5);
-    max-width: 56ch;
+    max-width: 64ch;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
   }
   .ab-journey__head .kicker { color: var(--c-tomato); margin: 0; }
-  .ab-journey__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-tight);
-    margin: var(--s-3) 0 0;
-    letter-spacing: -0.01em;
+  .ab-journey__lede {
+    font-family: var(--f-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-body);
+    color: var(--fg);
+    margin: 0;
   }
   .ab-journey__timeline {
     list-style: none;
@@ -228,9 +257,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     letter-spacing: 0.12em;
     color: var(--hero);
   }
-  .ab-journey__logo {
-    color: var(--fg);
-  }
+  .ab-journey__logo { color: var(--fg); }
   .ab-journey__logo img {
     height: 32px;
     width: auto;
@@ -248,7 +275,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     .ab-journey__node:first-child { border-top: 0; }
   }
 
-  .ab-roles { padding-block: var(--s-7); }
+  .ab-roles { padding-block: var(--s-7); border-top: var(--hair) solid var(--hair-color); }
   .ab-roles__head { max-width: 56ch; }
   .ab-roles__head .kicker { color: var(--c-tomato); margin: 0; }
   .ab-roles__title {
@@ -272,7 +299,7 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     border-bottom: var(--hair) solid var(--hair-color);
     display: flex;
     flex-direction: column;
-    gap: var(--s-4);
+    gap: var(--s-3);
   }
   .ab-role__head {
     display: flex;
@@ -310,24 +337,22 @@ const gpBackgroundMailto = buildContactMailto('GP background');
     color: var(--fg-soft);
     margin-inline-start: auto;
   }
+  .ab-role__heading {
+    font-family: var(--f-display);
+    font-size: var(--fs-lg);
+    line-height: var(--lh-tight);
+    color: var(--fg);
+    margin: var(--s-2) 0 var(--s-2);
+    letter-spacing: -0.005em;
+    font-weight: 400;
+  }
   .ab-role__detail {
     font-family: var(--f-body);
     font-size: var(--fs-md);
     line-height: var(--lh-body);
     color: var(--fg);
-    max-width: 64ch;
+    max-width: 72ch;
     margin: 0;
-  }
-  .ab-role__bridge {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--hero);
-    padding-block-start: var(--s-3);
-    border-top: var(--hair) solid var(--hair-color);
-    margin: 0;
-    line-height: 1.4;
   }
 
   .ab-closer {
@@ -362,3 +387,5 @@ const gpBackgroundMailto = buildContactMailto('GP background');
   }
   .ab-contact__line a:hover { color: var(--fg); border-bottom-color: var(--fg); }
 </style>
+</content>
+</invoke>
