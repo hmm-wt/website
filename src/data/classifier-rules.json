@@ -22,7 +22,7 @@
       "outcome": "t1",
       "keywords": ["licence", "license", "approval", "clearance", "certification", "accreditation", "authorised", "authorized", "registered with", "TGA", "PMDA", "MAS", "APRA", "MLIT", "HSA", "Medsafe", "AEMO", "ERA", "FDA", "FSANZ", "510(k)", "WAND", "SaMD"],
       "explanation": "The company cannot legally operate without regulatory approval. The classifier flags T1 when registry, product description, or hiring signals indicate dependence on a named licence, clearance, or certification regime in one of the four markets.",
-      "next_step": "Document the named licence, the regulator portal URL, and the latest milestone in the data room. The fund's IC sequencing starts here."
+      "next_step": "Document the named licence, the regulator portal URL, and the latest milestone. The fund's IC sequencing starts here."
     },
     {
       "id": "t2-compulsion",
@@ -30,7 +30,7 @@
       "outcome": "t2",
       "keywords": ["mandatory", "compulsory", "compulsion", "statutory", "compliance reporting", "mandated disclosure", "compelled", "audit obligation", "obligation to disclose", "must report", "required by law", "regulatory filing", "compliance evidence", "code obligation", "carbon disclosure", "modern slavery", "due diligence", "traceability"],
       "explanation": "Buyers are statutorily required to purchase compliant solutions. The classifier flags T2 when sector and customer profile map to a compliance mandate that creates demand for the company's product.",
-      "next_step": "Document the statutory mandate, the enforcement record, and the buyer's compliance line item in the data room."
+      "next_step": "Document the statutory mandate, the enforcement record, and the buyer's compliance line item."
     },
     {
       "id": "excluded-other",

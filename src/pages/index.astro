@@ -8,7 +8,19 @@ import CorridorGrid from '../components/CorridorGrid.astro';
 import ChartFrame from '../components/ChartFrame.astro';
 import CTARail from '../components/CTARail.astro';
 
+// Necessity order is canonical eat / heal / move / power / supply per IM line 42
+// and the LP deck (External/Outbound/01_Teaser/build/lib/data.py). Site aligned
+// 2026-05-27.
 const necessities = [
+  {
+    slug: 'eat',
+    name: 'Food Security Systems',
+    shortName: 'Eat',
+    necessityKey: 'Food Security Systems',
+    markKind: 'food' as const,
+    inThesis: 395,
+    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
+  },
   {
     slug: 'heal',
     name: 'Biomedical Systems',
@@ -17,15 +29,6 @@ const necessities = [
     markKind: 'biomedical' as const,
     inThesis: 1269,
     claim: 'Clinical software, diagnostics, AI-assisted decisions. Cannot ship without regulator clearance.',
-  },
-  {
-    slug: 'power',
-    name: 'Power Systems',
-    shortName: 'Power',
-    necessityKey: 'Power Systems',
-    markKind: 'power' as const,
-    inThesis: 581,
-    claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
   },
   {
     slug: 'move',
@@ -37,6 +40,15 @@ const necessities = [
     claim: 'Road, logistics, public-path, maritime, aviation. Cannot operate without licence.',
   },
   {
+    slug: 'power',
+    name: 'Power Systems',
+    shortName: 'Power',
+    necessityKey: 'Power Systems',
+    markKind: 'power' as const,
+    inThesis: 581,
+    claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
+  },
+  {
     slug: 'supply',
     name: 'Critical Materials and Supply Integrity',
     shortName: 'Supply',
@@ -45,20 +57,11 @@ const necessities = [
     inThesis: 505,
     claim: 'Provenance, chain of custody, processing history, ESG evidence. Cannot sell without traceability.',
   },
-  {
-    slug: 'eat',
-    name: 'Food Security Systems',
-    shortName: 'Eat',
-    necessityKey: 'Food Security Systems',
-    markKind: 'food' as const,
-    inThesis: 395,
-    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
-  },
 ];
 ---
 <Base
   title="hmm Ventures"
-  description="Necessity is the Thesis. Seed-stage capital into the companies people need to heal, power, move, supply, and eat. Four markets in developed APAC."
+  description="Necessity is the Thesis. Seed-stage capital into the companies people need to eat, heal, move, power, and supply. Four markets in developed APAC."
 >
   <section class="hero">
     <div class="container hero__inner">
@@ -73,7 +76,7 @@ const necessities = [
       </h1>
 
       <p class="hero__sub">
-        Seed-stage capital into the companies people need to heal, power, move, supply, and eat. Four markets in developed APAC, on a regulatory clock.
+        Seed-stage capital into the companies people need to eat, heal, move, power, and supply. Four markets in developed APAC, on a regulatory clock.
       </p>
 
       <ul class="hero__marks" role="list" aria-label="The five Necessities">
@@ -128,17 +131,20 @@ const necessities = [
         <p class="stage__kicker">The cohort</p>
         <span class="stage__num">2,625</span>
         <h2>In Necessities, at seed stage.</h2>
-        <p>The addressable cohort. 13.5% of the universe. 25 of them get a cheque.</p>
+        <p>The addressable cohort. 13.5% of the universe. 25 enter the portfolio.</p>
       </div>
+      <p class="filter__exits-note kicker">
+        <a href="/references/exits/">Nine named exits across the four markets &rarr;</a>
+      </p>
     </div>
   </section>
 
   <section id="necessities" class="necessities-section container">
     <header class="necessities-section__head">
       <p class="kicker">The five Necessities</p>
-      <h2 class="necessities-section__title">Heal. Power. Move. Supply. Eat.</h2>
+      <h2 class="necessities-section__title">Eat. Heal. Move. Power. Supply.</h2>
       <p class="necessities-section__sub">
-        The AI revolution becomes investable when it leaves the desk and enters the systems society cannot allow to fail.
+        The systems society cannot allow to fail are where AI becomes infrastructure.
       </p>
     </header>
     <ol class="necessities-section__list" role="list">
@@ -377,6 +383,19 @@ const necessities = [
     line-height: var(--lh-body);
     margin: 0;
   }
+  .filter__exits-note {
+    padding-block: var(--s-5) var(--s-7);
+    margin: 0;
+    color: var(--fg-faint);
+  }
+  .filter__exits-note a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+  .filter__exits-note a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
   @media (max-width: 880px) {
     .filter {
       grid-template-columns: 1fr;
