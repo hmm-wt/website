@@ -1,5 +1,5 @@
-/* hmm Ventures. Design System v1.0. Canonical tokens.
-   Source: project/tokens/hmm-tokens.json (HMM Ventures Design System).
+/* hmm Ventures. Canonical tokens.
+   Source: project/tokens/hmm-tokens.json.
    Dark-first product per canon. Light register is opt-in via .surface-light. */
 
 /* ---------- Self-hosted fonts (latin) ---------- */
@@ -75,7 +75,7 @@
   --rule-light:         rgba(4, 47, 42, 0.14);
   --rule-light-strong:  rgba(4, 47, 42, 0.28);
 
-  /* ---------- Content-role colours (canonical v1.1) ---------- */
+  /* ---------- Content-role colours ---------- */
   --role-thesis:        #B8863A;   /* Ochre */
   --role-thesis-ink:    #8A6426;
   --role-thesis-tint:   rgba(184, 134, 58, 0.10);
@@ -137,7 +137,7 @@
   --f-print:   'Inter', 'Arial', sans-serif;
 
   /* ---------- Type scale (fluid) ----------
-     Body sits at 17–19px per Design System v1.0 §A.01 (long-form, elderly-legible).
+     Body sits at 17–19px (long-form, elderly-legible).
      Heading scale steps up from there. */
   --fs-xs:   clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);  /* 11–13 */
   --fs-sm:   clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);  /* 13–15 */
@@ -199,7 +199,7 @@
   --bp-lg: 1024px;
 
   /* ---------- Motion (canonical) ----------
-     Design System v1.0 section Q: two short beats + one held beat.
+     Two short beats + one held beat.
      --mo-tick:  beat 1/2 (linear).
      --mo-hold:  beat 3 (ease-out).
      --mo-total: full transition cap.

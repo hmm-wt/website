@@ -70,7 +70,7 @@ The doctrine is testable. 33.5% of the 19,416 four-market universe (6,505 compan
 
 What it claims: regulatory architecture produces durable barriers. The four markets have built deeper architecture than the alternatives. The seed-stage entry into that architecture is mispriced. The period for capturing the mispricing is closing.
 
-What it does not claim: that other markets cannot produce returns. That other theses are wrong. That this is the only correct one. The claim is narrower. Inside the regulated-sector seed thesis, executed in these four markets, during this window, the structural advantage is observable.<span class="pause" aria-label="pause"></span>
+What it does not claim: that other markets cannot produce returns. That other Necessities are wrong. That this is the only correct one. The claim is narrower. Inside the regulated-sector Necessities, executed in these four markets, during this window, the structural advantage is observable.<span class="pause" aria-label="pause"></span>
 
 ---
 

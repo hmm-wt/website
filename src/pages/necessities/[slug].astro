@@ -11,13 +11,15 @@ import necessityData from '../../data/necessity-index.json';
 import crystallisation from '../../data/crystallisation-window.json';
 import exitsData from '../../data/exits-named.json';
 
+// Canonical order: eat / heal / move / power / supply (IM line 42, LP deck).
+// Aligned 2026-05-27.
 export async function getStaticPaths() {
   return [
-    { params: { slug: 'heal' } },
-    { params: { slug: 'power' } },
-    { params: { slug: 'move' } },
-    { params: { slug: 'supply' } },
     { params: { slug: 'eat' } },
+    { params: { slug: 'heal' } },
+    { params: { slug: 'move' } },
+    { params: { slug: 'power' } },
+    { params: { slug: 'supply' } },
   ];
 }
 
@@ -35,6 +37,18 @@ interface NecessityConfig {
 }
 
 const configs: Record<string, NecessityConfig> = {
+  eat: {
+    slug: 'eat',
+    name: 'Food Security Systems',
+    shortName: 'Eat',
+    necessityKey: 'Food Security Systems',
+    markKind: 'food',
+    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
+    why: 'Food safety is moving from periodic inspection to continuous, traceable proof. A contaminated batch reaches shelves. The recall takes weeks instead of hours. People get sick from food that should have been traced and pulled before it left the warehouse.',
+    examples: 'Tier 1: food labelling laws, AI traceability extension (Japan), food security regulations. Tier 2: small-business compliance phase-ins.',
+    exitFilter: 'Food',
+    monitoring: 'Monitored for biosecurity, food-export assurance, and recall-readiness obligations.',
+  },
   heal: {
     slug: 'heal',
     name: 'Biomedical Systems',
@@ -45,17 +59,6 @@ const configs: Record<string, NecessityConfig> = {
     why: 'Ageing populations and clinical-labour shortages are pushing more care into clinical software, diagnostics, and AI-assisted decision tools. A scan is misread. A treatable condition is caught late. An AI tool is deployed in a clinic without evidence that it works, and a patient pays the price.',
     examples: 'Tier 1: device licensing, clinical software clearance, digital health frameworks. Tier 2: clinical safety reporting, AI risk management for medical devices.',
     exitFilter: 'Biomedical',
-  },
-  power: {
-    slug: 'power',
-    name: 'Power Systems',
-    shortName: 'Power',
-    necessityKey: 'Power Systems',
-    markKind: 'power',
-    claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
-    why: 'Storage, EVs, buildings, and distributed assets are becoming active grid participants, not passive loads. A heatwave hits. Rooftop solar floods the grid with no coordination. Batteries sit idle because nobody filed the dispatch paperwork. The blackout was avoidable.',
-    examples: 'Tier 1: grid connection licensing, renewable targets, building energy codes. Tier 2: carbon pricing, embodied carbon disclosure.',
-    exitFilter: 'Power',
   },
   move: {
     slug: 'move',
@@ -68,6 +71,17 @@ const configs: Record<string, NecessityConfig> = {
     examples: 'Tier 1: AV deployment frameworks, remote ID for UAS, autonomous vessel classification. Tier 2: transport data sharing, fleet safety reporting.',
     exitFilter: 'Autonomous',
   },
+  power: {
+    slug: 'power',
+    name: 'Power Systems',
+    shortName: 'Power',
+    necessityKey: 'Power Systems',
+    markKind: 'power',
+    claim: 'Grid orchestration, storage, EV charging, distributed energy. Cannot connect without compliance proof.',
+    why: 'Storage, EVs, buildings, and distributed assets are becoming active grid participants, not passive loads. A heatwave hits. Rooftop solar floods the grid with no coordination. Batteries sit idle because nobody filed the dispatch paperwork. The blackout was avoidable.',
+    examples: 'Tier 1: grid connection licensing, renewable targets, building energy codes. Tier 2: carbon pricing, embodied carbon disclosure.',
+    exitFilter: 'Power',
+  },
   supply: {
     slug: 'supply',
     name: 'Critical Materials and Supply Integrity',
@@ -79,18 +93,6 @@ const configs: Record<string, NecessityConfig> = {
     examples: 'Tier 1: critical minerals traceability, digital customs automation. Tier 2: construction payment compliance, modern slavery due diligence.',
     exitFilter: 'Critical Materials',
     monitoring: 'Monitored for customs automation, trade documentation, modern-slavery, and supply-chain assurance obligations.',
-  },
-  eat: {
-    slug: 'eat',
-    name: 'Food Security Systems',
-    shortName: 'Eat',
-    necessityKey: 'Food Security Systems',
-    markKind: 'food',
-    claim: 'Traceability, biosecurity, recall-readiness, import and export assurance. Cannot launch without machine-readable proof.',
-    why: 'Food safety is moving from periodic inspection to continuous, traceable proof. A contaminated batch reaches shelves. The recall takes weeks instead of hours. People get sick from food that should have been traced and pulled before it left the warehouse.',
-    examples: 'Tier 1: food labelling laws, AI traceability extension (Japan), food security regulations. Tier 2: small-business compliance phase-ins.',
-    exitFilter: 'Food',
-    monitoring: 'Monitored for biosecurity, food-export assurance, and recall-readiness obligations.',
   },
 };
 
@@ -266,7 +268,7 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
     <article class="nec-stage" aria-labelledby="coh-h">
       <p class="nec-stage__kicker">The cohort</p>
       <h2 id="coh-h" class="nec-stage__h">
-        <span class="nec-stage__bignum">{inThesis.toLocaleString()}</span> companies mapped to the {cfg.name} thesis.
+        <span class="nec-stage__bignum">{inThesis.toLocaleString()}</span> companies mapped to the {cfg.name} Necessities.
       </h2>
       <p class="nec-stage__body">
         {matchingExits.length > 0
@@ -284,7 +286,7 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
           markSize={6}
           gap={2}
           shape="squares"
-          ariaLabel={`${cfg.name} in-thesis cohort with named exits`}
+          ariaLabel={`${cfg.name} Necessities-aligned cohort with named exits`}
         />
       </ChartFrame>
 

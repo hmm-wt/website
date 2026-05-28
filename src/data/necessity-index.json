@@ -31,8 +31,8 @@
   ],
   "stage_funnel": [
     { "stage": "Classified universe (four-market)", "count": 19416 },
-    { "stage": "In thesis (T1 or T2)", "count": 6505, "share_pct": 33.5 },
-    { "stage": "In thesis, seed-stage", "count": 2625, "share_pct": 13.5 }
+    { "stage": "In Necessities (T1 or T2)", "count": 6505, "share_pct": 33.5 },
+    { "stage": "In Necessities, seed-stage", "count": 2625, "share_pct": 13.5 }
   ],
   "premiums": {
     "round_size_seed": 1.12,

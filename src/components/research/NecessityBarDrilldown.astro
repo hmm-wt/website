@@ -4,7 +4,7 @@
  *
  * Click a Necessity bar, the page transitions to a stage-2 view showing
  * that Necessity's regulation profile (T1 / T2 split) and its share of the
- * in-thesis universe. Stage-1 is the existing NecessityBar chart; stage-2
+ * Necessities-aligned universe. Stage-1 is the existing NecessityBar chart; stage-2
  * is rendered inline next to it.
  *
  * No new data file required — per-necessity counts come straight from
@@ -36,7 +36,7 @@ const maxRegs = Math.max(...items.map((i) => i.totalRegs));
   <div class="nbd__detail">
     <header class="nbd__detail-head">
       <p class="kicker nbd__detail-kicker">Drill in · Per-Necessity profile</p>
-      <p class="nbd__detail-sub">Companies in thesis · T1 / T2 regulation count · share of the four-market in-thesis universe.</p>
+      <p class="nbd__detail-sub">Companies in Necessities · T1 / T2 regulation count · share of the four-market Necessities-aligned universe.</p>
     </header>
     <ol class="nbd__rows" role="list">
       {items.map((n) => (
@@ -47,7 +47,7 @@ const maxRegs = Math.max(...items.map((i) => i.totalRegs));
           </header>
           <div class="nbd__row-grid">
             <div class="nbd__cell">
-              <span class="nbd__cell-label">In thesis</span>
+              <span class="nbd__cell-label">In Necessities</span>
               <span class="nbd__cell-value">{n.in_thesis.toLocaleString('en-GB')}</span>
             </div>
             <div class="nbd__cell">

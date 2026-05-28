@@ -8,7 +8,7 @@ word_count: 540
 
 ---
 
-Necessity is the thesis. Where regulation defines what an operator can legally launch, sell, export, insure, or continue running, the company that builds the compliant operational layer earns a structural premium. Four developed-APAC markets have built the deepest version of this architecture. That is where seed-stage value will be captured this decade.
+Necessity. Where regulation defines what an operator can legally launch, sell, export, insure, or continue running, the company that builds the compliant operational layer earns a structural premium. Four developed-APAC markets have built the deepest version of this architecture. That is where seed-stage value will be captured this decade.
 
 The claim is falsifiable. The evidence is timestamped.
 
@@ -75,5 +75,5 @@ Five domains meet the test: Food Security, Biomedical, Power, Autonomous, Critic
 ---
 
 [^1]: hmm Ventures classified universe.
-[^2]: hmm Ventures regulatory dataset, 2026-04. 725 regulations, 64 countries, 13 sectors.
+[^2]: hmm Ventures regulatory dataset. 725 regulations, 64 countries, 13 sectors.
 [^3]: hmm Ventures funding-premium analysis, 2024 four-market dataset. Premiums report median round size for regulated vs unregulated comparables.

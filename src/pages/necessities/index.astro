@@ -13,7 +13,17 @@ interface Necessity {
   oneLine: string;
 }
 
+// Canonical order: eat / heal / move / power / supply (IM line 42, LP deck data.py).
+// Site aligned 2026-05-27.
 const necessities: Necessity[] = [
+  {
+    slug: 'eat',
+    name: 'Food Security Systems',
+    shortName: 'Eat',
+    necessityKey: 'Food Security Systems',
+    markKind: 'food',
+    oneLine: 'Traceability, biosecurity, recall-readiness, import and export assurance.',
+  },
   {
     slug: 'heal',
     name: 'Biomedical Systems',
@@ -21,14 +31,6 @@ const necessities: Necessity[] = [
     necessityKey: 'Biomedical Systems',
     markKind: 'biomedical',
     oneLine: 'Clinical software, diagnostics, AI-assisted decisions.',
-  },
-  {
-    slug: 'power',
-    name: 'Power Systems',
-    shortName: 'Power',
-    necessityKey: 'Power Systems',
-    markKind: 'power',
-    oneLine: 'Grid orchestration, storage, EV charging, distributed energy.',
   },
   {
     slug: 'move',
@@ -39,20 +41,20 @@ const necessities: Necessity[] = [
     oneLine: 'Road, logistics, public-path, maritime, aviation.',
   },
   {
+    slug: 'power',
+    name: 'Power Systems',
+    shortName: 'Power',
+    necessityKey: 'Power Systems',
+    markKind: 'power',
+    oneLine: 'Grid orchestration, storage, EV charging, distributed energy.',
+  },
+  {
     slug: 'supply',
     name: 'Critical Materials and Supply Integrity',
     shortName: 'Supply',
     necessityKey: 'Critical Materials and Supply Integrity',
     markKind: 'materials',
     oneLine: 'Provenance, chain of custody, processing history, ESG evidence.',
-  },
-  {
-    slug: 'eat',
-    name: 'Food Security Systems',
-    shortName: 'Eat',
-    necessityKey: 'Food Security Systems',
-    markKind: 'food',
-    oneLine: 'Traceability, biosecurity, recall-readiness, import and export assurance.',
   },
 ];
 
@@ -93,7 +95,7 @@ const statsByKey: Record<string, { inThesis: number; regs: number }> = {};
               <p class="nec-card__line">{n.oneLine}</p>
               <dl class="nec-card__stats">
                 <div>
-                  <dt>In thesis</dt>
+                  <dt>In Necessities</dt>
                   <dd>{stats.inThesis.toLocaleString()}</dd>
                 </div>
                 <div>

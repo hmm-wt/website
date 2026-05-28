@@ -12,7 +12,7 @@ rail_market: NZ
 
 New Zealand is the doctrine's capital-efficiency case. The smallest market in the portfolio by GDP, population, venture deployment, and domestic addressable market. That is the risk. It is also why entry valuations are lower and the capital-efficiency test is sharper.
 
-The country's R&D and grant ecosystem (Callaghan Innovation transitioning to MBIE Innovation Services, NZGCP, the R&D Tax Incentive) plays a smaller-scale version of the Australian capital-efficiency role. The regulatory perimeter is concentrated in three Necessity-aligned domains: agritech and food security, biomedical, and renewable energy. Companies that build at the intersection of these and the international export channel have a thesis-aligned profile that is harder to replicate in larger jurisdictions.
+The country's R&D and grant ecosystem (Callaghan Innovation transitioning to MBIE Innovation Services, NZGCP, the R&D Tax Incentive) plays a smaller-scale version of the Australian capital-efficiency role. The regulatory perimeter is concentrated in three Necessity-aligned domains: agritech and food security, biomedical, and renewable energy. Companies that build at the intersection of these and the international export channel have the Necessities-aligned profile that is harder to replicate in larger jurisdictions.
 
 > **New Zealand, current state**
 >
@@ -69,7 +69,7 @@ The implication is that the NZ seed company's runway is composed differently fro
 
 ## Risks
 
-The domestic addressable market is too small to support a Series A from domestic revenue alone. Every NZ T1 or T2 thesis is an export thesis from incorporation. Companies that delay the export build until post-Series A face structural exit risk.
+The domestic addressable market is too small to support a Series A from domestic revenue alone. Every NZ T1 or T2 Necessities is an export Necessities from incorporation. Companies that delay the export build until post-Series A face structural exit risk.
 
 The country's tax law on equity investing is unsettled. Section CB 4 of the Income Tax Act 2007 contains revenue-account characterisation provisions whose application to venture exits is not always certain.[^5] Foreign-domiciled funds investing into NZ companies need explicit tax counsel and structuring at fund formation. The risk is real but quantifiable.
 

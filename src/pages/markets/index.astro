@@ -91,6 +91,9 @@ const comparisonRows = [
       headers={['', 'Australia', 'Japan', 'New Zealand', 'Singapore']}
       rows={comparisonRows}
     />
+    <p class="mk-compare__foot kicker">
+      <a href="/references/exits/">Recent named exits across the four markets &rarr;</a>
+    </p>
   </section>
 
   <CTARail />
@@ -131,4 +134,15 @@ const comparisonRows = [
     margin: var(--s-3) 0 var(--s-5);
     letter-spacing: -0.01em;
   }
+  .mk-compare__foot {
+    margin-block-start: var(--s-5);
+    color: var(--fg-soft);
+  }
+  .mk-compare__foot a {
+    color: var(--c-tomato);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+  }
+  .mk-compare__foot a:hover { color: var(--fg); border-bottom-color: var(--fg); }
 </style>

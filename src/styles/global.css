@@ -417,13 +417,12 @@ button[disabled],
   transform: none;
 }
 
-/* Reveal group. Per Design System v1.0 section Q ("no staggered reveal per
-   item"). The parent fades as a single 480ms beat-3; children inherit the
-   visible state. No per-child stagger. */
+/* Reveal group. No staggered reveal per item. The parent fades as a single
+   480ms beat-3; children inherit the visible state. No per-child stagger. */
 .reveal-group > * { opacity: 0; transform: translateY(12px); transition: opacity var(--mo-hold) var(--ease-golden), transform var(--mo-hold) var(--ease-golden); }
 .reveal-group.is-visible > * { opacity: 1; transform: none; }
 
-/* Pause mark. Per Design System v1.0 section X.
+/* Pause mark.
    Inline ellipsis with the third dot hollow. Use in long-form prose at
    considered pauses (max one per paragraph). Embed in markdown as
    <span class="pause" aria-label="pause"></span>. Pure CSS, no children. */

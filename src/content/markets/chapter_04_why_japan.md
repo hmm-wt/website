@@ -51,9 +51,9 @@ A v1.2 update is reportedly in preparation, addressing cross-border data flows a
 
 Corporate venture capital in Japan is structurally distinct from CVC elsewhere. The long-cycle horizons, the limited partner pressures of patient capital from main banks and life insurers, and the tight coupling to corporate parent procurement budgets produce a different deployment profile.
 
-Major Japanese CVC vehicles (Sumitomo Mitsui's CVC arm, MUFG Innovation Partners, SoftBank Ventures, NTT Docomo Ventures, JIC VGI, and others) deploy at scale into both domestic and international targets. A meaningful share of inside-Japan deployment routes through CVC vehicles to thesis-aligned companies serving the regulated parent enterprise as customer or technology partner.[^4]
+Major Japanese CVC vehicles (Sumitomo Mitsui's CVC arm, MUFG Innovation Partners, SoftBank Ventures, NTT Docomo Ventures, JIC VGI, and others) deploy at scale into both domestic and international targets. A meaningful share of inside-Japan deployment routes through CVC vehicles to Necessities-aligned companies serving the regulated parent enterprise as customer or technology partner.[^4]
 
-The implication is that the Japanese seed-stage thesis is not really a Japanese-only thesis. It is a thesis about access to Japanese corporate buyer relationships from any geography, with Japanese-domiciled cap table participation. Companies based in Singapore, Sydney, or Auckland can serve the Japanese T1 buyer if they enter the corporate venture relationship layer.
+The implication is that the Japanese seed-stage Necessities is not really a Japanese-only Necessities. It is the Necessities about access to Japanese corporate buyer relationships from any geography, with Japanese-domiciled cap table participation. Companies based in Singapore, Sydney, or Auckland can serve the Japanese T1 buyer if they enter the corporate venture relationship layer.
 
 ---
 
@@ -69,7 +69,7 @@ The third signal is the rarest. Most APAC-domiciled companies pursuing Japan sub
 
 The Japanese demographic profile is the standard counter-argument. The population is shrinking, the workforce is aging, and the domestic addressable market is on a long-cycle decline. The doctrine accepts the demographics and bets on the corporate balance sheet rather than the consumer wallet.
 
-Foreign investor participation in Japanese venture remains thin compared to North America or Europe. That is part of the thesis. The entry valuation discount is real and driven by capital scarcity, and exits to North American strategic acquirers extract the valuation differential. The discount also reflects friction in cap table management, post-money rights, and exit liquidity that a foreign-domiciled fund must underwrite explicitly.
+Foreign investor participation in Japanese venture remains thin compared to North America or Europe. That is part of the Necessities. The entry valuation discount is real and driven by capital scarcity, and exits to North American strategic acquirers extract the valuation differential. The discount also reflects friction in cap table management, post-money rights, and exit liquidity that a foreign-domiciled fund must underwrite explicitly.
 
 The name-and-shame enforcement model is untested. No company has yet been publicly named under the AI Promotion Act, and the political economy of doing so is uncertain. If the model proves toothless, the participation perimeter degrades into a compliance suggestion. The doctrine assumes the perimeter holds. The falsification condition is two cycles without a public naming when one is warranted.
 

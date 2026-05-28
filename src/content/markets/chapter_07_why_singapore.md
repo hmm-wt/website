@@ -57,7 +57,7 @@ For seed-stage investors, the sandbox status is a valuation signal. A Singapore 
 
 A specific profile. A Singapore-domiciled T1 or T2 company with a regional expansion path in financial services, healthcare, or supply integrity. A documented MAS or HSA pathway, in sandbox or licensed. A go-to-market plan that books the first ASEAN regional logo within twelve months of seed close. A cap table that supports a U.S. or U.K. Series A lead with Singapore-based co-investors.
 
-The Singapore pool is smaller in absolute terms than Australia's but produces a higher density of companies that fit the thesis relative to the size of its venture market, because the regulatory architecture is more concentrated and more aligned with the Five Necessities.
+The Singapore pool is smaller in absolute terms than Australia's but produces a higher density of companies that fit the Necessities relative to the size of its venture market, because the regulatory architecture is more concentrated and more aligned with the Five Necessities.
 
 ---
 

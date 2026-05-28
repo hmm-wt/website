@@ -63,7 +63,7 @@ const { Content } = await entry.render();
     <div class="market-hero">
       <span class="market-hero__mark"><JurisdictionMark market={market} size={56} /></span>
       <EssayMeta
-        chapterRef={`Thesis · Markets · ${fullName}`}
+        chapterRef={`Necessities · Markets · ${fullName}`}
         title={`Why ${fullName}.`}
         readingTime={Math.ceil((entry.data.word_count ?? 1200) / 250)}
         market={market}
@@ -98,6 +98,7 @@ const { Content } = await entry.render();
       </ul>
       <p class="market-foot__hub kicker">
         <a href="/markets/">Back to the four markets &rarr;</a>
+        <a href="/references/exits/">Recent named exits &rarr;</a>
       </p>
     </nav>
   </Fragment>
@@ -138,7 +139,12 @@ const { Content } = await entry.render();
     color: var(--c-tomato);
     border-bottom-color: currentColor;
   }
-  .market-foot__hub { margin-block-start: var(--s-4); }
+  .market-foot__hub {
+    margin-block-start: var(--s-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+  }
   .market-foot__hub a {
     color: var(--c-tomato);
     text-decoration: none;

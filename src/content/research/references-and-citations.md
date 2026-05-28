@@ -48,7 +48,7 @@ Each row in the regulations dataset carries a primary-source URL to a regulator 
 
 ## Doctrine references
 
-The hmm Necessity Doctrine is the long-form public companion to the fund's thesis. It is structured in ten chapters, with full citation footnotes published in the site-wide [References](/references/) page.
+The hmm Necessity Doctrine is the long-form public companion to the Necessities. It is structured in ten chapters, with full citation footnotes published in the site-wide [References](/references/) page.
 
 ## Falsification commitments
 
