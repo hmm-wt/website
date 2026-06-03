@@ -58,30 +58,31 @@
   status = 301
   force = true
 
-# Fund-economics archive (2026-05-17). Returns framing and exit-multiple
-# disclosures retired from the public surface; LP-tier content lives in
-# the private IM. External links land on the IM-request page.
+# Fund-economics archive. Returns framing and exit-multiple disclosures
+# retired from the public surface; LP-tier content lives in the private IM.
+# The former /lps/ route was collapsed into the homepage + /contact/, so
+# these retired links land on the homepage rather than a dead /lps/ target.
 [[redirects]]
   from = "/research/four-tier-returns-framing"
-  to = "/lps/"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/research/four-tier-returns-framing/*"
-  to = "/lps/"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/research/exit-evidence-dataset"
-  to = "/lps/"
+  to = "/"
   status = 301
   force = true
 
 [[redirects]]
   from = "/research/exit-evidence-dataset/*"
-  to = "/lps/"
+  to = "/"
   status = 301
   force = true
 

@@ -36,3 +36,6 @@ playwright-report/
 _mobile-audit/**
 !_mobile-audit/**/findings.md
 !_mobile-audit/**/reports.json
+
+# Core Web Vitals audit output (timestamped runs)
+_cwv-audit/**

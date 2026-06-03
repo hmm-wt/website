@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "audit:mobile": "playwright test"
+    "audit:mobile": "playwright test",
+    "audit:cwv": "node scripts/cwv-audit.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
