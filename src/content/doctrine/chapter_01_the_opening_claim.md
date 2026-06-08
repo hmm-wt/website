@@ -8,7 +8,7 @@ word_count: 540
 
 ---
 
-Necessity. Where regulation defines what an operator can legally launch, sell, export, insure, or continue running, the company that builds the compliant operational layer earns a structural premium. Four developed-APAC markets have built the deepest version of this architecture. That is where seed-stage value will be captured this decade.
+Necessity. Start with what society cannot do without: food, health, power, movement, and the materials underneath them all. These are the systems that are not allowed to fail. Where one of them is also governed, so that an operator cannot legally launch, sell, export, insure, or keep running without clearing a regulator, the company that builds the compliant operational layer first earns a structural premium. Four developed-APAC markets have built the deepest version of this architecture. That is where seed-stage value will be captured this decade.
 
 The claim is falsifiable. The evidence is timestamped.
 
