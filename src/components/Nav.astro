@@ -1,9 +1,12 @@
 ---
 interface NavItem { href: string; label: string; }
 
+// /markets/ stays live and indexable (in sitemap, robots allow), but is
+// kept out of the primary nav so it is not a clearly visible menu item.
+// External backlinks to /markets/ still resolve (200) and index. Deep
+// contextual links (references/exits, thesis/[market], 404) remain.
 const items: NavItem[] = [
   { href: '/necessities/', label: 'Necessities' },
-  { href: '/markets/', label: 'Markets' },
   { href: '/research/', label: 'Research' },
   { href: '/about/', label: 'About' },
   { href: '/contact/', label: 'Contact' }
