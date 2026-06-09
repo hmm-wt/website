@@ -114,3 +114,11 @@
   for = "/_astro/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Unlisted LP share files. Clean /lp/ paths carry an unguessable filename token,
+# are never linked and stay out of the sitemap. noindex stops a leaked link from
+# being indexed. Synced from the pack build via `npm run sync:deck`.
+[[headers]]
+  for = "/lp/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

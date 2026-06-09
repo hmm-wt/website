@@ -10,7 +10,9 @@
     "astro": "astro",
     "check": "astro check",
     "audit:mobile": "playwright test",
-    "audit:cwv": "node scripts/cwv-audit.mjs"
+    "audit:cwv": "node scripts/cwv-audit.mjs",
+    "sync:deck": "node scripts/sync-lp-deck.mjs",
+    "publish:deck": "node scripts/sync-lp-deck.mjs --publish"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
