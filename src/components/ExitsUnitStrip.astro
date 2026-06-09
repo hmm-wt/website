@@ -111,24 +111,24 @@ const dots = binned.map((b) => {
     );
   })}
 
-  {/* Annotation: 2024 (Costa) and 2026 (Eucalyptus) callouts */}
+  {/* Annotation: 2024 (Synspective) and 2026 (Eucalyptus) callouts */}
   {(() => {
-    const costa = dots.find((d) => d.exit.id === 'costa-paineschwartz');
+    const synspective = dots.find((d) => d.exit.id === 'synspective-tse');
     const eucalyptus = dots.find((d) => d.exit.id === 'eucalyptus-hims');
     return (
       <g>
-        {costa && (
+        {synspective && (
           <g>
             <line
-              x1={costa.x + dotSize / 2 + 4}
-              y1={costa.y}
-              x2={costa.x + 80}
-              y2={costa.y - 30}
+              x1={synspective.x + dotSize / 2 + 4}
+              y1={synspective.y}
+              x2={synspective.x + 80}
+              y2={synspective.y - 30}
               stroke="var(--hero)"
               stroke-width="0.75"
             />
-            <text x={costa.x + 84} y={costa.y - 34} class="exitsstrip__annot">Costa A$2.459B</text>
-            <text x={costa.x + 84} y={costa.y - 20} class="exitsstrip__annot exitsstrip__annot--sub">AU Food T2</text>
+            <text x={synspective.x + 84} y={synspective.y - 34} class="exitsstrip__annot">Synspective ~US$345M</text>
+            <text x={synspective.x + 84} y={synspective.y - 20} class="exitsstrip__annot exitsstrip__annot--sub">JP Autonomous · listed</text>
           </g>
         )}
         {eucalyptus && (

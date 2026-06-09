@@ -1,6 +1,6 @@
 {
   "source": "hmm Ventures. Named developed-APAC outcomes in the regulated Necessities, primary-source verified per row.",
-  "scope_note": "These named material outcomes span the four target markets and the Five Necessities, with every figure primary-source verified. The full strategic-acquirer set sits in the Investment Memorandum.",
+  "scope_note": "These named material outcomes sit across the four target markets and the regulated Necessities, with every figure primary-source verified. The full strategic-acquirer set sits in the Investment Memorandum.",
   "exits": [
     {
       "id": "eucalyptus-hims",
@@ -69,23 +69,6 @@
       "value_display": "~US$1.1B valuation, ~US$180M raised",
       "value_usd_m_low": 1100,
       "value_usd_m_high": 1100
-    },
-    {
-      "id": "costa-paineschwartz",
-      "company": "Costa Group",
-      "company_url": "https://paineschwartz.com/news/costa-group-enters-new-ownership-phase-as-experienced-consortium-takes-control/",
-      "type": "acquisition",
-      "market": "AU",
-      "necessity": "Food",
-      "tier": "T2",
-      "barrier": "Food safety compliance and fresh-produce supply integrity",
-      "acquirer": "Paine Schwartz Partners",
-      "acquirer_url": "https://paineschwartz.com",
-      "acquirer_country": "US",
-      "year": 2024,
-      "value_display": "A$2.459B enterprise value",
-      "value_usd_m_low": 1640,
-      "value_usd_m_high": 1640
     }
   ]
 }
