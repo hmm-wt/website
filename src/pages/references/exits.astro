@@ -6,6 +6,7 @@ interface Exit {
   id: string;
   company: string;
   company_url: string | null;
+  type: 'acquisition' | 'ipo' | 'late_stage';
   market: string;
   necessity: string;
   tier: string;
@@ -18,6 +19,22 @@ interface Exit {
   value_usd_m_low: number | null;
   value_usd_m_high: number | null;
 }
+
+const typeLabel: Record<string, string> = {
+  acquisition: 'Acquisition',
+  ipo: 'Public listing',
+  late_stage: 'Late-stage round',
+};
+const relationVerb: Record<string, string> = {
+  acquisition: 'Acquired by',
+  ipo: 'Listed on',
+  late_stage: 'Backed by',
+};
+const geoLabel: Record<string, string> = {
+  acquisition: 'Acquirer geography',
+  ipo: 'Listing geography',
+  late_stage: 'Company geography',
+};
 
 const marketLabel: Record<string, string> = {
   AU: 'Australia',
@@ -37,15 +54,15 @@ const marketCounts = exits.reduce<Record<string, number>>((acc, e) => {
 }, {});
 ---
 <Base
-  title="Exit references"
-  description="Named acquisitions of regulated companies across Australia, Japan, New Zealand, and Singapore. Primary-source verified."
+  title="Named outcomes"
+  description="Named outcomes in regulated companies across Australia, Japan, New Zealand, and Singapore. Primary-source verified."
 >
   <header class="ex-hero">
     <div class="container">
-      <p class="kicker ex-hero__kicker">Exit references</p>
+      <p class="kicker ex-hero__kicker">Named outcomes</p>
       <h1 class="ex-hero__title">The four markets clear.</h1>
       <p class="ex-hero__sub">
-        Named acquisitions of regulated companies across Australia, Japan, New Zealand, and Singapore. Strategic and financial acquirers from the United States, Europe, and intra-APAC. Primary-source verified per row.
+        Across Australia, Japan, New Zealand, and Singapore, regulated companies are acquired by global strategics, list on public markets, and raise late-stage capital from Series C onwards. Every figure is primary-source verified per row.
       </p>
       <p class="ex-hero__note">{exitsData.scope_note}</p>
     </div>
@@ -53,8 +70,8 @@ const marketCounts = exits.reduce<Record<string, number>>((acc, e) => {
 
   <section class="ex container">
     <header class="ex__head">
-      <p class="kicker ex__kicker">{exits.length} acquisitions</p>
-      <h2 class="ex__title">Recent named exits.</h2>
+      <p class="kicker ex__kicker">Material outcomes</p>
+      <h2 class="ex__title">Named outcomes in the regulated Necessities.</h2>
       <ul class="ex__counts" role="list">
         {Object.entries(marketCounts).map(([code, n]) => (
           <li><span class="ex__count-num">{n}</span> <span class="ex__count-label">{marketLabel[code]}</span></li>
@@ -67,13 +84,14 @@ const marketCounts = exits.reduce<Record<string, number>>((acc, e) => {
         <li class="ex__row" id={e.id}>
           <header class="ex__row-head">
             <span class="ex__year">{e.year}</span>
+            <span class="ex__type">{typeLabel[e.type]}</span>
             <h3 class="ex__company">
               {e.company_url
                 ? <a href={e.company_url} target="_blank" rel="noopener noreferrer">{e.company}</a>
                 : <span>{e.company}</span>
               }
             </h3>
-            <span class="ex__arrow" aria-hidden="true">→</span>
+            <span class="ex__relation">{relationVerb[e.type]}</span>
             <span class="ex__acquirer">
               {e.acquirer_url
                 ? <a href={e.acquirer_url} target="_blank" rel="noopener noreferrer">{e.acquirer}</a>
@@ -99,7 +117,7 @@ const marketCounts = exits.reduce<Record<string, number>>((acc, e) => {
               <dd>{e.barrier}</dd>
             </div>
             <div class="ex__meta-row">
-              <dt>Acquirer geography</dt>
+              <dt>{geoLabel[e.type]}</dt>
               <dd>{e.acquirer_country}</dd>
             </div>
             <div class="ex__meta-row">
@@ -225,6 +243,23 @@ const marketCounts = exits.reduce<Record<string, number>>((acc, e) => {
     color: var(--c-tomato);
     font-weight: 600;
     min-width: 3rem;
+  }
+  .ex__type {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-soft);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+  }
+  .ex__relation {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+    color: var(--fg-faint);
   }
   .ex__company {
     font-family: var(--f-display);

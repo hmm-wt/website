@@ -138,11 +138,22 @@ const cohortMarks = (() => {
   return marks;
 })();
 
+// Surface the dataset's own status field instead of asserting "Effective".
+// Every row in the current dataset is "expected" or "in_parliament". None in force.
+const STATUS_LABEL: Record<string, string> = {
+  in_force: 'In force',
+  enacted: 'Enacted',
+  in_parliament: 'Before parliament',
+  expected: 'Expected',
+};
+const statusPhrase = (r: any): string =>
+  `${STATUS_LABEL[r.status] ?? 'Expected'} ${r.effective_year}`;
+
 const regRows = relevantRegs.slice(0, 6).map((r) => [
   r.market,
   r.title,
   r.tier,
-  String(r.effective_year),
+  statusPhrase(r),
 ]);
 
 // Fix 6: Across the four markets four-cell grid.
@@ -159,12 +170,17 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
   const exit = matchingExits.find((e) => e.market === mk);
   if (exit) {
     const tierLong = exit.tier === 'T1' ? 'Tier 1' : exit.tier === 'T2' ? 'Tier 2' : exit.tier;
-    const acquirerClean = String(exit.acquirer).replace(/\.$/, '');
+    const counterparty = String(exit.acquirer).replace(/\.$/, '');
+    const relation =
+      exit.type === 'ipo' ? `Listed on ${counterparty}` :
+      exit.type === 'late_stage' ? counterparty :
+      `Acquired by ${counterparty}`;
     return {
       market: mk,
       kind: 'exit' as const,
+      outcomeType: (exit.type ?? 'acquisition') as 'acquisition' | 'ipo' | 'late_stage',
       headline: exit.company,
-      meta: `${tierLong}. Acquired by ${acquirerClean}. ${exit.year}.`,
+      meta: `${tierLong}. ${relation}. ${exit.year}.`,
       sub: exit.value_display,
       barrier: exit.barrier,
     };
@@ -177,15 +193,17 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
     return {
       market: mk,
       kind: 'regulation' as const,
+      outcomeType: null,
       headline: reg.title,
-      meta: `${tierLong}. Effective ${reg.effective_year}.`,
-      sub: 'Status: in flight.',
+      meta: `${tierLong}. ${statusPhrase(reg)}.`,
+      sub: reg.status === 'in_parliament' ? 'Before parliament. Not yet in force.' : 'Expected. Not yet in force.',
       barrier: null,
     };
   }
   return {
     market: mk,
     kind: 'watching' as const,
+    outcomeType: null,
     headline: 'Watchlist market',
     meta: cfg.monitoring ?? 'No dated regulatory trigger in the current dataset.',
     sub: '',
@@ -235,14 +253,14 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
       </h2>
       <p class="nec-stage__body">
         {totalInFlight > 0
-          ? `Of those, ${totalInFlight} have effective dates between 2024 and 2030.`
-          : 'No effective dates on the current calendar between 2024 and 2030.'}
+          ? `Of those, ${totalInFlight} have expected effective dates between 2024 and 2030. None are yet in force.`
+          : 'No expected effective dates on the current calendar between 2024 and 2030.'}
       </p>
       {totalInFlight > 0 && (
         <ChartFrame
-          kicker="Effective dates"
-          title="When the filter takes effect."
-          caption="In-flight regulations across the four markets, by effective year."
+          kicker="Expected effective dates"
+          title="When the filter is expected to take effect."
+          caption="In-flight regulations across the four markets, by expected effective year. None yet in force."
           source="Source: hmm Ventures regulatory dataset."
         >
           <SparkBar
@@ -258,7 +276,7 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
       )}
       {regRows.length > 0 && (
         <ComparisonTable
-          headers={['Market', 'Regulation', 'Tier', 'Effective']}
+          headers={['Market', 'Regulation', 'Tier', 'Status']}
           rows={regRows}
           note="Source: hmm Ventures regulatory dataset."
         />
@@ -272,12 +290,12 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
       </h2>
       <p class="nec-stage__body">
         {matchingExits.length > 0
-          ? 'Each mark is one company in the four-market dataset. Highlighted marks are the named exits already on the dataset.'
+          ? 'Each mark is one company in the four-market dataset. Highlighted marks are the named outcomes already on the dataset.'
           : 'Each mark is one company in the four-market dataset.'}
       </p>
       <ChartFrame
         caption={matchingExits.length > 0
-          ? `${inThesis.toLocaleString()} ${cfg.name} companies. Highlighted marks: named regulated-company acquisitions.`
+          ? `${inThesis.toLocaleString()} ${cfg.name} companies. Highlighted marks: named outcomes in regulated companies.`
           : `${inThesis.toLocaleString()} ${cfg.name} companies.`}
       >
         <UnitDotGrid
@@ -286,7 +304,7 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
           markSize={6}
           gap={2}
           shape="squares"
-          ariaLabel={`${cfg.name} Necessities-aligned cohort with named exits`}
+          ariaLabel={`${cfg.name} Necessities-aligned cohort with named outcomes`}
         />
       </ChartFrame>
 
@@ -299,7 +317,9 @@ const acrossFourMarkets = orderedMarkets.map((mk) => {
             <li class={`nec-four__cell nec-four__cell--${cell.kind}`}>
               <span class="nec-four__market">{marketLongName[cell.market]}</span>
               <span class="nec-four__tag">
-                {cell.kind === 'exit' && 'Named exit'}
+                {cell.kind === 'exit' && cell.outcomeType === 'acquisition' && 'Named acquisition'}
+                {cell.kind === 'exit' && cell.outcomeType === 'ipo' && 'Public listing'}
+                {cell.kind === 'exit' && cell.outcomeType === 'late_stage' && 'Late-stage round'}
                 {cell.kind === 'regulation' && 'In-flight regulation'}
                 {cell.kind === 'watching' && 'Monitoring'}
               </span>

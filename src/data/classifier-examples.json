@@ -1,5 +1,5 @@
 {
-  "source": "hmm Ventures classifier methodology. Worked examples drawn from the canonical 9-exit dataset and the off-mandate exclusions in the doctrine.",
+  "source": "hmm Ventures classifier methodology. Worked examples from the named-outcomes dataset and the off-mandate exclusions in the doctrine.",
   "branches": {
     "t1": {
       "label": "T1. Licence-as-barrier",
@@ -9,22 +9,22 @@
           "company": "Eucalyptus",
           "market": "AU",
           "necessity": "Biomedical",
-          "rule_applied": "Telehealth licensing + ACHS accreditation. Cannot prescribe or dispense without approved-provider status.",
-          "outcome": "Exit 2026 — Hims & Hers, up to $1.15B total."
+          "rule_applied": "Telehealth licensing and ACHS accreditation. Cannot prescribe or dispense without approved-provider status.",
+          "outcome": "Acquired 2026 by Hims & Hers. Up to $1.15B total."
         },
         {
-          "company": "Volpara Health",
-          "market": "NZ",
-          "necessity": "Biomedical",
-          "rule_applied": "TGA + FDA medical-device clearance. Cannot ship breast-density AI without regulatory approval per indication.",
-          "outcome": "Exit 2024 — Lunit, $193M."
-        },
-        {
-          "company": "Telecare",
+          "company": "Telix Pharmaceuticals",
           "market": "AU",
           "necessity": "Biomedical",
-          "rule_applied": "Virtual specialist care licensing. Cannot deliver specialist consults without registered-practitioner credentialing.",
-          "outcome": "Exit 2025 — Teladoc, undisclosed."
+          "rule_applied": "TGA and FDA radiopharmaceutical approval. Cannot market Illuccix without clearance per indication.",
+          "outcome": "ASX-listed. US$804M revenue, FY2025."
+        },
+        {
+          "company": "Synspective",
+          "market": "JP",
+          "necessity": "Autonomous",
+          "rule_applied": "Space-activities authorisation. Cannot operate Earth-observation satellites without licensed launch and data approvals.",
+          "outcome": "Listed 2024, Tokyo Stock Exchange. ~US$345M valuation."
         }
       ]
     },
@@ -33,25 +33,25 @@
       "rule": "Buyers are statutorily required to purchase compliant solutions. The classifier flags T2 when sector and customer profile map to a compliance mandate that creates demand for the company's product.",
       "examples": [
         {
-          "company": "Payapps",
-          "market": "AU",
-          "necessity": "Critical Materials",
-          "rule_applied": "AU Building & Construction Industry Security of Payment Act compels head contractors to manage statutory progress claims. The buyer's purchase is the compliance mechanism.",
-          "outcome": "Exit 2024 — Autodesk, ~$390M."
-        },
-        {
           "company": "Costa Group",
           "market": "AU",
           "necessity": "Food Security",
           "rule_applied": "FSANZ Standard 3.2.2A compels food businesses to demonstrate supply-chain traceability. Buyers can only source from compliant growers.",
-          "outcome": "Exit 2024 — Paine Schwartz, A$2.459B."
+          "outcome": "Acquired 2024 by Paine Schwartz. A$2.459B."
+        },
+        {
+          "company": "Payapps",
+          "market": "AU",
+          "necessity": "Critical Materials",
+          "rule_applied": "AU Building and Construction Industry Security of Payment Act compels head contractors to manage statutory progress claims. The buyer's purchase is the compliance mechanism.",
+          "outcome": "Acquired 2024 by Autodesk. Terms undisclosed."
         },
         {
           "company": "Infigen Energy",
           "market": "AU",
           "necessity": "Power",
           "rule_applied": "Renewable Energy Target compels retailers to source from accredited generators. Buyers must purchase from licensed renewables to meet statutory targets.",
-          "outcome": "Exit 2020 — Iberdrola, A$893M."
+          "outcome": "Acquired 2020 by Iberdrola. A$893M."
         }
       ]
     },
@@ -62,23 +62,23 @@
         {
           "company": "Consumer fintech (neobank)",
           "market": "Any",
-          "necessity": "—",
+          "necessity": "n/a",
           "rule_applied": "Financial services / fintech is fully off-mandate. Banking licences are real T1 barriers, but the sector itself sits outside the fund's scope.",
-          "outcome": "Excluded — off-mandate sector, regardless of regulatory depth."
+          "outcome": "Excluded. Off-mandate sector, regardless of regulatory depth."
         },
         {
           "company": "Defence-tech / dual-use",
           "market": "Any",
-          "necessity": "—",
+          "necessity": "n/a",
           "rule_applied": "Defence-tech is off-mandate everywhere. Export-control regimes meet the T1 criterion in form, but the fund does not invest in defence applications.",
-          "outcome": "Excluded — off-mandate sector."
+          "outcome": "Excluded. Off-mandate sector."
         },
         {
           "company": "Generalist B2B SaaS",
           "market": "Any",
-          "necessity": "—",
+          "necessity": "n/a",
           "rule_applied": "No named licence, clearance, or certification dependency. Buyers are not statutorily required to purchase. Fails both screens.",
-          "outcome": "Excluded — neither barrier present."
+          "outcome": "Excluded. Neither barrier present."
         }
       ]
     }

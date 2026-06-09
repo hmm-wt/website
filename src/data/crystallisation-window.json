@@ -12,7 +12,7 @@
     { "id": "au-2027-high-risk-ai-enact", "market": "AU", "necessity": "AI Governance", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "Mandatory High-Risk AI Obligations (expected enactment)" },
     { "id": "au-2027-fsanz-3-2-2a-smb", "market": "AU", "necessity": "Food Security Systems", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "FSANZ Standard 3.2.2A. Full Enforcement for Small Business" },
     { "id": "au-2027-av-national-deploy", "market": "AU", "necessity": "Autonomous Systems", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "Automated Vehicle Safety Law. National Deployment Phase" },
-    { "id": "au-2027-critical-minerals-phase2", "market": "AU", "necessity": "Critical Materials and Supply Integrity", "tier": "T2", "effective_year": 2027, "status": "expected", "title": "Critical Minerals Processing Incentive (phase 2)" },
+    { "id": "au-2027-critical-minerals-phase2", "market": "AU", "necessity": "Critical Materials and Supply Integrity", "tier": "T2", "effective_year": 2027, "status": "expected", "title": "Critical Minerals Production Tax Incentive" },
     { "id": "au-2027-capacity-investment-scheme", "market": "AU", "necessity": "Power Systems", "tier": "T2", "effective_year": 2027, "status": "expected", "title": "Capacity Investment Scheme. Renewable Targets" },
     { "id": "au-2027-modern-slavery-review", "market": "AU", "necessity": "Critical Materials and Supply Integrity", "tier": "T2", "effective_year": 2027, "status": "expected", "title": "Modern Slavery Act Review. Enhanced Due Diligence" },
     { "id": "au-2027-ncc-2025-state-adopt", "market": "AU", "necessity": "Power Systems", "tier": "T1", "effective_year": 2027, "status": "expected", "title": "NCC 2025. State Adoption Completion" },
@@ -37,6 +37,6 @@
     { "id": "sg-2028-mas-ai-all-sectors", "market": "SG", "necessity": "AI Governance", "tier": "T1", "effective_year": 2028, "status": "expected", "title": "MAS AI Risk Management. Extended to All Sectors" },
     { "id": "sg-2028-sle-building-mandate", "market": "SG", "necessity": "Power Systems", "tier": "T1", "effective_year": 2028, "status": "expected", "title": "Super Low Energy (SLE) Building Mandate" },
     { "id": "sg-2028-mpa-autonomous-vessel", "market": "SG", "necessity": "Autonomous Systems", "tier": "T1", "effective_year": 2028, "status": "expected", "title": "MPA Autonomous Vessel Port Operations" },
-    { "id": "sg-2030-sfa-30x30", "market": "SG", "necessity": "Food Security Systems", "tier": "T2", "effective_year": 2030, "status": "expected", "title": "SFA 30x30 Food Security Regulations" }
+    { "id": "sg-2030-sfa-30x30", "market": "SG", "necessity": "Food Security Systems", "tier": "T2", "effective_year": 2030, "status": "expected", "title": "SFA '30 by 30' Food Resilience Target" }
   ]
 }

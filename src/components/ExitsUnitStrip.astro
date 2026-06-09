@@ -105,30 +105,30 @@ const dots = binned.map((b) => {
           height={dotSize}
           fill="var(--hero)"
         >
-          <title>{d.exit.company} ({d.exit.market}, T1). {d.exit.acquirer}. {d.exit.value_display}</title>
+          <title>{d.exit.company} ({d.exit.market}, {d.exit.tier}). {d.exit.acquirer}. {d.exit.value_display}</title>
         </rect>
       </g>
     );
   })}
 
-  {/* Annotation: 2024 (Volpara) and 2026 (Eucalyptus) callouts */}
+  {/* Annotation: 2024 (Costa) and 2026 (Eucalyptus) callouts */}
   {(() => {
-    const volpara = dots.find((d) => d.exit.id === 'volpara-lunit');
+    const costa = dots.find((d) => d.exit.id === 'costa-paineschwartz');
     const eucalyptus = dots.find((d) => d.exit.id === 'eucalyptus-hims');
     return (
       <g>
-        {volpara && (
+        {costa && (
           <g>
             <line
-              x1={volpara.x + dotSize / 2 + 4}
-              y1={volpara.y}
-              x2={volpara.x + 80}
-              y2={volpara.y - 30}
+              x1={costa.x + dotSize / 2 + 4}
+              y1={costa.y}
+              x2={costa.x + 80}
+              y2={costa.y - 30}
               stroke="var(--hero)"
               stroke-width="0.75"
             />
-            <text x={volpara.x + 84} y={volpara.y - 34} class="exitsstrip__annot">Volpara $193M</text>
-            <text x={volpara.x + 84} y={volpara.y - 20} class="exitsstrip__annot exitsstrip__annot--sub">NZ Biomedical T1</text>
+            <text x={costa.x + 84} y={costa.y - 34} class="exitsstrip__annot">Costa A$2.459B</text>
+            <text x={costa.x + 84} y={costa.y - 20} class="exitsstrip__annot exitsstrip__annot--sub">AU Food T2</text>
           </g>
         )}
         {eucalyptus && (
