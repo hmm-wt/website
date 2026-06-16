@@ -3,7 +3,7 @@
  * Plate. The Record's exhibit card, rebuilt from the IM .fig grammar:
  * mahogany double-rule, sci-corner registration, mono eyebrow with the tomato
  * EX-N fignum and a descriptive label, optional serif argument with an
- * italic-tomato key term, the chart slot, a Source / Basis grid. No expand.
+ * tomato key term, the chart slot, a Source / Basis grid. No expand.
  *
  * Charts authored against the dark page inherit pearl-surface tokens inside the
  * plate, so any exhibit reads legibly on paper without per-chart edits.
@@ -106,7 +106,7 @@ const { ex, label, title, sub, source, basis } = Astro.props;
     margin: 0 0 var(--s-3);
     text-wrap: balance;
   }
-  .plate__title :global(em) { font-style: italic; color: var(--c-tomato); }
+  .plate__title :global(em) { font-style: normal; color: var(--c-tomato); }
 
   .plate__sub {
     font-family: var(--f-body);

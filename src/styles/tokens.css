@@ -33,7 +33,7 @@
 }
 @font-face {
   font-family: 'Instrument Serif';
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url('/fonts/InstrumentSerif-Italic.woff2') format('woff2');
@@ -49,7 +49,7 @@
 }
 @font-face {
   font-family: 'Newsreader';
-  font-style: italic;
+  font-style: normal;
   font-weight: 400 600;
   font-display: swap;
   src: url('/fonts/Newsreader-Italic.woff2') format('woff2');

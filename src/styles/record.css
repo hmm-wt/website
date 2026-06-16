@@ -156,7 +156,7 @@
   margin: 0 0 var(--s-4);
   max-width: 28ch;
 }
-.rec-beat__arg em { font-style: italic; color: var(--c-tomato); }
+.rec-beat__arg em { font-style: normal; color: var(--c-tomato); }
 .rec-beat__prose {
   font-family: var(--f-body);
   font-size: var(--fs-md);

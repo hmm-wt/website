@@ -42,7 +42,7 @@
 /* 1. SHUTTER-WIPE                                            */
 /* Cream rectangle scales scaleX(0→1) from left, then scaleX  */
 /* (1→0) from right, revealing the element underneath. Used   */
-/* on hero italic word groups and section headings.           */
+/* on hero accent word groups and section headings.           */
 /* ────────────────────────────────────────────────────────── */
 .shutter-wipe {
   position: relative;
@@ -153,7 +153,7 @@
 /* ────────────────────────────────────────────────────────── */
 /* 5. REDACTION-REVEAL (one-time)                             */
 /* A solid evergreen-on-evergreen bar covers the line, then   */
-/* erases left-to-right revealing italic serif underneath.    */
+/* erases left-to-right revealing the serif underneath.    */
 /* Used once on declassified-research sub-headlines.          */
 /* ────────────────────────────────────────────────────────── */
 .redaction-reveal {

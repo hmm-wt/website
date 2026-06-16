@@ -30,6 +30,9 @@ body {
   font-feature-settings: "ss01" 1, "tnum" 1, "lnum" 1;
 }
 
+/* No italics anywhere on the site (per brand). Key terms read in tomato, upright. */
+em, i { font-style: normal; }
+
 a {
   color: var(--link);
   text-decoration-thickness: 1px;
@@ -269,7 +272,7 @@ button[disabled],
 .prose blockquote {
   border-left: 2px solid var(--accent);
   padding-left: var(--s-4);
-  font-style: italic;
+  font-style: normal;
   color: var(--fg-soft);
 }
 .prose code {
