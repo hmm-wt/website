@@ -1,0 +1,184 @@
+---
+import RecordLayout from '../../layouts/RecordLayout.astro';
+import Plate from '../../components/record/Plate.astro';
+import MarketFlower from '../../components/record/MarketFlower.astro';
+import Bars from '../../components/record/Bars.astro';
+import necessityData from '../../data/necessity-index.json';
+import exitsData from '../../data/exits-named.json';
+
+const exits = exitsData.exits as any[];
+const p = necessityData.premiums;
+
+// The matrix: exit path (rows) by market (columns).
+const paths = [
+  { key: 'acquisition', label: 'Strategic acquisition' },
+  { key: 'ipo', label: 'Public listing' },
+  { key: 'late_stage', label: 'Institutional late-stage' },
+];
+const markets = ['AU', 'JP', 'NZ', 'SG'] as const;
+const marketName: Record<string, string> = { AU: 'Australia', JP: 'Japan', NZ: 'New Zealand', SG: 'Singapore' };
+const cellFor = (pathKey: string, mk: string) => exits.find((e) => e.type === pathKey && e.market === mk);
+
+const total = exits.length;
+const disclosed = exits.filter((e) => e.value_usd_m_high).map((e) => e.value_usd_m_high as number);
+const fmtUsd = (m: number) => (m >= 1000 ? `$${(m / 1000).toFixed(2)}B` : `$${m}M`);
+const minExit = fmtUsd(Math.min(...disclosed));
+const maxExit = fmtUsd(Math.max(...disclosed));
+const marketsCovered = new Set(exits.map((e) => e.market)).size;
+
+// Round-size uplift by stage (the quantitative pattern).
+const stages = [
+  { label: 'Seed', v: p.round_size_seed },
+  { label: 'Series A', v: p.round_size_series_a },
+  { label: 'Series C', v: p.round_size_series_c },
+  { label: 'Series D+', v: p.round_size_series_d_plus },
+];
+const maxV = Math.max(...stages.map((s) => s.v));
+---
+<RecordLayout
+  title="The exits"
+  description="Multiple proven paths to liquidity across the four markets. Strategic acquirers, public markets, and late-stage investors are already buying developed-APAC regulatory infrastructure."
+  section="exits"
+  tone="light"  folio="ex-13 / 38"
+  locator='02 · <span class="here">The exits</span>'
+  next={{ href: '/data/necessity-index/', label: '03 The data' }}
+>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow" style="color:var(--c-tomato)">02 · The exits</p>
+    <h1 class="rec-masthead__title">Three paths to liquidity, all already open.</h1>
+    <p class="rec-masthead__claim">
+      Strategic acquirers, public markets, and late-stage investors are already buying
+      developed-APAC regulatory infrastructure. <strong>{total} named outcomes</strong>,
+      across {marketsCovered} of the four markets, from {minExit} to {maxExit}.
+    </p>
+  </header>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The matrix</span><span class="rec-beat__count">01 / 02</span></div>
+    <h2 class="rec-beat__arg">Liquidity here is <em>broad</em>, not a single fragile route.</h2>
+    <p class="rec-beat__prose">
+      Each named company below reached liquidity through one of three paths. Only one is a
+      strategic acquisition. The opportunity is not "APAC sources, Western acquirers exit."
+      That is one pathway of three, and not the dominant one.
+    </p>
+    <Plate
+      ex="EX-13"
+      label="Named acquirer deals · path by market"
+      source="hmm Ventures exit dataset, source-verified."
+      basis={`${total} named outcomes across four necessities. Disclosed values ${minExit} to ${maxExit}.`}
+    >
+      <div class="xm">
+        <table class="xm__table">
+          <thead>
+            <tr>
+              <th class="xm__corner" scope="col"><span class="xm__corner-label">Path · market</span></th>
+              {markets.map((mk) => (
+                <th class="xm__mh" scope="col">
+                  <span class="xm__flower" aria-hidden="true"><MarketFlower market={mk} size={26} /></span>
+                  <span class="xm__mname">{marketName[mk]}</span>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {paths.map((path) => (
+              <tr>
+                <th class="xm__rh" scope="row">{path.label}</th>
+                {markets.map((mk) => {
+                  const e = cellFor(path.key, mk);
+                  return (
+                    <td class={`xm__cell ${e ? 'xm__cell--deal' : ''}`}>
+                      {e ? (
+                        <>
+                          <span class="xm__co">{e.company}</span>
+                          <span class="xm__val">{e.value_display}</span>
+                          <span class="xm__yr">{e.tier} · {e.year}</span>
+                        </>
+                      ) : (
+                        <span class="xm__empty" aria-hidden="true">·</span>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Plate>
+    <p class="rec-beat__note">
+      Singapore carries no named outcome yet and stays on the watchlist. Coverage is uneven.
+      More is expected as the 2026 to 2028 compliant cohorts mature.
+    </p>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The pattern</span><span class="rec-beat__count">02 / 02</span></div>
+    <h2 class="rec-beat__arg">Near parity at seed. The premium <em>appears later</em>.</h2>
+    <Plate
+      ex="EX-14"
+      label="Round-size uplift and exit incidence"
+      sub="Regulated cohort relative to the unregulated cohort. The gap opens by Series C."
+      source="hmm Ventures four-market dataset."
+    >
+      <div class="xp">
+        <div class="xp__bars">
+          <Bars
+            items={stages.map((s) => ({ label: s.label, value: s.v, display: `${s.v.toFixed(2)}x`, hero: s.v === maxV }))}
+            height={150}
+          />
+        </div>
+        <div class="xp__incidence">
+          <p class="xp__inc-num">{p.exit_rate_multiple.toFixed(2)}x</p>
+          <p class="xp__inc-lab">Observed exit incidence, regulated vs unregulated cohort</p>
+          <p class="xp__inc-detail">{p.regulated_exit_rate_pct}% vs {p.unregulated_exit_rate_pct}%</p>
+        </div>
+      </div>
+    </Plate>
+  </section>
+</RecordLayout>
+
+<style>
+  /* The exit matrix. */
+  .xm { overflow-x: auto; }
+  .xm__table { width: 100%; border-collapse: collapse; min-width: 34rem; }
+  .xm__corner { width: 9rem; text-align: left; vertical-align: bottom; padding: 0 0 var(--s-3); }
+  .xm__corner-label {
+    font-family: var(--f-mono); font-size: 0.5625rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(37, 0, 1, 0.42);
+  }
+  .xm__mh { text-align: center; padding: 0 var(--s-2) var(--s-3); vertical-align: bottom; }
+  .xm__flower { display: block; color: var(--c-mahogany); margin: 0 auto var(--s-1); }
+  .xm__mname {
+    font-family: var(--f-mono); font-size: var(--fs-xs); letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(37, 0, 1, 0.7);
+  }
+  .xm__rh {
+    text-align: left; font-family: var(--f-mono); font-size: var(--fs-xs); font-weight: 400;
+    letter-spacing: 0.08em; text-transform: uppercase; color: rgba(37, 0, 1, 0.7);
+    padding: var(--s-3) var(--s-4) var(--s-3) 0; border-top: 1px solid rgba(4, 47, 42, 0.16);
+    white-space: nowrap; vertical-align: top;
+  }
+  .xm__cell {
+    border-top: 1px solid rgba(4, 47, 42, 0.16); border-left: 1px solid rgba(4, 47, 42, 0.12);
+    padding: var(--s-3); vertical-align: top; text-align: center;
+  }
+  .xm__cell--deal { background: rgba(196, 69, 57, 0.05); }
+  .xm__co { display: block; font-family: var(--f-display); font-size: var(--fs-md); line-height: 1.1; color: var(--c-tomato); }
+  .xm__val { display: block; font-family: var(--f-mono); font-size: 0.625rem; line-height: 1.4; color: rgba(37, 0, 1, 0.62); margin-top: 3px; }
+  .xm__yr { display: block; font-family: var(--f-mono); font-size: 0.5625rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(37, 0, 1, 0.42); margin-top: 3px; }
+  .xm__empty { color: rgba(37, 0, 1, 0.22); font-family: var(--f-mono); }
+
+  /* The pattern. */
+  .xp { display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-6); align-items: center; }
+  .xp__bars { min-width: 0; }
+  .xp__incidence { border-left: 1px solid rgba(4, 47, 42, 0.16); padding-left: var(--s-5); }
+  .xp__inc-num { font-family: var(--f-display); font-size: var(--fs-3xl); line-height: 1; color: var(--c-tomato); margin: 0; }
+  .xp__inc-lab { font-family: var(--f-mono); font-size: var(--fs-xs); line-height: 1.5; color: rgba(37, 0, 1, 0.66); margin: var(--s-2) 0 0; }
+  .xp__inc-detail { font-family: var(--f-mono); font-size: var(--fs-xs); letter-spacing: 0.06em; color: rgba(37, 0, 1, 0.42); margin: var(--s-1) 0 0; }
+
+  @media (max-width: 640px) {
+    .xp { grid-template-columns: 1fr; }
+    .xp__incidence { border-left: 0; padding-left: 0; border-top: 1px solid rgba(4, 47, 42, 0.16); padding-top: var(--s-4); }
+  }
+</style>

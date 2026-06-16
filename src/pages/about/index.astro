@@ -1,7 +1,6 @@
 ---
-import Base from '../../layouts/Base.astro';
-import CTARail from '../../components/CTARail.astro';
-import { buildContactMailto } from '../../utils/mailto.ts';
+import RecordLayout from '../../layouts/RecordLayout.astro';
+import Plate from '../../components/record/Plate.astro';
 
 interface Operator {
   idx: string;
@@ -12,6 +11,7 @@ interface Operator {
   role: string;
   years: string;
   heading: string;
+  ex: string;
   details: string[];
 }
 
@@ -25,6 +25,7 @@ const operators: Operator[] = [
     role: 'Cross-border GTM',
     years: '2017 – 2021',
     heading: 'Paddle (2017 to 2021, Series B through Series D run-up)',
+    ex: 'EX-33',
     details: [
       'Joined Paddle ahead of the Series B in December 2017, when the company was under thirty people. Stayed four years. Departed in 2021 with the Series D round in motion; KKR closed the round at $200M and a $1.4B valuation in May 2022, shortly after departure. The seat covered product validation, revenue building, post-sales function design, and the APAC market build.',
       'China is the underwriting proof point. Paddle had a single Chinese speaker, no local entity, and no playbook. Inside twelve months, China was the third-largest country revenue contributor to the entire company. The result persisted long after the GP left.',
@@ -40,6 +41,7 @@ const operators: Operator[] = [
     role: 'Sourcing rebuild',
     years: '2021 – 2022',
     heading: 'Skalata Ventures (sourcing rebuild, 2021 to 2022)',
+    ex: 'EX-34',
     details: [
       'After Paddle, the GP was hired to take Skalata through the transition from non-profit accelerator to institutional seed fund. Within six months the firm had moved through the strategic pivot. Sourcing throughput moved from approximately 300 to 1,200 companies per quarter. Deal-flow networks were built across universities, accelerators, and co-working spaces in every Australian state, from Hobart and the Sunshine Coast to Sydney and Melbourne. Skalata raised Fund III after the GP’s departure, the external validation that the repositioning worked.',
       'Closed deals sourced during the period include Foremind (workforce mental health, 150 B2B clients, third Skalata follow-on May 2025), Lewi Software (water/waste engineering software; Rio Tinto, Urban Utilities), Omni Biotech (industrial safety sensors; Woodside pilot, Monash validation), NetNada, NOLA, and Lanterne. All six operating as of Q1 2026.',
@@ -55,6 +57,7 @@ const operators: Operator[] = [
     role: 'Classifier methodology',
     years: '2022 – 2026',
     heading: 'GoodFit (classifier methodology, 2022 to 2026)',
+    ex: 'EX-35',
     details: [
       'As VP Revenue, the GP built GoodFit’s commercial function from a founder-led, high-churn starting point: 5x revenue growth, first enterprise agreements, operations, marketing, customer success, and sales built from scratch. GoodFit closed a $13M Series A led by Notion Capital in September 2025. The GP has since departed to go full-time on hmm.',
       'The infrastructure underneath those outcomes is the substance for hmm. The classifier methodology that powers Layers 1 and 2 of hmm’s sourcing engine was built and validated across four years inside GoodFit. The architectural pattern has been rebuilt for hmm against a regulated-T1/T2 ICP rather than a SaaS-revenue ICP.',
@@ -62,330 +65,118 @@ const operators: Operator[] = [
     ],
   },
 ];
-
-const gpBackgroundMailto = buildContactMailto('GP background');
 ---
-<Base
+<RecordLayout
   title="The GP"
   description="hmm Ventures is Wahid Tashkandi, Founding GP. A solo GP whose career has been pointed at the Necessities for a decade."
+  section="gp"
+  tone="light"  folio="ex-33 / 38"
+  locator='05 · <span class="here">The GP</span>'
 >
-  <header class="ab-hero">
-    <div class="container">
-      <p class="kicker ab-hero__kicker">The GP</p>
-      <h1 class="ab-hero__title">Wahid Tashkandi</h1>
-      <p class="ab-hero__subline">Founding GP. hmm Ventures.</p>
-      <p class="ab-hero__lede">A solo GP whose career has been pointed at the Necessities for a decade.</p>
-    </div>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow">05 · The GP</p>
+    <h1 class="rec-masthead__title">Wahid Tashkandi</h1>
+    <p class="rec-masthead__claim">hmm ventures is a pre-seed and seed stage VC firm focused on the Necessities across Australia, Japan, New Zealand, and Singapore. A solo GP whose career has been pointed at them for a decade.</p>
   </header>
 
-  <section class="container ab-posture">
-    <header class="ab-posture__head">
-      <p class="kicker ab-posture__kicker">The posture</p>
-    </header>
-    <p class="ab-posture__opener">
-      There is a way of looking at regulated companies in developed APAC that treats Japan, Australia, New Zealand, and Singapore as four separate problems, and the GP has spent a decade not doing that.
-    </p>
-    <p class="ab-posture__line">
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The journey</span><span class="rec-beat__count">01 / 04</span></div>
+    <p class="rec-beat__prose">Lived across Australia, New Zealand, Saudi Arabia, and the UK by twenty one. Operating cross-border was the default before it was the work.</p>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The posture</span><span class="rec-beat__count">02 / 04</span></div>
+    <h2 class="rec-beat__arg">There is a way of looking at regulated companies in developed APAC that treats Japan, Australia, New Zealand, and Singapore as four separate problems, and the GP has spent a decade not doing that.</h2>
+    <p class="rec-beat__prose">
       A critical mineral mined in Western Australia, processed in Shenzhen, and assembled into a medical handset sold to a hospital in Tokyo passes through three regulators on one product, and the compliance question each regulator asks is a version of the same question. Medical device pathways in Sydney (TGA) and Tokyo (PMDA) sit on different statutes but ask the founder to close the same underlying gap. Grid-connection regimes in Singapore and New Zealand differ in mechanism but converge on the same missing piece. The vocabulary changes from jurisdiction to jurisdiction; the underlying problem does not.
     </p>
-    <p class="ab-posture__line">
+    <p class="rec-beat__prose">
       The four markets do look heterogeneous from the outside. Japanese seed is dominated by corporate venture; Australian Series A is largely super-backed; New Zealand runs a regulator-as-partner posture that is unusual globally; and Singapore is explicitly designed around regulatory arbitrage. None of those differences determine which companies build durable advantage. The filter that does is the same in every market: which company carries the approval the regulator is going to require.
     </p>
-    <p class="ab-posture__line">
+    <p class="rec-beat__prose">
       That filter is the founding observation behind hmm.
     </p>
   </section>
 
-  <section class="container ab-journey">
-    <header class="ab-journey__head">
-      <p class="kicker ab-journey__kicker">The journey</p>
-      <p class="ab-journey__lede">
-        Lived across Australia, New Zealand, Saudi Arabia, and the UK by twenty one. Operating cross-border was the default before it was the work.
-      </p>
-    </header>
-    <ol class="ab-journey__timeline" role="list">
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">Solo by design</span><span class="rec-beat__count">03 / 04</span></div>
+    <h2 class="rec-beat__arg">One GP. <em>One attribution surface.</em></h2>
+    <p class="rec-beat__prose">
+      Every company hmm backs is sourced, screened, and decided by the same person, against the same filter. There is no committee to translate the thesis through, and no gap between the person who built the screen and the person who makes the call. Conviction and accountability sit in one place.
+    </p>
+    <p class="rec-beat__prose">
+      A decade operating across the four markets, the cross-border go-to-market playbook, and the live classifier are what let one operator carry the work that usually takes a team. The model is deliberate, not a constraint to apologise for.
+    </p>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The record</span><span class="rec-beat__count">04 / 04</span></div>
+    <h2 class="rec-beat__arg">Three operating seats. <em>One thread.</em></h2>
+    <ol class="gp-seats" role="list">
       {operators.map((op) => (
-        <li class="ab-journey__node">
-          <span class="ab-journey__years">{op.years}</span>
-          <span class="ab-journey__logo">
-            <img src={op.logo} alt={op.name} loading="lazy" />
-          </span>
-          <span class="ab-journey__takeaway">{op.role}</span>
+        <li class="gp-seat">
+          <p class="gp-seat__meta">
+            <span class="gp-seat__idx">[{op.idx}]</span>
+            <span class="gp-seat__role">{op.role}</span>
+            <span class="gp-seat__years">{op.years}</span>
+          </p>
+          <h3 class="gp-seat__heading">{op.heading}</h3>
+          <Plate ex={op.ex} label={op.role}>
+            {op.details.map((para) => (
+              <p class="gp-seat__detail">{para}</p>
+            ))}
+          </Plate>
         </li>
       ))}
     </ol>
   </section>
-
-  <section class="container ab-roles">
-    <header class="ab-roles__head">
-      <p class="kicker ab-roles__kicker">The roles</p>
-      <h2 class="ab-roles__title">Three operating seats. One thread.</h2>
-    </header>
-    <ol class="ab-roles__list" role="list">
-      {operators.map((op) => (
-        <li class="ab-role">
-          <header class="ab-role__head">
-            <span class="ab-role__idx">[{op.idx}]</span>
-            <a class="ab-role__logo" href={op.url} rel="noopener" target="_blank" aria-label={`${op.name} website`}>
-              <img src={op.logo} alt={op.name} loading="lazy" />
-            </a>
-            <span class="ab-role__role">{op.role}</span>
-          </header>
-          <h3 class="ab-role__heading">{op.heading}</h3>
-          {op.details.map((para) => (
-            <p class="ab-role__detail">{para}</p>
-          ))}
-        </li>
-      ))}
-    </ol>
-  </section>
-
-  <section class="container ab-closer">
-    <p class="ab-closer__line">
-      The same three-in-one quality runs through the operator stack: cross-border APAC operating from Paddle, an institutional sourcing build from Skalata, and the classifier already running from GoodFit. Most generalist seed funds in the target markets carry none of these, and even regulated-sector specialists rarely carry more than one.
-    </p>
-  </section>
-
-  <section class="container ab-contact">
-    <p class="ab-contact__line">
-      GP background, references, anything not in the IM. <a href={gpBackgroundMailto}>wt@hmm.ventures</a>
-    </p>
-  </section>
-
-  <CTARail />
-</Base>
+</RecordLayout>
 
 <style>
-  .ab-hero {
-    background: var(--c-evergreen);
-    color: var(--c-pearl);
-    padding-block: var(--s-8) var(--s-7);
-  }
-  .ab-hero__kicker { color: var(--c-tomato); margin: 0; }
-  .ab-hero__title {
-    font-family: var(--f-display);
-    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: var(--s-3) 0 var(--s-3);
-    font-weight: 400;
-  }
-  .ab-hero__subline {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: color-mix(in srgb, var(--c-pearl) 70%, transparent);
-    margin: 0 0 var(--s-5);
-  }
-  .ab-hero__lede {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--c-pearl);
-    max-width: 56ch;
-    margin: 0;
-  }
-
-  .ab-posture {
-    padding-block: var(--s-7);
-    border-top: var(--hair) solid var(--hair-color);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-4);
-  }
-  .ab-posture__head { max-width: 56ch; margin-block-end: var(--s-3); }
-  .ab-posture__head .kicker { color: var(--c-tomato); margin: 0; }
-  .ab-posture__opener {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--fg);
-    max-width: 64ch;
-    margin: 0;
-  }
-  .ab-posture__line {
-    font-family: var(--f-body);
-    font-size: var(--fs-md);
-    line-height: var(--lh-body);
-    color: var(--fg);
-    max-width: 64ch;
-    margin: 0;
-  }
-
-  .ab-journey {
-    padding-block: var(--s-7);
-    border-top: var(--hair) solid var(--hair-color);
-  }
-  .ab-journey__head {
-    margin-block-end: var(--s-5);
-    max-width: 64ch;
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-  }
-  .ab-journey__head .kicker { color: var(--c-tomato); margin: 0; }
-  .ab-journey__lede {
-    font-family: var(--f-body);
-    font-size: var(--fs-md);
-    line-height: var(--lh-body);
-    color: var(--fg);
-    margin: 0;
-  }
-  .ab-journey__timeline {
+  .gp-seats {
     list-style: none;
-    margin: var(--s-6) 0 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    border-top: var(--hair) solid var(--hair-color);
-    border-bottom: var(--hair) solid var(--hair-color);
-  }
-  .ab-journey__node {
-    padding: var(--s-5);
-    border-left: var(--hair) solid var(--hair-color);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-  }
-  .ab-journey__node:first-child { border-left: 0; }
-  .ab-journey__years {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--hero);
-  }
-  .ab-journey__logo { color: var(--fg); }
-  .ab-journey__logo img {
-    height: 32px;
-    width: auto;
-    display: block;
-  }
-  .ab-journey__takeaway {
-    font-family: var(--f-display);
-    font-size: var(--fs-lg);
-    line-height: var(--lh-tight);
-    color: var(--fg);
-  }
-  @media (max-width: 800px) {
-    .ab-journey__timeline { grid-template-columns: 1fr; }
-    .ab-journey__node { border-left: 0; border-top: var(--hair) solid var(--hair-color); }
-    .ab-journey__node:first-child { border-top: 0; }
-  }
-
-  .ab-roles { padding-block: var(--s-7); border-top: var(--hair) solid var(--hair-color); }
-  .ab-roles__head { max-width: 56ch; }
-  .ab-roles__head .kicker { color: var(--c-tomato); margin: 0; }
-  .ab-roles__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-tight);
-    margin: var(--s-3) 0 var(--s-5);
-    letter-spacing: -0.01em;
-  }
-  .ab-roles__list {
-    list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 0;
-    border-top: var(--hair) solid var(--hair-color);
+    gap: var(--s-6);
   }
-  .ab-role {
-    padding-block: var(--s-6);
-    border-bottom: var(--hair) solid var(--hair-color);
+  .gp-seat {
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
   }
-  .ab-role__head {
+  .gp-seat__meta {
     display: flex;
-    align-items: center;
-    gap: var(--s-4);
+    align-items: baseline;
+    gap: var(--s-3);
     flex-wrap: wrap;
-  }
-  .ab-role__idx {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--hero);
-  }
-  .ab-role__logo {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap-min);
-    padding-block: 0.25rem;
-    color: var(--fg);
-    text-decoration: none;
-    transition: color var(--mo-tick) var(--ease-golden);
-  }
-  .ab-role__logo:hover { color: var(--hero); }
-  .ab-role__logo img {
-    height: 36px;
-    width: auto;
-    display: block;
-  }
-  .ab-role__role {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--fg-soft);
-    margin-inline-start: auto;
+    text-transform: uppercase;
+    margin: 0;
   }
-  .ab-role__heading {
+  .gp-seat__idx { color: var(--c-tomato); }
+  .gp-seat__role { color: var(--fg-soft); }
+  .gp-seat__years { color: var(--fg-faint); margin-inline-start: auto; }
+  .gp-seat__heading {
     font-family: var(--f-display);
-    font-size: var(--fs-lg);
-    line-height: var(--lh-tight);
-    color: var(--fg);
-    margin: var(--s-2) 0 var(--s-2);
-    letter-spacing: -0.005em;
     font-weight: 400;
+    font-size: var(--fs-xl);
+    line-height: 1.1;
+    letter-spacing: -0.005em;
+    color: var(--fg);
+    margin: 0;
+    max-width: 36ch;
   }
-  .ab-role__detail {
+  .gp-seat__detail {
     font-family: var(--f-body);
     font-size: var(--fs-md);
-    line-height: var(--lh-body);
-    color: var(--fg);
+    line-height: 1.65;
+    color: var(--p-muted, rgba(37, 0, 1, 0.66));
     max-width: 72ch;
-    margin: 0;
+    margin: 0 0 var(--s-4);
   }
-
-  .ab-closer {
-    padding-block: var(--s-6);
-    border-top: var(--hair) solid var(--hair-color);
-  }
-  .ab-closer__line {
-    font-family: var(--f-display);
-    font-size: var(--fs-lg);
-    line-height: var(--lh-snug);
-    color: var(--fg);
-    max-width: 72ch;
-    margin: 0;
-  }
-
-  .ab-contact {
-    padding-block: var(--s-6) var(--s-7);
-  }
-  .ab-contact__line {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--fg-soft);
-    margin: 0;
-  }
-  .ab-contact__line a {
-    color: var(--hero);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 1px;
-  }
-  .ab-contact__line a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+  .gp-seat__detail:last-child { margin-bottom: 0; }
 </style>
-</content>
-</invoke>

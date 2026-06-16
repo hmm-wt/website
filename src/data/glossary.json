@@ -1,68 +1,13 @@
 {
   "categories": [
     {
-      "id": "returns",
-      "label": "Returns and performance metrics",
-      "terms": [
-        { "term": "DPI", "def": "Distribution to Paid-In Capital. The cash returned to LPs divided by the capital called from LPs. The primary 'real money back' measure for fund performance. Reported on two bases (paid-in and committed)." },
-        { "term": "TVPI", "def": "Total Value to Paid-In. Distributions (DPI) plus residual net asset value of unrealised holdings, divided by paid-in capital. Captures unrealised value alongside realised." },
-        { "term": "MOIC", "def": "Multiple on Invested Capital. Exit value divided by capital invested in a single company. Distinguishable from DPI (which is fund-level, after fees and carry)." },
-        { "term": "Net IRR", "def": "The annualised internal rate of return on LP cash flows, after deduction of management fees and carried interest. A standard headline return measure for institutional comparison, usually read alongside DPI and TVPI." },
-        { "term": "Gross IRR", "def": "The annualised internal rate of return on fund cash flows, before deduction of management fees and carried interest. Used to assess GP investment skill independent of fee structure." },
-        { "term": "Paid-in capital", "def": "The capital actually called from LPs into the fund, used both for investments and management fees. This is the DPI denominator." },
-        { "term": "Committed capital", "def": "The total capital LPs have agreed to provide to the fund, called or uncalled. Used as the alternative DPI denominator for like-for-like benchmarking against funds that report on committed basis." },
-        { "term": "LP-Net basis", "def": "The reporting basis used throughout the fund's materials: distributions to LPs after deduction of management fees and carried interest, divided by capital called from LPs (paid-in) or total LP commitment (committed)." },
-        { "term": "P(≥X)", "def": "The probability of meeting or exceeding a given DPI or IRR threshold. Computed against the raw 1,000-iteration simulation distribution." }
-      ]
-    },
-    {
-      "id": "simulation",
-      "label": "Simulation and modelling",
-      "terms": [
-        { "term": "Monte Carlo simulation", "def": "A computational method that runs the fund model thousands of times with randomised inputs to produce a probability distribution of possible outcomes. Used here for fund return projections." },
-        { "term": "Iterations", "def": "The number of times the simulation is run. The fund's base simulation uses 1,000 iterations per scenario." },
-        { "term": "Seed", "def": "The number that initialises the random number generator in a Monte Carlo simulation. The same seed produces the same results, allowing reproducibility. Different seeds produce different specific outcomes but should produce broadly similar distributions if the model is stable." },
-        { "term": "P10 / P25 / P50 / P75 / P90", "def": "Percentiles of the simulation distribution. P10 = 10th percentile (90% of simulations clear this; the Downside Case). P50 = median (half clear it; the Base Case). P75 = 75th percentile (25% clear it; the Target Case)." },
-        { "term": "Target Case (P75)", "def": "The 75th percentile of fund outcomes across the 1,000-iteration simulation. The GP's stated return target, set above the median. Approximately 25% of simulations achieve or exceed it." },
-        { "term": "Base Case (median, P50)", "def": "The 50th percentile. The central tendency of the simulation. Half of simulations clear this level. The benchmark-comparable figure." },
-        { "term": "Downside Case (P10)", "def": "The 10th percentile. A downside reference point. 90% of simulations clear this level. Distinct from the Bear Case." },
-        { "term": "Bear Case", "def": "A separate stress simulation with coordinated parameter drift across markets. Distinct from the Downside Case, which is a percentile of the unstressed Base Case sim." },
-        { "term": "Pareto distribution / alpha", "def": "A heavy-tailed distribution where most observations cluster at low values and a few produce extreme outcomes. Used here to model winner-company MOIC. Lower alpha means a heavier tail." },
-        { "term": "p_fail / p_base / p_win", "def": "The per-region probabilities (summing to 1.0) that a portfolio company fails (0x return), produces a base-case exit, or produces a winner exit." },
-        { "term": "moic_base / moic_win", "def": "The per-region MOIC assumption for base-case exits and winner exits respectively. Winner MOICs are Pareto-distributed around moic_win." },
-        { "term": "Lever decomposition", "def": "The breakdown of return drivers into Survival (lower failure rate), Win-Rate (higher proportion of winners), and Exit Premium (winners exiting at higher multiples)." }
-      ]
-    },
-    {
-      "id": "reporting",
-      "label": "Reporting standards and conventions",
-      "terms": [
-        { "term": "JIT (just-in-time) capital call convention", "def": "Capital called from LPs at the moment it is deployed. Total called approaches the full commitment over the fund life." },
-        { "term": "Pre-funded reserve convention", "def": "Capital called from LPs at investment time; follow-on reserves drawn from within-fund cash. Total called is lower than the full commitment." },
-        { "term": "Convention-invariance", "def": "The modelling property that headline results are designed to remain comparable under both capital-call conventions." },
-        { "term": "Scenario / engine identifiers", "def": "Internal codes for the current Base Case configuration and simulation engine." }
-      ]
-    },
-    {
-      "id": "waterfall",
-      "label": "Waterfall and fund economics",
-      "terms": [
-        { "term": "European waterfall", "def": "A carry distribution structure where LPs are repaid all called capital and the preferred return before the GP receives any carry. The alternative ('American' or deal-by-deal) pays GP carry on each successful exit." },
-        { "term": "Preferred return (pref)", "def": "The minimum annual return LPs receive before the GP earns carry." },
-        { "term": "GP catch-up", "def": "After the pref clears, the GP receives a higher share of subsequent distributions until the catch-up tier completes. Then the standard carry split applies." },
-        { "term": "Carried interest (carry)", "def": "The GP's share of fund profits after pref and catch-up." },
-        { "term": "Reserve ratio", "def": "The proportion of committed capital held back for follow-on investments rather than initial cheques." },
-        { "term": "Recycling", "def": "Reinvestment of early-exit proceeds into new portfolio companies during the investment period. Subject to a cap on the recycled share of fund size." }
-      ]
-    },
-    {
       "id": "Necessities",
       "label": "Necessities and screen",
       "terms": [
         { "term": "T1 (Tier 1)", "def": "Companies that cannot legally operate without regulatory approval (a licence, a clearance, a certification). The barrier is permission to operate." },
         { "term": "T2 (Tier 2)", "def": "Companies whose customers are statutorily required to produce evidence, reporting, monitoring, or compliance outputs that the company enables. The barrier is evidence of compliance." },
-        { "term": "Five Necessities", "def": "Food Security Systems, Biomedical Systems, Power Systems, Autonomous Systems, Critical Materials and Supply Integrity. The five sectors that meet the fund's regulation-as-barrier test." },
-        { "term": "Crystallisation Window", "def": "The gap between a regulation's effective date and the moment a compliant operational layer exists. The window the fund enters." },
+        { "term": "Five Necessities", "def": "Food Security Systems, Biomedical Systems, Power Systems, Autonomous Systems, Critical Materials and Supply Integrity. The five sectors that meet the regulation-as-barrier test." },
+        { "term": "Crystallisation Window", "def": "The gap between a regulation's effective date and the moment a compliant operational layer exists. The window the thesis targets." },
         { "term": "Conservative classifier (33.5%)", "def": "The deterministic T1/T2 classifier that produces 33.5% regulated share of the four-market 19,416-company universe. Reproduces from shipped keyword sets alone. The single classifier used for every empirical claim." },
         { "term": "Three-method classifier", "def": "A broader classifier (keyword + domain index + LinkedIn index + university spinout registry) maintained as a methodology sensitivity and available on request. Backs no headline figure." }
       ]

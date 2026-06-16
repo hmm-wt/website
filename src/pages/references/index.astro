@@ -1,11 +1,11 @@
 ---
-import Base from '../../layouts/Base.astro';
+import RecordLayout from '../../layouts/RecordLayout.astro';
 import { getCollection } from 'astro:content';
 import glossary from '../../data/glossary.json';
 
-// Pull footnotes from every content collection that may carry them.
-const [doctrine, markets, research] = await Promise.all([
-  getCollection('doctrine'),
+// Pull footnotes from the public content collections. The doctrine collection
+// is retired (its routes redirect to /), so its citations are not surfaced here.
+const [markets, research] = await Promise.all([
   getCollection('markets'),
   getCollection('research')
 ]);
@@ -73,190 +73,126 @@ function group(collection: string, label: string, anchor: string, entries: any[]
 }
 
 const sourceGroups: SourceGroup[] = [
-  group('doctrine', 'Necessity Doctrine', 'doctrine', doctrine),
   group('markets', 'Markets', 'markets', markets),
   group('research', 'Research', 'research', research)
 ];
 
+// Beat numbering: glossary + three footnote sources.
+const totalBeats = 1 + sourceGroups.length;
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
-<Base
-  title="References"
+<RecordLayout
+  title="Glossary and citations."
   description="Site-wide glossary and citation index. Every public claim and term across hmm.ventures traces here."
+  section="method"
+  tone="light"  folio="ex-34 / 38"
+  locator='04 · The method <span style="color:var(--fg-faint)">&rarr;</span> <span class="here">References</span>'
 >
-  <header class="refs-hero">
-    <div class="container">
-      <p class="kicker refs-hero__kicker">References</p>
-      <h1 class="refs-hero__title">Glossary and citations.</h1>
-      <p class="refs-hero__sub">
-        Definitions and source notes for the doctrine, market chapters, and research library.
-      </p>
-      <nav class="refs-hero__toc" aria-label="On this page">
-        <a href="#glossary">Glossary</a>
-        <span aria-hidden="true">·</span>
-        <a href="#doctrine">Doctrine</a>
-        <span aria-hidden="true">·</span>
-        <a href="#markets">Markets</a>
-        <span aria-hidden="true">·</span>
-        <a href="#research">Research</a>
-        <span aria-hidden="true">·</span>
-        <a href="/references/exits/">Exits &rarr;</a>
-      </nav>
-    </div>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow">04 · The method</p>
+    <h1 class="rec-masthead__title">Glossary and citations.</h1>
+    <p class="rec-masthead__claim">Definitions and source notes for the market chapters and the research library.</p>
+    <nav class="refs-toc" aria-label="On this page">
+      <a href="#glossary">Glossary</a>
+      <span aria-hidden="true">·</span>
+      <a href="#markets">Markets</a>
+      <span aria-hidden="true">·</span>
+      <a href="#research">Research</a>
+      <span aria-hidden="true">·</span>
+      <a href="/references/exits/">Exits &rarr;</a>
+    </nav>
   </header>
 
-  <section class="refs container">
-    <header class="refs__head" hidden>
-      <h1 class="refs__title">References.</h1>
-    </header>
+  <!-- GLOSSARY -->
+  <section class="rec-beat" id="glossary" aria-label="Glossary">
+    <div class="rec-beat__head"><span class="rec-beat__label">Glossary</span><span class="rec-beat__count">{pad(1)} / {pad(totalBeats)}</span></div>
+    <h2 class="rec-beat__arg">Terms across the thesis, the markets, the research.</h2>
+    <p class="rec-beat__prose">Definitions are written plainly so the assumptions and metrics can be reviewed without specialist context.</p>
 
-    <!-- GLOSSARY -->
-    <section class="refs__sec" id="glossary" aria-label="Glossary">
-      <header class="refs__sec-head">
-        <p class="kicker refs__sec-kicker">Glossary</p>
-        <h2 class="refs__sec-title">Terms across the doctrine, the IM, the research.</h2>
-        <p class="refs__sec-sub">Definitions are written plainly so the assumptions and metrics can be reviewed without specialist context.</p>
-      </header>
-
-      {glossary.categories.map((cat) => (
-        <section class="refs__cat" id={`glossary-${cat.id}`}>
-          <header class="refs__cat-head">
-            <span class="refs__cat-idx">{cat.id.toUpperCase()}</span>
-            <h3 class="refs__cat-title">{cat.label}</h3>
-          </header>
-          <dl class="refs__terms">
-            {cat.terms.map((t) => (
-              <div class="refs__term" id={`glossary-${cat.id}-${t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-                <dt class="refs__term-key">{t.term}</dt>
-                <dd class="refs__term-def">{t.def}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-      ))}
-
-    </section>
-
-    <!-- FOOTNOTES BY SOURCE -->
-    {sourceGroups.map((sg) => (
-      <section class="refs__sec" id={sg.anchor} aria-label={sg.collectionLabel}>
-        <header class="refs__sec-head">
-          <p class="kicker refs__sec-kicker">{sg.collectionLabel} · footnotes</p>
-          <h2 class="refs__sec-title">{sg.items.length} {sg.items.length === 1 ? 'chapter' : 'entries'} with citations</h2>
+    {glossary.categories.map((cat) => (
+      <section class="refs__cat" id={`glossary-${cat.id}`}>
+        <header class="refs__cat-head">
+          <span class="refs__cat-idx">{cat.id.toUpperCase()}</span>
+          <h3 class="refs__cat-title">{cat.label}</h3>
         </header>
-
-        {sg.items.length === 0 ? (
-          <p class="refs__empty">No external citations in this collection yet.</p>
-        ) : sg.items.map((it) => (
-          <section class="refs__ch" id={`${sg.anchor}-${it.slug}`}>
-            <header class="refs__ch-head">
-              {it.chapter != null && (
-                <span class="refs__ch-idx">{sg.anchor === 'doctrine' ? 'Chapter' : it.chapter ? 'Chapter' : ''} {it.chapter != null ? String(it.chapter).padStart(2, '0') : ''}</span>
-              )}
-              <h3 class="refs__ch-title">{it.title}</h3>
-            </header>
-            <ol class="refs__list" role="list">
-              {it.footnotes.map((fn) => (
-                <li class="refs__item" id={`${sg.anchor}-${it.slug}-${fn.num}`}>
-                  <span class="refs__num">[{fn.num}]</span>
-                  <span class="refs__text">{fn.segments.map((seg) => (
-                    seg.kind === 'link'
-                      ? <a href={seg.href} target="_blank" rel="noopener noreferrer">{seg.value}</a>
-                      : <Fragment>{seg.value}</Fragment>
-                  ))}</span>
-                </li>
-              ))}
-            </ol>
-          </section>
-        ))}
+        <dl class="refs__terms">
+          {cat.terms.map((t) => (
+            <div class="refs__term" id={`glossary-${cat.id}-${t.term.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+              <dt class="refs__term-key">{t.term}</dt>
+              <dd class="refs__term-def">{t.def}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
     ))}
-
   </section>
-</Base>
+
+  <!-- FOOTNOTES BY SOURCE -->
+  {sourceGroups.map((sg, gi) => (
+    <section class="rec-beat" id={sg.anchor} aria-label={sg.collectionLabel}>
+      <div class="rec-beat__head"><span class="rec-beat__label">{sg.collectionLabel} · footnotes</span><span class="rec-beat__count">{pad(gi + 2)} / {pad(totalBeats)}</span></div>
+      <h2 class="rec-beat__arg">{sg.items.length} {sg.items.length === 1 ? 'chapter' : 'entries'} with citations</h2>
+
+      {sg.items.length === 0 ? (
+        <p class="rec-beat__note">No external citations in this collection yet.</p>
+      ) : sg.items.map((it) => (
+        <section class="refs__ch" id={`${sg.anchor}-${it.slug}`}>
+          <header class="refs__ch-head">
+            {it.chapter != null && (
+              <span class="refs__ch-idx">{sg.anchor === 'doctrine' ? 'Chapter' : it.chapter ? 'Chapter' : ''} {it.chapter != null ? String(it.chapter).padStart(2, '0') : ''}</span>
+            )}
+            <h3 class="refs__ch-title">{it.title}</h3>
+          </header>
+          <ol class="refs__list" role="list">
+            {it.footnotes.map((fn) => (
+              <li class="refs__item" id={`${sg.anchor}-${it.slug}-${fn.num}`}>
+                <span class="refs__num">[{fn.num}]</span>
+                <span class="refs__text">{fn.segments.map((seg) => (
+                  seg.kind === 'link'
+                    ? <a href={seg.href} target="_blank" rel="noopener noreferrer">{seg.value}</a>
+                    : <Fragment>{seg.value}</Fragment>
+                ))}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </section>
+  ))}
+</RecordLayout>
 
 <style>
-  .refs-hero {
-    background: var(--c-evergreen);
-    color: var(--c-pearl);
-    padding-block: var(--s-8) var(--s-6);
-  }
-  .refs-hero__kicker { color: var(--c-tomato); margin: 0; }
-  .refs-hero__title {
-    font-family: var(--f-display);
-    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: var(--s-3) 0 var(--s-4);
-    font-weight: 400;
-  }
-  .refs-hero__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
-    max-width: 60ch;
-    margin: 0 0 var(--s-4);
-  }
-  .refs-hero__toc {
+  .refs-toc {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--s-3);
+    justify-content: center;
+    gap: var(--s-2) var(--s-3);
     align-items: baseline;
-    margin-block-start: var(--s-4);
+    margin: var(--s-5) auto 0;
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
   }
-  .refs-hero__toc a {
+  .refs-toc a {
     display: inline-flex;
     align-items: center;
-    min-height: var(--tap-min);
-    padding-block: 0.5rem;
     color: var(--c-tomato);
     text-decoration: none;
     border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
   }
-  .refs-hero__toc a:hover { color: var(--c-pearl); border-bottom-color: var(--c-pearl); }
+  .refs-toc a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+  .refs-toc span { color: var(--fg-faint); }
 
-  .refs { padding-block: var(--s-7) var(--s-9); max-width: 64rem; }
-  .refs__head[hidden] { display: none; }
-
-  .refs__sec {
-    margin-block-end: var(--s-8);
-    padding-block-end: var(--s-7);
-    border-bottom: 1px solid var(--rule);
-    scroll-margin-top: var(--s-7);
-  }
-  .refs__sec:last-of-type { border-bottom: 0; }
-
-  .refs__sec-head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-    margin-block-end: var(--s-6);
-  }
-  .refs__sec-kicker { color: var(--c-tomato); margin: 0; }
-  .refs__sec-title {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-tight);
-    margin: 0;
-    max-width: 36ch;
-  }
-  .refs__sec-sub {
-    font-family: var(--f-body);
-    font-size: var(--fs-md);
-    color: var(--fg-soft);
-    margin: 0;
-    max-width: 56ch;
-  }
+  .rec-beat[id] { scroll-margin-top: var(--s-6); }
 
   /* Glossary categories */
   .refs__cat {
     padding-block: var(--s-5);
     border-top: 1px solid var(--rule);
   }
+  .refs__cat:first-of-type { margin-block-start: var(--s-4); }
   .refs__cat-head {
     display: flex;
     align-items: baseline;
@@ -267,33 +203,34 @@ const sourceGroups: SourceGroup[] = [
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     color: var(--c-tomato);
-    font-weight: 600;
   }
   .refs__cat-title {
     font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-tight);
+    font-weight: 400;
+    font-size: var(--fs-lg);
+    line-height: 1.12;
     margin: 0;
+    color: var(--fg);
   }
   .refs__terms {
     margin: 0;
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--s-4);
+    gap: 0;
   }
   .refs__term {
     display: grid;
     grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
     gap: var(--s-4);
     padding-block: var(--s-3);
-    border-top: 1px dashed var(--rule);
+    border-top: 1px solid var(--rule);
     scroll-margin-top: var(--s-6);
   }
   .refs__term:first-child { border-top: 0; padding-block-start: 0; }
   .refs__term:target {
-    background: color-mix(in srgb, var(--c-tomato) 8%, transparent);
+    background: color-mix(in srgb, var(--c-tomato) 10%, transparent);
     padding-inline: var(--s-3);
     margin-inline: calc(-1 * var(--s-3));
   }
@@ -301,15 +238,15 @@ const sourceGroups: SourceGroup[] = [
     font-family: var(--f-mono);
     font-size: var(--fs-sm);
     color: var(--c-tomato);
-    font-weight: 600;
     line-height: 1.45;
     margin: 0;
+    letter-spacing: 0.02em;
   }
   .refs__term-def {
     font-family: var(--f-body);
     font-size: var(--fs-base);
     line-height: 1.55;
-    color: var(--fg);
+    color: var(--fg-soft);
     margin: 0;
   }
 
@@ -320,20 +257,7 @@ const sourceGroups: SourceGroup[] = [
     }
   }
 
-  .refs__source-note {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    color: var(--fg-soft);
-    margin-block-start: var(--s-5);
-    padding-block-start: var(--s-4);
-    border-top: 1px solid var(--rule);
-    max-width: 72ch;
-    line-height: 1.55;
-    letter-spacing: 0.02em;
-    text-transform: none;
-  }
-
-  /* Footnote sections */
+  /* Footnote chapters */
   .refs__ch {
     padding-block: var(--s-5);
     border-top: 1px solid var(--rule);
@@ -350,15 +274,16 @@ const sourceGroups: SourceGroup[] = [
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     color: var(--c-tomato);
-    font-weight: 600;
   }
   .refs__ch-title {
     font-family: var(--f-display);
+    font-weight: 400;
     font-size: var(--fs-lg);
-    line-height: var(--lh-tight);
+    line-height: 1.12;
     margin: 0;
+    color: var(--fg);
   }
   .refs__list {
     list-style: none;
@@ -376,7 +301,7 @@ const sourceGroups: SourceGroup[] = [
     scroll-margin-top: var(--s-6);
   }
   .refs__item:target {
-    background: color-mix(in srgb, var(--c-tomato) 8%, transparent);
+    background: color-mix(in srgb, var(--c-tomato) 10%, transparent);
     padding-inline: var(--s-3);
     margin-inline: calc(-1 * var(--s-3));
   }
@@ -384,14 +309,13 @@ const sourceGroups: SourceGroup[] = [
     font-family: var(--f-mono);
     font-size: var(--fs-sm);
     color: var(--c-tomato);
-    font-weight: 600;
     line-height: 1.55;
   }
   .refs__text {
     font-family: var(--f-body);
     font-size: var(--fs-base);
     line-height: 1.55;
-    color: var(--fg);
+    color: var(--fg-soft);
   }
   .refs__text a {
     color: var(--c-tomato);
@@ -399,28 +323,5 @@ const sourceGroups: SourceGroup[] = [
     border-bottom: 1px solid currentColor;
     padding-bottom: 1px;
     word-break: break-word;
-  }
-  .refs__empty {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--fg-faint);
-    margin: 0;
-  }
-
-  .refs__foot {
-    margin-block-start: var(--s-7);
-    padding-block-start: var(--s-5);
-    border-top: 1px solid var(--rule);
-  }
-  .refs__foot .kicker {
-    max-width: 72ch;
-    text-transform: none;
-    letter-spacing: 0;
-    font-family: var(--f-body);
-    font-size: var(--fs-sm);
-    line-height: 1.55;
-    color: var(--fg-soft);
   }
 </style>

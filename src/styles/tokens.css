@@ -96,6 +96,17 @@
   --c07: #5A7A6E;
   --c08: #A83B2E;
 
+  /* ---------- Five Necessities categorical palette ----------
+     The site renders Necessity marks mono (currentColor); these tones are
+     used only where the five must be told apart at a glance (the home
+     funnel colour key + dot field). Every value is an existing brand token,
+     never an invented hue. */
+  --nec-eat:    var(--role-thesis);   /* #B8863A ochre */
+  --nec-heal:   var(--c-tomato);      /* #C44539 */
+  --nec-move:   var(--role-opinion-on-dark); /* #7FB8A8 light teal */
+  --nec-power:  var(--c06);           /* #D48C6A coral */
+  --nec-supply: var(--c07);           /* #5A7A6E sage */
+
   /* ---------- Cohort + hero ramp (Pudding-style, dark-first) ----------
      Every new chart uses cohort tones for the population and `--hero` for
      the single anchored mark (peak year, named exit, T1, funnel terminus).
@@ -186,12 +197,12 @@
   /* ---------- Breakpoints (max-width) ----------
      Canonical 3-step responsive ladder. Replaces the prior ad-hoc set
      (480/520/640/720/800/820/980). CSS custom properties don't work
-     inside @media () queries — so the values double as documentation
+     inside @media () queries, so the values double as documentation
      for the literal pixel values used in component @media blocks.
 
-       --bp-sm: ≤480px   — small phones / iPhone SE / Galaxy S24
-       --bp-md: ≤720px   — large phones, tablets in portrait
-       --bp-lg: ≤1024px  — tablets in landscape / small laptops
+       --bp-sm: max 480px   . small phones / iPhone SE / Galaxy S24
+       --bp-md: max 720px   . large phones, tablets in portrait
+       --bp-lg: max 1024px  . tablets in landscape / small laptops
 
      Component CSS uses the matching literal: @media (max-width: 480px). */
   --bp-sm: 480px;

@@ -17,7 +17,8 @@ interface Metric {
 interface Props {
   fignum: string;        // e.g. "EX-2"
   label: string;         // e.g. "Cumulative Premium Wedge · T1 vs Unregulated"
-  title: string;         // serif headline. May include <em>...</em> for tomato accent.
+  title?: string;        // serif headline. May include <em>...</em> for tomato accent.
+                         // Optional: pure-illustration exhibits sit under a prose argument.
   sub?: string;
   metrics?: Metric[];
   source?: string;
@@ -40,7 +41,7 @@ const bleedClass = bleed === 'wide' ? 'imfig--bleed-wide' : bleed === 'full' ? '
       <span class="imfig__label">{label}</span>
     </div>
 
-    <h3 class="imfig__title" set:html={title}></h3>
+    {title && <h3 class="imfig__title" set:html={title}></h3>}
     {sub && <p class="imfig__sub">{sub}</p>}
 
     {metrics.length > 0 && (
@@ -56,11 +57,7 @@ const bleedClass = bleed === 'wide' ? 'imfig--bleed-wide' : bleed === 'full' ? '
     )}
 
     <div class="imfig__plot" data-imfig-plot>
-      <button type="button" class="imfig__zoom" data-chart-zoom aria-label="Expand chart to full screen">
-        <span class="imfig__zoom-icon" aria-hidden="true">⤢</span>
-        <span class="imfig__zoom-label">Expand</span>
-      </button>
-      <div class="imfig__plot-inner" data-chart-zoom-content>
+      <div class="imfig__plot-inner">
         <slot />
       </div>
     </div>
@@ -100,6 +97,20 @@ const bleedClass = bleed === 'wide' ? 'imfig--bleed-wide' : bleed === 'full' ? '
     --dark-teal: var(--c-dark-teal);
     --serif: var(--f-display);
     --mono: var(--f-mono);
+    /* Surface remap: site-native charts authored against the dark page
+       (--cohort-*, --fg-*, --hair-color) inherit pearl-surface equivalents
+       when placed inside the card, so any chart renders legibly on paper
+       without per-component edits. --hero stays Tomato (reads on both). */
+    --fg: var(--c-mahogany);
+    --fg-soft: var(--imfig-muted);
+    --fg-faint: var(--imfig-faint);
+    --hair-color: var(--imfig-rule);
+    --hair-strong: var(--rule-strong);
+    --cohort-1: var(--cohort-1-on-light);
+    --cohort-2: var(--cohort-2-on-light);
+    --cohort-3: var(--cohort-3-on-light);
+    --cohort-4: var(--cohort-4-on-light);
+    --cohort-ink: var(--cohort-ink-on-light);
     transition: box-shadow var(--mo-tick) var(--ease-golden);
   }
   .imfig:hover {
@@ -241,32 +252,8 @@ const bleedClass = bleed === 'wide' ? 'imfig--bleed-wide' : bleed === 'full' ? '
     }
   }
 
-  /* Expand button visible on every viewport. Mobile additionally lets the
-   * plot scroll horizontally so charts render at native readable size. */
-  .imfig__zoom {
-    display: inline-flex;
-    position: absolute;
-    top: var(--s-2);
-    right: var(--s-2);
-    z-index: 3;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.75rem 0.875rem;
-    min-height: var(--tap-min);
-    background: var(--c-mahogany);
-    color: var(--c-pearl);
-    border: 1px solid var(--c-mahogany);
-    font-family: var(--f-mono);
-    font-size: calc(var(--fs-xs) * 0.92);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity var(--mo-tick) var(--ease-golden), background var(--mo-tick) var(--ease-golden), border-color var(--mo-tick) var(--ease-golden);
-  }
-  .imfig:hover .imfig__zoom { opacity: 1; }
-  .imfig__zoom:hover, .imfig__zoom:focus { background: var(--c-tomato); border-color: var(--c-tomato); outline: none; opacity: 1; }
-  .imfig__zoom-icon { font-size: 1.05em; line-height: 1; }
+  /* Mobile lets the plot scroll horizontally so charts render at native
+   * readable size. */
   @media (max-width: 720px) {
     .imfig__plot-inner {
       overflow-x: auto;
@@ -307,92 +294,6 @@ const bleedClass = bleed === 'wide' ? 'imfig--bleed-wide' : bleed === 'full' ? '
   }
 </style>
 
-<!-- Global chart-zoom modal. Injected once by the script below on first use. -->
-<style is:global>
-  .chart-zoom-modal {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    max-width: 100vw;
-    max-height: 100vh;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: var(--c-mahogany, #250001);
-    color: var(--c-pearl, #F2ECC9);
-    z-index: 200;
-  }
-  .chart-zoom-modal::backdrop { background: rgba(4, 47, 42, 0.88); }
-  .chart-zoom-modal[open] {
-    display: flex;
-    flex-direction: column;
-  }
-  .chart-zoom-modal__head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl, #F2ECC9) 18%, transparent);
-    flex-shrink: 0;
-  }
-  .chart-zoom-modal__title {
-    margin: 0;
-    font-family: var(--f-mono, monospace);
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: color-mix(in srgb, var(--c-pearl, #F2ECC9) 80%, transparent);
-  }
-  .chart-zoom-modal__close {
-    background: transparent;
-    border: 1px solid color-mix(in srgb, var(--c-pearl, #F2ECC9) 30%, transparent);
-    color: var(--c-pearl, #F2ECC9);
-    font-size: 1.4rem;
-    line-height: 1;
-    width: 44px;
-    height: 44px;
-    cursor: pointer;
-  }
-  .chart-zoom-modal__close:hover { color: var(--c-tomato, #C44539); border-color: var(--c-tomato, #C44539); }
-  .chart-zoom-modal__body {
-    flex: 1;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 1rem;
-    background: var(--c-pearl, #F2ECC9);
-    color: var(--c-mahogany, #250001);
-  }
-  .chart-zoom-modal__body > svg,
-  .chart-zoom-modal__body > * > svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    max-height: calc(100vh - 6rem);
-    margin-inline: auto;
-  }
-  @media (max-width: 720px) {
-    .chart-zoom-modal__body > svg,
-    .chart-zoom-modal__body > * > svg {
-      min-width: 32rem;
-      max-width: none;
-    }
-  }
-  .chart-zoom-modal__hint {
-    margin: 0;
-    padding: 0.5rem 1rem 0.75rem;
-    font-family: var(--f-mono, monospace);
-    font-size: 0.72rem;
-    color: color-mix(in srgb, var(--c-pearl, #F2ECC9) 60%, transparent);
-    text-align: center;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
-</style>
-
 <script>
-  import '../scripts/chart-zoom';
   import '../scripts/imfig-reveal';
 </script>

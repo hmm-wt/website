@@ -1,63 +1,36 @@
 ---
-import Base from '../../../layouts/Base.astro';
+import RecordLayout from '../../../layouts/RecordLayout.astro';
 import Scoreboard from '../../../components/Scoreboard.astro';
 import BettingWindow from '../../../components/BettingWindow.astro';
 ---
-<Base
+<RecordLayout
   title="Scoreboard"
   description="Five Structural Certainties. Five testable predictions. Dated and traceable to a public source."
+  section="data"
+  tone="light"  folio="ex-18 / 38"
+  locator='03 · The data <span style="color:var(--fg-faint)">&rarr;</span> <span class="here">The scoreboard</span>'
 >
-  <header class="sb-hero">
-    <div class="container">
-      <p class="kicker sb-hero__kicker">The scoreboard</p>
-      <h1 class="sb-hero__title">Five Structural Certainties.</h1>
-      <p class="sb-hero__lede">
-        The Necessities pairs five structural certainties about regulatory direction with five dated, testable claims about magnitude. Each claim has a date, a dataset, and a pass/fail test.
-      </p>
-      <div class="sb-hero__window">
-        <BettingWindow />
-      </div>
-    </div>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow" style="color:var(--c-tomato)">03 · The scoreboard</p>
+    <h1 class="rec-masthead__title">Five Structural Certainties.</h1>
+    <p class="rec-masthead__claim">
+      The Necessities pairs five structural certainties about regulatory direction with five
+      dated, testable claims about magnitude. Each claim has a date, a dataset, and a pass/fail test.
+    </p>
   </header>
 
-  <section class="sb-page container">
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The window</span><span class="rec-beat__count">01 / 02</span></div>
+    <h2 class="rec-beat__arg">We will be <em>wrong in public</em>, on a clock.</h2>
+    <div class="sb-window"><BettingWindow /></div>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The predictions</span><span class="rec-beat__count">02 / 02</span></div>
     <Scoreboard />
   </section>
-</Base>
+</RecordLayout>
 
 <style>
-  .sb-hero {
-    background: var(--c-evergreen);
-    color: var(--c-pearl);
-    padding-block: var(--s-8) var(--s-7);
-  }
-  .sb-hero__kicker { color: var(--c-tomato); margin: 0; }
-  .sb-hero__title {
-    font-family: var(--f-display);
-    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: var(--s-3) 0 var(--s-4);
-    font-weight: 400;
-    max-width: 22ch;
-  }
-  .sb-hero__lede {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
-    max-width: 60ch;
-    margin: 0 0 var(--s-3);
-  }
-  .sb-hero__strap {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--c-tomato);
-    margin: 0;
-  }
-  .sb-hero__window { margin-block-start: var(--s-5); max-width: 36rem; }
-
-  .sb-page { padding-block: var(--s-7) var(--s-9); }
+  .sb-window { max-width: 36rem; margin-top: var(--s-3); }
 </style>

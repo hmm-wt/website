@@ -11,6 +11,11 @@ export default defineConfig({
   // and public/sitemap-index.xml.
   integrations: [mdx()],
   redirects: {
+    // The four markets folded into The exits 2026-06-15; results merged in.
+    '/markets': '/exits/',
+    '/markets/': '/exits/',
+    '/research/results': '/exits/',
+    '/research/results/': '/exits/',
     // Pages collapsed into anchored panels on the home page.
     '/lps': '/#lps',
     '/lps/': '/#lps',

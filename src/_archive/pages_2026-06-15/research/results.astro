@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ChartFrame from '../../components/ChartFrame.astro';
+import IMFigure from '../../components/IMFigure.astro';
 import PremiumBar from '../../components/charts/PremiumBar.astro';
 import SmallMultiples from '../../components/charts/SmallMultiples.astro';
 import ExitsUnitStrip from '../../components/ExitsUnitStrip.astro';
@@ -63,25 +63,28 @@ const stats = [
   </section>
 
   <section class="container rsl-exits">
-    <ChartFrame
-      kicker="Named acquirer deals"
-      title="Strategic acquirers are already buying."
-      caption={`${totalExits} named developed-APAC regulated-company acquisitions, source-verified. Highlighted marks show T1 acquisitions. Disclosed values range ${fmtUsd(minExit)} to ${fmtUsd(maxExit)}.`}
-      source="Source: hmm Ventures exit dataset."
+    <IMFigure
+      fignum="EX-1"
+      label="Named acquirer deals"
+      title="Strategic acquirers are <em>already buying</em>."
+      sub={`${totalExits} named developed-APAC regulated-company acquisitions, source-verified. Highlighted marks show T1 acquisitions. Disclosed values range ${fmtUsd(minExit)} to ${fmtUsd(maxExit)}.`}
+      source="hmm Ventures exit dataset."
+      basis="Named, source-verified acquisitions across the four markets."
     >
       <ExitsUnitStrip />
-    </ChartFrame>
+    </IMFigure>
     <p class="rsl-exits__note">
       Coverage today: AUS {countByMarket['AU'] ?? 0}. NZL {countByMarket['NZ'] ?? 0}. JPN {countByMarket['JP'] ?? 0}. SIN {countByMarket['SG'] ?? 0}. Current coverage is uneven. More data is expected as 2026-2028 compliant cohorts mature.
     </p>
   </section>
 
   <section class="container rsl-premiums">
-    <ChartFrame
-      kicker="Round-size uplift"
-      title="T1 companies show larger observed rounds at every stage."
-      caption="Round-size uplift relative to the unregulated cohort. Seed near parity. The gap opens by Series C."
-      source="Source: hmm Ventures four-market dataset."
+    <IMFigure
+      fignum="EX-2"
+      label="Round-size uplift"
+      title="T1 companies show <em>larger observed rounds</em> at every stage."
+      sub="Round-size uplift relative to the unregulated cohort. Seed near parity. The gap opens by Series C."
+      source="hmm Ventures four-market dataset."
     >
       <SmallMultiples cols={4}>
         <PremiumBar label="Seed" value={p.round_size_seed} />
@@ -89,20 +92,21 @@ const stats = [
         <PremiumBar label="Series C" value={p.round_size_series_c} />
         <PremiumBar label="Series D+" value={p.round_size_series_d_plus} />
       </SmallMultiples>
-    </ChartFrame>
+    </IMFigure>
   </section>
 
   <section class="container rsl-exit-rate">
-    <ChartFrame
-      kicker="Exit incidence"
-      title="T1 companies show 2.22x the observed exit incidence of the unregulated cohort."
-      caption={`Exit incidence: regulated cohort ${p.regulated_exit_rate_pct}% vs unregulated ${p.unregulated_exit_rate_pct}%.`}
-      source="Source: hmm Ventures four-market dataset."
+    <IMFigure
+      fignum="EX-3"
+      label="Exit incidence"
+      title="T1 companies show <em>2.22x</em> the observed exit incidence of the unregulated cohort."
+      sub={`Exit incidence: regulated cohort ${p.regulated_exit_rate_pct}% vs unregulated ${p.unregulated_exit_rate_pct}%.`}
+      source="hmm Ventures four-market dataset."
     >
       <SmallMultiples cols={1}>
         <PremiumBar label="Exit rate, T1 vs unregulated" value={p.exit_rate_multiple} max={3} />
       </SmallMultiples>
-    </ChartFrame>
+    </IMFigure>
   </section>
 
   <CTARail />
@@ -125,11 +129,11 @@ const stats = [
     max-width: 22ch;
   }
   .rsl-hero__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
-    max-width: 60ch;
+    font-family: var(--f-mono);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--c-pearl) 78%, transparent);
+    max-width: 64ch;
     margin: 0;
   }
 

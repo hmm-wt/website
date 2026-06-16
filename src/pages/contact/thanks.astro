@@ -1,60 +1,50 @@
 ---
-import Base from '../../layouts/Base.astro';
+import RecordLayout from '../../layouts/RecordLayout.astro';
 ---
-<Base
+<RecordLayout
   title="Thanks"
   description="Message received."
+  section="gp"
+  tone="light"  folio="ex-38 / 38"
+  locator='<span class="here">Thanks</span>'
 >
-  <section class="thanks container">
-    <p class="kicker thanks__kicker">Received</p>
-    <h1 class="thanks__title">Thanks. We'll be in touch.</h1>
-    <p class="thanks__sub">
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow">Received</p>
+    <h1 class="rec-masthead__title">Thanks. We'll be in touch.</h1>
+    <p class="rec-masthead__claim">
       Replies usually land within two business days. If it's urgent, mail <a href="mailto:wt@hmm.ventures">wt@hmm.ventures</a> directly.
     </p>
+  </header>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">Next</span><span class="rec-beat__count">01 / 01</span></div>
     <p class="thanks__next">
       <a href="/">Back to the home page</a>
       <span aria-hidden="true">·</span>
       <a href="/research/">Read the doctrine</a>
     </p>
   </section>
-</Base>
+</RecordLayout>
 
 <style>
-  .thanks {
-    padding-block: var(--s-8) var(--s-9);
-    max-width: 48rem;
-  }
-  .thanks__kicker { color: var(--c-tomato); margin: 0 0 var(--s-3); }
-  .thanks__title {
-    font-family: var(--f-display);
-    font-size: clamp(2rem, 1.4rem + 3.5vw, 4rem);
-    line-height: 1;
-    letter-spacing: -0.01em;
-    margin: 0 0 var(--s-5);
-    font-weight: 400;
-  }
-  .thanks__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--fg) 84%, transparent);
-    max-width: 60ch;
-    margin: 0 0 var(--s-6);
-  }
-  .thanks__sub a {
+  .rec-masthead__claim a {
     color: var(--c-tomato);
     text-decoration: none;
     border-bottom: 1px solid currentColor;
     padding-bottom: 1px;
   }
+  .rec-masthead__claim a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
   .thanks__next {
     display: inline-flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--s-3);
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.12em;
+    color: var(--fg-faint);
     margin: 0;
   }
   .thanks__next a {

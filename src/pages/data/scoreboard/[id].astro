@@ -1,7 +1,6 @@
 ---
-import Base from '../../../layouts/Base.astro';
+import RecordLayout from '../../../layouts/RecordLayout.astro';
 import StatusIndicator from '../../../components/StatusIndicator.astro';
-import Breadcrumb from '../../../components/Breadcrumb.astro';
 import scoreboard from '../../../data/scoreboard.json';
 
 export async function getStaticPaths() {
@@ -15,125 +14,70 @@ const { prediction } = Astro.props;
 const fmtDate = (iso?: string) =>
   iso ? new Date(iso).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: '2-digit' }) : '';
 ---
-<Base
+<RecordLayout
   title={`${prediction.certainty ?? prediction.id} · Scoreboard · hmm Ventures`}
   description={prediction.claim.slice(0, 200)}
+  section="data"
+  tone="light"  folio="ex-18 / 38"
+  locator='03 · The data <span style="color:var(--fg-faint)">&rarr;</span> <span class="here">Prediction</span>'
 >
-  <article class="claim container">
-    <header class="claim__head">
-      <Breadcrumb
-        crumbs={[
-          { label: 'hmm', href: '/' },
-          { label: 'Data', href: '/data/scoreboard/' },
-          { label: 'Scoreboard', href: '/data/scoreboard/' },
-          { label: `Certainty ${prediction.certainty_num ?? prediction.id}` },
-        ]}
-      />
-      {prediction.certainty_num && (
-        <p class="claim__cnum">Certainty {prediction.certainty_num}</p>
-      )}
-      <h1 class="claim__title">{prediction.certainty ?? prediction.id}</h1>
-      <p class="claim__claim">{prediction.claim}</p>
-      <div class="claim__status-row">
-        <StatusIndicator status={prediction.status as 'open' | 'pending' | 'closed' | 'confirmed' | 'refuted'} />
-        <time class="claim__test" datetime={prediction.testable_by}>
-          <span class="claim__test-label">Testable by</span>
-          <span class="claim__test-value">{fmtDate(prediction.testable_by)}</span>
-        </time>
-      </div>
-    </header>
-
-    {prediction.evidence && prediction.evidence.length > 0 && (
-      <section class="claim__block">
-        <p class="kicker claim__kicker">Evidence</p>
-        <ul class="claim__evidence" role="list">
-          {prediction.evidence.map((e: { label: string; href: string }) => (
-            <li><a href={e.href}>{e.label}</a></li>
-          ))}
-        </ul>
-      </section>
+  <header class="rec-masthead">
+    {prediction.certainty_num && (
+      <p class="rec-masthead__eyebrow" style="color:var(--c-tomato)">Certainty {prediction.certainty_num}</p>
     )}
+    <h1 class="rec-masthead__title">{prediction.certainty ?? prediction.id}</h1>
+    <p class="rec-masthead__claim">{prediction.claim}</p>
+  </header>
 
-    <footer class="claim__foot">
-      <p class="claim__foot-line">Falsifiable. Dated. Public. Scored on the dataset.</p>
-    </footer>
-  </article>
-</Base>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The test</span><span class="rec-beat__count">01 / 03</span></div>
+    <div class="sb-status-row">
+      <StatusIndicator status={prediction.status as 'open' | 'pending' | 'closed' | 'confirmed' | 'refuted'} />
+      <time class="sb-test" datetime={prediction.testable_by}>
+        <span class="sb-test__label">Testable by</span>
+        <span class="sb-test__value">{fmtDate(prediction.testable_by)}</span>
+      </time>
+    </div>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The dataset</span><span class="rec-beat__count">02 / 03</span></div>
+    <p class="rec-beat__note">{prediction.source}</p>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The current reading</span><span class="rec-beat__count">03 / 03</span></div>
+    {prediction.evidence && prediction.evidence.length > 0 && (
+      <ul class="sb-evidence" role="list">
+        {prediction.evidence.map((e: { label: string; href: string }) => (
+          <li><a href={e.href}>{e.label} &rarr;</a></li>
+        ))}
+      </ul>
+    )}
+    <p class="rec-beat__note sb-foot">Falsifiable. Dated. Public. Scored on the dataset.</p>
+  </section>
+</RecordLayout>
 
 <style>
-  .claim { padding-block: var(--s-8) var(--s-9); max-width: 56rem; }
-  .claim__head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    margin-block-end: var(--s-7);
-    padding-block-end: var(--s-5);
-    border-bottom: 1px solid var(--rule);
-  }
-  .claim__crumbs {
-    margin: 0;
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-  }
-  .claim__crumbs a {
-    color: var(--c-tomato);
-    text-decoration: none;
-  }
-  .claim__cnum {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--c-tomato);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin: 0;
-  }
-  .claim__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-snug);
-    letter-spacing: -0.01em;
-    margin: 0;
-    max-width: 36ch;
-  }
-  .claim__claim {
-    font-family: var(--f-body);
-    font-size: var(--fs-base);
-    line-height: 1.6;
-    margin: 0;
-    max-width: 64ch;
-    color: var(--fg);
-  }
-  .claim__status-row {
+  .sb-status-row {
     display: flex;
     gap: var(--s-4);
     align-items: baseline;
     flex-wrap: wrap;
-    margin-block-start: var(--s-2);
   }
-  .claim__test {
+  .sb-test {
     display: flex;
     align-items: baseline;
     gap: var(--s-2);
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
   }
-  .claim__test-label { text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-soft); }
-  .claim__test-value { color: var(--fg); font-weight: 600; }
+  .sb-test__label { text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-soft); }
+  .sb-test__value { color: var(--fg); font-weight: 600; }
 
-  .claim__block {
-    padding-block: var(--s-5);
-    border-bottom: 1px solid var(--rule);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-2);
-  }
-  .claim__kicker { color: var(--c-tomato); margin: 0; }
-  .claim__evidence {
+  .sb-evidence {
     list-style: none;
-    margin: 0;
+    margin: 0 0 var(--s-4);
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -141,24 +85,17 @@ const fmtDate = (iso?: string) =>
     font-family: var(--f-mono);
     font-size: var(--fs-sm);
   }
-  .claim__evidence a {
+  .sb-evidence a {
     color: var(--c-tomato);
     text-decoration: none;
     border-bottom: 1px solid currentColor;
     padding-bottom: 1px;
   }
+  .sb-evidence a:hover { color: var(--fg); border-bottom-color: var(--fg); }
 
-  .claim__foot {
-    margin-block-start: var(--s-7);
-    padding-block-start: var(--s-5);
-    border-top: var(--hair) solid var(--c-tomato);
-  }
-  .claim__foot-line {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
+  .sb-foot {
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--c-tomato);
-    margin: 0;
   }
 </style>

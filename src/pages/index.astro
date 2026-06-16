@@ -1,11 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import ShapeRow from '../components/ShapeRow.astro';
-import UnitDotFunnel from '../components/charts/UnitDotFunnel.astro';
-import NecessityPanelTeaser from '../components/NecessityPanelTeaser.astro';
+import NecessityFunnel from '../components/charts/NecessityFunnel.astro';
 import NecessityMark from '../components/NecessityMark.astro';
-import CorridorGrid from '../components/CorridorGrid.astro';
-import ChartFrame from '../components/ChartFrame.astro';
 import CTARail from '../components/CTARail.astro';
 
 // Necessity order is canonical eat / heal / move / power / supply per IM line 42
@@ -65,19 +61,16 @@ const necessities = [
 >
   <section class="hero">
     <div class="container hero__inner">
-      <div class="hero__meta">
-        <span class="hero__reg pulse-tomato" aria-hidden="true"></span>
-        <span class="hero__kicker">The Necessity Doctrine</span>
-      </div>
-
       <h1 class="hero__sentence">
         <span class="hero__accent shutter-wipe" style="--shutter-delay: 80ms; --shutter-color: var(--c-tomato);">Necessity</span>
         <span class="shutter-wipe" style="--shutter-delay: 520ms;">is&nbsp;the&nbsp;Thesis.</span>
       </h1>
 
       <p class="hero__sub">
-        Eat, heal, move, power, supply: the five Necessities society cannot do without. COVID revealed which industries had to keep running when everything else stopped. Now AI is rebuilding them, across four developed APAC markets.
+        <span class="sub-nec sub-nec--eat">Eat</span>, <span class="sub-nec sub-nec--heal">heal</span>, <span class="sub-nec sub-nec--move">move</span>, <span class="sub-nec sub-nec--power">power</span>, <span class="sub-nec sub-nec--supply">supply</span>: the five Necessities society cannot do without. <span class="sub-em">COVID</span> revealed which industries had to keep running when everything else stopped. Now AI is rebuilding them, across four developed APAC markets.
       </p>
+
+      <NecessityFunnel />
 
       <ul class="hero__marks" role="list" aria-label="The five Necessities">
         {necessities.map((n) => (
@@ -91,79 +84,12 @@ const necessities = [
       </ul>
 
       <p class="hero__actions">
-        <a class="hero__primary" href="#necessities">See the five Necessities &darr;</a>
+        <a class="hero__primary" href="/necessities/">See the five Necessities &rarr;</a>
         <a class="hero__secondary" href="/research/">See the research &rarr;</a>
       </p>
     </div>
 
   </section>
-
-  <ShapeRow />
-
-  <section class="filter container" data-scrolly aria-label="The filter, demonstrated">
-    <div class="filter__viz" data-scrolly-viz>
-      <div class="filter__vizinner">
-        <ChartFrame
-          kicker="The filter"
-          title="Regulation does the deterministic cut."
-          caption="Each dot is one company in the four-market classified universe. Highlighted dots survive the regulation filter; the brightest survive to seed-stage Necessities-aligned."
-          source="Source: hmm Ventures four-market dataset."
-          centered={false}
-        >
-          <UnitDotFunnel />
-        </ChartFrame>
-      </div>
-    </div>
-    <div class="filter__rail">
-      <div class="scrolly__stage" data-stage="s1">
-        <p class="stage__kicker">The universe</p>
-        <span class="stage__num">19,416</span>
-        <h2>Companies in the four-market dataset.</h2>
-        <p>Australia, Japan, New Zealand, Singapore. Every classified technology company in scope.</p>
-      </div>
-      <div class="scrolly__stage" data-stage="s2">
-        <p class="stage__kicker">The cut</p>
-        <span class="stage__num">6,505</span>
-        <h2>Pass the regulation filter.</h2>
-        <p>Companies sitting behind a Tier 1 licence or a Tier 2 compulsion barrier. 33.5% of the universe. No human triage. The filter runs on 174 regulations indexed across the four markets, 117 of them Tier 1 in the five Necessities.</p>
-      </div>
-      <div class="scrolly__stage" data-stage="s3">
-        <p class="stage__kicker">The cohort</p>
-        <span class="stage__num">2,625</span>
-        <h2>In Necessities, at seed stage.</h2>
-        <p>The addressable cohort. 13.5% of the universe. 25 enter the portfolio.</p>
-      </div>
-      <p class="filter__exits-note kicker">
-        <a href="/references/exits/">Nine named exits across the four markets &rarr;</a>
-      </p>
-    </div>
-  </section>
-
-  <section id="necessities" class="necessities-section container">
-    <header class="necessities-section__head">
-      <p class="kicker">The five Necessities</p>
-      <h2 class="necessities-section__title">Eat. Heal. Move. Power. Supply.</h2>
-      <p class="necessities-section__sub">
-        The systems society cannot allow to fail are where AI becomes infrastructure.
-      </p>
-    </header>
-    <ol class="necessities-section__list" role="list">
-      {necessities.map((n, i) => (
-        <NecessityPanelTeaser
-          slug={n.slug}
-          name={n.name}
-          shortName={n.shortName}
-          necessityKey={n.necessityKey}
-          markKind={n.markKind}
-          inThesis={n.inThesis}
-          claim={n.claim}
-          index={i}
-        />
-      ))}
-    </ol>
-  </section>
-
-  <CorridorGrid />
 
   <CTARail />
 </Base>
@@ -171,96 +97,57 @@ const necessities = [
 <style>
   /* HERO. */
   .hero {
-    background: var(--c-evergreen);
+    background: transparent;
     color: var(--c-pearl);
-    padding-block: var(--s-9) var(--s-7);
+    padding-block: var(--s-6) var(--s-5);
     position: relative;
   }
   .hero__inner {
     display: flex;
     flex-direction: column;
-    gap: var(--s-5);
-  }
-  .hero__cue {
-    position: absolute;
-    bottom: var(--s-4);
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--f-mono);
-    font-size: calc(var(--fs-xs) * 0.9);
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: color-mix(in srgb, var(--c-pearl) 50%, transparent);
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 6px;
-    pointer-events: none;
-  }
-  .hero__cue::after {
-    content: "";
-    width: 1px;
-    height: 24px;
-    background: linear-gradient(to bottom, color-mix(in srgb, var(--c-tomato) 60%, transparent), transparent);
-    animation: hero-cue 2.4s ease-in-out infinite;
-  }
-  @keyframes hero-cue {
-    0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
-    50% { opacity: 1; transform: scaleY(1.1); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero__cue::after { animation: none; }
+    text-align: center;
+    gap: var(--s-3);
   }
   @media (max-width: 720px) {
     .hero { padding-block: var(--s-6) var(--s-5); }
     .hero__inner { gap: var(--s-4); }
-    .hero__cue { display: none; }
   }
-
-  .hero__meta {
-    display: flex;
-    align-items: baseline;
-    gap: var(--s-3);
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-  }
-  .hero__reg {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: var(--c-tomato);
-    border-radius: 50%;
-    align-self: center;
-  }
-  .hero__kicker { color: color-mix(in srgb, var(--c-pearl) 70%, transparent); }
 
   .hero__sentence {
     font-family: var(--f-display);
-    font-size: clamp(3rem, 1.6rem + 6.2vw, 7rem);
-    line-height: 1.0;
+    font-size: clamp(2.25rem, 1.4rem + 3vw, 4rem);
+    line-height: 1.02;
     letter-spacing: -0.025em;
-    margin: var(--s-4) 0 0;
-    max-width: 18ch;
+    margin: 0;
+    max-width: 34ch;
     font-weight: 400;
   }
   .hero__accent { color: var(--c-tomato); }
 
   .hero__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
-    max-width: 56ch;
-    margin: var(--s-3) 0 0;
+    font-family: var(--f-mono);
+    font-size: clamp(0.875rem, 0.83rem + 0.3vw, 1rem);
+    line-height: 1.55;
+    letter-spacing: 0.005em;
+    color: color-mix(in srgb, var(--c-pearl) 72%, transparent);
+    max-width: 60ch;
+    margin: 0;
   }
+  .sub-nec { font-weight: 500; }
+  .sub-nec--eat    { color: var(--nec-eat); }
+  .sub-nec--heal   { color: var(--nec-heal); }
+  .sub-nec--move   { color: var(--nec-move); }
+  .sub-nec--power  { color: var(--nec-power); }
+  .sub-nec--supply { color: var(--nec-supply); }
+  .sub-em { color: var(--c-pearl); font-weight: 500; }
 
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--s-4);
-    margin: var(--s-4) 0 0;
+    margin: 0;
     font-family: var(--f-mono);
     font-size: var(--fs-sm);
     text-transform: uppercase;
@@ -288,9 +175,10 @@ const necessities = [
 
   .hero__marks {
     list-style: none;
-    margin: var(--s-3) 0 0;
+    margin: 0;
     padding: 0;
     display: flex;
+    justify-content: center;
     gap: var(--s-4);
     flex-wrap: wrap;
   }
@@ -321,135 +209,4 @@ const necessities = [
     .hero__marklink { padding: 0.4rem 0.55rem; }
   }
 
-  /* FILTER. The scrolly. */
-  .filter {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--s-7);
-    padding-block: var(--s-8);
-    align-items: start;
-  }
-  .filter__viz {
-    position: sticky;
-    top: 5vh;
-    height: 90vh;
-    display: grid;
-    place-items: center;
-  }
-  .filter__vizinner {
-    width: 100%;
-    max-width: 460px;
-  }
-  .filter__rail :global(.scrolly__stage) {
-    min-height: 80vh;
-    padding-block: var(--s-7);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--s-3);
-    max-width: 36ch;
-    transition: color var(--mo-hold) var(--ease-golden), opacity var(--mo-hold) var(--ease-golden);
-    opacity: 0.45;
-    color: var(--fg-soft);
-  }
-  .filter__rail :global(.scrolly__stage--active) {
-    opacity: 1;
-    color: var(--fg);
-  }
-  .filter__rail :global(.stage__kicker) {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--fg-faint);
-    margin: 0;
-  }
-  .filter__rail :global(.stage__num) {
-    font-family: var(--f-display);
-    font-size: var(--fs-3xl);
-    line-height: 1;
-    color: var(--hero);
-    letter-spacing: -0.02em;
-  }
-  .filter__rail :global(.scrolly__stage h2) {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-tight);
-    margin: 0;
-    color: var(--fg);
-  }
-  .filter__rail :global(.scrolly__stage p) {
-    font-family: var(--f-body);
-    font-size: var(--fs-md);
-    line-height: var(--lh-body);
-    margin: 0;
-  }
-  .filter__exits-note {
-    padding-block: var(--s-5) var(--s-7);
-    margin: 0;
-    color: var(--fg-faint);
-  }
-  .filter__exits-note a {
-    color: var(--c-tomato);
-    text-decoration: none;
-    border-bottom: 1px solid currentColor;
-    padding-bottom: 1px;
-  }
-  .filter__exits-note a:hover { color: var(--fg); border-bottom-color: var(--fg); }
-
-  @media (max-width: 880px) {
-    .filter {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-    .filter__viz {
-      height: 56vh;
-      top: 0;
-      background: var(--bg);
-      z-index: 2;
-      border-bottom: var(--hair) solid var(--hair-color);
-    }
-    .filter__rail :global(.scrolly__stage) {
-      min-height: 60vh;
-      padding-block: var(--s-5);
-    }
-  }
-
-  /* NECESSITIES SECTION. */
-  .necessities-section {
-    padding-block: var(--s-8) var(--s-7);
-  }
-  .necessities-section__head {
-    max-width: 56ch;
-    margin-block-end: var(--s-6);
-  }
-  .necessities-section__head .kicker {
-    color: var(--c-tomato);
-    margin: 0;
-  }
-  .necessities-section__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-3xl);
-    line-height: var(--lh-tight);
-    margin: var(--s-3) 0 var(--s-3);
-    letter-spacing: -0.02em;
-  }
-  .necessities-section__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--fg-soft);
-    margin: 0;
-    max-width: 50ch;
-  }
-  .necessities-section__list {
-    list-style: none;
-    margin: var(--s-6) 0 0;
-    padding: 0;
-  }
-
 </style>
-
-<script>
-  import '../scripts/scrolly.ts';
-</script>

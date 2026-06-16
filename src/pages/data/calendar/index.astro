@@ -1,99 +1,64 @@
 ---
-import Base from '../../../layouts/Base.astro';
-import CrystallisationStrip from '../../../components/charts/CrystallisationStrip.astro';
+import RecordLayout from '../../../layouts/RecordLayout.astro';
+import Plate from '../../../components/record/Plate.astro';
+import Bars from '../../../components/record/Bars.astro';
 import CalendarTimeline from '../../../components/CalendarTimeline.astro';
 import TagFilter from '../../../components/TagFilter.astro';
-import ChartFrame from '../../../components/ChartFrame.astro';
-import CTARail from '../../../components/CTARail.astro';
 import calendar from '../../../data/crystallisation-window.json';
 
 const necessityList = Array.from(new Set(calendar.regulations.map((r) => r.necessity))).sort();
 
+const calYears = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+const calCounts = calYears.map((y) => (calendar.year_counts as Record<string, number>)[String(y)] ?? 0);
+const calPeak = calCounts.indexOf(Math.max(...calCounts));
+const calItems = calYears.map((y, i) => ({ label: String(y), value: calCounts[i], hero: i === calPeak }));
+
 const filterGroups = [
   { key: 'market', label: 'Market', options: ['AU', 'JP', 'NZ', 'SG'] },
   { key: 'necessity', label: 'Necessity', options: necessityList },
-  { key: 'tier', label: 'Tier', options: ['T1', 'T2'] }
+  { key: 'tier', label: 'Tier', options: ['T1', 'T2'] },
 ];
 ---
-<Base
+<RecordLayout
   title="The Crystallisation Window"
   description="Thirty-four regulations crystallising what people need into law across Australia, Japan, New Zealand, and Singapore, dated 2024 to 2030."
+  section="data"
+  tone="light"  folio="ex-16 / 38"
+  locator='03 · The data <span style="color:var(--fg-faint)">&rarr;</span> <span class="here">The window</span>'
 >
-  <header class="cal-hero">
-    <div class="container">
-      <p class="kicker cal-hero__kicker">The window</p>
-      <h1 class="cal-hero__title">Regulatory effective dates peak in 2027.</h1>
-      <p class="cal-hero__sub">
-        Thirty-four upcoming or recently effective regulations across Australia, Japan, New Zealand, and Singapore. Each creates a compliance trigger that can be mapped to company categories, buyer demand, and operational tooling.
-      </p>
-    </div>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow" style="color:var(--c-tomato)">03 · The data</p>
+    <h1 class="rec-masthead__title">Regulatory effective dates peak in 2027.</h1>
+    <p class="rec-masthead__claim">
+      Thirty-four upcoming or recently effective regulations across Australia, Japan, New Zealand, and Singapore. Each creates a compliance trigger that can be mapped to company categories, buyer demand, and operational tooling.
+    </p>
   </header>
 
-  <section class="container cal-chart">
-    <ChartFrame
-      kicker="Effective dates"
-      title="In-flight regulations by year."
-      caption="All thirty-four in-flight regulations across the four target markets."
-      source="Source: hmm Ventures regulatory dataset."
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The window</span><span class="rec-beat__count">01 / 02</span></div>
+    <h2 class="rec-beat__arg"><em>34 in-flight regulations</em>. Peak 2027. None yet in force.</h2>
+    <Plate
+      ex="EX-16"
+      label="Effective dates"
+      title="<em>In-flight regulations</em> by year."
+      sub="All thirty-four in-flight regulations across the four target markets."
+      source="hmm Ventures regulatory dataset."
+      basis="In-flight 2024 to 2030, four-market subset."
     >
-      <CrystallisationStrip />
-    </ChartFrame>
+      <Bars items={calItems} height={170} />
+    </Plate>
   </section>
 
-  <section class="container cal-list">
-    <header class="cal-list__head">
-      <p class="kicker cal-list__kicker">The list</p>
-      <h2 class="cal-list__title">Every regulation, grouped by year.</h2>
-    </header>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The list</span><span class="rec-beat__count">02 / 02</span></div>
+    <h2 class="rec-beat__arg">Every regulation, <em>grouped by year</em>.</h2>
     <div class="cal-list__filter">
       <TagFilter groups={filterGroups} target=".cal-year__list .ce" />
     </div>
     <CalendarTimeline />
   </section>
-
-  <CTARail />
-</Base>
+</RecordLayout>
 
 <style>
-  .cal-hero {
-    background: var(--c-evergreen);
-    color: var(--c-pearl);
-    padding-block: var(--s-8) var(--s-6);
-  }
-  .cal-hero__kicker { color: var(--c-tomato); margin: 0; }
-  .cal-hero__title {
-    font-family: var(--f-display);
-    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: var(--s-3) 0 var(--s-4);
-    font-weight: 400;
-    max-width: 22ch;
-  }
-  .cal-hero__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
-    max-width: 60ch;
-    margin: 0;
-  }
-  .cal-chart { padding-block: var(--s-7); }
-  .cal-list {
-    padding-block: var(--s-7) var(--s-8);
-    max-width: 64rem;
-  }
-  .cal-list__head {
-    margin-block-end: var(--s-5);
-    max-width: 56ch;
-  }
-  .cal-list__head .kicker { color: var(--c-tomato); margin: 0; }
-  .cal-list__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-tight);
-    margin: var(--s-3) 0 0;
-    letter-spacing: -0.01em;
-  }
   .cal-list__filter { margin-block-end: var(--s-5); }
 </style>

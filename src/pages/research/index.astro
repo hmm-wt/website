@@ -1,21 +1,36 @@
 ---
-import Base from '../../layouts/Base.astro';
-import CTARail from '../../components/CTARail.astro';
-import { buildContactMailto } from '../../utils/mailto.ts';
+import RecordLayout from '../../layouts/RecordLayout.astro';
+import MarketFlower from '../../components/record/MarketFlower.astro';
 
-const cards = [
+const longform = [
   {
-    href: '/research/results/',
-    kicker: 'Results',
-    title: 'What the cohort does once it meets the T1/T2 screen.',
-    summary: 'Round-size uplift from 1.12x at seed to 1.53x at Series C. Observed exit incidence at 2.22x the unregulated rate. Nine named acquirer deals, source-verified.',
+    href: '/the-edge/',
+    kicker: 'The edge',
+    title: 'Why the regulated cohort reaches exit 2.22x as often.',
+    summary: 'Observed exit incidence and the round-size uplift from seed to Series D+. The empirical pattern behind the thesis.',
+    cta: 'Open the edge',
+  },
+  {
+    href: '/data/necessity-index/methodology/',
+    kicker: 'Methodology',
+    title: 'How the universe is classified.',
+    summary: 'The T1 licence-as-barrier and T2 compulsion-as-barrier screen, the source registers it reads, and the limits of the method.',
+    cta: 'Open the method',
   },
   {
     href: '/references/',
     kicker: 'References',
     title: 'Every cited source, every dataset.',
     summary: 'The bibliography. Public datasets and primary-source references behind every number on the site.',
+    cta: 'Open the page',
   },
+];
+
+const markets = [
+  { href: '/thesis/australia/', code: 'AU' as const, name: 'Australia' },
+  { href: '/thesis/japan/', code: 'JP' as const, name: 'Japan' },
+  { href: '/thesis/new-zealand/', code: 'NZ' as const, name: 'New Zealand' },
+  { href: '/thesis/singapore/', code: 'SG' as const, name: 'Singapore' },
 ];
 
 const dataProducts = [
@@ -24,152 +39,136 @@ const dataProducts = [
     kicker: 'Index',
     title: 'The Necessity Index.',
     summary: '19,416 four-market companies against the T1 / T2 Necessities. Cross-referenced against 174 four-market regulations.',
+    cta: 'Open the product',
   },
   {
     href: '/data/calendar/',
     kicker: 'Calendar',
     title: 'The Crystallisation Window.',
     summary: 'Thirty-four in-flight regulations across the four markets, dated 2024 to 2030. Peak 2027.',
+    cta: 'Open the product',
   },
   {
     href: '/data/scoreboard/',
     kicker: 'Scoreboard',
     title: 'Five falsifiable predictions.',
     summary: 'Five Structural Certainties. Five testable predictions on the dataset. The window is open.',
+    cta: 'Open the product',
   },
 ];
 ---
-<Base
-  title="Research"
-  description="Method, results, references. The classifier, the graduation rates, the live data products."
+<RecordLayout
+  title="Method. Results. References."
+  description="The edge, the method, the four markets, and three live data products. Every number traces to a primary source."
+  section="method"
+  tone="light"  folio="ex-30 / 38"
+  locator='04 · <span class="here">The method</span>'
+  next={{ href: '/about/', label: '05 The GP' }}
 >
-  <header class="rsh-hero">
-    <div class="container">
-      <p class="kicker rsh-hero__kicker">The research</p>
-      <h1 class="rsh-hero__title">Method. Results. References.</h1>
-      <p class="rsh-hero__sub">
-        Two long-form pages. Three live data products. Every number traces to a primary source.
-      </p>
-    </div>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow">04 · The method</p>
+    <h1 class="rec-masthead__title">The edge, the method, the markets.</h1>
+    <p class="rec-masthead__claim">Three long-form pages. Four market deep-dives. Three live data products. Every number traces to a primary source.</p>
   </header>
 
-  <section class="rsh container">
-    <header class="rsh__group-head">
-      <p class="kicker">Long-form research</p>
-    </header>
-    <ol class="rsh__list" role="list">
-      {cards.map((c) => (
-        <li class="rsh__cell">
-          <a class="rsh__link" href={c.href}>
-            <span class="rsh__kicker">{c.kicker}</span>
-            <h2 class="rsh__h">{c.title}</h2>
-            <p class="rsh__body">{c.summary}</p>
-            <span class="rsh__more">Open the page &rarr;</span>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">Long-form research</span><span class="rec-beat__count">01 / 03</span></div>
+    <ol class="mth-list mth-list--three" role="list">
+      {longform.map((c) => (
+        <li class="mth-cell">
+          <a class="mth-link" href={c.href}>
+            <span class="mth-kicker">{c.kicker}</span>
+            <h2 class="mth-h">{c.title}</h2>
+            <p class="mth-body">{c.summary}</p>
+            <span class="mth-more">{c.cta} &rarr;</span>
           </a>
         </li>
       ))}
     </ol>
   </section>
 
-  <section class="rsh container">
-    <header class="rsh__group-head">
-      <p class="kicker">Live data products</p>
-    </header>
-    <ol class="rsh__list rsh__list--data" role="list">
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The four markets</span><span class="rec-beat__count">02 / 03</span></div>
+    <ol class="mth-list mth-list--four" role="list">
+      {markets.map((m) => (
+        <li class="mth-cell">
+          <a class="mth-link mth-link--market" href={m.href}>
+            <span class="mth-flower" aria-hidden="true"><MarketFlower market={m.code} size={24} /></span>
+            <span class="mth-kicker">{m.code}</span>
+            <h2 class="mth-h">Why {m.name}.</h2>
+            <span class="mth-more">Open the chapter &rarr;</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">Live data products</span><span class="rec-beat__count">03 / 03</span></div>
+    <ol class="mth-list mth-list--three" role="list">
       {dataProducts.map((d) => (
-        <li class="rsh__cell">
-          <a class="rsh__link" href={d.href}>
-            <span class="rsh__kicker">{d.kicker}</span>
-            <h2 class="rsh__h">{d.title}</h2>
-            <p class="rsh__body">{d.summary}</p>
-            <span class="rsh__more">Open the product &rarr;</span>
+        <li class="mth-cell">
+          <a class="mth-link" href={d.href}>
+            <span class="mth-kicker">{d.kicker}</span>
+            <h2 class="mth-h">{d.title}</h2>
+            <p class="mth-body">{d.summary}</p>
+            <span class="mth-more">{d.cta} &rarr;</span>
           </a>
         </li>
       ))}
     </ol>
   </section>
-
-  <CTARail />
-</Base>
+</RecordLayout>
 
 <style>
-  .rsh-hero {
-    background: var(--c-evergreen);
-    color: var(--c-pearl);
-    padding-block: var(--s-8) var(--s-6);
-  }
-  .rsh-hero__kicker { color: var(--c-tomato); margin: 0; }
-  .rsh-hero__title {
-    font-family: var(--f-display);
-    font-size: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: var(--s-3) 0 var(--s-4);
-    font-weight: 400;
-  }
-  .rsh-hero__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
-    max-width: 60ch;
-    margin: 0;
-  }
-  .rsh {
-    padding-block: var(--s-7);
-  }
-  .rsh__group-head {
-    padding-block-end: var(--s-3);
-    margin-block-end: var(--s-3);
-  }
-  .rsh__group-head .kicker { color: var(--c-tomato); margin: 0; }
-  .rsh__list {
+  .mth-list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 0;
-    border-top: var(--hair) solid var(--hair-color);
-    border-bottom: var(--hair) solid var(--hair-color);
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
   }
-  @media (max-width: 980px) {
-    .rsh__list { grid-template-columns: 1fr; }
+  .mth-list--three { grid-template-columns: repeat(3, 1fr); }
+  .mth-list--four { grid-template-columns: repeat(4, 1fr); }
+
+  .mth-cell {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
-  .rsh__cell { border-left: var(--hair) solid var(--hair-color); }
-  .rsh__cell:first-child { border-left: 0; }
-  @media (max-width: 980px) {
-    .rsh__cell { border-left: 0; border-top: var(--hair) solid var(--hair-color); }
-    .rsh__cell:first-child { border-top: 0; }
-  }
-  .rsh__link {
+  .mth-link {
     display: flex;
     flex-direction: column;
     gap: var(--s-3);
-    padding: var(--s-6) var(--s-5);
+    padding: var(--s-5);
     height: 100%;
     text-decoration: none;
     color: var(--fg);
     transition: background var(--mo-hold) var(--ease-golden);
   }
-  .rsh__link:hover { background: color-mix(in srgb, var(--c-tomato) 8%, transparent); }
-  .rsh__kicker {
+  .mth-link:hover { background: color-mix(in srgb, var(--c-tomato) 8%, transparent); }
+  .mth-link--market { gap: var(--s-2); }
+  .mth-flower { display: block; color: var(--c-mahogany); }
+  .mth-kicker {
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--fg-faint);
+    letter-spacing: 0.16em;
+    color: var(--c-tomato);
   }
-  .rsh__h {
+  .mth-h {
     font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-tight);
+    font-weight: 400;
+    font-size: var(--fs-lg);
+    line-height: 1.12;
     margin: 0;
     color: var(--fg);
     transition: color var(--mo-tick) var(--ease-golden);
   }
-  .rsh__link:hover .rsh__h { color: var(--c-tomato); }
-  .rsh__body {
+  .mth-link:hover .mth-h { color: var(--c-tomato); }
+  .mth-body {
     font-family: var(--f-body);
     font-size: var(--fs-sm);
     line-height: 1.55;
@@ -177,13 +176,21 @@ const dataProducts = [
     margin: 0;
     max-width: 44ch;
   }
-  .rsh__more {
+  .mth-more {
     margin-block-start: auto;
     padding-block-start: var(--s-3);
     font-family: var(--f-mono);
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--hero);
+    letter-spacing: 0.14em;
+    color: var(--fg-faint);
+  }
+  .mth-link:hover .mth-more { color: var(--c-tomato); }
+
+  @media (max-width: 900px) {
+    .mth-list--four { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .mth-list, .mth-list--three, .mth-list--four { grid-template-columns: 1fr; }
   }
 </style>

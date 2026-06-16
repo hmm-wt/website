@@ -1,0 +1,103 @@
+---
+/**
+ * NecessityNav. A sticky top switcher for the five Necessities, so a reader on
+ * one necessity page can move to any other without returning to the index.
+ * Pass the current slug to mark it active; omit on the index.
+ */
+interface Props { current?: string; }
+const { current } = Astro.props;
+
+const items = [
+  { slug: 'eat', label: 'Eat', name: 'Food' },
+  { slug: 'heal', label: 'Heal', name: 'Biomedical' },
+  { slug: 'move', label: 'Move', name: 'Autonomous' },
+  { slug: 'power', label: 'Power', name: 'Power' },
+  { slug: 'supply', label: 'Supply', name: 'Materials' },
+];
+---
+<nav class="necnav" aria-label="The five Necessities">
+  <a class="necnav__all" href="/necessities/" aria-current={current ? undefined : 'page'}>The five &rsaquo;</a>
+  <ul class="necnav__list" role="list">
+    {items.map((it) => (
+      <li>
+        <a
+          class:list={['necnav__item', it.slug === current && 'is-current']}
+          href={`/necessities/${it.slug}/`}
+          aria-current={it.slug === current ? 'page' : undefined}
+        >
+          <span class="necnav__lab">{it.label}</span>
+          <span class="necnav__name">{it.name}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .necnav {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-5);
+    margin: 0 0 var(--s-6);
+    padding-block: var(--s-3);
+    background: var(--c-light-tint);
+    border-bottom: 1px solid var(--rule);
+  }
+  .necnav__all {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--fg-faint);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .necnav__all:hover { color: var(--c-tomato); }
+  .necnav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-5);
+    margin: 0;
+    padding: 0;
+  }
+  .necnav__item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--s-2);
+    min-height: var(--tap-min);
+    text-decoration: none;
+  }
+  .necnav__lab {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-soft);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color var(--mo-tick) var(--ease-golden),
+                border-color var(--mo-tick) var(--ease-golden);
+  }
+  .necnav__name {
+    font-family: var(--f-mono);
+    font-size: 0.5625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--fg-faint);
+  }
+  .necnav__item:hover .necnav__lab { color: var(--c-tomato); }
+  .necnav__item.is-current .necnav__lab {
+    color: var(--c-tomato);
+    border-bottom-color: var(--c-tomato);
+  }
+
+  @media (max-width: 560px) {
+    .necnav { gap: var(--s-2) var(--s-4); }
+    .necnav__list { gap: var(--s-2) var(--s-4); }
+    .necnav__name { display: none; }
+  }
+</style>

@@ -1,52 +1,38 @@
 ---
-import Base from '../layouts/Base.astro';
+import RecordLayout from '../layouts/RecordLayout.astro';
 ---
-<Base
+<RecordLayout
   title="Not found"
   description="That page does not exist on hmm.ventures."
+  section="necessities"
+  tone="light"  folio="ex-00 / 38"
+  locator='<span class="here">Not found</span>'
 >
-  <section class="nf container">
-    <h1 class="nf__title">That page does not exist.</h1>
-    <p class="nf__sub">
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow">404</p>
+    <h1 class="rec-masthead__title">That page does not exist.</h1>
+    <p class="rec-masthead__claim">
       The URL you followed does not resolve to a page on this site. The link may be stale, mistyped, or pointing at a page that has been moved.
     </p>
+  </header>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">Find your way back</span><span class="rec-beat__count">01 / 01</span></div>
     <ul class="nf__list" role="list">
       <li><a href="/">Home</a></li>
       <li><a href="/necessities/">The five Necessities</a></li>
-      <li><a href="/markets/">Markets</a></li>
+      <li><a href="/exits/">The exits</a></li>
       <li><a href="/research/">Research</a></li>
       <li><a href="/contact/">Contact</a></li>
     </ul>
   </section>
-</Base>
+</RecordLayout>
 
 <style>
-  .nf {
-    padding-block: var(--s-9);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-4);
-    max-width: 48rem;
-  }
-  .nf__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-3xl);
-    line-height: var(--lh-tight);
-    letter-spacing: -0.02em;
-    margin: 0;
-  }
-  .nf__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: var(--fg-soft);
-    margin: 0;
-    max-width: 52ch;
-  }
   .nf__list {
     list-style: none;
     padding: 0;
-    margin: var(--s-5) 0 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: var(--s-3);

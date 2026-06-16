@@ -349,7 +349,7 @@ svg polygon.wedge-draw {
 /* ────────────────────────────────────────────────────────── */
 /* 11. STAGGER-ROW                                            */
 /* Groups of items with data-i index: each item delays by     */
-/* --stagger-default × i so they cascade. Used inside charts  */
+/* --stagger-default x i so they cascade. Used inside charts  */
 /* on .stagger-row[data-i="0..N"] groups and in lists.        */
 /* ────────────────────────────────────────────────────────── */
 .stagger-row {

@@ -14,6 +14,8 @@ interface Props {
   kicker?: string;
   caption?: string;
   source?: string;
+  /** Exhibit number, IM-style (e.g. "EX-3"). Rendered as a mono tomato eyebrow. */
+  exNumber?: string;
   /** Center-align the title (used on home + Necessity panels). */
   centered?: boolean;
   /** Maximum container width override. */
@@ -25,6 +27,7 @@ const {
   kicker,
   caption,
   source,
+  exNumber,
   centered = false,
   maxWidth,
 } = Astro.props;
@@ -32,8 +35,9 @@ const {
 const align = centered ? 'center' : 'start';
 ---
 <figure class="chartfrm" style={maxWidth ? `--cf-max: ${maxWidth};` : ''} data-align={align}>
-  {(kicker || title) && (
+  {(exNumber || kicker || title) && (
     <header class="chartfrm__head">
+      {exNumber && <p class="chartfrm__exnum">{exNumber}</p>}
       {kicker && <p class="chartfrm__kicker kicker">{kicker}</p>}
       {title && <h2 class="chartfrm__title">{title}</h2>}
     </header>
@@ -64,6 +68,14 @@ const align = centered ? 'center' : 'start';
   }
   .chartfrm[data-align='center'] .chartfrm__head {
     margin-inline: auto;
+  }
+  .chartfrm__exnum {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--c-tomato);
+    margin: 0 0 var(--s-1);
   }
   .chartfrm__kicker {
     color: var(--c-tomato);

@@ -10,12 +10,19 @@ interface Props {
   ogImage?: string;
   /** When true, omits container padding so the page can run edge-to-edge. */
   bare?: boolean;
+  /** When true, omits the global Nav + Footer so a layout can supply its own
+   *  chrome (the Record folio + Contents rail). */
+  chromeless?: boolean;
+  /** Class applied to <body>, used to set the page surface register. */
+  bodyClass?: string;
 }
 
 const {
   title,
-  description = 'hmm Ventures. Necessity is the Thesis. An APAC-focused seed fund investing where regulation creates demand.',
-  ogImage = '/og-default.png'
+  description = 'hmm Ventures is a pre-seed and seed stage VC firm focused on the Necessities across Australia, Japan, New Zealand, and Singapore. Necessity is the Thesis.',
+  ogImage = '/og-default.png',
+  chromeless = false,
+  bodyClass
 } = Astro.props;
 
 const fullTitle = title === 'hmm Ventures' ? title : `${title} · hmm Ventures`;
@@ -54,13 +61,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
       <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "57e0596d97fe493fa379f40cd7be32af"}'></script>
     )}
   </head>
-  <body>
+  <body class={bodyClass}>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Nav />
+    {!chromeless && <Nav />}
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    {!chromeless && <Footer />}
 
     <button type="button" class="back-to-top" aria-label="Back to top" data-back-to-top>↑</button>
 
@@ -73,7 +80,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://hmm.venture
         if (sessionStorage.getItem('hmm-played') === '1') {
           html.setAttribute('data-hmm-played', 'true');
         } else {
-          // Six beats × 160ms = 960ms for letters+dots; add tiny buffer.
+          // Six beats x 160ms = 960ms for letters+dots; add tiny buffer.
           setTimeout(() => {
             html.setAttribute('data-hmm-played', 'true');
             sessionStorage.setItem('hmm-played', '1');

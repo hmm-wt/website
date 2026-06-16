@@ -1,0 +1,77 @@
+---
+/**
+ * RecordLayout. The Record chrome: folio running-head, left Contents rail (the
+ * navigation), a record locator, the main column, and a colophon. Wraps Base in
+ * chromeless mode (no global Nav/Footer) and supplies its own.
+ *
+ * The five sections are the table of contents. `section` lights the active one.
+ */
+import Base from './Base.astro';
+import Wordmark from '../components/record/Wordmark.astro';
+import '../styles/record.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  section: 'necessities' | 'exits' | 'data' | 'method' | 'gp';
+  /** Continuous exhibit folio, e.g. "ex-1 / 38". */
+  folio: string;
+  /** Record locator breadcrumb, rendered as HTML (the leaf wrapped in .here). */
+  locator: string;
+  /** Optional next-movement link. */
+  next?: { href: string; label: string };
+  /** Surface register. 'dark' = evergreen field (default). 'light' = the paper
+   *  record (pearl page, mahogany ink). */
+  tone?: 'dark' | 'light';
+}
+
+const { title, description, section, folio, locator, next, tone = 'dark' } = Astro.props;
+
+const SECTIONS = [
+  { key: 'necessities', n: '01', label: 'The five Necessities', href: '/necessities/' },
+  { key: 'exits', n: '02', label: 'The exits', href: '/exits/' },
+  { key: 'data', n: '03', label: 'The data', href: '/data/necessity-index/' },
+  { key: 'method', n: '04', label: 'The method', href: '/research/' },
+  { key: 'gp', n: '05', label: 'The GP', href: '/about/' },
+];
+---
+<Base title={title} description={description} chromeless bodyClass={tone === 'light' ? 'tone-light' : undefined}>
+  <div class:list={['rec', tone === 'light' && 'rec--light']}>
+    <header class="rec__top">
+      <a class="rec__wordmark" href="/" aria-label="hmm Ventures home"><Wordmark height={22} /></a>
+      <span class="rec__folio">The Record · {folio}</span>
+    </header>
+
+    <div class="rec__grid">
+      <nav class="rec__rail" aria-label="Contents">
+        <p class="rec__rail-head">Contents</p>
+        {SECTIONS.map((s) => (
+          <a
+            class="rec__rail-item"
+            href={s.href}
+            aria-current={s.key === section ? 'page' : undefined}
+          >
+            <span class="n">{s.n}</span> · {s.label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="rec__main">
+        <p class="rec__locator" set:html={locator}></p>
+        <slot />
+
+        {next && (
+          <a class="rec__next" href={next.href}>
+            <span class="lead">Continue the record</span>
+            <span class="go">{next.label} &rarr;</span>
+          </a>
+        )}
+
+        <footer class="rec__colophon">
+          <span>hmm ventures · pre-seed and seed VC in the Necessities</span>
+          <span>Australia · Japan · New Zealand · Singapore</span>
+        </footer>
+      </div>
+    </div>
+  </div>
+</Base>

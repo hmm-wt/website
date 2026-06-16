@@ -1,290 +1,317 @@
 ---
-import Index from '../../../layouts/Index.astro';
-import IndexCard from '../../../components/IndexCard.astro';
-import IndexMatrix from '../../../components/IndexMatrix.astro';
-import DataSection from '../../../components/DataSection.astro';
-import CiteThis from '../../../components/CiteThis.astro';
-import ScrollyClassifierFunnel from '../../../components/research/ScrollyClassifierFunnel.astro';
-import MarketRegulationBar from '../../../components/charts/MarketRegulationBar.astro';
-import NecessityBarDrilldown from '../../../components/research/NecessityBarDrilldown.astro';
+import RecordLayout from '../../../layouts/RecordLayout.astro';
+import Plate from '../../../components/record/Plate.astro';
 import data from '../../../data/necessity-index.json';
+
+// Per-Necessity rows, ordered by cohort size (largest first) for the EX-15 bars.
+const perNecessity = [...data.per_necessity].sort(
+  (a, b) => b.in_thesis_companies - a.in_thesis_companies,
+);
+const cohortMax = Math.max(...perNecessity.map((n) => n.in_thesis_companies));
+
+// Per-market detail rows preserve the classified-dataset breakdown verbatim.
+const perMarket = data.per_market;
+
+// Bar geometry for EX-15 (horizontal cohort bars). The necessity name sits on
+// its own line above each bar so long labels (Critical Materials and Supply
+// Integrity) can never collide with the value.
+const ROWW = 360;
+const BARMAX = 264; // bar track; the value label sits to the right of the bar
+const ROWH = 44;    // taller rows: name above, bar + value below
+const chartH = perNecessity.length * ROWH + 6;
 ---
-<Index
-  title="The Necessity Index"
-  description="The classified APAC technology universe. Embeddable. The citation engine for the four-market regulated Necessities."
+<RecordLayout
+  title="The company universe"
+  description="19,416 four-market technology companies, classified against the T1 / T2 Necessities. Cross-referenced against 174 four-market regulations."
+  section="data"
+  tone="light"  folio="ex-15 / 38"
+  locator='03 · <span class="here">The data</span>'
+  next={{ href: '/data/calendar/', label: '03 The window' }}
 >
-  <section class="ip container">
-    <header class="ip__head">
-      <div class="ip__meta">
-        <span class="ip__reg" aria-hidden="true"></span>
-        <span class="ip__kicker">Necessity Index</span>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow" style="color:var(--c-tomato)">03 · The data</p>
+    <h1 class="rec-masthead__title">The company universe.</h1>
+    <p class="rec-masthead__claim">
+      19,416 four-market technology companies, classified against the T1 / T2 Necessities. Cross-referenced against 174 four-market regulations.
+    </p>
+  </header>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The universe</span><span class="rec-beat__count">01 / 05</span></div>
+    <h2 class="rec-beat__arg">The four-market universe sits at <em>{data.universe.four_market_companies.toLocaleString('en-GB')}</em> companies.</h2>
+    <p class="rec-beat__prose">
+      Every technology company trading in the four target markets, classified against the T1 / T2 screen. {data.universe.regulations_four_market} four-market regulations frame the Necessities.
+    </p>
+    <dl class="ni-stats ni-stats--3">
+      <div class="ni-stat ni-stat--accent">
+        <dt class="ni-stat__k">Four-market companies</dt>
+        <dd class="ni-stat__v">{data.universe.four_market_companies.toLocaleString('en-GB')}</dd>
       </div>
-      <h1 class="ip__title">The company universe.</h1>
-      <p class="ip__lede">
-        22,217 APAC technology companies, classified against the T1 / T2 Necessities. Cross-referenced against 174 four-market regulations.
-      </p>
-    </header>
-
-    <DataSection
-      fignum="NI-01"
-      label="Universe · Four-market classified dataset"
-      title='The classified universe sits at <em>22,217</em> companies.'
-      sub="Of those, 19,416 trade in the four target markets. 174 four-market regulations frame the Necessities."
-      source="hmm Ventures classified universe"
-      basis="Commercial data feeds · last_funding_amount join · four-market filter"
-    >
-      <div class="ip__grid ip__grid--4">
-        <IndexCard label="Total companies classified" value={data.universe.total_companies} accent />
-        <IndexCard label="Four-market subset" value={data.universe.four_market_companies} />
-        <IndexCard label="Regulations mapped (global)" value={data.universe.regulations_global} />
-        <IndexCard label="Four-market regulations" value={data.universe.regulations_four_market} accent />
+      <div class="ni-stat">
+        <dt class="ni-stat__k">Regulations mapped (global)</dt>
+        <dd class="ni-stat__v">{data.universe.regulations_global.toLocaleString('en-GB')}</dd>
       </div>
-    </DataSection>
-
-    <DataSection
-      fignum="NI-02"
-      label="T1 / T2 screen · Conservative classifier"
-      title='One in three four-market companies <em>meets the T1/T2 screen</em>.'
-      sub="Conservative T1 / T2 classifier across the four-market universe. T1 = licence-as-barrier. T2 = compliance-demand-as-barrier."
-      source="hmm Ventures conservative classifier"
-      basis="T1 + T2 union · four-market subset"
-    >
-      <div class="ip__grid ip__grid--3">
-        <IndexCard
-          label="Conservative classifier share"
-          value={data.tier_shares.conservative_classifier_pct}
-          unit="%"
-          accent
-          source="Pass the T1 or T2 screen"
-        />
-        <IndexCard label="Necessities-aligned companies" value={data.tier_shares.conservative_classifier_count} />
-        <IndexCard label="T1 (licence-as-barrier)" value={data.tier_shares.t1_count} />
+      <div class="ni-stat ni-stat--accent">
+        <dt class="ni-stat__k">Four-market regulations</dt>
+        <dd class="ni-stat__v">{data.universe.regulations_four_market}</dd>
       </div>
-    </DataSection>
-
-    <section class="ip__inline-fig">
-      <ScrollyClassifierFunnel inline={true} />
-    </section>
-
-    <section class="ip__inline-fig">
-      <MarketRegulationBar />
-    </section>
-
-    <section class="ip__inline-fig">
-      <NecessityBarDrilldown />
-    </section>
-
-    <DataSection
-      fignum="NI-06"
-      label="Detail tables · Per market and per Necessity"
-      title='Drill-down: <em>regulation, tier, and cohort detail</em>.'
-      sub="Per-market and per-Necessity counts for the four-market universe. Counts are shown by market and Necessity. Per-market companies + regulations + tier breakdown verified against the classified dataset."
-      source="hmm Ventures classified dataset + regulatory dataset"
-      basis="Per-market + per-Necessity joins · four-market filter"
-    >
-      <IndexMatrix perMarket={data.per_market} perNecessity={data.per_necessity} />
-    </DataSection>
-
-    <DataSection
-      fignum="NI-07"
-      label="Round-size premiums · T1 vs unregulated"
-      title='Cumulative funding multiple widens to <em>2.12x</em> by Series D+.'
-      sub="T1 round-size uplift relative to unregulated peers at each stage. The cumulative funding gap is widest by Series D+."
-      source="hmm Ventures funding-premium analysis · 2024 four-market deal data"
-      basis="T1 / unregulated · last_funding_amount · round-size median"
-    >
-      <div class="ip__grid ip__grid--4">
-        <IndexCard label="Seed" value={data.premiums.round_size_seed} unit="x" />
-        <IndexCard label="Series A" value={data.premiums.round_size_series_a} unit="x" />
-        <IndexCard label="Series C" value={data.premiums.round_size_series_c} unit="x" accent />
-        <IndexCard label="Series D+" value={data.premiums.round_size_series_d_plus} unit="x" />
-      </div>
-      <div class="ip__grid ip__grid--3 ip__grid--top-gap">
-        <IndexCard label="Cumulative pre-seed" value={data.premiums.cumulative_pre_seed} unit="x" />
-        <IndexCard label="Cumulative Series D+" value={data.premiums.cumulative_series_d_plus} unit="x" accent />
-        <IndexCard
-          label="Exit-rate multiple"
-          value={data.premiums.exit_rate_multiple}
-          unit="x"
-          accent
-          source={`${data.premiums.regulated_exit_rate_pct}% vs ${data.premiums.unregulated_exit_rate_pct}%`}
-        />
-      </div>
-    </DataSection>
-
-    <DataSection
-      fignum="NI-08"
-      label="The crystallisation window · 2024 to 2030"
-      title='Thirty-four in-flight regulations. Peak density in <em>2027</em>.'
-      sub="The period when new rules become active and companies need operational tools to comply. Each market on a different clock."
-      source="hmm Ventures regulatory dataset"
-      basis="In-flight 2024 to 2030 · four-market subset"
-    >
-      <div class="ip__grid ip__grid--3">
-        <IndexCard label="In-flight regulations 2024 to 2030" value={data.crystallisation_window.in_flight_2024_2030} accent />
-        <IndexCard label="Peak year" value={String(data.crystallisation_window.peak_year)} />
-        <IndexCard label="Regulations in peak year" value={data.crystallisation_window.peak_year_count} accent />
-      </div>
-      <p class="ip__note ip__note--cta">
-        <a href="/data/calendar/">View the full calendar →</a>
-      </p>
-    </DataSection>
-
-    <section class="ip__share">
-      <p class="kicker ip__share-label">Use this index</p>
-      <CiteThis
-        title="The Necessity Index"
-        href="/data/necessity-index/"
-      />
-    </section>
-
-    <footer class="ip__foot">
-      <p class="ip__sources-label">Source datasets</p>
-      <ul class="ip__sources" role="list">
-        {data.source_datasets.map((s) => <li>{s}</li>)}
-      </ul>
-      <p class="ip__methodology">
-        <a href="/data/necessity-index/methodology/">Methodology &rarr;</a>
-      </p>
-    </footer>
+    </dl>
   </section>
-</Index>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The screen</span><span class="rec-beat__count">02 / 05</span></div>
+    <h2 class="rec-beat__arg">One in three four-market companies <em>meets the T1/T2 screen</em>.</h2>
+    <p class="rec-beat__prose">
+      Conservative T1 / T2 classifier across the four-market universe. T1 = licence-as-barrier. T2 = compliance-demand-as-barrier.
+    </p>
+    <dl class="ni-stats ni-stats--3">
+      <div class="ni-stat ni-stat--accent">
+        <dt class="ni-stat__k">Conservative classifier share</dt>
+        <dd class="ni-stat__v">{data.tier_shares.conservative_classifier_pct}%</dd>
+        <dd class="ni-stat__sub">Pass the T1 or T2 screen</dd>
+      </div>
+      <div class="ni-stat">
+        <dt class="ni-stat__k">Necessities-aligned companies</dt>
+        <dd class="ni-stat__v">{data.tier_shares.conservative_classifier_count.toLocaleString('en-GB')}</dd>
+      </div>
+      <div class="ni-stat">
+        <dt class="ni-stat__k">T1 (licence-as-barrier)</dt>
+        <dd class="ni-stat__v">{data.tier_shares.t1_count.toLocaleString('en-GB')}</dd>
+      </div>
+    </dl>
+    <p class="rec-beat__note">
+      Classified universe (four-market): {data.stage_funnel[0].count.toLocaleString('en-GB')}. In Necessities (T1 or T2): {data.stage_funnel[1].count.toLocaleString('en-GB')} ({data.stage_funnel[1].share_pct}%). In Necessities, seed-stage: {data.stage_funnel[2].count.toLocaleString('en-GB')} ({data.stage_funnel[2].share_pct}%).
+    </p>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The cohort</span><span class="rec-beat__count">03 / 05</span></div>
+    <h2 class="rec-beat__arg">The company universe across the <em>five Necessities</em>.</h2>
+    <Plate
+      ex="EX-15"
+      label="Necessities-aligned cohort"
+      sub="Companies in the four-market dataset, mapped to each of the five Necessities. T1 and T2 regulation counts shown per Necessity."
+      source="hmm Ventures four-market classified dataset."
+      basis="Per-Necessity joins, four-market filter."
+    >
+      <svg viewBox={`0 0 ${ROWW} ${chartH}`} width={ROWW} height={chartH} preserveAspectRatio="xMidYMid meet" class="ni-bars" role="img" aria-label="Companies mapped to each of the five Necessities">
+        {perNecessity.map((n, i) => {
+          const top = 4 + i * ROWH;
+          const w = (n.in_thesis_companies / cohortMax) * BARMAX;
+          const hero = i === 0;
+          return (
+            <g>
+              <text x="0" y={top + 12} class="ni-bars__label">{n.name}</text>
+              <rect x="0" y={top + 20} width={w} height="10"
+                fill={hero ? 'var(--c-tomato)' : 'var(--c-mahogany)'} opacity={hero ? 0.95 : 0.3} />
+              <text x={w + 7} y={top + 29} class="ni-bars__val"
+                fill={hero ? 'var(--c-tomato)' : 'rgba(37,0,1,0.66)'}>{n.in_thesis_companies.toLocaleString('en-GB')}</text>
+            </g>
+          );
+        })}
+      </svg>
+    </Plate>
+    <div class="nd-scroll nd-scroll--below">
+        <table class="nd-table">
+          <thead><tr><th>Necessity</th><th>Companies</th><th>T1</th><th>T2</th></tr></thead>
+          <tbody>
+            {perNecessity.map((n) => (
+              <tr>
+                <td>{n.name}</td>
+                <td>{n.in_thesis_companies.toLocaleString('en-GB')}</td>
+                <td class="nd-table__tier">{n.regulations_t1}</td>
+                <td class="nd-table__status">{n.regulations_t2}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+    </div>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The four markets</span><span class="rec-beat__count">04 / 05</span></div>
+    <h2 class="rec-beat__arg">Per-market <em>companies, regulations, and tier</em> detail.</h2>
+    <p class="rec-beat__note">
+      Per-market and per-Necessity counts for the four-market universe. Per-market companies, regulations, and tier breakdown verified against the classified dataset.
+    </p>
+    <div class="nd-scroll">
+    <table class="nd-table ni-market">
+      <thead><tr><th>Market</th><th>Companies</th><th>Regulations</th><th>T1</th><th>T2</th><th>Enacted</th><th>Projected</th></tr></thead>
+      <tbody>
+        {perMarket.map((m) => (
+          <tr>
+            <td>{m.code}</td>
+            <td>{m.companies.toLocaleString('en-GB')}</td>
+            <td>{m.regulations}</td>
+            <td class="nd-table__tier">{m.t1}</td>
+            <td>{m.t2}</td>
+            <td>{m.enacted}</td>
+            <td class="nd-table__status">{m.projected}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The premium</span><span class="rec-beat__count">05 / 05</span></div>
+    <h2 class="rec-beat__arg">Cumulative funding multiple widens to <em>2.12x</em> by Series D+.</h2>
+    <p class="rec-beat__prose">
+      T1 round-size uplift relative to unregulated peers at each stage. The cumulative funding gap is widest by Series D+.
+    </p>
+    <dl class="ni-stats">
+      <div class="ni-stat">
+        <dt class="ni-stat__k">Seed</dt>
+        <dd class="ni-stat__v">{data.premiums.round_size_seed}x</dd>
+      </div>
+      <div class="ni-stat">
+        <dt class="ni-stat__k">Series A</dt>
+        <dd class="ni-stat__v">{data.premiums.round_size_series_a}x</dd>
+      </div>
+      <div class="ni-stat ni-stat--accent">
+        <dt class="ni-stat__k">Series C</dt>
+        <dd class="ni-stat__v">{data.premiums.round_size_series_c}x</dd>
+      </div>
+      <div class="ni-stat">
+        <dt class="ni-stat__k">Series D+</dt>
+        <dd class="ni-stat__v">{data.premiums.round_size_series_d_plus}x</dd>
+      </div>
+    </dl>
+    <dl class="ni-stats ni-stats--3">
+      <div class="ni-stat">
+        <dt class="ni-stat__k">Cumulative pre-seed</dt>
+        <dd class="ni-stat__v">{data.premiums.cumulative_pre_seed}x</dd>
+      </div>
+      <div class="ni-stat ni-stat--accent">
+        <dt class="ni-stat__k">Cumulative Series D+</dt>
+        <dd class="ni-stat__v">{data.premiums.cumulative_series_d_plus}x</dd>
+      </div>
+      <div class="ni-stat ni-stat--accent">
+        <dt class="ni-stat__k">Exit-rate multiple</dt>
+        <dd class="ni-stat__v">{data.premiums.exit_rate_multiple}x</dd>
+        <dd class="ni-stat__sub">{data.premiums.regulated_exit_rate_pct}% vs {data.premiums.unregulated_exit_rate_pct}%</dd>
+      </div>
+    </dl>
+    <p class="rec-beat__note">
+      In-flight regulations 2024 to 2030: {data.crystallisation_window.in_flight_2024_2030}. Peak year: {data.crystallisation_window.peak_year}. Regulations in peak year: {data.crystallisation_window.peak_year_count}.
+    </p>
+    <p class="ni-cta"><a href="/data/calendar/">View the full calendar &rarr;</a></p>
+  </section>
+
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">Source datasets</span><span class="rec-beat__count">Colophon</span></div>
+    <ul class="ni-sources" role="list">
+      {data.source_datasets.map((s) => <li>{s}</li>)}
+    </ul>
+    <p class="ni-cta"><a href="/data/necessity-index/methodology/">Methodology &rarr;</a></p>
+  </section>
+</RecordLayout>
 
 <style>
-  .ip { max-width: 72rem; }
-
-  .ip__head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-    margin-block-end: var(--s-8);
-    padding-block-end: var(--s-5);
-    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
-  }
-  .ip__meta {
-    display: flex;
-    align-items: baseline;
-    gap: var(--s-3);
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-  }
-  .ip__reg {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background: var(--c-tomato);
-    align-self: center;
-  }
-  .ip__kicker { color: color-mix(in srgb, var(--c-pearl) 70%, transparent); }
-  .ip__meta :global(.status) { margin-inline-start: auto; }
-
-  .ip__title {
-    font-family: var(--f-display);
-    font-size: var(--fs-3xl);
-    line-height: var(--lh-tight);
-    letter-spacing: -0.02em;
-    margin: var(--s-3) 0 0;
-    color: var(--c-pearl);
-  }
-  .ip__lede {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
-    color: color-mix(in srgb, var(--c-pearl) 78%, transparent);
-    max-width: 56ch;
-    margin: 0;
-  }
-  .ip__as-of {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: color-mix(in srgb, var(--c-pearl) 55%, transparent);
-    margin: 0;
-  }
-
-  .ip__section {
-    padding-block: var(--s-6);
-    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 12%, transparent);
-  }
-  .ip__section:last-of-type { border-bottom: 0; }
-  .ip__h2 {
-    font-family: var(--f-display);
-    font-size: var(--fs-2xl);
-    line-height: var(--lh-tight);
-    margin: 0 0 var(--s-5);
-    color: var(--c-pearl);
-  }
-  .ip__note {
-    font-family: var(--f-mono);
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
-    margin: 0 0 var(--s-4);
-  }
-  .ip__note--cta { margin-block-start: var(--s-5); margin-block-end: 0; }
-  .ip__note--cta a { color: var(--c-tomato); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
-
-  .ip__inline-fig {
-    padding-block: var(--s-7);
-    border-bottom: 1px solid color-mix(in srgb, var(--c-pearl) 12%, transparent);
-  }
-  .ip__inline-fig:last-of-type { border-bottom: 0; }
-
-  .ip__grid {
+  /* Stat grid. Mono labels, serif-free data. */
+  .ni-stats {
     display: grid;
-    gap: var(--s-3);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: var(--s-4) 0 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
   }
-  .ip__grid--3 { grid-template-columns: repeat(3, 1fr); }
-  .ip__grid--4 { grid-template-columns: repeat(4, 1fr); }
-  .ip__grid--top-gap { margin-block-start: var(--s-3); }
-  @media (max-width: 900px) {
-    .ip__grid--3, .ip__grid--4 { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 560px) {
-    .ip__grid--3, .ip__grid--4 { grid-template-columns: 1fr; }
-  }
-
-  .ip__share {
-    padding-block: var(--s-6) var(--s-5);
-    border-top: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
-    margin-block-start: var(--s-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--s-3);
-  }
-  .ip__share-label { color: var(--c-tomato); margin: 0; }
-
-  .ip__foot {
-    padding-block-start: var(--s-5);
-    border-top: 1px solid color-mix(in srgb, var(--c-pearl) 18%, transparent);
-    margin-block-start: var(--s-3);
-    font-family: var(--f-mono);
-  }
-  .ip__sources-label {
-    font-size: var(--fs-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: color-mix(in srgb, var(--c-pearl) 60%, transparent);
-    margin: 0 0 var(--s-3);
-  }
-  .ip__sources {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .ni-stats--3 { grid-template-columns: repeat(3, 1fr); margin-top: var(--s-3); }
+  .ni-stat {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: var(--s-4);
     display: flex;
     flex-direction: column;
     gap: var(--s-2);
+  }
+  .ni-stat__k {
+    font-family: var(--f-mono);
     font-size: var(--fs-xs);
-    color: color-mix(in srgb, var(--c-pearl) 75%, transparent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin: 0;
   }
-  .ip__methodology {
-    margin-block-start: var(--s-5);
-    font-size: var(--fs-sm);
+  .ni-stat__v {
+    font-family: var(--f-mono);
+    font-size: var(--fs-2xl);
+    line-height: 1;
+    color: var(--fg);
+    margin: 0;
   }
-  .ip__methodology a { color: var(--c-tomato); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
-  .ip__embed-note { color: color-mix(in srgb, var(--c-pearl) 60%, transparent); }
+  .ni-stat--accent .ni-stat__v { color: var(--c-tomato); }
+  .ni-stat__sub {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.06em;
+    color: var(--fg-faint);
+    margin: 0;
+  }
+
+  /* EX-15 horizontal bars (pearl surface inside the plate). height:auto lets
+     the SVG scale to its container width (without it the viewBox forces an
+     intrinsic width that overflows narrow screens). */
+  .ni-bars { display: block; width: 100%; height: auto; max-width: 100%; min-width: 0; }
+  .ni-bars__label {
+    font-family: var(--f-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    fill: rgba(37, 0, 1, 0.74);
+  }
+  .ni-bars__val {
+    font-family: var(--f-mono);
+    font-size: 9px;
+  }
+
+  /* Wide tables scroll horizontally inside their own box on narrow screens
+     instead of overflowing the page (and widening the EX-15 plate/SVG). */
+  .nd-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .nd-scroll--below { margin-top: var(--s-4); }
+  .nd-scroll .nd-table { margin-top: 0; }
+  .ni-market { white-space: nowrap; }
+
+  /* Shared nd-table (mirrors the reference necessity pattern). */
+  .nd-table { width: 100%; border-collapse: collapse; margin-top: var(--s-3); font-family: var(--f-mono); }
+  .nd-table th {
+    text-align: left; font-size: var(--fs-xs); font-weight: 400; text-transform: uppercase;
+    letter-spacing: 0.1em; color: rgba(37, 0, 1, 0.42); padding: 0 var(--s-3) var(--s-2) 0;
+  }
+  .nd-table td {
+    font-size: var(--fs-sm); color: rgba(37, 0, 1, 0.74); padding: var(--s-2) var(--s-3) var(--s-2) 0;
+    border-top: 1px solid rgba(4, 47, 42, 0.14);
+  }
+  .nd-table__tier { color: var(--c-tomato); }
+  .nd-table__status { text-align: right; white-space: nowrap; }
+
+  /* Per-market table renders on the dark page, not inside a plate. */
+  .ni-market { margin-top: var(--s-4); }
+  .ni-market th { color: var(--fg-faint); }
+  .ni-market td { color: var(--fg-soft); border-top: 1px solid var(--rule); }
+  .ni-market .nd-table__tier { color: var(--c-tomato); }
+
+  .ni-cta {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: var(--s-4) 0 0;
+  }
+  .ni-cta a { color: var(--c-tomato); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+
+  .ni-sources {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: var(--s-2);
+    font-family: var(--f-mono); font-size: var(--fs-xs); line-height: 1.5;
+    color: var(--fg-soft);
+  }
+
+  @media (max-width: 900px) {
+    .ni-stats, .ni-stats--3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .ni-stats, .ni-stats--3 { grid-template-columns: 1fr; }
+  }
 </style>

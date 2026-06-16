@@ -1,75 +1,165 @@
 ---
-import Research from '../../../layouts/Research.astro';
+import RecordLayout from '../../../layouts/RecordLayout.astro';
 import data from '../../../data/necessity-index.json';
 
 const metrics = [
-  { label: 'Total companies classified', value: data.universe.total_companies.toLocaleString('en-US') },
-  { label: 'Four-market subset', value: data.universe.four_market_companies.toLocaleString('en-US') },
+  { label: 'Four-market companies', value: data.universe.four_market_companies.toLocaleString('en-US') },
   { label: 'Regulations mapped (global)', value: data.universe.regulations_global.toString() },
   { label: 'Four-market regulations', value: data.universe.regulations_four_market.toString() }
 ];
 ---
-<Research
+<RecordLayout
   title="The Necessity Index. Methodology"
   description="How the classified universe was built, how the T1 / T2 screen is applied, and how to reproduce the headline figures."
-  headlineMetrics={metrics}
+  section="data"
+  tone="light"  folio="ex-17 / 38"
+  locator='03 · The data <span style="color:var(--fg-faint)">&rarr;</span> <span class="here">Methodology</span>'
 >
-  <p>
-    The Necessity Index is a public data product that summarises the hmm Ventures classified universe of APAC technology companies and the regulatory architecture they operate against. This page documents how each figure on the index is produced, the source datasets, and the steps required to reproduce the result.
-  </p>
+  <header class="rec-masthead">
+    <p class="rec-masthead__eyebrow" style="color:var(--c-tomato)">03 · Methodology</p>
+    <h1 class="rec-masthead__title">The Necessity Index. Methodology</h1>
+    <p class="rec-masthead__claim">
+      How the classified universe was built, how the T1 / T2 screen is applied, and how to reproduce the headline figures.
+    </p>
+  </header>
 
-  <h2>Source datasets</h2>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The figures</span><span class="rec-beat__count">01 / 05</span></div>
+    <ul class="md-metrics" role="list">
+      {metrics.map((m) => (
+        <li><span class="md-metrics__num">{m.value}</span> <span class="md-metrics__label">{m.label}</span></li>
+      ))}
+    </ul>
+    <p class="rec-beat__prose">
+      The Necessity Index is a public data product that summarises the hmm Ventures classified universe of APAC technology companies and the regulatory architecture they operate against. This page documents how each figure on the index is produced, the source datasets, and the steps required to reproduce the result.
+    </p>
+  </section>
 
-  <p>The Index draws from three primary datasets, all maintained as part of the fund's continuous research operation.</p>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The sources</span><span class="rec-beat__count">02 / 05</span></div>
+    <h2 class="rec-beat__arg">Source datasets</h2>
+    <p class="rec-beat__prose">The Index draws from three primary datasets, all maintained as part of the fund's continuous research operation.</p>
+    <ul class="md-list" role="list">
+      <li>
+        <strong>Classified company universe.</strong> 19,416 technology companies headquartered in the four target markets (Australia, Japan, New Zealand, Singapore), enriched from licensed commercial data feeds (domain, registry, funding, headcount, location) and classified against the T1 / T2 framework using a two-stage pipeline.
+      </li>
+      <li>
+        <strong>Comprehensive regulations dataset.</strong> 725 regulations across 64 countries and 13 sectors, drawn from public legislation portals, regulator publications, and parliamentary records. 174 regulations operate in the four target markets. Status is tracked across three states: enacted, in_parliament, expected.
+      </li>
+      <li>
+        <strong>Four-market sector-tier breakdown.</strong> A reconciled table of the 174 four-market regulations grouped by sector and by tier (T1 / T2), used for the per-market and per-Necessity views in the Index.
+      </li>
+    </ul>
+  </section>
 
-  <ul>
-    <li>
-      <strong>Classified company universe.</strong> 22,217 APAC technology companies enriched from licensed commercial data feeds (domain, registry, funding, headcount, location) and classified against the T1 / T2 framework using a two-stage pipeline. 19,416 of the 22,217 are headquartered in the four target markets (Australia, Japan, New Zealand, Singapore).
-    </li>
-    <li>
-      <strong>Comprehensive regulations dataset.</strong> 725 regulations across 64 countries and 13 sectors, drawn from public legislation portals, regulator publications, and parliamentary records. 174 regulations operate in the four target markets. Status is tracked across three states: enacted, in_parliament, expected.
-    </li>
-    <li>
-      <strong>Four-market sector-tier breakdown.</strong> A reconciled table of the 174 four-market regulations grouped by sector and by tier (T1 / T2), used for the per-market and per-Necessity views in the Index.
-    </li>
-  </ul>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The classifier</span><span class="rec-beat__count">03 / 05</span></div>
+    <h2 class="rec-beat__arg">Classification rules</h2>
+    <p class="rec-beat__prose">
+      A company passes the screen and enters the Necessities-aligned universe only if it is classified as Tier 1 or Tier 2 against the Five Necessities or the cross-cutting AI and Data band.
+    </p>
+    <ul class="md-list" role="list">
+      <li>
+        <strong>Tier 1. Licence-as-barrier.</strong> The company cannot legally operate without regulatory approval. The classifier flags a company as T1 when its registry, product description, or hiring signals indicate dependence on a named licence, clearance, or certification regime in one of the four markets.
+      </li>
+      <li>
+        <strong>Tier 2. Compulsion-as-barrier.</strong> The company's buyers are statutorily required to purchase compliant solutions. The classifier flags a company as T2 when its sector and customer profile map to a compliance mandate that creates demand for the company's product.
+      </li>
+    </ul>
+    <p class="rec-beat__prose">
+      The conservative classifier (the figure reported on the public Index) requires both stages of the pipeline to agree. Where the two stages disagree, the company is held out of the conservative count. The conservative classifier returns 33.5 percent (6,505 of 19,416) for the four-market universe.
+    </p>
+  </section>
 
-  <h2>Classification rules</h2>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The limitations</span><span class="rec-beat__count">04 / 05</span></div>
+    <h2 class="rec-beat__arg">Known limitations</h2>
+    <ol class="md-list md-list--num" role="list">
+      <li>
+        <strong>English-language bias.</strong> Japanese and multilingual portals (e-Gov, METI, MLIT) are scanned in both English and Japanese, but where only the Japanese text is authoritative the English rendering is translated and labelled accordingly.
+      </li>
+      <li>
+        <strong>Four-market bound.</strong> Coverage outside Australia, Japan, New Zealand, and Singapore is reference-only in the wider 725-regulation dataset. The 174 four-market entries are the authoritative scope for fund investment decisions and for the Index.
+      </li>
+      <li>
+        <strong>Per-Necessity counts may not reconcile against four-market totals.</strong> Some regulations span multiple Necessities. The per-market totals (174) count each regulation once; the per-Necessity totals do not de-duplicate cross-Necessity entries.
+      </li>
+    </ol>
+  </section>
 
-  <p>
-    A company passes the screen and enters the Necessities-aligned universe only if it is classified as Tier 1 or Tier 2 against the Five Necessities or the cross-cutting AI and Data band.
-  </p>
+  <section class="rec-beat">
+    <div class="rec-beat__head"><span class="rec-beat__label">The reproducibility</span><span class="rec-beat__count">05 / 05</span></div>
+    <h2 class="rec-beat__arg">Reproducibility</h2>
+    <p class="rec-beat__prose">
+      Every figure on the Index resolves to a row in one of the three source datasets above. The classifier rules and worked examples are published openly across the research surface.
+    </p>
+  </section>
+</RecordLayout>
 
-  <ul>
-    <li>
-      <strong>Tier 1. Licence-as-barrier.</strong> The company cannot legally operate without regulatory approval. The classifier flags a company as T1 when its registry, product description, or hiring signals indicate dependence on a named licence, clearance, or certification regime in one of the four markets.
-    </li>
-    <li>
-      <strong>Tier 2. Compulsion-as-barrier.</strong> The company's buyers are statutorily required to purchase compliant solutions. The classifier flags a company as T2 when its sector and customer profile map to a compliance mandate that creates demand for the company's product.
-    </li>
-  </ul>
+<style>
+  /* Headline metric strip. Mono labels, serif numerals. */
+  .md-metrics {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--s-5);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-5) var(--s-6);
+  }
+  .md-metrics li { display: inline-flex; flex-direction: column; gap: var(--s-1); }
+  .md-metrics__num {
+    font-family: var(--f-display);
+    font-size: var(--fs-xl);
+    line-height: 1;
+    color: var(--c-tomato);
+    letter-spacing: -0.01em;
+  }
+  .md-metrics__label {
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--fg-soft);
+  }
 
-  <p>
-    The conservative classifier (the figure reported on the public Index) requires both stages of the pipeline to agree. Where the two stages disagree, the company is held out of the conservative count. The conservative classifier returns 33.5 percent (6,505 of 19,416) for the four-market universe.
-  </p>
-
-  <h2>Known limitations</h2>
-
-  <ol>
-    <li>
-      <strong>English-language bias.</strong> Japanese and multilingual portals (e-Gov, METI, MLIT) are scanned in both English and Japanese, but where only the Japanese text is authoritative the English rendering is translated and labelled accordingly.
-    </li>
-    <li>
-      <strong>Four-market bound.</strong> Coverage outside Australia, Japan, New Zealand, and Singapore is reference-only in the wider 725-regulation dataset. The 174 four-market entries are the authoritative scope for fund investment decisions and for the Index.
-    </li>
-    <li>
-      <strong>Per-Necessity counts may not reconcile against four-market totals.</strong> Some regulations span multiple Necessities. The per-market totals (174) count each regulation once; the per-Necessity totals do not de-duplicate cross-Necessity entries.
-    </li>
-  </ol>
-
-  <h2>Reproducibility</h2>
-
-  <p>
-    Every figure on the Index resolves to a row in one of the three source datasets above. The classifier rules and worked examples are published openly across the research surface.
-  </p>
-</Research>
+  /* Prose lists. DM Sans body, mono-strong lead-ins via inherited weight. */
+  .md-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 64ch;
+  }
+  .md-list li {
+    font-family: var(--f-body);
+    font-size: var(--fs-md);
+    line-height: 1.65;
+    color: var(--fg-soft);
+    padding-block: var(--s-3);
+    padding-inline-start: var(--s-4);
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+  .md-list li:first-child { border-top: 0; }
+  .md-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: calc(var(--s-3) + 0.65em);
+    width: 5px;
+    height: 5px;
+    background: var(--c-tomato);
+  }
+  .md-list--num { counter-reset: md-item; }
+  .md-list--num li::before {
+    counter-increment: md-item;
+    content: counter(md-item);
+    background: none;
+    color: var(--c-tomato);
+    font-family: var(--f-mono);
+    font-size: var(--fs-xs);
+    top: var(--s-3);
+    width: auto;
+    height: auto;
+  }
+  .md-list strong { color: var(--fg); font-weight: 500; }
+</style>

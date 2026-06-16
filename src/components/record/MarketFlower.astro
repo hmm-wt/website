@@ -1,0 +1,94 @@
+---
+/**
+ * MarketFlower. The canonical national flower per market. Paths from the IM
+ * fauna SVGs (/public/fauna/hmm-fauna-{market}-{name}.svg). One source of truth.
+ *
+ * AU golden wattle · JP chrysanthemum (16 petals, 22.5deg) · NZ koru · SG vanda.
+ */
+interface Props {
+  market: 'AU' | 'JP' | 'NZ' | 'SG';
+  size?: number;
+  strokeWidth?: number;
+}
+const { market, size = 28, strokeWidth = 1.5 } = Astro.props;
+
+const labels: Record<Props['market'], string> = {
+  AU: 'Golden wattle, national flower of Australia',
+  JP: 'Chrysanthemum, national flower of Japan',
+  NZ: 'Koru, motif of New Zealand',
+  SG: 'Vanda Miss Joaquim, national flower of Singapore',
+};
+const jpAngles = [0, 22.5, 45, 67.5, 90, 112.5, 135, 157.5, 180, 202.5, 225, 247.5, 270, 292.5, 315, 337.5];
+---
+<svg
+  class={`mflower mflower--${market.toLowerCase()}`}
+  data-market={market}
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  role="img"
+  aria-label={labels[market]}
+  fill="none"
+  stroke="currentColor"
+  stroke-width={strokeWidth}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  {market === 'AU' && (
+    <g>
+      <path d="M 18 84 Q 40 72 54 56 Q 68 40 82 22" />
+      <path d="M 28 78 C 22 78, 18 74, 16 70 C 22 72, 26 74, 28 78 Z" />
+      <path d="M 34 74 C 36 70, 38 64, 38 60 C 38 66, 38 72, 34 74 Z" />
+      <path d="M 46 60 C 40 60, 34 56, 32 52 C 38 54, 44 58, 46 60 Z" />
+      <path d="M 52 56 C 54 50, 56 44, 56 40 C 56 46, 56 52, 52 56 Z" />
+      <path d="M 64 42 C 58 42, 52 38, 50 34 C 56 36, 62 40, 64 42 Z" />
+      <path d="M 70 38 C 72 34, 74 28, 74 24 C 74 30, 74 34, 70 38 Z" />
+      <g fill="currentColor" stroke="none">
+        <circle cx="22" cy="80" r="1.4" /><circle cx="19.8" cy="81.8" r="1.4" /><circle cx="24.2" cy="81.8" r="1.4" /><circle cx="20.2" cy="77.8" r="1.4" /><circle cx="23.8" cy="77.8" r="1.4" />
+        <circle cx="38" cy="66" r="1.4" /><circle cx="35.8" cy="67.8" r="1.4" /><circle cx="40.2" cy="67.8" r="1.4" /><circle cx="36.2" cy="63.8" r="1.4" /><circle cx="39.8" cy="63.8" r="1.4" />
+        <circle cx="54" cy="50" r="1.4" /><circle cx="51.8" cy="51.8" r="1.4" /><circle cx="56.2" cy="51.8" r="1.4" /><circle cx="52.2" cy="47.8" r="1.4" /><circle cx="55.8" cy="47.8" r="1.4" />
+        <circle cx="68" cy="34" r="1.4" /><circle cx="65.8" cy="35.8" r="1.4" /><circle cx="70.2" cy="35.8" r="1.4" /><circle cx="66.2" cy="31.8" r="1.4" /><circle cx="69.8" cy="31.8" r="1.4" />
+        <circle cx="80" cy="24" r="1.4" /><circle cx="77.8" cy="25.8" r="1.4" /><circle cx="82.2" cy="25.8" r="1.4" /><circle cx="78.2" cy="21.8" r="1.4" /><circle cx="81.8" cy="21.8" r="1.4" />
+      </g>
+    </g>
+  )}
+  {market === 'JP' && (
+    <g>
+      <g transform="translate(50 50)">
+        {jpAngles.map((a) => (
+          <g transform={`rotate(${a})`}>
+            <path d="M 0 -32 C -4 -20 -4 -8 0 -4 C 4 -8 4 -20 0 -32 Z" />
+          </g>
+        ))}
+      </g>
+      <circle cx="50" cy="50" r="5.5" />
+      <circle cx="50" cy="50" r="1.6" fill="currentColor" stroke="none" />
+    </g>
+  )}
+  {market === 'NZ' && (
+    <g>
+      <path d="M 20 86 C 20 40, 46 14, 70 14 C 90 14, 92 38, 74 44 C 58 48, 50 36, 56 26 C 62 18, 76 22, 76 32" />
+      <circle cx="72" cy="30" r="1.4" fill="currentColor" stroke="none" />
+    </g>
+  )}
+  {market === 'SG' && (
+    <g>
+      <path d="M 50 96 Q 52 82 50 70 L 50 46" />
+      <path d="M 50 78 C 44 76, 40 72, 38 68 C 44 70, 48 72, 50 78 Z" />
+      <path d="M 50 86 C 56 84, 60 80, 62 76 C 56 78, 52 80, 50 86 Z" />
+      <path d="M 50 42 C 44 32, 42 20, 46 12 C 50 18, 52 30, 50 42 Z" />
+      <path d="M 50 42 C 56 32, 58 20, 54 12 C 50 18, 48 30, 50 42 Z" />
+      <path d="M 48 44 C 36 44, 26 38, 20 30 C 30 34, 40 40, 48 44 Z" />
+      <path d="M 52 44 C 64 44, 74 38, 80 30 C 70 34, 60 40, 52 44 Z" />
+      <path d="M 48 48 C 38 50, 28 52, 22 56 C 30 52, 38 50, 48 48 Z" />
+      <path d="M 52 48 C 62 50, 72 52, 78 56 C 70 52, 62 50, 52 48 Z" />
+      <path d="M 50 46 C 40 52, 36 62, 40 72 C 42 78, 48 82, 50 82 C 52 82, 58 78, 60 72 C 64 62, 60 52, 50 46 Z" />
+      <line x1="50" y1="54" x2="50" y2="76" stroke-width={Math.max(strokeWidth * 0.6, 0.7)} />
+      <circle cx="50" cy="44" r="1.4" fill="currentColor" stroke="none" />
+    </g>
+  )}
+</svg>
+
+<style>
+  .mflower { display: inline-block; vertical-align: middle; color: currentColor; }
+</style>

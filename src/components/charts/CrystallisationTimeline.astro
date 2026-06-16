@@ -11,7 +11,7 @@
  * Data source: src/data/crystallisation-window.json.
  *
  * Keyboard: tab through markers in DOM order; left/right arrows move within
- * a lane. Marker click opens the source modal (existing chart-zoom).
+ * a lane. Marker click reveals the source tooltip in place.
  *
  * Sits inside an IMFigure with bleed="wide" so it spans 72rem on desktop.
  */
@@ -320,9 +320,7 @@ const totalCount = regs.length;
     display: block;
     height: 3px;
     width: 0;
-    background: linear-gradient(90deg,
-      color-mix(in srgb, var(--cwt-tomato) calc(35% + 50% * var(--cwt-year-intensity, 0)), transparent),
-      color-mix(in srgb, var(--cwt-tomato) calc(15% + 45% * var(--cwt-year-intensity, 0)), transparent));
+    background: color-mix(in srgb, var(--c-tomato) 70%, transparent);
     margin-block-start: 2px;
     transition: width 720ms cubic-bezier(0.22, 1, 0.36, 1);
   }

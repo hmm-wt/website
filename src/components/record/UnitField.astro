@@ -1,0 +1,40 @@
+---
+/**
+ * UnitField. IM-grade unit grid: one mark per unit, hero units in Tomato, the
+ * rest faint mahogany. Built for the pearl Plate surface. Square marks on a
+ * regular pitch, capped so the field stays legible.
+ */
+interface Props {
+  total: number;
+  heroIndices?: number[];
+  cols?: number;
+  cap?: number;
+}
+const { total, heroIndices = [], cols = 50, cap = 1100 } = Astro.props;
+
+const shown = Math.min(total, cap);
+const heroes = new Set(heroIndices.filter((i) => i < shown));
+const W = 360;
+const padX = 5;
+const pitch = (W - padX * 2) / cols;
+const m = pitch * 0.5;          // mark size = half the pitch
+const rows = Math.ceil(shown / cols);
+const H = rows * pitch + padX * 2;
+
+const marks = Array.from({ length: shown }, (_, i) => {
+  const c = i % cols;
+  const r = Math.floor(i / cols);
+  return { x: padX + c * pitch, y: padX + r * pitch, hero: heroes.has(i) };
+});
+---
+<svg class="unitf" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${total} units, ${heroes.size} highlighted`}>
+  {marks.map((mk) => (
+    <rect class={`unitf__m ${mk.hero ? 'unitf__m--hero' : ''}`} x={mk.x} y={mk.y} width={m} height={m} />
+  ))}
+</svg>
+
+<style>
+  .unitf { display: block; width: 100%; height: auto; }
+  .unitf__m { fill: var(--c-mahogany); opacity: 0.22; }
+  .unitf__m--hero { fill: var(--c-tomato); opacity: 0.95; }
+</style>

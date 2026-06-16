@@ -105,6 +105,10 @@ const marketLabel: Record<string, string> = { AU: 'Australia', JP: 'Japan', NZ: 
     font-size: var(--fs-lg);
     line-height: var(--lh-snug);
     margin: 0;
+    /* Explicit ink. Without it the title inherits the dark-theme pearl text
+       and ghosts out on the light register. --fg resolves to mahogany inside
+       .rec--light, pearl on dark. */
+    color: var(--fg);
   }
 
   .ce__necessity { margin: 0; }

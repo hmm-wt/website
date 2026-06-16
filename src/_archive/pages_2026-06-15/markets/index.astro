@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import CorridorGrid from '../../components/CorridorGrid.astro';
-import ChartFrame from '../../components/ChartFrame.astro';
+import IMFigure from '../../components/IMFigure.astro';
 import CrystallisationStrip from '../../components/charts/CrystallisationStrip.astro';
 import ComparisonTable from '../../components/ComparisonTable.astro';
 import CTARail from '../../components/CTARail.astro';
@@ -72,14 +72,15 @@ const comparisonRows = [
   <CorridorGrid />
 
   <section class="container mk-window">
-    <ChartFrame
-      kicker="The window"
-      title="One crystallisation window across all four markets."
-      caption="In-flight regulations by effective year, summed across the four target markets. Peak crystallisation 2027."
-      source="Source: hmm Ventures regulatory dataset."
+    <IMFigure
+      fignum="EX-1"
+      label="The window"
+      title="One <em>crystallisation window</em> across all four markets."
+      sub="In-flight regulations by effective year, summed across the four target markets. Peak crystallisation 2027."
+      source="hmm Ventures regulatory dataset."
     >
       <CrystallisationStrip />
-    </ChartFrame>
+    </IMFigure>
   </section>
 
   <section class="container mk-compare">
@@ -115,9 +116,9 @@ const comparisonRows = [
     font-weight: 400;
   }
   .mk-hero__sub {
-    font-family: var(--f-display);
-    font-size: var(--fs-xl);
-    line-height: var(--lh-snug);
+    font-family: var(--f-mono);
+    font-size: var(--fs-md);
+    line-height: 1.6;
     color: color-mix(in srgb, var(--c-pearl) 84%, transparent);
     max-width: 60ch;
     margin: 0;
