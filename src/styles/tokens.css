@@ -38,6 +38,22 @@
   font-display: swap;
   src: url('/fonts/InstrumentSerif-Italic.woff2') format('woff2');
 }
+/* Newsreader. Editorial text serif (optical-size + weight axes), self-hosted.
+   The record's reading face: arguments and body on the light paper subpages. */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/Newsreader-Roman.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/Newsreader-Italic.woff2') format('woff2');
+}
 
 :root {
   /* ---------- Six brand colours ---------- */
@@ -142,9 +158,13 @@
   --lh-annot: 1.32;
 
   /* ---------- Type stack ---------- */
-  --f-display: 'Instrument Serif', 'Times New Roman', Georgia, serif;
+  /* Editorial text serif. Newsreader carries arguments and body across the whole
+     site (display + text via its optical-size axis), retiring the Instrument
+     Serif + DM Sans pairing. IBM Plex Mono stays the data/label voice. */
+  --f-editorial: 'Newsreader', 'Georgia', 'Times New Roman', serif;
+  --f-display: var(--f-editorial);
   --f-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --f-body:    'DM Sans', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --f-body:    var(--f-editorial);
   --f-print:   'Inter', 'Arial', sans-serif;
 
   /* ---------- Type scale (fluid) ----------
