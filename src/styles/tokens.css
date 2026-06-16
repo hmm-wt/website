@@ -31,15 +31,8 @@
   font-display: swap;
   src: url('/fonts/InstrumentSerif-Regular.woff2') format('woff2');
 }
-@font-face {
-  font-family: 'Instrument Serif';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/InstrumentSerif-Italic.woff2') format('woff2');
-}
 /* Newsreader. Editorial text serif (optical-size + weight axes), self-hosted.
-   The record's reading face: arguments and body on the light paper subpages. */
+   The record's reading face (body). No italic face: the site has no italics. */
 @font-face {
   font-family: 'Newsreader';
   font-style: normal;
@@ -47,12 +40,21 @@
   font-display: swap;
   src: url('/fonts/Newsreader-Roman.woff2') format('woff2');
 }
+/* Bitcount. Dot-matrix display face, self-hosted. The header voice: headlines,
+   arguments, and the funnel counts render as dots, tying type to the chart. */
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Bitcount Grid Single';
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 100 900;
   font-display: swap;
-  src: url('/fonts/Newsreader-Italic.woff2') format('woff2');
+  src: url('/fonts/Bitcount-Grid-Single.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Bitcount Prop Single';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Bitcount-Prop-Single.woff2') format('woff2');
 }
 
 :root {
@@ -162,7 +164,10 @@
      site (display + text via its optical-size axis), retiring the Instrument
      Serif + DM Sans pairing. IBM Plex Mono stays the data/label voice. */
   --f-editorial: 'Newsreader', 'Georgia', 'Times New Roman', serif;
-  --f-display: var(--f-editorial);
+  /* Dot-matrix header voice. Headlines and arguments render as dots, tying the
+     type to the funnel's dot field. Body stays editorial; data stays mono. */
+  --f-header:  'Bitcount Grid Single', 'Bitcount Prop Single', ui-monospace, monospace;
+  --f-display: var(--f-header);
   --f-mono:    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --f-body:    var(--f-editorial);
   --f-print:   'Inter', 'Arial', sans-serif;
