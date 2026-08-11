@@ -665,7 +665,7 @@
 
     function Schematic(kind){var cfg=SECCFG[kind],S=cfg.stages,acc=ACCENT[kind];
       var LAB="rgba(242,236,201,.85)",LINE="rgba(242,236,201,.4)",BRD="rgba(242,236,201,.22)";
-      var N=S.length,PR=Math.ceil(N/2),BW=108,BH=48,GX=16,GY=56,x0=7,y0=18,vbW=x0+PR*(BW+GX)+3;
+      var N=S.length,PR=Math.ceil(N/2),BW=108,BH=48,GX=16,GY=56,M=14,x0=M,y0=M,vbW=2*M+(PR-1)*(BW+GX)+BW,vbH=2*M+2*BH+GY;
       function pos(i){return i<PR?{c:i,r:0}:{c:N-1-i,r:1};}
       function xy(i){var p=pos(i);return {x:x0+p.c*(BW+GX),y:y0+p.r*(BH+GY)};}
       var e=[],kc=0;
@@ -682,9 +682,9 @@
         e.push(h("g",{key:"g"+i,className:"blk",tabIndex:0,role:"button","aria-label":s.key,"data-key":s.key,
           onClick:function(){showStage(kind,s.key);},onKeyDown:function(ev){if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();showStage(kind,s.key);}}},g));});
       var fw=vbW-4;
-      e.unshift(h("rect",{key:"frame",x:2,y:2,width:fw,height:206,fill:"none",stroke:"rgba(242,236,201,.1)",strokeWidth:1}));
-      [[2,2,9,9],[vbW-2,2,-9,9],[2,208,9,-9],[vbW-2,208,-9,-9]].forEach(function(t,ti){e.push(h("line",{key:"fa"+ti,x1:t[0],y1:t[1],x2:t[0]+t[2],y2:t[1],stroke:acc,strokeWidth:1}));e.push(h("line",{key:"fb"+ti,x1:t[0],y1:t[1],x2:t[0],y2:t[1]+t[3],stroke:acc,strokeWidth:1}));});
-      return h("svg",{viewBox:"0 0 "+vbW+" 210",role:"img","aria-label":cfg.exTitle+", end to end, as a block schematic"},e);
+      e.unshift(h("rect",{key:"frame",x:2,y:2,width:fw,height:vbH-4,fill:"none",stroke:"rgba(242,236,201,.1)",strokeWidth:1}));
+      [[2,2,9,9],[vbW-2,2,-9,9],[2,vbH-2,9,-9],[vbW-2,vbH-2,-9,-9]].forEach(function(t,ti){e.push(h("line",{key:"fa"+ti,x1:t[0],y1:t[1],x2:t[0]+t[2],y2:t[1],stroke:acc,strokeWidth:1}));e.push(h("line",{key:"fb"+ti,x1:t[0],y1:t[1],x2:t[0],y2:t[1]+t[3],stroke:acc,strokeWidth:1}));});
+      return h("svg",{viewBox:"0 0 "+vbW+" "+vbH,role:"img","aria-label":cfg.exTitle+", end to end, as a block schematic"},e);
     }
 
     function showStage(kind,name){var cfg=SECCFG[kind],st=(cfg.data||{})[name];
