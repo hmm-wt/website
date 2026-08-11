@@ -276,8 +276,8 @@
       var active = false;
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
-        d.vx = (d.vx + (d.hx - d.x) * 0.085) * 0.87;  // spring home + damping
-        d.vy = (d.vy + (d.hy - d.y) * 0.085) * 0.87;
+        d.vx = (d.vx + (d.hx - d.x) * 0.10) * 0.86;   // spring home + damping (crisp settle)
+        d.vy = (d.vy + (d.hy - d.y) * 0.10) * 0.86;
         d.x += d.vx; d.y += d.vy;
         d.n.setAttribute("cx", d.x.toFixed(2));
         d.n.setAttribute("cy", d.y.toFixed(2));
