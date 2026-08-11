@@ -267,27 +267,29 @@
       dots.push({ n: n, hx: hx, hy: hy, x: hx, y: hy, ph: Math.random() * 6.283 });
     }
     if (!dots.length) return;
-    var vis = false, run = false;
+    var vis = true;   // default on; the observer only turns it OFF when the panel is offscreen
     function loop() {
-      if (!vis) { run = false; return; }
-      var now = Date.now() / 1000;
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        var tx = d.hx + Math.cos(now * 0.6 + d.ph) * 2.4;   // flock breath
-        var ty = d.hy + Math.sin(now * 0.7 + d.ph) * 2.4;
-        d.x += (tx - d.x) * 0.045;                          // flock SMOOTH lag
-        d.y += (ty - d.y) * 0.045;
-        d.n.setAttribute("cx", d.x.toFixed(2));
-        d.n.setAttribute("cy", d.y.toFixed(2));
+      if (vis) {
+        var now = Date.now() / 1000;
+        for (var i = 0; i < dots.length; i++) {
+          var d = dots[i];
+          var tx = d.hx + Math.cos(now * 0.6 + d.ph) * 2.4;   // flock breath
+          var ty = d.hy + Math.sin(now * 0.7 + d.ph) * 2.4;
+          d.x += (tx - d.x) * 0.045;                          // flock SMOOTH lag
+          d.y += (ty - d.y) * 0.045;
+          d.n.setAttribute("cx", d.x.toFixed(2));
+          d.n.setAttribute("cy", d.y.toFixed(2));
+        }
       }
       requestAnimationFrame(loop);
     }
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { vis = e.isIntersecting; if (vis && !run) { run = true; requestAnimationFrame(loop); } });
+        es.forEach(function (e) { vis = e.isIntersecting; });
       }, { threshold: 0 });
       io.observe(svg);
-    } else { vis = true; run = true; requestAnimationFrame(loop); }
+    }
+    requestAnimationFrame(loop);   // always alive; cheap no-op while offscreen
   }
 
   function buildPanel(market) {
