@@ -15,6 +15,10 @@
   var HUES = { Power: "#F0902F", Eat: "#5FB873", Heal: "#4FA3DC" };
   var SERIES = ["Power", "Eat", "Heal"];
 
+  // dots render on <canvas> using the DWG-NEC machine-flock physics; PANELS collects them per panel.
+  var PANELS = [];
+  function hexA(h, a) { var n = parseInt(h.slice(1), 16); return "rgba(" + ((n >> 16) & 255) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + a + ")"; }
+
   // Scores 0 to 10, order: AI, Hardware, Regulation, Startup, Exit, Trade.
   var MARKETS = [
     {
@@ -107,13 +111,8 @@
       "#radars .radar-panel[data-focus] .series.is-active .radar-line{stroke-width:2.6;}",
       "#radars .radar-caption{max-width:70ch;margin:20px auto 0;font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);",
       "  font-size:10px;line-height:1.55;letter-spacing:.02em;color:var(--hmm-text-muted,rgba(242,236,201,.6));text-align:center;}",
-      "@keyframes radarPulse{0%,100%{r:1.9px;}50%{r:2.4px;}}",
-      "#radars .vtx{animation:radarPulse 3.6s ease-in-out infinite;}",
-      "@keyframes radarDot{0%,100%{r:1.1px;opacity:.78;}50%{r:1.6px;opacity:1;}}",
-      "#radars .radar-dot{animation:radarDot 3.2s ease-in-out infinite;}",
-      "@keyframes radarDotLg{0%,100%{r:1.7px;opacity:.9;}50%{r:2.4px;opacity:1;}}",
-      "#radars .radar-dot--lg{animation:radarDotLg 3.2s ease-in-out infinite;}",
-      "@media (prefers-reduced-motion:reduce){#radars .vtx,#radars .radar-dot,#radars .radar-dot--lg{animation:none;}}",
+      "#radars .radar-stage{position:relative;}",
+      "#radars .radar-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;}",
       "#radars .axis-lbl{cursor:help;transition:fill .15s ease;}",
       "#radars .axis-lbl:hover,#radars .axis-lbl:focus{fill:var(--hmm-pearl,#F2ECC9);outline:none;}",
       "#radars .axis-lbl:focus-visible{outline:2px solid var(--hmm-accent,#C44539);outline-offset:2px;}",
@@ -178,7 +177,7 @@
     "TRADE": "Global trade. How naturally the market's companies reach global demand: go-to-market, exports, redomicile."
   };
 
-  function buildSVG(market) {
+  function buildSVG(market, dotsOut) {
     var svg = el("svg", { class: "radar-svg", viewBox: "0 0 " + VB_W + " " + VB_H, role: "img" });
     svg.appendChild(el("title", {})).textContent = market.name + " necessity radar";
 
@@ -220,9 +219,9 @@
         "stroke-linejoin": "round"
       }));
 
-      // content is a dense constellation of breathing dots filling the necessity shape (no border traced)
+      // dot positions collected for the canvas flock engine (drawn on <canvas>, not SVG) at machine-diagram density
       var avg = (scores[0] + scores[1] + scores[2] + scores[3] + scores[4] + scores[5]) / 60; // 0..1
-      var FILL = Math.round(52 + avg * 96);              // scale count with shape size so density reads even
+      var FILL = Math.round(64 + avg * 120);             // dense fill; cheap on canvas, matches the DWG-NEC diagrams
       for (var q = 0; q < FILL; q++) {
         var seg = Math.random() * 6, si = seg | 0, fr = seg - si;
         var ri = (scores[si] / 10) * R, rj = (scores[(si + 1) % 6] / 10) * R;
@@ -230,27 +229,13 @@
         var th = angle(si) + fr * (Math.PI / 3);
         var rr2 = bnd * Math.sqrt(Math.random()) * 0.96;  // sqrt for area-uniform fill, 0.96 keeps inside the edge
         var big = Math.random() < 0.22;
-        g.appendChild(el("circle", {
-          class: "radar-dot" + (big ? " radar-dot--lg" : ""),
-          cx: (CX + Math.cos(th) * rr2).toFixed(2), cy: (CY + Math.sin(th) * rr2).toFixed(2),
-          r: big ? "1.9" : "1.2", fill: hue,
-          style: "animation-delay:" + (q * 0.06).toFixed(2) + "s"
-        }));
+        dotsOut.push({ x: CX + Math.cos(th) * rr2, y: CY + Math.sin(th) * rr2, r: big ? 1.9 : 1.2, hue: hue, s: name });
       }
-
-      // vertex dots: the peaks, larger, with a surface-coloured ring so overlaps stay legible
+      // vertex dots: the peaks, larger
       for (var vv = 0; vv < 6; vv++) {
         var rr = (scores[vv] / 10) * R;
-        g.appendChild(el("circle", {
-          class: "vtx",
-          cx: px(vv, rr).toFixed(2), cy: py(vv, rr).toFixed(2),
-          r: "1.9",
-          fill: hue,
-          stroke: "var(--rad-surface,#141414)", "stroke-width": "1.2",
-          style: "animation-delay:" + (vv * 0.16).toFixed(2) + "s"
-        }));
+        dotsOut.push({ x: px(vv, rr), y: py(vv, rr), r: 2.2, hue: hue, s: name, vtx: true });
       }
-
 
       svg.appendChild(g);
     });
@@ -258,57 +243,7 @@
     return svg;
   }
 
-  // click-to-explode: clicking a panel scatters its dots outward from the click point,
-  // then a spring pulls each back to its home position. Same dot idiom as the rest of the site.
-  function attachExplode(svg) {
-    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    var nodes = svg.querySelectorAll(".radar-dot, .vtx");
-    var dots = [];
-    for (var i = 0; i < nodes.length; i++) {
-      var n = nodes[i];
-      var hx = parseFloat(n.getAttribute("cx")), hy = parseFloat(n.getAttribute("cy"));
-      dots.push({ n: n, hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0 });
-    }
-    if (!dots.length) return;
-    var running = false;
-    function loop() {
-      var active = false;
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        d.vx = (d.vx + (d.hx - d.x) * 0.10) * 0.86;   // spring home + damping (crisp settle)
-        d.vy = (d.vy + (d.hy - d.y) * 0.10) * 0.86;
-        d.x += d.vx; d.y += d.vy;
-        d.n.setAttribute("cx", d.x.toFixed(2));
-        d.n.setAttribute("cy", d.y.toFixed(2));
-        if (Math.abs(d.vx) + Math.abs(d.vy) > 0.06 || Math.abs(d.hx - d.x) + Math.abs(d.hy - d.y) > 0.5) active = true;
-      }
-      if (active) { requestAnimationFrame(loop); }
-      else {
-        for (var j = 0; j < dots.length; j++) {
-          var e = dots[j]; e.n.setAttribute("cx", e.hx.toFixed(2)); e.n.setAttribute("cy", e.hy.toFixed(2));
-          e.x = e.hx; e.y = e.hy; e.vx = 0; e.vy = 0;
-        }
-        running = false;
-      }
-    }
-    svg.style.cursor = "pointer";
-    svg.addEventListener("click", function (ev) {
-      var loc;
-      try { var pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; loc = pt.matrixTransform(svg.getScreenCTM().inverse()); }
-      catch (err) { loc = { x: CX, y: CY }; }
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        var dx = d.x - loc.x, dy = d.y - loc.y, dist = Math.sqrt(dx * dx + dy * dy), ux, uy;
-        if (dist < 1.2) { var a = Math.random() * 6.283; ux = Math.cos(a); uy = Math.sin(a); dist = 1.2; }  // dead-on click: random direction so it still flies
-        else { ux = dx / dist; uy = dy / dist; }
-        var force = 12 + 240 / (dist + 12);           // every dot flung; closer dots harder
-        d.vx += ux * force * (0.7 + Math.random() * 0.8) + (Math.random() - 0.5) * 9;
-        d.vy += uy * force * (0.7 + Math.random() * 0.8) + (Math.random() - 0.5) * 9;
-      }
-      if (!running) { running = true; requestAnimationFrame(loop); }
-    });
-  }
+  // (radar dots are drawn on <canvas> by the shared flock engine in render(); no SVG explode.)
 
   function buildPanel(market) {
     var panel = document.createElement("div");
@@ -330,9 +265,16 @@
     sub.textContent = market.sub;
     panel.appendChild(sub);
 
-    var svg = buildSVG(market);
-    panel.appendChild(svg);
-    attachExplode(svg);
+    var dotsOut = [];
+    var svg = buildSVG(market, dotsOut);
+    var stage = document.createElement("div");
+    stage.className = "radar-stage";
+    stage.appendChild(svg);
+    var cv = document.createElement("canvas");
+    cv.className = "radar-canvas";
+    stage.appendChild(cv);
+    panel.appendChild(stage);
+    PANELS.push({ panel: panel, svg: svg, cv: cv, dots: dotsOut });
 
     // legend chips (identity never rests on colour alone)
     var legend = document.createElement("ul");
@@ -386,6 +328,46 @@
     wrap.className = "radar-wrap";
     MARKETS.forEach(function (m) { wrap.appendChild(buildPanel(m)); });
     root.appendChild(wrap);
+
+    // ---- canvas flock engine: draw every panel's dots with the DWG-NEC machine physics ----
+    var reduceMo = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    function sizePanel(p) {
+      var w = p.cv.clientWidth, h = p.cv.clientHeight;
+      if (!w || !h) return false;
+      p.cv.width = Math.round(w * DPR); p.cv.height = Math.round(h * DPR);
+      p.sx = w / VB_W; p.w = w; p.h = h;
+      p.ctx = p.cv.getContext("2d"); p.ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      for (var i = 0; i < p.dots.length; i++) {
+        var d = p.dots[i]; d.hx = d.x * (w / VB_W); d.hy = d.y * (h / VB_H);
+        if (d.cx === undefined) { d.cx = d.hx; d.cy = d.hy; d.ph = Math.random() * 6.283; }
+      }
+      return true;
+    }
+    function sizeAll() { for (var i = 0; i < PANELS.length; i++) sizePanel(PANELS[i]); }
+    var visR = true;
+    function frame() {
+      if (visR) {
+        var now = Date.now() / 1000;
+        for (var pi = 0; pi < PANELS.length; pi++) {
+          var p = PANELS[pi];
+          if (!p.ctx && !sizePanel(p)) continue;
+          var focus = p.panel.getAttribute("data-focus");
+          p.ctx.clearRect(0, 0, p.w, p.h);
+          for (var i = 0; i < p.dots.length; i++) {
+            var d = p.dots[i];
+            if (!reduceMo) { var tx = d.hx + Math.cos(now * 0.6 + d.ph) * 2.4, ty = d.hy + Math.sin(now * 0.7 + d.ph) * 2.4; d.cx += (tx - d.cx) * 0.045; d.cy += (ty - d.cy) * 0.045; }
+            var a = (focus && focus !== d.s) ? 0.10 : (d.vtx ? 1 : 0.9);
+            p.ctx.beginPath(); p.ctx.arc(d.cx, d.cy, d.r * p.sx, 0, 6.283); p.ctx.fillStyle = hexA(d.hue, a); p.ctx.fill();
+          }
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    sizeAll(); setTimeout(sizeAll, 300);
+    if ("IntersectionObserver" in window) { var rio = new IntersectionObserver(function (es) { es.forEach(function (e) { visR = e.isIntersecting; }); }, { threshold: 0 }); rio.observe(root); }
+    var rrt = null; addEventListener("resize", function () { clearTimeout(rrt); rrt = setTimeout(sizeAll, 180); });
+    requestAnimationFrame(frame);
 
     // click a market name to open its prose
     var drill = document.createElement("div");
