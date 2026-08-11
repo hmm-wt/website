@@ -216,7 +216,9 @@
   .src-move-body p{font-size:13.5px;line-height:1.6;color:var(--hmm-text-muted);margin:0;}
   .src-stream{position:sticky;top:100px;height:min(72vh,620px);overflow:hidden;border-top:1px solid var(--hmm-border);border-bottom:1px solid var(--hmm-border);
     -webkit-mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);}
-  @media(max-width:860px){.src-split{grid-template-columns:1fr;}.src-stream{position:relative;top:0;height:min(60vh,480px);}}
+  .src-reccol{min-width:0;}
+  .src-reccol .src-after{margin-top:16px;}
+  @media(max-width:860px){.src-split{grid-template-columns:1fr;}.src-stream{position:relative;top:0;height:min(60vh,480px);}.src-reccol .src-after{margin-top:14px;}}
   /* ---------- S7 markets + S8 density ---------- */
   .mkt,.dens{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
   .mkt>*,.dens>*{width:min(1180px,96vw);}
@@ -570,7 +572,6 @@
         <div class="src-question">
           <div class="k-label">The one question</div>
           <p class="src-q">If the necessities are where the next wave of innovation sits, and these three markets set the standards first, how do we find these founders?</p>
-          <p class="src-after">They form in markets the global funds treat as insular and thin on exits. The record beside this shows the innovation was there, mostly found or backed late.</p>
         </div>
         <div class="src-moves">
           <div class="src-move"><span class="src-move-i">A</span><div class="src-move-body"><h4>Source before the first round</h4><p>These companies do not reliably enter through conventional venture networks. Many founders are still focused on the technical problem when hmm first approaches them. The fund maps a market, identifies relevant companies and contacts the teams before a formal raise begins. The GP used this outbound method in venture and later as an operator at a platform built to identify companies before they entered a sales pipeline.</p></div></div>
@@ -578,7 +579,10 @@
           <div class="src-move"><span class="src-move-i">C</span><div class="src-move-body"><h4>Enter locally, scale internationally</h4><p>Most comparable exits in hmm's record are sales to overseas acquirers, while limited local capital continues to shape entry pricing. hmm invests before international capital becomes the price setter and helps founders build for the markets where their customers and eventual acquirers operate. The GP has worked on both sides of that expansion, leading commercial growth across APAC and into North America and Europe.</p></div></div>
         </div>
       </div>
-      <div class="src-stream" id="s9stream"></div>
+      <div class="src-reccol">
+        <div class="src-stream" id="s9stream"></div>
+        <p class="src-after">They form in markets the global funds treat as insular and thin on exits. The record shows the innovation was there, mostly found or backed late.</p>
+      </div>
     </div>
   </section>
 
