@@ -345,9 +345,9 @@
       return true;
     }
     function sizeAll() { for (var i = 0; i < PANELS.length; i++) sizePanel(PANELS[i]); }
-    var visR = true;
     function frame() {
-      if (visR) {
+      var rr = root.getBoundingClientRect(), vh = window.innerHeight || 800;
+      if (rr.bottom > -80 && rr.top < vh + 80) {          // draw only while in/near the viewport (reliable, no IntersectionObserver)
         var now = Date.now() / 1000;
         for (var pi = 0; pi < PANELS.length; pi++) {
           var p = PANELS[pi];
@@ -365,7 +365,6 @@
       requestAnimationFrame(frame);
     }
     sizeAll(); setTimeout(sizeAll, 300);
-    if ("IntersectionObserver" in window) { var rio = new IntersectionObserver(function (es) { es.forEach(function (e) { visR = e.isIntersecting; }); }, { threshold: 0 }); rio.observe(root); }
     var rrt = null; addEventListener("resize", function () { clearTimeout(rrt); rrt = setTimeout(sizeAll, 180); });
     requestAnimationFrame(frame);
 
