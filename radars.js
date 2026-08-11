@@ -109,9 +109,9 @@
       "  font-size:10px;line-height:1.55;letter-spacing:.02em;color:var(--hmm-text-muted,rgba(242,236,201,.6));text-align:center;}",
       "@keyframes radarPulse{0%,100%{r:1.9px;}50%{r:2.4px;}}",
       "#radars .vtx{animation:radarPulse 3.6s ease-in-out infinite;}",
-      "@keyframes radarDot{0%,100%{r:0.8px;opacity:.5;}50%{r:1.2px;opacity:.9;}}",
+      "@keyframes radarDot{0%,100%{r:1.0px;opacity:.55;}50%{r:1.5px;opacity:.95;}}",
       "#radars .radar-dot{animation:radarDot 3.2s ease-in-out infinite;}",
-      "@keyframes radarDotLg{0%,100%{r:1.3px;opacity:.6;}50%{r:1.9px;opacity:.95;}}",
+      "@keyframes radarDotLg{0%,100%{r:1.6px;opacity:.7;}50%{r:2.3px;opacity:1;}}",
       "#radars .radar-dot--lg{animation:radarDotLg 3.2s ease-in-out infinite;}",
       "@media (prefers-reduced-motion:reduce){#radars .vtx,#radars .radar-dot,#radars .radar-dot--lg{animation:none;}}",
       "#radars .axis-lbl{cursor:help;transition:fill .15s ease;}",
@@ -182,24 +182,7 @@
     var svg = el("svg", { class: "radar-svg", viewBox: "0 0 " + VB_W + " " + VB_H, role: "img" });
     svg.appendChild(el("title", {})).textContent = market.name + " necessity radar";
 
-    // grid rings (hairline, no fill)
-    var grid = el("g", {});
-    RINGS.forEach(function (ring) {
-      grid.appendChild(el("path", {
-        d: hexPath((ring / 10) * R),
-        fill: "none",
-        stroke: "var(--hmm-border,rgba(242,236,201,.12))",
-        "stroke-width": "1"
-      }));
-    });
-    // spokes
-    for (var i = 0; i < 6; i++) {
-      grid.appendChild(el("line", {
-        x1: CX, y1: CY, x2: px(i, R), y2: py(i, R),
-        stroke: "var(--hmm-border,rgba(242,236,201,.12))", "stroke-width": "1"
-      }));
-    }
-    svg.appendChild(grid);
+    // no hexagon frame or spokes: the constellation of dots carries the shape
 
     // axis labels (text ink, uppercase, letter-spaced)
     for (var a = 0; a < 6; a++) {
@@ -223,33 +206,35 @@
       var g = el("g", { class: "series series--" + name.toLowerCase() });
       g.setAttribute("data-series", name);
 
+      // invisible fill: no visible wash by default, but the focus state can raise it on legend hover
       g.appendChild(el("path", {
         class: "radar-fill",
         d: scorePath(scores),
-        fill: hue, "fill-opacity": "0.13", stroke: "none"
+        fill: hue, "fill-opacity": "0", stroke: "none"
       }));
-      // faint continuous edge (kept for the flock to sample); the dots carry the shape
+      // invisible edge, kept in the DOM only so the morph flock can sample the shape; the dots carry it visually
       g.appendChild(el("path", {
         class: "radar-line",
         d: scorePath(scores),
-        fill: "none", stroke: hue, "stroke-width": "1", "stroke-opacity": "0.28",
+        fill: "none", stroke: hue, "stroke-width": "1", "stroke-opacity": "0",
         "stroke-linejoin": "round"
       }));
 
-      // content is a scatter of breathing dots filling the necessity shape (not tracing the border)
-      var FILL = 34;
+      // content is a dense constellation of breathing dots filling the necessity shape (no border traced)
+      var avg = (scores[0] + scores[1] + scores[2] + scores[3] + scores[4] + scores[5]) / 60; // 0..1
+      var FILL = Math.round(30 + avg * 66);              // scale count with shape size so density reads even
       for (var q = 0; q < FILL; q++) {
         var seg = Math.random() * 6, si = seg | 0, fr = seg - si;
         var ri = (scores[si] / 10) * R, rj = (scores[(si + 1) % 6] / 10) * R;
         var bnd = ri + (rj - ri) * fr;                    // polygon boundary radius at this angle (approx)
         var th = angle(si) + fr * (Math.PI / 3);
-        var rr2 = bnd * Math.sqrt(Math.random()) * 0.94;  // sqrt for area-uniform fill, 0.94 keeps inside the edge
-        var big = Math.random() < 0.15;
+        var rr2 = bnd * Math.sqrt(Math.random()) * 0.96;  // sqrt for area-uniform fill, 0.96 keeps inside the edge
+        var big = Math.random() < 0.22;
         g.appendChild(el("circle", {
           class: "radar-dot" + (big ? " radar-dot--lg" : ""),
           cx: (CX + Math.cos(th) * rr2).toFixed(2), cy: (CY + Math.sin(th) * rr2).toFixed(2),
-          r: big ? "1.5" : "0.9", fill: hue,
-          style: "animation-delay:" + (q * 0.08).toFixed(2) + "s"
+          r: big ? "1.9" : "1.2", fill: hue,
+          style: "animation-delay:" + (q * 0.06).toFixed(2) + "s"
         }));
       }
 

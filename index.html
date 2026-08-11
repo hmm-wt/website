@@ -214,11 +214,11 @@
   .src-move-i{font-family:var(--hmm-font-mono);font-size:22px;color:var(--hmm-accent);line-height:1;padding-left:16px;}
   .src-move-body h4{font-family:var(--hmm-font-display);font-weight:700;font-size:16px;margin:0 0 7px;line-height:1.15;color:var(--hmm-pearl);}
   .src-move-body p{font-size:13.5px;line-height:1.6;color:var(--hmm-text-muted);margin:0;}
-  .src-stream{position:sticky;top:100px;height:min(72vh,620px);overflow:hidden;border-top:1px solid var(--hmm-border);border-bottom:1px solid var(--hmm-border);
+  .src-stream{height:min(72vh,620px);overflow:hidden;border-top:1px solid var(--hmm-border);border-bottom:1px solid var(--hmm-border);
     -webkit-mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);}
-  .src-reccol{min-width:0;}
-  .src-reccol .src-after{margin-top:16px;}
-  @media(max-width:860px){.src-split{grid-template-columns:1fr;}.src-stream{position:relative;top:0;height:min(60vh,480px);}.src-reccol .src-after{margin-top:14px;}}
+  .src-reccol{min-width:0;position:sticky;top:100px;align-self:start;}
+  .src-reccol .src-after{margin-top:18px;}
+  @media(max-width:860px){.src-split{grid-template-columns:1fr;}.src-reccol{position:static;top:0;}.src-stream{height:min(60vh,480px);}.src-reccol .src-after{margin-top:14px;}}
   /* ---------- S7 markets + S8 density ---------- */
   .mkt,.dens{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
   .mkt>*,.dens>*{width:min(1180px,96vw);}
@@ -786,7 +786,7 @@
   </script>
   <script src="transitions.js?v=13"></script>
   <script src="ai-figures.js?v=13"></script>
-  <script src="radars.js?v=13"></script>
+  <script src="radars.js?v=14"></script>
   <script src="catalogue.js?v=13"></script>
   <script src="catalogue_scroll.js?v=13"></script>
   <script src="morph.js?v=13"></script>
