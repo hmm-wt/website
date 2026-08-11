@@ -107,13 +107,9 @@
       "#radars .radar-panel[data-focus] .series.is-active .radar-line{stroke-width:2.6;}",
       "#radars .radar-caption{max-width:70ch;margin:20px auto 0;font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);",
       "  font-size:10px;line-height:1.55;letter-spacing:.02em;color:var(--hmm-text-muted,rgba(242,236,201,.6));text-align:center;}",
-      "@keyframes radarPulse{0%,100%{r:1.9px;}50%{r:2.4px;}}",
-      "#radars .vtx{animation:radarPulse 3.6s ease-in-out infinite;}",
-      "@keyframes radarDot{0%,100%{r:1.1px;opacity:.78;}50%{r:1.6px;opacity:1;}}",
-      "#radars .radar-dot{animation:radarDot 3.2s ease-in-out infinite;}",
-      "@keyframes radarDotLg{0%,100%{r:1.7px;opacity:.9;}50%{r:2.4px;opacity:1;}}",
-      "#radars .radar-dot--lg{animation:radarDotLg 3.2s ease-in-out infinite;}",
-      "@media (prefers-reduced-motion:reduce){#radars .vtx,#radars .radar-dot,#radars .radar-dot--lg{animation:none;}}",
+      "#radars .vtx{opacity:1;}",
+      "#radars .radar-dot{opacity:.92;}",
+      "#radars .radar-dot--lg{opacity:1;}",
       "#radars .axis-lbl{cursor:help;transition:fill .15s ease;}",
       "#radars .axis-lbl:hover,#radars .axis-lbl:focus{fill:var(--hmm-pearl,#F2ECC9);outline:none;}",
       "#radars .axis-lbl:focus-visible{outline:2px solid var(--hmm-accent,#C44539);outline-offset:2px;}",
@@ -222,7 +218,7 @@
 
       // content is a dense constellation of breathing dots filling the necessity shape (no border traced)
       var avg = (scores[0] + scores[1] + scores[2] + scores[3] + scores[4] + scores[5]) / 60; // 0..1
-      var FILL = Math.round(52 + avg * 96);              // scale count with shape size so density reads even
+      var FILL = Math.round(22 + avg * 42);              // flock-level density (dots now move every frame, so keep the count sane)
       for (var q = 0; q < FILL; q++) {
         var seg = Math.random() * 6, si = seg | 0, fr = seg - si;
         var ri = (scores[si] / 10) * R, rj = (scores[(si + 1) % 6] / 10) * R;
@@ -258,9 +254,9 @@
     return svg;
   }
 
-  // click-to-explode: clicking a panel scatters its dots outward from the click point,
-  // then a spring pulls each back to its home position. Same dot idiom as the rest of the site.
-  function attachExplode(svg) {
+  // persistent flock breathing: each dot eases toward its home while drifting on a small sinusoid,
+  // the same physics as the DWG-NEC machine flock (SMOOTH=0.045 calm lag + ~2.4px positional breath, per-dot phase).
+  function attachFlock(svg) {
     var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
     var nodes = svg.querySelectorAll(".radar-dot, .vtx");
@@ -268,46 +264,30 @@
     for (var i = 0; i < nodes.length; i++) {
       var n = nodes[i];
       var hx = parseFloat(n.getAttribute("cx")), hy = parseFloat(n.getAttribute("cy"));
-      dots.push({ n: n, hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0 });
+      dots.push({ n: n, hx: hx, hy: hy, x: hx, y: hy, ph: Math.random() * 6.283 });
     }
     if (!dots.length) return;
-    var running = false;
+    var vis = false, run = false;
     function loop() {
-      var active = false;
+      if (!vis) { run = false; return; }
+      var now = Date.now() / 1000;
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
-        d.vx = (d.vx + (d.hx - d.x) * 0.10) * 0.86;   // spring home + damping (crisp settle)
-        d.vy = (d.vy + (d.hy - d.y) * 0.10) * 0.86;
-        d.x += d.vx; d.y += d.vy;
+        var tx = d.hx + Math.cos(now * 0.6 + d.ph) * 2.4;   // flock breath
+        var ty = d.hy + Math.sin(now * 0.7 + d.ph) * 2.4;
+        d.x += (tx - d.x) * 0.045;                          // flock SMOOTH lag
+        d.y += (ty - d.y) * 0.045;
         d.n.setAttribute("cx", d.x.toFixed(2));
         d.n.setAttribute("cy", d.y.toFixed(2));
-        if (Math.abs(d.vx) + Math.abs(d.vy) > 0.06 || Math.abs(d.hx - d.x) + Math.abs(d.hy - d.y) > 0.5) active = true;
       }
-      if (active) { requestAnimationFrame(loop); }
-      else {
-        for (var j = 0; j < dots.length; j++) {
-          var e = dots[j]; e.n.setAttribute("cx", e.hx.toFixed(2)); e.n.setAttribute("cy", e.hy.toFixed(2));
-          e.x = e.hx; e.y = e.hy; e.vx = 0; e.vy = 0;
-        }
-        running = false;
-      }
+      requestAnimationFrame(loop);
     }
-    svg.style.cursor = "pointer";
-    svg.addEventListener("click", function (ev) {
-      var loc;
-      try { var pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; loc = pt.matrixTransform(svg.getScreenCTM().inverse()); }
-      catch (err) { loc = { x: CX, y: CY }; }
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        var dx = d.x - loc.x, dy = d.y - loc.y, dist = Math.sqrt(dx * dx + dy * dy), ux, uy;
-        if (dist < 1.2) { var a = Math.random() * 6.283; ux = Math.cos(a); uy = Math.sin(a); dist = 1.2; }  // dead-on click: random direction so it still flies
-        else { ux = dx / dist; uy = dy / dist; }
-        var force = 12 + 240 / (dist + 12);           // every dot flung; closer dots harder
-        d.vx += ux * force * (0.7 + Math.random() * 0.8) + (Math.random() - 0.5) * 9;
-        d.vy += uy * force * (0.7 + Math.random() * 0.8) + (Math.random() - 0.5) * 9;
-      }
-      if (!running) { running = true; requestAnimationFrame(loop); }
-    });
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { vis = e.isIntersecting; if (vis && !run) { run = true; requestAnimationFrame(loop); } });
+      }, { threshold: 0 });
+      io.observe(svg);
+    } else { vis = true; run = true; requestAnimationFrame(loop); }
   }
 
   function buildPanel(market) {
@@ -332,7 +312,7 @@
 
     var svg = buildSVG(market);
     panel.appendChild(svg);
-    attachExplode(svg);
+    attachFlock(svg);
 
     // legend chips (identity never rests on colour alone)
     var legend = document.createElement("ul");
