@@ -1,0 +1,64 @@
+/* hmm Ventures brand faces (2026-08-09 update, GP-ratified) — TWO faces only:
+   Kufam = display / headers.
+   Raela Grotesque = EVERYTHING else — body, data, chart finding-titles, and
+   notation/labels (rendered uppercase + letter-spaced for the label look).
+   Layering comes from weight / case / size / colour, not extra faces.
+   Beiruti and Instrument Serif are RETIRED. Their @font-face blocks are kept
+   below ONLY so the legacy type-study demos (_demo/fonts*.html, decisions.html)
+   still render; no system component references them. Do not use in new work. */
+@font-face {
+  font-family: "Raela Grotesque";
+  src: url("./RaelaGrotesque-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Raela Grotesque";
+  src: url("./RaelaGrotesque-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Raela Grotesque";
+  src: url("./RaelaGrotesque-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kufam";
+  src: url("./Kufam-VariableFont.ttf") format("truetype");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kufam";
+  src: url("./Kufam-Italic-VariableFont.ttf") format("truetype");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Beiruti";
+  src: url("./Beiruti-VariableFont.ttf") format("truetype");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("./InstrumentSerif-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("./InstrumentSerif-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}

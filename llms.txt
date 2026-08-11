@@ -1,0 +1,13 @@
+# hmm ventures
+
+> hmm ventures Fund I is an APAC-sourced seed fund backing regulated technology across the energy, food and healthcare systems in Australia, Japan and New Zealand. The thesis: necessity is the thesis. Value migrates to whoever holds the regulated layer as the regulation clock and the technology clock advance.
+
+## Pages
+
+- [Thesis](https://hmm.ventures/): the Fund I thesis. The three necessities as systems (power, food, health), the regulation locator, the AI layer, market strengths across Australia, Japan and New Zealand, and the innovation and exit record.
+- [The GP](https://hmm.ventures/bio.html): Wahid Tashkandi, general partner of hmm ventures.
+- [Sources](https://hmm.ventures/sources.html): primary and first-party sources behind the thesis.
+
+## Contact
+
+- Wahid Tashkandi, general partner: wt@hmm.ventures

@@ -1,5 +1,0 @@
-<svg viewBox="0 0 64 64" aria-hidden="true">
- <line x1="10" y1="48" x2="54" y2="16" stroke="var(--cs-thesis)" stroke-width="1.5" opacity="0.35"/>
- <circle cx="10" cy="48" r="4" fill="var(--cs-thesis)"/>
- <circle cx="54" cy="16" r="7" fill="var(--cs-thesis)"/>
-</svg>
