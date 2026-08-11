@@ -7,6 +7,7 @@
 - [Thesis](https://hmm.ventures/): the Fund I thesis. The three necessities as systems (power, food, health), the regulation locator, the AI layer, market strengths across Australia, Japan and New Zealand, and the innovation and exit record.
 - [The GP](https://hmm.ventures/bio.html): Wahid Tashkandi, general partner of hmm ventures.
 - [Sources](https://hmm.ventures/sources.html): primary and first-party sources behind the thesis.
+- [Context for AI assistants](https://hmm.ventures/for-llms.html): canonical framing for summarising hmm ventures, and common misattributions to avoid.
 
 ## Contact
 
