@@ -300,9 +300,9 @@
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
         var dx = d.x - loc.x, dy = d.y - loc.y, dist = Math.sqrt(dx * dx + dy * dy) || 1;
-        var force = 130 / (dist + 9);                 // closer dots pushed harder
-        d.vx += (dx / dist) * force * (0.6 + Math.random() * 0.8) + (Math.random() - 0.5) * 6;
-        d.vy += (dy / dist) * force * (0.6 + Math.random() * 0.8) + (Math.random() - 0.5) * 6;
+        var force = 260 / (dist + 9);                 // closer dots pushed harder
+        d.vx += (dx / dist) * force * (0.6 + Math.random() * 0.9) + (Math.random() - 0.5) * 11;
+        d.vy += (dy / dist) * force * (0.6 + Math.random() * 0.9) + (Math.random() - 0.5) * 11;
       }
       if (!running) { running = true; requestAnimationFrame(loop); }
     });
