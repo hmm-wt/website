@@ -222,7 +222,7 @@
 
       // content is a dense constellation of breathing dots filling the necessity shape (no border traced)
       var avg = (scores[0] + scores[1] + scores[2] + scores[3] + scores[4] + scores[5]) / 60; // 0..1
-      var FILL = Math.round(30 + avg * 66);              // scale count with shape size so density reads even
+      var FILL = Math.round(52 + avg * 96);              // scale count with shape size so density reads even
       for (var q = 0; q < FILL; q++) {
         var seg = Math.random() * 6, si = seg | 0, fr = seg - si;
         var ri = (scores[si] / 10) * R, rj = (scores[(si + 1) % 6] / 10) * R;
