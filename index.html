@@ -759,6 +759,37 @@
       for(var y=2020;y<=2030;y++){var future=y>=2027,rows=(byYear[y]||[]).slice().sort(function(a,b){return (a.global?1:0)-(b.global?1:0);});
         html+='<div class="tl-year'+(future?' tl-future':'')+'"><div class="tl-axis"><span class="tl-node"></span><span class="tl-y">'+y+'</span></div><div class="tl-rows">'+(rows.length?rows.map(row).join(''):'<div class="tl-empty">·</div>')+'</div></div>';}
       body.innerHTML=html;
+      // click-to-explode on the timeline spine: nodes scatter from the click point, then spring home
+      (function(){
+        var reduceM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches; if(reduceM) return;
+        var nodes=[].slice.call(body.querySelectorAll('.tl-node')).map(function(n){return {n:n,x:0,y:0,vx:0,vy:0};});
+        if(!nodes.length) return;
+        var running=false;
+        function frame(){
+          var active=false;
+          for(var i=0;i<nodes.length;i++){var d=nodes[i];
+            d.vx=(d.vx - d.x*0.13)*0.83; d.vy=(d.vy - d.y*0.13)*0.83;
+            d.x+=d.vx; d.y+=d.vy;
+            d.n.style.transform='translate('+d.x.toFixed(1)+'px,'+d.y.toFixed(1)+'px)';
+            if(Math.abs(d.vx)+Math.abs(d.vy)>0.06||Math.abs(d.x)+Math.abs(d.y)>0.5) active=true;
+          }
+          if(active){ requestAnimationFrame(frame); }
+          else { for(var j=0;j<nodes.length;j++){var e=nodes[j];e.n.style.transform='';e.n.style.animation='';e.x=e.y=e.vx=e.vy=0;} running=false; }
+        }
+        body.style.cursor='pointer';
+        body.addEventListener('click',function(ev){
+          for(var i=0;i<nodes.length;i++){var d=nodes[i];
+            d.n.style.animation='none';                       // CSS pulse would override our transform; pause it
+            var r=d.n.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
+            var dx=cx-ev.clientX, dy=cy-ev.clientY, dist=Math.sqrt(dx*dx+dy*dy), ux, uy;
+            if(dist<2){var a=Math.random()*6.283;ux=Math.cos(a);uy=Math.sin(a);dist=2;}else{ux=dx/dist;uy=dy/dist;}
+            var force=9+420/(dist+34);
+            d.vx+=ux*force*(0.6+Math.random()*0.8)+(Math.random()-0.5)*8;
+            d.vy+=uy*force*(0.6+Math.random()*0.8)+(Math.random()-0.5)*8;
+          }
+          if(!running){running=true;requestAnimationFrame(frame);}
+        });
+      })();
       // load-more-on-scroll: each year group starts hidden and reveals as it enters the viewport
       var years=body.querySelectorAll('.tl-year');
       var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
