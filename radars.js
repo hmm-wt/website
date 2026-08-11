@@ -12,7 +12,7 @@
   var AXES = ["AI", "HARDWARE", "REGULATION", "STARTUP", "EXIT", "TRADE"];
 
   // Necessity palette (exact hues, matched to the rest of the site).
-  var HUES = { Power: "#E0812E", Eat: "#4F8A5B", Heal: "#3E79A6" };
+  var HUES = { Power: "#F0902F", Eat: "#5FB873", Heal: "#4FA3DC" };
   var SERIES = ["Power", "Eat", "Heal"];
 
   // Scores 0 to 10, order: AI, Hardware, Regulation, Startup, Exit, Trade.
@@ -109,9 +109,9 @@
       "  font-size:10px;line-height:1.55;letter-spacing:.02em;color:var(--hmm-text-muted,rgba(242,236,201,.6));text-align:center;}",
       "@keyframes radarPulse{0%,100%{r:1.9px;}50%{r:2.4px;}}",
       "#radars .vtx{animation:radarPulse 3.6s ease-in-out infinite;}",
-      "@keyframes radarDot{0%,100%{r:1.0px;opacity:.55;}50%{r:1.5px;opacity:.95;}}",
+      "@keyframes radarDot{0%,100%{r:1.1px;opacity:.78;}50%{r:1.6px;opacity:1;}}",
       "#radars .radar-dot{animation:radarDot 3.2s ease-in-out infinite;}",
-      "@keyframes radarDotLg{0%,100%{r:1.6px;opacity:.7;}50%{r:2.3px;opacity:1;}}",
+      "@keyframes radarDotLg{0%,100%{r:1.7px;opacity:.9;}50%{r:2.4px;opacity:1;}}",
       "#radars .radar-dot--lg{animation:radarDotLg 3.2s ease-in-out infinite;}",
       "@media (prefers-reduced-motion:reduce){#radars .vtx,#radars .radar-dot,#radars .radar-dot--lg{animation:none;}}",
       "#radars .axis-lbl{cursor:help;transition:fill .15s ease;}",
