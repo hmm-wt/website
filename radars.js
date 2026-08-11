@@ -258,6 +258,56 @@
     return svg;
   }
 
+  // click-to-explode: clicking a panel scatters its dots outward from the click point,
+  // then a spring pulls each back to its home position. Same dot idiom as the rest of the site.
+  function attachExplode(svg) {
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    var nodes = svg.querySelectorAll(".radar-dot, .vtx");
+    var dots = [];
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      var hx = parseFloat(n.getAttribute("cx")), hy = parseFloat(n.getAttribute("cy"));
+      dots.push({ n: n, hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0 });
+    }
+    if (!dots.length) return;
+    var running = false;
+    function loop() {
+      var active = false;
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i];
+        d.vx = (d.vx + (d.hx - d.x) * 0.10) * 0.86;   // spring home + damping
+        d.vy = (d.vy + (d.hy - d.y) * 0.10) * 0.86;
+        d.x += d.vx; d.y += d.vy;
+        d.n.setAttribute("cx", d.x.toFixed(2));
+        d.n.setAttribute("cy", d.y.toFixed(2));
+        if (Math.abs(d.vx) + Math.abs(d.vy) > 0.05 || Math.abs(d.hx - d.x) + Math.abs(d.hy - d.y) > 0.3) active = true;
+      }
+      if (active) { requestAnimationFrame(loop); }
+      else {
+        for (var j = 0; j < dots.length; j++) {
+          var e = dots[j]; e.n.setAttribute("cx", e.hx.toFixed(2)); e.n.setAttribute("cy", e.hy.toFixed(2));
+          e.x = e.hx; e.y = e.hy; e.vx = 0; e.vy = 0;
+        }
+        running = false;
+      }
+    }
+    svg.style.cursor = "pointer";
+    svg.addEventListener("click", function (ev) {
+      var loc;
+      try { var pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; loc = pt.matrixTransform(svg.getScreenCTM().inverse()); }
+      catch (err) { loc = { x: CX, y: CY }; }
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i];
+        var dx = d.x - loc.x, dy = d.y - loc.y, dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        var force = 130 / (dist + 9);                 // closer dots pushed harder
+        d.vx += (dx / dist) * force * (0.6 + Math.random() * 0.8) + (Math.random() - 0.5) * 6;
+        d.vy += (dy / dist) * force * (0.6 + Math.random() * 0.8) + (Math.random() - 0.5) * 6;
+      }
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    });
+  }
+
   function buildPanel(market) {
     var panel = document.createElement("div");
     panel.className = "radar-panel";
@@ -280,6 +330,7 @@
 
     var svg = buildSVG(market);
     panel.appendChild(svg);
+    attachExplode(svg);
 
     // legend chips (identity never rests on colour alone)
     var legend = document.createElement("ul");
