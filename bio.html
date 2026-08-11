@@ -32,6 +32,10 @@
   .bio-mark:hover{color:var(--hmm-accent,#C44539);border-color:var(--hmm-accent,#C44539);}
   .bio-mark--logo{flex-direction:column;align-items:center;justify-content:center;gap:10px;width:152px;padding:18px 12px;box-sizing:border-box;}
   .bio-mark--logo svg{height:15px;max-width:118px;width:auto;display:block;}
+  /* optical balance: GoodFit's wordmark is far wider per unit height, so size each to a similar visual width */
+  .bio-mark--logo[aria-label="Skalata"] svg{height:19px;}
+  .bio-mark--logo[aria-label="Paddle"] svg{height:21px;}
+  .bio-mark--logo[aria-label="GoodFit"] svg{height:11px;}
   .bio-mark--logo span{margin-left:0;}
   .bio-contact{font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:12px;letter-spacing:.06em;color:var(--hmm-text-muted,rgba(242,236,201,.6));}
   .bio-contact a{color:var(--hmm-accent,#C44539);text-decoration:none;}
