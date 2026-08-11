@@ -276,12 +276,12 @@
       var active = false;
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
-        d.vx = (d.vx + (d.hx - d.x) * 0.10) * 0.86;   // spring home + damping
-        d.vy = (d.vy + (d.hy - d.y) * 0.10) * 0.86;
+        d.vx = (d.vx + (d.hx - d.x) * 0.085) * 0.87;  // spring home + damping
+        d.vy = (d.vy + (d.hy - d.y) * 0.085) * 0.87;
         d.x += d.vx; d.y += d.vy;
         d.n.setAttribute("cx", d.x.toFixed(2));
         d.n.setAttribute("cy", d.y.toFixed(2));
-        if (Math.abs(d.vx) + Math.abs(d.vy) > 0.05 || Math.abs(d.hx - d.x) + Math.abs(d.hy - d.y) > 0.3) active = true;
+        if (Math.abs(d.vx) + Math.abs(d.vy) > 0.06 || Math.abs(d.hx - d.x) + Math.abs(d.hy - d.y) > 0.5) active = true;
       }
       if (active) { requestAnimationFrame(loop); }
       else {
@@ -299,10 +299,12 @@
       catch (err) { loc = { x: CX, y: CY }; }
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
-        var dx = d.x - loc.x, dy = d.y - loc.y, dist = Math.sqrt(dx * dx + dy * dy) || 1;
-        var force = 260 / (dist + 9);                 // closer dots pushed harder
-        d.vx += (dx / dist) * force * (0.6 + Math.random() * 0.9) + (Math.random() - 0.5) * 11;
-        d.vy += (dy / dist) * force * (0.6 + Math.random() * 0.9) + (Math.random() - 0.5) * 11;
+        var dx = d.x - loc.x, dy = d.y - loc.y, dist = Math.sqrt(dx * dx + dy * dy), ux, uy;
+        if (dist < 1.2) { var a = Math.random() * 6.283; ux = Math.cos(a); uy = Math.sin(a); dist = 1.2; }  // dead-on click: random direction so it still flies
+        else { ux = dx / dist; uy = dy / dist; }
+        var force = 12 + 240 / (dist + 12);           // every dot flung; closer dots harder
+        d.vx += ux * force * (0.7 + Math.random() * 0.8) + (Math.random() - 0.5) * 9;
+        d.vy += uy * force * (0.7 + Math.random() * 0.8) + (Math.random() - 0.5) * 9;
       }
       if (!running) { running = true; requestAnimationFrame(loop); }
     });
