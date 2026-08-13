@@ -456,7 +456,7 @@
     .ai,.mkt,.dens,.rec{padding-top:64px;padding-bottom:64px;}
     /* hero: no hover on touch, so reveal the ledger + commentary permanently */
     .box .commentary,.box .ledger,.box .ledger-cap{opacity:1;max-height:none;}
-    .box .commentary{margin-top:11px;font-size:12px;}
+    .box .commentary{margin-top:11px;font-size:15px;line-height:1.55;}
     /* Power/Eat/Heal: shrink the machine graphic + tighten the list so the stacked boxes are compact */
     .hero-row .box{min-height:auto;}
     .hero-row .box-stage{flex:0 0 126px;}
@@ -465,6 +465,20 @@
     .hero-row .ledger{margin-top:12px;}
     .hero-row .ledger li{font-size:11.5px;padding:5px 0;}
     .tl-axis{flex:0 0 54px;padding-left:8px;}
+    /* P0 overflow: force the timeline row to reflow. The desktop `.tl-row{display:grid}` sits later in
+       the sheet, and media queries add no specificity, so the earlier mobile rule lost. Re-assert here. */
+    .tl-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;padding:9px 12px;}
+    .tl-row .tl-name{flex:1 1 100%;order:3;}
+    .tl-row .tl-org{flex:1 1 100%;order:4;}
+    .tl-row .tl-c{order:1;} .tl-row .tl-date{order:2;} .tl-row .tl-status{order:5;}
+    .tl-body,.tl-year,.tl-rows,.reg-right,.reg-tl-head{max-width:100%;min-width:0;}
+    .tl-legend,.tl-filters,.tl-stand-wrap{max-width:100%;}
+    /* legibility: nothing that carries meaning drops below ~11px, core reading copy sits at 14-15px */
+    .tl-name{font-size:14px;}
+    .tl-date,.tl-org,.tl-c{font-size:11.5px;}
+    .tl-status,.rec-tag,.tl-stand-label,.tl-stand-item{font-size:11px;}
+    .rec-what{font-size:14px;} .rec-meta{font-size:12px;}
+    .card-eyebrow,.reg-label{font-size:11.5px;}
   }
   @media(hover:none){.machine-wrap svg .callout{transform:scale(1.3);}}
   /* ===== large screens (monitors / TV): cap content so lines stay readable and layout doesn't sprawl ===== */
