@@ -449,7 +449,8 @@
     /* touch targets >= 44px */
     .tl-filters button,#radars .radar-chip{min-height:44px;padding:11px 14px;}
     #radars .radar-drill-x{min-width:44px;min-height:44px;}
-    #radars .radar-title--click{padding:10px 0;}
+    #radars .radar-title--click{min-height:44px;padding:11px 0;box-sizing:border-box;}
+    #radars .radar-sub{font-size:11px;}
   }
   @media(max-width:640px){
     .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl{padding-left:20px;padding-right:20px;}
@@ -479,6 +480,11 @@
     .tl-status,.rec-tag,.tl-stand-label,.tl-stand-item{font-size:11px;}
     .rec-what{font-size:14px;} .rec-meta{font-size:12px;}
     .card-eyebrow,.reg-label{font-size:11.5px;}
+    /* footer nav: real navigation (GP / Sources / Contact), give each link a 44px tap height */
+    .site-footer{padding:32px 20px;}
+    .footer-nav{gap:2px 22px;flex-wrap:wrap;}
+    .footer-contact{display:inline-flex;align-items:center;min-height:44px;}
+    .tl-filters button{font-size:11px;}
   }
   @media(hover:none){.machine-wrap svg .callout{transform:scale(1.3);}}
   /* ===== large screens (monitors / TV): cap content so lines stay readable and layout doesn't sprawl ===== */
