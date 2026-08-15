@@ -1,9 +1,9 @@
 /* Power / energy chain - per-stage Opportunities / Threats / Regulations for the S2 system schematic.
-   SOURCED 2026-08-10 (research agent). NOTHING fabricated. Empty arrays = "not surfaced" (honest gap).
+   SOURCED 2026-08-10 (research agent).  Empty arrays = "not surfaced" (honest gap).
    Keys match the schematic stage labels exactly.
    Sources: opportunities = frontier[F]/new[N] components verbatim from assets/component-library.json `energy`;
-     regulations = IM §4.1 (grid connection gated on market registration) + CANON §1 supply cross-cut
-     (IRA Section 45X, EU Critical Raw Materials Act); threats = CANON §1 "The AI layer" (commodity traders).
+     regulations = IM §4.1 (grid connection gated on market registration) + internal canon supply cross-cut
+     (IRA Section 45X, EU Critical Raw Materials Act); threats = internal canon "The AI layer" (commodity traders).
    Carbon-accounting / DAC items deliberately excluded per the carbon-tracking ban.
    Gaps (correct, not fabricated): Component manufacture + Distribution have no F/N opp key; threats exist only
    at Distribution; regulations only at Extraction / Generation / Transmission. */

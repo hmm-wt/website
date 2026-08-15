@@ -1,9 +1,9 @@
 /* Eat / agri chain - per-stage Opportunities / Threats / Regulations for the S3 system schematic.
-   SOURCED 2026-08-10 (research agent). NOTHING fabricated. Empty arrays = "not surfaced".
+   SOURCED 2026-08-10 (research agent).  Empty arrays = "not surfaced".
    Opportunities = frontier[F]/new[N] components verbatim from assets/component-library.json `agri`
    (E-class excluded; protein-alternatives / fermentation / traceability excluded per the bans).
-   Threat = CANON §1 "The AI layer" (commodity traders). Regulations = im-sectional Eat callout
-   (biosecurity; approval to sell) + CANON §1 (Japan Smart Agriculture Technology Promotion Act, Oct 2024). */
+   Threat = internal canon "The AI layer" (commodity traders). Regulations = internal source
+   (biosecurity; approval to sell) + internal canon (Japan Smart Agriculture Technology Promotion Act, Oct 2024). */
 
 var AGRI_STAGE_FACETS = {
   "Genetics / inputs": { opp:["Gene-editing delivery/screening","High-throughput phenotyping","Microbial fertiliser production","Climate-adaptive breeding chambers"], threat:[], reg:["Biosecurity - right to operate on germplasm, seed and biological inputs","Approval to sell - registration of agricultural inputs"] },

@@ -1,5 +1,5 @@
 /* Eat necessity - pickup-reel physical-part blow-out callouts.
-   SOURCED 2026-08-10 from real corpus data (research agent). NOTHING fabricated.
+   SOURCED 2026-08-10 from real corpus data (research agent). 
    GP ruling 2026-08-10: strict library-backed variant - the four parts whose names trace to the
    component library. The two geometry-only parts (Star End-Plates, Auger Housing) were dropped.
    Machine geometry: _demo/eat.html (buildEat reel), viewBox 0 0 1080 620.

@@ -1,9 +1,9 @@
 /* Heal / health chain - per-stage Opportunities / Threats / Regulations for the S4 system schematic.
-   SOURCED 2026-08-10 (research agent). NOTHING fabricated. Empty arrays = "not surfaced".
+   SOURCED 2026-08-10 (research agent).  Empty arrays = "not surfaced".
    Opportunities = frontier[F]/new[N] components verbatim from assets/component-library.json `health`
-   (E-class + tracking items excluded per the bans). Threat = CANON §1 "The AI layer" (central diagnostics).
+   (E-class + tracking items excluded per the bans). Threat = internal canon "The AI layer" (central diagnostics).
    Regulations = IM §3.1/§4.1/§4.3 (FDA/TGA/EU approval, TGA comparable-overseas pathway, NZ WAND,
-   manufacture-covering approval) + im-sectional Heal callout (approval; reimbursement). */
+   manufacture-covering approval) + internal source (approval; reimbursement). */
 
 var HEALTH_STAGE_FACETS = {
   "Biological discovery": { opp:["Single-cell analysis systems","Spatial-omics imaging","Organ-on-chip perfusion cartridges","Patient-specific organ-chip test beds"], threat:[], reg:[] },

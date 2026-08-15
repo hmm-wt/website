@@ -1,9 +1,9 @@
 /* S7 regulatory timeline - the AU/JP/NZ in-mandate register. 33 enforceable + 9 frameworks.
    SOURCED 2026-07-20/21 to primary legislation (research agent), from:
-     Internal/Research/Regulations_Sourced_{AU,JP,NZ}_2026-07-20.md + Frameworks_and_Guidelines_2026-07-21.md.
-   NOTHING fabricated. Names shortened for display; full titles + primary-source URLs in the source files.
+     internal regulatory source pass,JP,NZ}_2026-07-20.md + Frameworks_and_Guidelines_2026-07-21.md.
+    Names shortened for display; full titles + primary-source URLs in the source files.
    NOTE: BIOSECURE / FDA AI-device (6→295) / ICH Q13 / CMS waiver are US-global "why-now" evidence
-   (CANON §1/§3), NOT part of this register - kept separate to preserve the 14/11/8 arithmetic.
+   (internal canon/§3), NOT part of this register - kept separate to preserve the 14/11/8 arithmetic.
    yr places the row on the axis; yr<2020 = the standing base. Forecast rows (status "expected") are
    real phased/expected milestones flagged by the sourcing pass, shown dashed in 2027+. */
 var REG_INSTRUMENTS = [
@@ -52,7 +52,7 @@ var REG_INSTRUMENTS = [
   {c:"JP",name:"AI Promotion Act",body:"Cabinet Office (AI Strategy HQ)",date:"Sep 2025",yr:2025,type:"enforceable",status:"effective"},
   {c:"AU",name:"Medical-device adverse-event reporting (ASDER)",body:"TGA",date:"Mar 2026",yr:2026,type:"enforceable",status:"effective"},
   // ---- global instruments + recognition pathways re-pricing / multiplying reach across exit markets
-  //      (CANON §1/§3 net-new + line 62 reliance pathways; CONTEXT, NOT part of the AU/JP/NZ 33) ----
+  //      (internal canon/§3 net-new + line 62 reliance pathways; CONTEXT, NOT part of the AU/JP/NZ 33) ----
   {c:"AMER",name:"CMS hospital-at-home reimbursement waiver",body:"CMS",date:"2020",yr:2020,type:"enforceable",status:"effective",global:true},
   {c:"AMER",name:"IRA Section 45X (domestic-content)",body:"US Treasury / IRS",date:"2022",yr:2022,type:"enforceable",status:"effective",global:true},
   {c:"AMER",name:"FDA AI-device authorisations (6 → 295)",body:"FDA",date:"2015→2025",yr:2025,type:"enforceable",status:"effective",global:true},
