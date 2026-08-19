@@ -598,7 +598,7 @@
       </div>
       <div class="reg-right">
         <div class="reg-tl-head"><span class="reg-label">The enacted record</span>
-          <p class="tl-sub">hmm maps 42 enforceable instruments across the three markets: 17 in Australia, 15 in Japan, 10 in New Zealand, 22 of them since 2020, with more forecast from 2027. This is the regulatory surface the fund tracks, not a count of investable companies. The global rows are the same rules re-pricing the space elsewhere.</p>
+          <p class="tl-sub">hmm maps 33 enforceable instruments in force across the three markets: 14 in Australia, 11 in Japan, 8 in New Zealand, 14 of them since 2020, with four more scheduled between 2027 and 2030. This is the regulatory surface the fund tracks. The global rows are the same rules re-pricing the space elsewhere.</p>
           <div class="tl-legend"><span><b>AU·JP·NZ</b> in-market</span><span><b>AMER·CA·GCC·EU·UKI·GL</b> global · dashed</span></div>
           <div class="tl-filters" id="tlFilters"></div>
         </div>
@@ -818,8 +818,8 @@
     /* ---------- S7 regulatory timeline ---------- */
     (function(){var body=document.getElementById('tlBody');if(!body||!window.REG_INSTRUMENTS)return;
       function e2(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
-      // keep the lead sentence's instrument counts derived from the data so they never drift
-      (function(){var inf={AU:0,JP:0,NZ:0},s20=0;REG_INSTRUMENTS.forEach(function(r){if((r.c==='AU'||r.c==='JP'||r.c==='NZ')&&r.yr<2027){inf[r.c]++;if(r.yr>=2020)s20++;}});var tot=inf.AU+inf.JP+inf.NZ,sub=document.querySelector('.tl-sub');if(sub&&tot)sub.textContent='hmm maps '+tot+' enforceable instruments across the three markets: '+inf.AU+' in Australia, '+inf.JP+' in Japan, '+inf.NZ+' in New Zealand, '+s20+' of them since 2020, with more forecast from 2027. This is the regulatory surface the fund tracks, not a count of investable companies. The global rows are the same rules re-pricing the space elsewhere.';})();
+      // lead sentence counts derive from the register: enforceable + (effective|transitional) = in force
+      (function(){var W=['zero','one','two','three','four','five','six','seven','eight','nine','ten'];var inf={AU:0,JP:0,NZ:0},s20=0,sched=0;REG_INSTRUMENTS.forEach(function(r){if(r.global)return;if(r.c!=='AU'&&r.c!=='JP'&&r.c!=='NZ')return;if(r.type!=='enforceable')return;if(r.status==='effective'||r.status==='transitional'){inf[r.c]++;if(r.yr>=2020)s20++;}else if(r.status==='expected'){sched++;}});var tot=inf.AU+inf.JP+inf.NZ,sub=document.querySelector('.tl-sub');if(sub&&tot)sub.textContent='hmm maps '+tot+' enforceable instruments in force across the three markets: '+inf.AU+' in Australia, '+inf.JP+' in Japan, '+inf.NZ+' in New Zealand, '+s20+' of them since 2020, with '+(W[sched]||sched)+' more scheduled between 2027 and 2030. This is the regulatory surface the fund tracks. The global rows are the same rules re-pricing the space elsewhere.';})();
       var byYear={};REG_INSTRUMENTS.forEach(function(r){(byYear[r.yr]=byYear[r.yr]||[]).push(r);});
       function cTag(r){return '<span class="tl-c'+(r.global?' tl-c--global':'')+'">'+e2(r.c)+'</span>';}
       function row(r){return '<div class="tl-row tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+'<span class="tl-date">'+e2(r.date)+'</span><span class="tl-name">'+e2(r.name)+'</span><span class="tl-org">'+e2(r.body)+'</span><span class="tl-status tl-st--'+r.status+'">'+e2(r.status)+'</span></div>';}

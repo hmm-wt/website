@@ -1,4 +1,4 @@
-/* S7 regulatory timeline - the AU/JP/NZ in-mandate register. 33 enforceable + 9 frameworks.
+/* S7 regulatory timeline - the AU/JP/NZ in-mandate register. 33 enforceable in force + 4 scheduled to 2030 + 9 frameworks.
    SOURCED 2026-07-20/21 to primary legislation (research agent), from:
      internal regulatory source pass,JP,NZ}_2026-07-20.md + Frameworks_and_Guidelines_2026-07-21.md.
     Names shortened for display; full titles + primary-source URLs in the source files.
