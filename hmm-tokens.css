@@ -1,7 +1,7 @@
 /* GENERATED FILE. DO NOT EDIT.
    Source: Internal/Design/tokens/hmm.tokens.json
    Build:  python3 Internal/Design/tokens/build_tokens.py
-   Tokens: 202   Source digest: 7f0215dca6f70aec
+   Tokens: 204   Source digest: 3552c60c37a50b12
    Guard 25 fails the build if this file drifts from the source.
 */
 
@@ -332,10 +332,12 @@
   --hmm-duo-shadow:    var(--hmm-evergreen);   /* shadow end of the duotone ramp */
   --hmm-duo-highlight: var(--hmm-pearl-beige);   /* highlight end. Swap to hmm-accent for a Tomato grade */
 
-  /* ---------- Wash (the field, held back) ---------- */
-  /* One rung the ladder was missing. Everything else a wash needs is already named: a lifted panel is hmm-surface at 0.04, a rule is hmm-border at 0.12, a notebook grid line is hmm-grid-line at 0.05. This one had no name and so was written as a literal in the density chart, once per ground. The chart's hatch is not on this ladder: it is the panel colour at alpha rather than the field held back, and naming that needs color-mix, not another rung. */
+  /* ---------- Wash and rule (the field, held back) ---------- */
+  /* Two rungs the ladder was missing, both measured before they were named. hmm-wash sits between a lifted panel at 0.04 and a rule at 0.12. hmm-rule is a page or section rule, distinct from hmm-border and hmm-border-hover, which are one weight in two states: 0.18 measures 4.3 and 5.2 from those two against a 9.5 gap between them, so it is a third weight and not a drift toward either. Thirteen literals in the corpus were already writing it. */
   --hmm-wash:       rgba(242, 236, 201, 0.06);   /* a band tint, between a lifted panel and a rule */
   --hmm-wash-light: rgba(37, 34, 27, 0.06);   /* the same on a light ground */
+  --hmm-rule:       rgba(242, 236, 201, 0.18);   /* page and section rules, heavier than a border and lighter than its hover */
+  --hmm-rule-light: rgba(37, 34, 27, 0.18);   /* the same on a light ground */
 
   /* ---------- Plate metrics (the numbers a drawing is held to) ---------- */
   /* Every one of these was discovered by a plate failing and then lived in whichever module noticed. design_guards.py held the type floor, which made the checker its own source. They are declared here so a drawing, a checker and a document all read the same number. */
@@ -375,6 +377,7 @@
     --hmm-border-hover:     var(--hmm-border-light-hover);
     --hmm-caption:          var(--hmm-caption-light);
     --hmm-wash:             var(--hmm-wash-light);
+    --hmm-rule:             var(--hmm-rule-light);
     --hmm-accent-text:      var(--hmm-accent-ink);
   }
 }
@@ -395,6 +398,7 @@
   --hmm-border-hover:     var(--hmm-border-light-hover);
   --hmm-caption:          var(--hmm-caption-light);
   --hmm-wash:             var(--hmm-wash-light);
+  --hmm-rule:             var(--hmm-rule-light);
   --hmm-accent-text:      var(--hmm-accent-ink);
 }
 
@@ -416,5 +420,6 @@
   --hmm-border-hover:     var(--hmm-border-light-hover);
   --hmm-caption:          var(--hmm-caption-light);
   --hmm-wash:             var(--hmm-wash-light);
+  --hmm-rule:             var(--hmm-rule-light);
   --hmm-accent-text:      var(--hmm-accent-ink);
 }
