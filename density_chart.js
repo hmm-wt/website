@@ -1,3 +1,10 @@
+/* Tokens, read at paint time. These figures hardcoded colour because
+   nothing handed it to them; reading the custom property also means a theme
+   change reaches the canvas, which a frozen hex never could. */
+function __T(n, fallback) {
+  var v = getComputedStyle(document.documentElement).getPropertyValue(n);
+  return (v && v.trim()) || fallback;
+}
 /* density_chart.js
    Startup formation intensity 2015 to 2026, indexed to 2015 = 100.
    Stacked area, three country bands (bottom to top: JP, AU, NZ),
@@ -71,7 +78,7 @@
     var COPY = {
       jp: {
         name: "Japan",
-        hex: "#3E6DA6",
+        hex: __T("--hmm-mkt-jp-dark", "#687DB8"),
         lines: [
           "Growth 17.5%/yr (2015 to 2020) · strong-tier share 70%, the highest of the three · peak formation 2020 · trend to ~3.5x the 2015 base by 2026",
           "Necessity mix: Heal 85%, Eat 9%, Power 7%. The band is late-forming and overwhelmingly Heal, tracking the world's oldest population and the PMDA medical gate. Power and Eat are present but thin. The exit route on TSE Growth is the real differentiator."
@@ -79,7 +86,7 @@
       },
       au: {
         name: "Australia",
-        hex: "#B65C40",
+        hex: __T("--hmm-mkt-au-dark", "#A77900"),
         lines: [
           "Growth 11.2%/yr · strong-tier share 44% · peak formation 2020 · the widest band throughout",
           "Necessity mix: Heal 76%, Power 13%, Eat 11%. The volume of the cohort and the widest funnel, which is why its strong-tier share sits lowest. Power carries the critical-minerals and autonomous-mining hardware edge; Eat the field-autonomy layer. Exits resolve offshore through trade sale to global acquirers."
@@ -87,7 +94,7 @@
       },
       nz: {
         name: "New Zealand",
-        hex: "#0E93A6",
+        hex: __T("--hmm-mkt-nz-dark", "#C0C0C0"),
         lines: [
           "Growth 16.7%/yr · strong-tier share 47% · peak formation 2021 · the thinnest, latest band",
           "Necessity mix: Heal 53%, Eat 29%, Power 17%. The most balanced by necessity, with the highest Eat share of the three, reflecting the pastoral and animal base and the gene-technology reform. Companies are global from the first customer, and exits go offshore."
@@ -154,14 +161,14 @@
       style.id = "dc-style";
       style.textContent = [
         "#densityChart{",
-        "  --dc-jp:#5E8AC4; --dc-au:#C56E4E; --dc-nz:#279EB0;",
-        "  --dc-surface:#1a1a19;",
+        "  --dc-jp:var(--hmm-mkt-jp-ink); --dc-au:var(--hmm-mkt-au-ink); --dc-nz:var(--hmm-mkt-nz-ink);",
+        "  --dc-surface:var(--hmm-surface-solid);",
         "  --dc-grid:rgba(242,236,201,0.12);",
         "  --dc-wash:rgba(242,236,201,0.07);",
         "  --dc-hatch:rgba(26,26,25,0.55);",
-        "  --dc-ink:var(--hmm-pearl,#F2ECC9);",
-        "  --dc-muted:var(--hmm-text-muted,#9c968a);",
-        "  --dc-faint:var(--hmm-text-faint,#6d685e);",
+        "  --dc-ink:var(--hmm-pearl);",
+        "  --dc-muted:var(--hmm-text-muted);",
+        "  --dc-faint:var(--hmm-text-faint);",
         "  --dc-border:var(--hmm-border,rgba(242,236,201,0.16));",
         "  --dc-panel-bg:rgba(242,236,201,0.04);",
         "  color:var(--dc-ink);",
@@ -169,39 +176,39 @@
         "}",
         // light via media query
         "@media (prefers-color-scheme: light){#densityChart{",
-        "  --dc-jp:#3E6DA6; --dc-au:#B65C40; --dc-nz:#0E93A6;",
-        "  --dc-surface:#fcfcfb;",
+        "  --dc-jp:var(--hmm-mkt-jp-dark); --dc-au:var(--hmm-mkt-au-dark); --dc-nz:var(--hmm-mkt-nz-dark);",
+        "  --dc-surface:var(--hmm-white);",
         "  --dc-grid:rgba(20,20,20,0.12);",
         "  --dc-wash:rgba(20,20,20,0.06);",
         "  --dc-hatch:rgba(252,252,251,0.6);",
-        "  --dc-ink:#141414;",
-        "  --dc-muted:#5f5b52;",
-        "  --dc-faint:#8a867c;",
+        "  --dc-ink:var(--hmm-evergreen);",
+        "  --dc-muted:var(--hmm-text-dark-muted-solid);",
+        "  --dc-faint:var(--hmm-text-dark-faint-solid);",
         "  --dc-border:rgba(20,20,20,0.16);",
         "  --dc-panel-bg:rgba(20,20,20,0.035);",
         "}}",
         // explicit theme overrides win over the media query
         ":root[data-theme=\"light\"] #densityChart{",
-        "  --dc-jp:#3E6DA6; --dc-au:#B65C40; --dc-nz:#0E93A6;",
-        "  --dc-surface:#fcfcfb;",
+        "  --dc-jp:var(--hmm-mkt-jp-dark); --dc-au:var(--hmm-mkt-au-dark); --dc-nz:var(--hmm-mkt-nz-dark);",
+        "  --dc-surface:var(--hmm-white);",
         "  --dc-grid:rgba(20,20,20,0.12);",
         "  --dc-wash:rgba(20,20,20,0.06);",
         "  --dc-hatch:rgba(252,252,251,0.6);",
-        "  --dc-ink:#141414;",
-        "  --dc-muted:#5f5b52;",
-        "  --dc-faint:#8a867c;",
+        "  --dc-ink:var(--hmm-evergreen);",
+        "  --dc-muted:var(--hmm-text-dark-muted-solid);",
+        "  --dc-faint:var(--hmm-text-dark-faint-solid);",
         "  --dc-border:rgba(20,20,20,0.16);",
         "  --dc-panel-bg:rgba(20,20,20,0.035);",
         "}",
         ":root[data-theme=\"dark\"] #densityChart{",
-        "  --dc-jp:#5E8AC4; --dc-au:#C56E4E; --dc-nz:#279EB0;",
-        "  --dc-surface:#1a1a19;",
+        "  --dc-jp:var(--hmm-mkt-jp-ink); --dc-au:var(--hmm-mkt-au-ink); --dc-nz:var(--hmm-mkt-nz-ink);",
+        "  --dc-surface:var(--hmm-surface-solid);",
         "  --dc-grid:rgba(242,236,201,0.12);",
         "  --dc-wash:rgba(242,236,201,0.07);",
         "  --dc-hatch:rgba(26,26,25,0.55);",
-        "  --dc-ink:var(--hmm-pearl,#F2ECC9);",
-        "  --dc-muted:var(--hmm-text-muted,#9c968a);",
-        "  --dc-faint:var(--hmm-text-faint,#6d685e);",
+        "  --dc-ink:var(--hmm-pearl);",
+        "  --dc-muted:var(--hmm-text-muted);",
+        "  --dc-faint:var(--hmm-text-faint);",
         "  --dc-border:var(--hmm-border,rgba(242,236,201,0.16));",
         "  --dc-panel-bg:rgba(242,236,201,0.04);",
         "}",
