@@ -121,7 +121,7 @@ var HMM = (function(){
       els.push(h("circle",{key:"fd"+i,cx:p[0],cy:p[1],r:c[6]?4:3,fill:col}));
       if(c[6])els.push(h("circle",{key:"mg"+i,cx:p[0],cy:p[1],r:22,fill:"none",stroke:A,strokeWidth:1}));
       var box=[
-        h("rect",{key:"bx",x:bx,y:by,width:BW,height:BH,fill:"rgba(18,18,18,0.9)",stroke:col,strokeWidth:c[6]?1.5:1}),
+        h("rect",{key:"bx",x:bx,y:by,width:BW,height:BH,fill:"rgba(20,20,20,0.9)",stroke:col,strokeWidth:c[6]?1.5:1}),
         h("text",{key:"ix",x:bx+13,y:by+21,fontFamily:"Raela Grotesque",fontWeight:700,fontSize:11,letterSpacing:1.4,fill:c[6]?A:FN},c[0]),
         h("text",{key:"ti",x:bx+36,y:by+21,fontFamily:"Raela Grotesque",fontWeight:700,fontSize:12.5,letterSpacing:.7,fill:col},c[1]),
         h("line",{key:"rl",x1:bx+13,y1:by+30,x2:bx+BW-13,y2:by+30,stroke:"rgba(242,236,201,.2)",strokeWidth:.75})
