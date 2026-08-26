@@ -16,6 +16,15 @@
 <meta name="twitter:title" content="hmm ventures · Necessity is the thesis"/>
 <meta name="twitter:description" content="A seed fund backing the regulated technology behind the energy, food and healthcare systems across Australia, Japan and New Zealand."/>
 <meta name="twitter:image" content="https://hmm.ventures/og-default.png"/>
+<script>
+/* Tokens, read at paint time. These figures hardcoded colour because
+   nothing handed it to them; reading the custom property also means a theme
+   change reaches the canvas, which a frozen hex never could. */
+function __T(n, fallback) {
+  var v = getComputedStyle(document.documentElement).getPropertyValue(n);
+  return (v && v.trim()) || fallback;
+}
+</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"hmm ventures","url":"https://hmm.ventures","description":"hmm ventures Fund I. A seed fund backing regulated technology across the energy, food and healthcare systems in Australia, Japan and New Zealand. Necessity is the thesis.","founder":{"@type":"Person","name":"Wahid Tashkandi"},"areaServed":["Australia","Japan","New Zealand"],"knowsAbout":["regulated technology","energy systems","food systems","healthcare systems","venture capital"]}</script>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
@@ -24,7 +33,7 @@
 <link rel="preload" href="fonts/RaelaGrotesque-Regular.ttf" as="font" type="font/ttf" crossorigin/>
 <link rel="stylesheet" href="styles.css"/>
 <style>
-  html{background:#141414;}
+  html{background:var(--hmm-evergreen);}
   body{margin:0;padding:0;scroll-behavior:smooth;font-family:var(--hmm-font-body);color:var(--hmm-pearl);}
   #dotfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
   /* ---------- global chrome ---------- */
@@ -252,10 +261,10 @@
   .mkt-hint{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);text-align:center;margin:0;}
   .mkt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}
   .mkt-card{border:1px solid var(--hmm-border);border-top:2px solid var(--hmm-border);padding:18px 20px;background:rgba(242,236,201,.02);}
-  .mkt-card--au{border-top-color:#B65C40;}.mkt-card--nz{border-top-color:#0E93A6;}.mkt-card--jp{border-top-color:#3E6DA6;}
+  .mkt-card--au{border-top-color:var(--hmm-mkt-au-dark);}.mkt-card--nz{border-top-color:var(--hmm-mkt-nz-dark);}.mkt-card--jp{border-top-color:var(--hmm-mkt-jp-dark);}
   .mkt-card-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
   .mkt-flag{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.1em;border:1px solid var(--hmm-border);padding:2px 7px;}
-  .mkt-card--au .mkt-flag{color:#B65C40;border-color:#B65C40;}.mkt-card--nz .mkt-flag{color:#0E93A6;border-color:#0E93A6;}.mkt-card--jp .mkt-flag{color:#3E6DA6;border-color:#3E6DA6;}
+  .mkt-card--au .mkt-flag{color:var(--hmm-mkt-au-dark);border-color:var(--hmm-mkt-au-dark);}.mkt-card--nz .mkt-flag{color:var(--hmm-mkt-nz-dark);border-color:var(--hmm-mkt-nz-dark);}.mkt-card--jp .mkt-flag{color:var(--hmm-mkt-jp-dark);border-color:var(--hmm-mkt-jp-dark);}
   .mkt-name{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--hmm-pearl);}
   .mkt-card p{font-size:13px;line-height:1.55;color:var(--hmm-text-muted);margin:0;}
   .mkt-exit,.mkt-synth{border:1px solid var(--hmm-border);border-left:2px solid var(--hmm-accent);padding:16px 20px;margin-bottom:16px;}
@@ -275,7 +284,7 @@
   .rec-track{position:absolute;top:0;left:0;right:0;will-change:transform;}
   .rec-row{display:flex;flex-wrap:wrap;gap:5px 12px;align-items:baseline;padding:7px 8px;border-bottom:1px solid rgba(242,236,201,.06);}
   .rec-m{flex:0 0 24px;font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.06em;}
-  .rec-m--AU{color:#B65C40;}.rec-m--JP{color:#3E6DA6;}.rec-m--NZ{color:#0E93A6;}
+  .rec-m--AU{color:var(--hmm-mkt-au-dark);}.rec-m--JP{color:var(--hmm-mkt-jp-dark);}.rec-m--NZ{color:var(--hmm-mkt-nz-dark);}
   .rec-tag{flex:0 0 auto;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);}
   .rec-nec--Power{color:var(--hmm-nec-power);}.rec-nec--Eat{color:var(--hmm-nec-eat);}.rec-nec--Heal{color:var(--hmm-nec-heal);}.rec-nec--DeepTech{color:var(--hmm-text-faint);}
   .rec-name{font-size:13.5px;color:var(--hmm-pearl);}
@@ -671,7 +680,7 @@
     document.querySelectorAll('.box').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-target'));if(t)t.scrollIntoView({behavior:'smooth'});});});
 
     /* ---------- necessity section content ---------- */
-    var ACCENT={power:"#E0812E",eat:"#4F8A5B",heal:"#3E79A6"};
+    var ACCENT={power:__T("--hmm-nec-power", "#FF730B"),eat:__T("--hmm-nec-eat", "#4F8A5B"),heal:__T("--hmm-nec-heal", "#8752A5")};
     var SECCFG={
       power:{eyebrow:"Necessity 01 · Power",sub:"Distribution transformer · exploded",title:'The transformer, in <em>blow-out</em>',dwg:"hmm-NEC-01-D5",
         exEyebrow:"Why Power is a necessity",exTitle:"The energy system",
@@ -791,7 +800,7 @@
 
     /* ---------- S5 bifurcation: animated triple-helix of dots, necessity colours ---------- */
     (function(){
-      var NS="http://www.w3.org/2000/svg", NEC=["#E0812E","#4F8A5B","#3E79A6"];
+      var NS="http://www.w3.org/2000/svg", NEC=[__T("--hmm-nec-power", "#FF730B"),__T("--hmm-nec-eat", "#4F8A5B"),__T("--hmm-nec-heal", "#8752A5")];
       var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var m=document.getElementById('aiSplit');
       if(m){

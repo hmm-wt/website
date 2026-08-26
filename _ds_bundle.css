@@ -6,162 +6,6 @@
    parametric architecture. 75% machine, 25% hand. One accent.
    ============================================================= */
 
-:root {
-  /* ---------- Brand core (screen canon is authoritative) ---------- */
-  --hmm-evergreen:     #141414;  /* GREEN RETIRED (GP 2026-08-09): Evergreen ground -> near-black. Legacy alias; every "evergreen" surface now renders #141414. */
-  --hmm-dark-teal:     #141414;  /* GREEN RETIRED -> near-black (legacy alias) */
-  --hmm-pearl:         #F2ECC9;
-  --hmm-tomato:        #C44539;
-  --hmm-mahogany:      #250001;
-  --hmm-light-tint:    #F7F5F0;
-  --hmm-white:         #F7F5F0;   /* pure white RETIRED (ai-design-tells BAN): warm off-white only */
-
-  /* ---------- Semantic (dark-first) ---------- */
-  --hmm-bg:            var(--hmm-evergreen);
-  --hmm-bg-alt:        var(--hmm-dark-teal);
-  --hmm-surface:       rgba(242, 236, 201, 0.04);
-  --hmm-surface-2:     rgba(242, 236, 201, 0.08);
-  --hmm-text:          var(--hmm-pearl);
-  --hmm-text-muted:    rgba(242, 236, 201, 0.60);
-  --hmm-text-faint:    rgba(242, 236, 201, 0.35);
-  --hmm-accent:        var(--hmm-tomato);
-  --hmm-accent-hover:  #D45546;
-  /* necessity identity colours: use ONLY when a surface is specifically about a necessity
-     (machine accent, strength radar, cascade node, necessity section coding). Otherwise --hmm-accent (Tomato) holds.
-     Light-surface variants darken Power for contrast on Pearl/paper. */
-  --hmm-nec-power:      #E0812E;   --hmm-nec-power-ink: #B0641E;
-  --hmm-nec-eat:        #4F8A5B;   --hmm-nec-eat-ink:   #3E7049;
-  --hmm-nec-heal:       #3E79A6;   --hmm-nec-heal-ink:  #356585;
-  --hmm-border:        rgba(242, 236, 201, 0.12);
-  --hmm-border-hover:  rgba(242, 236, 201, 0.25);
-
-  /* ---------- Light-section semantics ---------- */
-  --hmm-bg-light:          var(--hmm-pearl);
-  --hmm-text-dark:         var(--hmm-mahogany);
-  --hmm-text-dark-muted:   rgba(37, 0, 1, 0.60);
-  --hmm-text-dark-faint:   rgba(37, 0, 1, 0.35);
-  --hmm-border-light:      rgba(37, 34, 27, 0.14);
-  --hmm-border-light-hover: rgba(37, 34, 27, 0.28);
-
-  /* ---------- Chart palette (categorical C01-C08) ---------- */
-  --hmm-c01: #C44539;  /* Tomato Jam · primary series */
-  --hmm-c02: #3F3A34;  /* Graphite (was Dark Teal; green retired) */
-  --hmm-c03: #F2ECC9;  /* Pearl */
-  --hmm-c04: #8B5A3C;  /* Clay */
-  --hmm-c05: #8A7A60;  /* Warm taupe (was Sage-teal) */
-  --hmm-c06: #D48C6A;  /* Terracotta tint */
-  --hmm-c07: #6E6A64;  /* Warm grey (was Muted teal) */
-  --hmm-c08: #A83B2E;  /* Deep tomato */
-
-  /* ---------- SURFACE PALETTE RULE (GP 2026-08-09) ----------
-     Choose the ground by the surface's ROLE, not the format:
-       DARK ground · RESERVED for COVER pages, SECTION DIVIDERS and CORE-EMPHASIS
-         slides only. --hmm-field-dark #141414 near-black (the "heal.html" scheme).
-         GREEN IS RETIRED (GP 2026-08-09) · no Evergreen ground. Pearl linework/type,
-         Tomato accent.
-       LIGHT ground · the DEFAULT for ALL regular content: reading pages, data
-         exhibits, tables, most deck slides. Pearl #F2ECC9 / paper #F4EEDA
-         background, ink type, one Tomato accent.
-     Any format (necessity machine, engineering sheet, chart) renders on EITHER
-     ground; the ground follows the slide's role. Light is the norm, dark the
-     exception for high-impact moments. Screen hexes authoritative; print CMYK
-     approx (Pearl #FCECC9 / Tomato #C44536) confined to any PDF/InDesign path. */
-  --hmm-field-dark:  #141414;   /* technical/system ground (heal scheme) */
-  --hmm-paper:       #F4EEDA;   /* content reading-page ground */
-
-  /* ---------- Content roles (colour = meaning) ---------- */
-  --hmm-thesis:        #B8863A;   /* Ochre · a claim we make */
-  --hmm-thesis-ink:    #8A6426;
-  --hmm-thesis-tint:   rgba(184, 134, 58, 0.10);
-  --hmm-decision:      #250001;   /* Mahogany · a ruling, settled */
-  --hmm-decision-pearl:#F2ECC9;
-  --hmm-decision-tint: rgba(37, 0, 1, 0.06);
-  --hmm-opinion:       #6E5F48;   /* Warm slate · editorial voice (green retired) */
-  --hmm-opinion-dark:  #C9B79A;
-  --hmm-opinion-tint:  rgba(45, 107, 95, 0.08);
-  --hmm-callout:       var(--hmm-tomato);
-  --hmm-callout-tint:  rgba(196, 69, 57, 0.08);
-  /* Accessibility tokens (WCAG AA, added 2026-08-09):
-     caption/source/meta TEXT must clear 4.5:1 — never the 0.35 faint. Small accent
-     TEXT on light uses accent-ink (~5:1); bright Tomato stays for large text + fills. */
-  --hmm-caption:       rgba(242, 236, 201, 0.72);  /* source/meta text on dark (~7:1) */
-  --hmm-accent-ink:    #A5382C;                     /* small accent text on light (~5:1) */
-
-  /* ---------- Typography · TWO faces (GP-ratified 2026-08-09) ----------
-     Kufam = headers/display. Raela Grotesque = EVERYTHING else: body, data,
-     chart finding-titles, and notation/labels (via uppercase + letter-spacing).
-     Layering comes from weight / case / size / colour, not extra faces.
-     Beiruti and Instrument Serif are RETIRED. */
-  --hmm-font-display: "Kufam", "Helvetica Neue", sans-serif;
-  --hmm-font-body:    "Raela Grotesque", "Helvetica Neue", sans-serif;
-  --hmm-font-mono:    "Raela Grotesque", "Helvetica Neue", sans-serif; /* retired Beiruti -> Raela */
-  --hmm-font-serif:   "Raela Grotesque", "Helvetica Neue", sans-serif; /* retired serif -> Raela */
-
-  /* Fluid type scale (container-relative variants set per component in cqw) */
-  --hmm-text-xs:   clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);  /* @kind spacing */
-  --hmm-text-sm:   clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);  /* @kind spacing */
-  --hmm-text-base: clamp(0.9375rem, 0.85rem + 0.45vw, 1.0625rem); /* @kind spacing */
-  --hmm-text-lg:   clamp(1.125rem,  0.95rem + 0.85vw, 1.5rem);    /* @kind spacing */
-  --hmm-text-xl:   clamp(1.5rem,    1rem    + 1.5vw,  2.25rem);   /* @kind spacing */
-  --hmm-text-2xl:  clamp(2rem,      1.2rem  + 2.5vw,  3.5rem);    /* @kind spacing */
-  --hmm-text-3xl:  clamp(2.5rem,    1rem    + 4vw,    5rem);      /* @kind spacing */
-  --hmm-text-hero: clamp(3rem,      0.5rem  + 7vw,    8rem);      /* @kind spacing */
-
-  /* Fixed mono scale */
-  --hmm-mono-meta: 11px;   /* a11y floor: mono meta never below 11px (was 9px) */
-  --hmm-mono-base: 11px;
-  --hmm-mono-edit: 14px;
-  --hmm-mono-head: 32px;
-
-  /* ---------- Typographic rhythm (GP 2026-08-09) ----------
-     Vertical rhythm on a 4px BASELINE; letter-tracking quantised to ~2px at the
-     reference size. Every leading value and block gap snaps to the baseline. */
-  --hmm-baseline:      4px;            /* the vertical rhythm unit */
-  --hmm-para-gap:      16px;           /* paragraph spacing = 4 x baseline */
-  --hmm-para-gap-dense:12px;           /* dense / two-column = 3 x baseline */
-  --hmm-block-gap:     24px;           /* between blocks = 6 x baseline */
-  /* tracking (letter-spacing) — em so it scales; ~2px at the noted reference size */
-  --hmm-track-tight:   -0.01em;        /* Kufam display / big numbers */
-  --hmm-track-normal:  0; /* @kind spacing */ /* Raela body / lead */
-  --hmm-track-label:   0.12em;         /* mono notation / data (~2px @ 16px) */
-  --hmm-track-eyebrow: 0.16em;         /* eyebrows (~2px @ 12px) */
-  --hmm-track-wide:    0.20em;         /* widest kickers */
-  /* leading (line-height) — rendered line box snaps to a 4px multiple */
-  --hmm-leading-hero:  1.0;            /* hero / big numbers */
-  --hmm-leading-title: 1.15;           /* Kufam titles */
-  --hmm-leading-snug:  1.3;            /* lead paragraphs, dense */
-  --hmm-leading-body:  1.5;            /* body (11px -> 16px box) */
-  --hmm-leading-read:  1.6;            /* IM two-column body */
-  --hmm-leading-label: 1.2;            /* mono labels */
-
-  /* ---------- Spacing (4-based) ---------- */
-  --hmm-space-1: 0.25rem;  --hmm-space-2: 0.5rem;  --hmm-space-3: 0.75rem;
-  --hmm-space-4: 1rem;     --hmm-space-5: 1.25rem; --hmm-space-6: 1.5rem;
-  --hmm-space-8: 2rem;     --hmm-space-10: 2.5rem; --hmm-space-12: 3rem;
-  --hmm-space-16: 4rem;    --hmm-space-20: 5rem;   --hmm-space-24: 6rem;
-  --hmm-space-32: 8rem;
-
-  /* ---------- Radius (notebook prefers sharp; larger radii for product UI only) ---------- */
-  --hmm-radius-sm: 0.25rem; --hmm-radius-md: 0.5rem;
-  --hmm-radius-lg: 0.75rem; --hmm-radius-xl: 1rem;
-
-  /* ---------- Motion ---------- */
-  --hmm-ease:       cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */ /* the one curve · decisive, no bounce */
-  --hmm-ease-exit:  cubic-bezier(0.4, 0, 1, 1);      /* @kind other */
-  --hmm-transition: 180ms var(--hmm-ease);
-
-  /* ---------- Shadows (restrained, ink-tinted; reading surfaces stay flat) ---------- */
-  --hmm-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.20);
-  --hmm-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --hmm-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.35);
-
-  /* ---------- Notebook geometry ---------- */
-  --hmm-grid:        48px;                              /* the graphite lattice module */
-  --hmm-grid-line:   rgba(242, 236, 201, 0.05);         /* on Evergreen */
-  --hmm-grid-line-light: rgba(37, 34, 27, 0.055);        /* on Pearl */
-  --hmm-keyline:     22px;                              /* plate inset */
-  --hmm-tick:        9px;                               /* corner registration tick arm */
-}
 
 * { box-sizing: border-box; }
 
@@ -182,13 +26,8 @@
 .hmm-field--dark-teal { background: var(--hmm-dark-teal); color: var(--hmm-pearl); }
 .hmm-field--pearl     { background: var(--hmm-pearl);     color: var(--hmm-mahogany); }
 .hmm-field--light-tint{ background: var(--hmm-light-tint);color: var(--hmm-mahogany); }
-/* Light surfaces flip the muted/faint tokens dark so mono labels stay legible. */
-[data-hmm-surface="light"], .hmm-field--pearl, .hmm-field--light-tint {
-  --hmm-text-muted: var(--hmm-text-dark-muted);
-  --hmm-text-faint: var(--hmm-text-dark-faint);
-  --hmm-border: var(--hmm-border-light);
-  --hmm-caption: rgba(37, 0, 1, 0.72);   /* compliant caption/source text on light (~5:1) */
-}
+/* The light-surface rebinding is emitted from the token source, at page
+   scope and at surface scope, from one list. */
 /* small accent TEXT on light surfaces uses the darker accent-ink (bright Tomato fails 4.5:1 below large) */
 .hmm-field--pearl .hmm-eyebrow, .hmm-field--light-tint .hmm-eyebrow,
 .hmm-field--pearl .hmm-fig-eyebrow, .hmm-field--light-tint .hmm-fig-eyebrow { color: var(--hmm-accent-ink); }
@@ -293,7 +132,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;            /* contain the blend to this box */
-  background: var(--hmm-duo-shadow, #141414);
+  background: var(--hmm-duo-shadow, var(--hmm-evergreen));
 }
 .hmm-duotone > img {
   width: 100%; height: 100%; object-fit: cover; display: block;
@@ -301,11 +140,11 @@
 }
 .hmm-duotone::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: var(--hmm-duo-shadow, #141414); mix-blend-mode: lighten;
+  background: var(--hmm-duo-shadow, var(--hmm-evergreen)); mix-blend-mode: lighten;
 }
 .hmm-duotone::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: var(--hmm-duo-highlight, #F2ECC9); mix-blend-mode: darken;
+  background: var(--hmm-duo-highlight, var(--hmm-pearl-beige)); mix-blend-mode: darken;
 }
 /* Scrim for legible type over a photographic field. */
 .hmm-scrim { position: absolute; inset: 0; pointer-events: none; z-index: 0; }

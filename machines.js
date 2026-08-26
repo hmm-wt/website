@@ -1,11 +1,18 @@
+/* Tokens, read at paint time. These figures hardcoded colour because
+   nothing handed it to them; reading the custom property also means a theme
+   change reaches the canvas, which a frozen hex never could. */
+function __T(n, fallback) {
+  var v = getComputedStyle(document.documentElement).getPropertyValue(n);
+  return (v && v.trim()) || fallback;
+}
 /* hmm site - reusable necessity machines (canonical set, GP-ruled).
    Power = distribution transformer (buildXfmr) · Eat = harvester pickup reel (buildReel) ·
    Heal = needle / auto-injector (buildInjector). Geometry lifted verbatim from the demos
    (_demo/transformer-blowout.html, eat.html, heal-blowout.html). Each builder is closured so its
    helper names never collide. Layers are tagged col in {PEARL, ACC (verb-part), FAINT, AXIS}.
-   Necessity accent colours: power #E0812E, eat #4F8A5B, heal #3E79A6. Requires window.React. */
+   Necessity accent colours: power #FF730B, eat #4F8A5B, heal #8752A5. Requires window.React. */
 var HMM = (function(){
-  var h = React.createElement, PEARL="#F2ECC9";
+  var h = React.createElement, PEARL=__T("--hmm-pearl-beige", "#F2ECC9");
   function seededRnd(s){s=s||1;return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};}
 
   /* ===================== transformer ===================== */
@@ -88,9 +95,9 @@ var HMM = (function(){
   ];
 
   var MACH = {
-    power:{vb:[0,0,1080,660], iconVB:"384 138 232 476", build:buildXfmr, seed:7,  accent:"#E0812E", call:XFMR_CALL, ch1:1056,chy:636},
-    eat:  {vb:[0,0,1080,620], iconVB:"128 152 828 420", build:buildReel, seed:11, accent:"#4F8A5B", call:REEL_CALL, ch1:1064,chy:604},
-    heal: {vb:[0,0,1080,660], iconVB:"432 92 136 566",  build:buildInjector, seed:17, accent:"#3E79A6", call:INJ_CALL, ch1:1064,chy:644}
+    power:{vb:[0,0,1080,660], iconVB:"384 138 232 476", build:buildXfmr, seed:7,  accent:__T("--hmm-nec-power", "#FF730B"), call:XFMR_CALL, ch1:1056,chy:636},
+    eat:  {vb:[0,0,1080,620], iconVB:"128 152 828 420", build:buildReel, seed:11, accent:__T("--hmm-nec-eat", "#4F8A5B"), call:REEL_CALL, ch1:1064,chy:604},
+    heal: {vb:[0,0,1080,660], iconVB:"432 92 136 566",  build:buildInjector, seed:17, accent:__T("--hmm-nec-heal", "#8752A5"), call:INJ_CALL, ch1:1064,chy:644}
   };
 
   function dotsOf(kind){

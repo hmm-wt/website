@@ -1,0 +1,412 @@
+/* GENERATED FILE. DO NOT EDIT.
+   Source: Internal/Design/tokens/hmm.tokens.json
+   Build:  python3 Internal/Design/tokens/build_tokens.py
+   Tokens: 200   Source digest: 58c35be39bb0d827
+   Guard 25 fails the build if this file drifts from the source.
+*/
+
+/* =============================================================
+   hmm Ventures. Canonical Design Tokens v3.0
+   Single source of truth for web, print, charts, and slides.
+
+   v3.0 (2026-08-23) ports the GP-ratified 2026-08-09 decisions from the
+   live site bundle (hmm-wt/website `_ds_bundle.css`) into the workspace,
+   which had been left on v2.0 through the 2026-06-12 to 2026-08-19 memory
+   gap. Two systems were live and contradictory until this port.
+
+   What changed from v2.0:
+     - GREEN RETIRED. Evergreen and Dark Teal both render near-black #141414.
+       Both names survive as legacy aliases so existing consumers resolve.
+     - TWO FACES. Kufam (display) + Raela Grotesque (everything else).
+       Instrument Serif, IBM Plex Mono, DM Sans and Beiruti are retired.
+     - Chart C02 / C05 / C07 rebound off green to graphite and warm neutrals.
+     - Opinion role moved off teal to warm slate.
+     - Pure white retired; warm off-white only.
+     - Added: pixel-grid rhythm (4px baseline, 48px lattice), plate geometry,
+       WCAG AA caption/accent-ink tokens, --hmm-paper.
+
+   The aesthetic: Renaissance engineering notebook through parametric
+   architecture. 75% machine, 25% hand. One accent.
+   ============================================================= */
+
+/* ---------- Brand @font-face (self-hosted, authoritative) ----------
+   url() in a stylesheet resolves against THAT stylesheet's own location,
+   not the importing document, so these are relative to this file. The
+   v2.0 header claimed "repo-relative from project root" and used
+   ../fonts/, which never resolved from anywhere. Fixed 2026-08-23.
+   For other mount points, rewrite the url() prefix at build time. */
+@font-face {
+  font-family: 'Kufam';
+  src: url('fonts/Kufam-VariableFont.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kufam';
+  src: url('fonts/Kufam-Italic-VariableFont.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Raela Grotesque';
+  src: url('fonts/RaelaGrotesque-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Raela Grotesque';
+  src: url('fonts/RaelaGrotesque-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Raela Grotesque';
+  src: url('fonts/RaelaGrotesque-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+
+  /* ---------- Brand colours (screen canon is authoritative) ---------- */
+  /* Screen canon: #F2ECC9 (Pearl) and #C44539 (Tomato). The InDesign values (#FCECC9 / #C44536) are CMYK print approximations. Use those only in InDesign CMYK swatches and any print deliverable. */
+  --hmm-evergreen:     #141414;   /* GREEN RETIRED (GP 2026-08-09): Evergreen ground -> near-black. Legacy alias; every "evergreen" surface now renders #141414. */
+  --hmm-dark-teal:     #141414;   /* GREEN RETIRED -> near-black (legacy alias) */
+  --hmm-pearl-beige:   #F2ECC9;   /* SCREEN canon. CMYK print approx = #FCECC9 */
+  --hmm-tomato-jam:    #C44539;   /* SCREEN canon. CMYK print approx = #C44536 */
+  --hmm-rich-mahogany: #250001;   /* CMYK 30/100/100/70. body text on light */
+  --hmm-light-tint:    #F7F5F0;   /* alt page / zebra row */
+  --hmm-white:         #F7F5F0;   /* pure white RETIRED (ai-design-tells BAN): warm off-white only */
+
+  /* ---------- Surface palette rule (GP 2026-08-09) ---------- */
+  /* Choose the ground by the surface's ROLE, not the format: DARK ground . RESERVED for COVER pages, SECTION DIVIDERS and CORE-EMPHASIS slides only. --hmm-field-dark #141414 near-black. GREEN IS RETIRED . no Evergreen ground. Pearl linework and type, Tomato accent. LIGHT ground . the DEFAULT for ALL regular content: reading pages, data exhibits, tables, most deck slides. Pearl #F2ECC9 / paper #F4EEDA background, ink type, one Tomato accent. Any format (necessity machine, engineering sheet, chart) renders on EITHER ground; the ground follows the surface's role. Light is the norm, dark the exception for high-impact moments. */
+  --hmm-field-dark: #141414;   /* technical / system ground */
+  --hmm-paper:      #F4EEDA;   /* content reading-page ground */
+
+  /* ---------- Semantic colour mapping (dark-first product) ---------- */
+  --hmm-bg:                 var(--hmm-field-dark);
+  --hmm-bg-alt:             var(--hmm-field-dark);
+  --hmm-surface:            rgba(242, 236, 201, 0.04);
+  --hmm-surface-2:          rgba(242, 236, 201, 0.08);
+  --hmm-text:               var(--hmm-pearl-beige);
+  --hmm-text-muted:         rgba(242, 236, 201, 0.60);
+  --hmm-text-faint:         rgba(242, 236, 201, 0.35);
+  --hmm-accent:             var(--hmm-tomato-jam);
+  --hmm-accent-hover:       #D45546;
+  --hmm-border:             rgba(242, 236, 201, 0.12);
+  --hmm-border-hover:       rgba(242, 236, 201, 0.25);
+  --hmm-bg-light:           var(--hmm-pearl-beige);
+  --hmm-text-dark:          var(--hmm-rich-mahogany);
+  --hmm-text-dark-muted:    rgba(37, 0, 1, 0.60);
+  --hmm-text-dark-faint:    rgba(37, 0, 1, 0.35);
+  --hmm-border-light:       rgba(37, 34, 27, 0.14);
+  --hmm-border-light-hover: rgba(37, 34, 27, 0.28);
+  --hmm-bg-alt-light:       var(--hmm-light-tint);   /* light-ground alt page / zebra row, mirroring hmm-bg-alt on dark */
+  --hmm-surface-light:      rgba(37, 34, 27, 0.04);   /* mirrors hmm-surface's 0.04 over the light ground's ink */
+  --hmm-surface-2-light:    rgba(37, 34, 27, 0.08);   /* mirrors hmm-surface-2's 0.08 over the light ground's ink */
+
+  /* ---------- Necessity identity colours ---------- */
+  /* Use ONLY when a surface is specifically about a Necessity (machine accent, strength radar, cascade node, necessity section coding). Otherwise --hmm-accent (Tomato) holds. The -ink variants darken for contrast on Pearl / paper. */
+  --hmm-nec-power:     #FF730B;   /* Power, the energy system including critical-minerals innovation. Heat: molten metal, a filament, an arc, the orange of a high-voltage warning. Australia's gold is a metal and this is what happens to metal, so the two sit in different halves of the warm range: 22.6 dE00 apart, against 15.9 for a peru-toned orange. It reads as darkorange at 8.3 and as coral at 8.5, which is the closest any identity colour comes to a red word, and it is still 22.7 from the accent itself. 2.35:1 on paper is the lowest in the palette, and every orange that names clear of both red and gold measures lower still while sitting 9 dE00 nearer Australia. */
+  --hmm-nec-power-ink: #B34B00;   /* Small text. 4.61:1 on paper. */
+  --hmm-nec-eat:       #4F8A5B;   /* Eat, the food and agricultural system from seed to mouth. Green is the strongest and most exclusive association in the palette: chlorophyll, crop, produce. Reads as seagreen. */
+  --hmm-nec-eat-ink:   #3C7749;   /* Small text. 4.61:1 on paper. */
+  --hmm-nec-heal:      #8752A5;   /* Heal, the healthcare system from preventative through to death. Violet, because the room leaves it: green belongs to Eat on any page where both appear, and blue is Japan. Haematology tubes cap in lavender and life sciences branding reaches for violet, so the association is available without being owned. Reads as darkorchid. */
+  --hmm-nec-heal-ink:  #8752A5;   /* 4.78:1 on paper, so the base carries. */
+
+  /* ---------- Chart palette (C01–C08, categorical) ---------- */
+  --hmm-c01: #C44539;   /* Tomato Jam. primary series (screen canon) */
+  --hmm-c02: #3F3A34;   /* Graphite (was Dark Teal; green retired) */
+  --hmm-c03: #F2ECC9;   /* Pearl Beige (screen canon) */
+  --hmm-c04: #8B5A3C;   /* Clay (mid-warm) */
+  --hmm-c05: #8A7A60;   /* Warm taupe (was Sage-teal; green retired) */
+  --hmm-c06: #D48C6A;   /* Terracotta tint */
+  --hmm-c07: #6E6A64;   /* Warm grey (was Muted teal; green retired) */
+  --hmm-c08: #A83B2E;   /* Deep tomato */
+
+  /* ---------- Content-role semantics (v1.1. strict) ---------- */
+  /* Every claim, ruling, or first-person editorial line in an hmm deliverable MUST be rendered in its role colour, regardless of surface (web, slide, phone, PDF, paper). The role colour is paired with a structural cue (italic / left-rule / margin tag) so the signal survives monochrome print. Roles are ORTHOGONAL to call-out. A thesis that is also a call-out wears its thesis colour AND a Tomato call-out tag. Never both as body colour. */
+  --hmm-thesis:         #B8863A;   /* Ochre. warm, claim-making, sits beside Pearl */
+  --hmm-thesis-ink:     #8A6426;   /* Darker ochre for body prose on Pearl */
+  --hmm-thesis-tint:    rgba(184, 134, 58, 0.10);   /* Background wash */
+  --hmm-decision:       #250001;   /* Mahogany. authoritative, final */
+  --hmm-decision-pearl: #F2ECC9;   /* Decision colour on dark surfaces = Pearl */
+  --hmm-decision-tint:  rgba(37, 0, 1, 0.06);
+  --hmm-opinion:        #6E5F48;   /* Warm slate (was teal-mid; green retired) */
+  --hmm-opinion-dark:   #C9B79A;   /* Opinion colour on the dark ground */
+  --hmm-opinion-tint:   rgba(110, 95, 72, 0.08);
+  --hmm-callout:        var(--hmm-tomato-jam);
+  --hmm-callout-tint:   rgba(196, 69, 57, 0.08);
+
+  /* ---------- Accessibility (WCAG AA, GP 2026-08-09) ---------- */
+  /* Caption / source / meta TEXT must clear 4.5:1. Never use the 0.35 faint token for text. Small accent TEXT on light grounds uses accent-ink (~5:1); bright Tomato stays for large text and fills. */
+  --hmm-caption:       rgba(242, 236, 201, 0.72);   /* source/meta text on dark (~7:1) */
+  --hmm-caption-light: rgba(37, 0, 1, 0.72);   /* source/meta text on light (~5:1) */
+  --hmm-accent-ink:    #A5382C;   /* small accent text on light (~5:1) */
+  --hmm-accent-text:   var(--hmm-accent-dark);   /* accent set as TEXT, which the brand Tomato cannot do: it measures 3.73 on the dark ground and 4.14 on Pearl, either side of the 4.5 floor. Rebinds to hmm-accent-ink on light. The fill stays Tomato */
+
+  /* ---------- Typography. TWO faces (GP-ratified 2026-08-09) ---------- */
+  /* Kufam = headers / display. Raela Grotesque = EVERYTHING else: body, data, chart finding-titles, and notation / labels (via uppercase + letter-spacing). Layering comes from weight / case / size / colour, not extra faces. Instrument Serif, IBM Plex Mono, DM Sans and Beiruti are RETIRED. The mono and serif aliases below are kept so legacy consumers resolve; they point at Raela. */
+  --hmm-font-display: 'Kufam', 'Helvetica Neue', sans-serif;
+  --hmm-font-body:    'Raela Grotesque', 'Helvetica Neue', sans-serif;
+  --hmm-font-mono:    'Raela Grotesque', 'Helvetica Neue', sans-serif;   /* retired mono -> Raela */
+  --hmm-font-serif:   'Raela Grotesque', 'Helvetica Neue', sans-serif;   /* retired serif -> Raela */
+  --hmm-font-print:   'Raela Grotesque', 'Helvetica Neue', sans-serif;   /* retired Inter -> Raela */
+  --hmm-text-xs:      clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);
+  --hmm-text-sm:      clamp(0.8125rem, 0.75rem + 0.3vw, 0.9375rem);
+  --hmm-text-base:    clamp(0.9375rem, 0.85rem + 0.45vw, 1.0625rem);
+  --hmm-text-lg:      clamp(1.125rem,  0.95rem + 0.85vw, 1.5rem);
+  --hmm-text-xl:      clamp(1.5rem,    1rem    + 1.5vw,  2.25rem);
+  --hmm-text-2xl:     clamp(2rem,      1.2rem  + 2.5vw,  3.5rem);
+  --hmm-text-3xl:     clamp(2.5rem,    1rem    + 4vw,    5rem);
+  --hmm-text-hero:    clamp(3rem,      0.5rem  + 7vw,    8rem);
+  --hmm-mono-meta:    11px;
+  --hmm-mono-base:    11px;
+  --hmm-mono-edit:    14px;
+  --hmm-mono-head:    32px;
+  --hmm-font-figures: 'Kufam', 'Helvetica Neue', sans-serif;   /* The face for figures that must ALIGN: a column of numbers, a percentile strip, a metric row. Raela Grotesque sets digits proportionally, advances 445 to 621 units, and carries no tnum feature, so font-variant-numeric: tabular-nums is a no-op on it. Kufam's digits are all 616, tabular by construction. --hmm-font-mono is unchanged: it is the specification REGISTER, and register is carried by size, tracking and case as well as by width. */
+
+  /* ---------- Typographic rhythm (GP 2026-08-09) ---------- */
+  /* Vertical rhythm on a 4px BASELINE; letter-tracking quantised to ~2px at the reference size. Every leading value and block gap snaps to the baseline. */
+  --hmm-baseline:       4px;   /* the vertical rhythm unit */
+  --hmm-para-gap:       16px;   /* paragraph spacing = 4 x baseline */
+  --hmm-para-gap-dense: 12px;   /* dense / two-column = 3 x baseline */
+  --hmm-block-gap:      24px;   /* between blocks = 6 x baseline */
+  --hmm-track-tight:    -0.01em;   /* Kufam display / big numbers */
+  --hmm-track-normal:   0;   /* Raela body / lead */
+  --hmm-track-label:    0.12em;   /* notation / data (~2px @ 16px) */
+  --hmm-track-eyebrow:  0.16em;   /* eyebrows (~2px @ 12px) */
+  --hmm-track-wide:     0.20em;   /* widest kickers */
+  --hmm-leading-hero:   1.0;   /* hero / big numbers */
+  --hmm-leading-title:  1.15;   /* Kufam titles */
+  --hmm-leading-snug:   1.3;   /* lead paragraphs, dense */
+  --hmm-leading-body:   1.5;   /* body (11px -> 16px box) */
+  --hmm-leading-read:   1.6;   /* IM two-column body */
+  --hmm-leading-label:  1.2;   /* notation labels */
+
+  /* ---------- 4-based spacing (web) ---------- */
+  --hmm-space-1:  0.25rem;
+  --hmm-space-2:  0.5rem;
+  --hmm-space-3:  0.75rem;
+  --hmm-space-4:  1rem;
+  --hmm-space-5:  1.25rem;
+  --hmm-space-6:  1.5rem;
+  --hmm-space-8:  2rem;
+  --hmm-space-10: 2.5rem;
+  --hmm-space-12: 3rem;
+  --hmm-space-16: 4rem;
+  --hmm-space-20: 5rem;
+  --hmm-space-24: 6rem;
+  --hmm-space-32: 8rem;
+
+  /* ---------- Inch-based spacing (print) ---------- */
+  /* Named in multiples of 0.056" = 4pt. Use for any print work. */
+  --hmm-print-xs:  0.056in;   /* 4pt */
+  --hmm-print-sm:  0.111in;   /* 8pt */
+  --hmm-print-md:  0.167in;   /* 12pt */
+  --hmm-print-lg:  0.278in;   /* 20pt */
+  --hmm-print-xl:  0.556in;   /* 40pt */
+  --hmm-print-xxl: 1.111in;   /* 80pt */
+
+  /* ---------- Notebook geometry (GP 2026-08-09) ---------- */
+  --hmm-grid:            48px;   /* the graphite lattice module */
+  --hmm-grid-line:       rgba(242, 236, 201, 0.05);   /* lattice on the dark ground */
+  --hmm-grid-line-light: rgba(37, 34, 27, 0.055);   /* lattice on Pearl / paper */
+  --hmm-keyline:         22px;   /* plate inset */
+  --hmm-tick:            9px;   /* corner registration tick arm */
+
+  /* ---------- Ruled vs freehand. R12, the origin axis ---------- */
+  /* The building is ruled; the ground is freehand. Our own construction (portfolio, fees, waterfall, structure) is drawn precisely. The world we found (market, regulation, comparables, benchmarks, the classified universe) is drawn loosely, and never carries more apparent precision than it has. These are the two pen weights, not two colours. */
+  --hmm-rule-constructed:    1.4px;   /* ruled: our own construction */
+  --hmm-rule-found:          1px;   /* freehand: the world we found */
+  --hmm-rule-constructed-op: 1;   /* constructed lines sit at full ink */
+  --hmm-rule-found-op:       0.72;   /* found lines are held back */
+  --hmm-cap-constructed:     butt;   /* a ruled line stops where it stops */
+  --hmm-cap-found:           round;   /* a drawn line has a drawn end */
+  --hmm-wash-found:          0.14;   /* fill opacity for a found area */
+
+  /* ---------- Radius (notebook prefers sharp; larger radii for product UI only) ---------- */
+  --hmm-radius-none: 0;   /* The default for a technical or structural object. */
+  --hmm-radius-sm:   0.25rem;
+  --hmm-radius-md:   0.5rem;
+  --hmm-radius-lg:   0.75rem;
+  --hmm-radius-xl:   1rem;
+  --hmm-radius-full: 9999px;   /* A node, a point entity, a dot. */
+
+  /* ---------- Motion. one curve, decisive, no bounce ---------- */
+  --hmm-ease:        cubic-bezier(0.22, 1, 0.36, 1);
+  --hmm-ease-golden: cubic-bezier(0.22, 1, 0.36, 1);   /* legacy alias -> the one curve */
+  --hmm-ease-exit:   cubic-bezier(0.4, 0, 1, 1);
+  --hmm-transition:  180ms var(--hmm-ease);
+
+  /* ---------- Shadows (restrained, ink-tinted; reading surfaces stay flat) ---------- */
+  --hmm-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.20);
+  --hmm-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --hmm-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.35);
+
+  /* ---------- Shadows (light bg) ---------- */
+  --hmm-shadow-sm-light: 0 1px 3px rgba(37, 0, 1, 0.06), 0 1px 2px rgba(37, 0, 1, 0.04);
+  --hmm-shadow-md-light: 0 4px 12px rgba(37, 0, 1, 0.08), 0 2px 4px rgba(37, 0, 1, 0.04);
+  --hmm-shadow-lg-light: 0 12px 32px rgba(37, 0, 1, 0.12), 0 4px 8px rgba(37, 0, 1, 0.06);
+
+  /* ---------- Content widths ---------- */
+  --hmm-content-narrow:  680px;
+  --hmm-content-default: 960px;
+  --hmm-content-wide:    1200px;
+
+  /* ---------- Live-site short aliases ---------- */
+  /* Declared by hmm-wt/website _ds_bundle.css and referenced by its rules. Carried here so this source is a superset of the live site and could generate that bundle without breaking a single selector. */
+  --hmm-pearl:    #F2ECC9;   /* Short alias used by the live site bundle. Same value as --hmm-pearl-beige. */
+  --hmm-tomato:   #C44539;   /* Short alias used by the live site bundle. Same value as --hmm-tomato-jam. */
+  --hmm-mahogany: #250001;   /* Short alias used by the live site bundle. Same value as --hmm-rich-mahogany. */
+
+  /* ---------- Launch playbook ramp ---------- */
+  /* A warm sequential ramp used by the NZ and DIFC launch two-pagers and the COO playbooks (launch_charts.py). Declared here because it is in live output; it was nine loose hex literals. Warm only: the green end of the original ramp was retired with the rest of green on 2026-08-09. */
+  --hmm-ramp-01:      #FAF8F0;   /* lightest. was a pale green, replaced on green retirement */
+  --hmm-ramp-02:      #EFCFAD;   /* warm sand */
+  --hmm-ramp-03:      #E6A892;   /* warm apricot */
+  --hmm-ramp-04:      #D88575;   /* warm coral */
+  --hmm-ramp-05:      #A8836A;   /* warm clay */
+  --hmm-ramp-06:      #8B6F47;   /* deep warm brown */
+  --hmm-ramp-tint:    #D8D2B8;   /* quiet fill under the ramp */
+  --hmm-ramp-neutral: #7A7A7A;   /* neutral comparator inside a ramp */
+  --hmm-ramp-ink:     #1A1A1A;   /* ink on a ramp swatch */
+
+  /* ---------- Specimen page chrome ---------- */
+  /* The design-review specimen pages (Internal/Design/Reviews). Not a deliverable surface, but live output, so its values are declared rather than loose. */
+  --hmm-specimen-ground:      #EDEAE2;   /* review page ground, light */
+  --hmm-specimen-ground-dark: #181715;   /* review page ground, dark */
+  --hmm-specimen-card-dark:   #201E1B;   /* review card on the dark ground */
+  --hmm-specimen-muted:       #6B6459;   /* review page secondary text */
+
+  /* ---------- Rule weights, print ---------- */
+  /* The source declared only px, so the print consumer had nowhere to put its weights and declared them locally. A source of truth has to carry the contextual variants its consumers need or it pushes them back into local overrides. */
+  --hmm-rule-constructed-print: 1.4pt;   /* R12 constructed rule, PRINT. The screen value is 1.4px, which is 1.05pt, so the printed rule is about a third heavier. This is the value the memorandum has shipped at; whether that weight is intended or inherited is a GP question, but it is declared now rather than invented locally. */
+  --hmm-rule-found-print:       1pt;   /* R12 found rule, PRINT. Screen is 1px = 0.75pt. */
+
+  /* ---------- Structural line hierarchy ---------- */
+  /* Weight carries WHAT KIND OF LINE THIS IS: the extent of the system, the resolved subject, its components, the guides that generated it. Dash and opacity carry evidence state, so weight is free to carry structure. Mirrors model.STRUCTURE, which is what the plates read. */
+  --hmm-line-boundary:     4px;   /* system extent, or a cut condition */
+  --hmm-line-primary:      2.5px;   /* the resolved subject. Every data mark draws here */
+  --hmm-line-secondary:    1.5px;   /* component structure */
+  --hmm-line-fine:         1px;   /* internal detail */
+  --hmm-line-construction: 0.5px;   /* guides, derivation, the generative geometry */
+
+  /* ---------- Market identity colours ---------- */
+  /* One colour per market, close to its national colours. These are IDENTITY, not encoding: they name a market across surfaces the way the Necessity colours name a system. Category INSIDE a plate is texture (R16), because six saturated hues cannot all separate in greyscale on a cream ground and guard 17 would be right to fail them. Guard 30 holds the set: dE00 20 within a taxonomy, 12 across, 20 against the accent. */
+  --hmm-mkt-au:     #A87A00;   /* Australia. The national gold, at the depth a cream ground needs: the bright gold #FFCD00 reads at 1.29:1 on paper and cannot carry a mark. Reads as darkgoldenrod. */
+  --hmm-mkt-au-ink: #866100;   /* Small text. 4.86:1 on paper. */
+  --hmm-mkt-jp:     #1B3B6F;   /* Japan. Samurai Blue, which is also the aizome indigo. Reads as midnightblue or darkslateblue. Blue rather than the Hinomaru red because a red that reads as Japanese sits 9 to 13 dE from the accent on paper and closes to 6.9 on the dark ground, and a market mistaken for SIGNAL carries a claim nobody made. Blue puts it 42.7 from the accent. */
+  --hmm-mkt-jp-ink: #1B3B6F;   /* Same value: 9.51:1 on paper already. */
+  --hmm-mkt-nz:     #7D858C;   /* New Zealand. Silver, from the All Blacks and the Silver Ferns, taken dark enough for a cream ground: true silver #C0C0C0 reads at 1.57:1 on paper and cannot carry a mark. Reads as lightslategray or slategray. */
+  --hmm-mkt-nz-ink: #5F676E;   /* Small text. 4.95:1 on paper. */
+
+  /* ---------- Dark-ground variants ---------- */
+  /* The near-black ground is reserved for covers, dividers and core-emphasis surfaces, and the light-ground palette does not survive on it: accent-ink sits at 2.81:1 there, Japan at 2.62 and New Zealand at 1.36. Every one of these clears 4.5:1 on #141414, so it carries text as well as fill. Each was lifted under the constraint that it still NAMES the same thing: a naive lift turns the navy into a lavender and the crimson into a salmon, which is the same failure as choosing a colour by distance alone. */
+  --hmm-accent-dark:    #D55446;   /* The accent on the dark ground. 4.55:1. Reads as indianred or crimson. */
+  --hmm-mkt-au-dark:    #A77900;   /* 4.72:1. Reads as darkgoldenrod. */
+  --hmm-mkt-jp-dark:    #687DB8;   /* 4.57:1 on the dark ground. Reads as steelblue. */
+  --hmm-mkt-nz-dark:    #C0C0C0;   /* True silver, 10.13:1 on the near-black ground. This is the authentic one: silver on black IS the national sporting identity, and the dark ground is black, so the cover gets the real colour and the printed page gets the compromise. */
+  --hmm-nec-power-dark: #FF9732;   /* 8.53:1 on the dark ground. Lifted toward the flame rather than held at the base, because the base sits 19.1 from the accent there. Reads as darkorange. */
+  --hmm-nec-eat-dark:   #508B5C;   /* 4.55:1 on the dark ground. Reads as seagreen. */
+  --hmm-nec-heal-dark:  #9E69BE;   /* 4.58:1 on the dark ground. Reads as mediumpurple. */
+
+  /* ---------- Flattened solids (for surfaces that cannot composite) ---------- */
+  /* The semantic muted/faint/surface tokens are an alpha over an assumed ground, which is right for CSS and unusable anywhere the ground is not underneath: a canvas chart, an SVG placed on a different field, a CMYK plate. Each value here is its alpha token composited over the ground its name implies, so a consumer that cannot blend reaches for the solid instead of flattening it by hand. Derived, never authored: build_tokens.py recomputes them and guard 34 fails on drift. */
+  --hmm-text-muted-solid:      #999681;   /* hmm-text-muted over hmm-field-dark */
+  --hmm-text-faint-solid:      #626053;   /* hmm-text-faint over hmm-field-dark */
+  --hmm-surface-solid:         #1D1D1B;   /* hmm-surface over hmm-field-dark */
+  --hmm-surface-2-solid:       #262522;   /* hmm-surface-2 over hmm-field-dark */
+  --hmm-text-dark-muted-solid: #775E51;   /* hmm-text-dark-muted over hmm-bg-light */
+  --hmm-text-dark-faint-solid: #AA9983;   /* hmm-text-dark-faint over hmm-bg-light */
+  --hmm-surface-light-solid:   #EAE4C2;   /* hmm-surface-light over hmm-bg-light */
+  --hmm-surface-2-light-solid: #E2DCBB;   /* hmm-surface-2-light over hmm-bg-light */
+
+  /* ---------- Duotone (grading an outside image to the field) ---------- */
+  /* The ds-bundle's .hmm-duotone rules reference these two and nothing declared them, so the grade has been rendering as an invalid var on every surface that used it. The values are the rule the bundle already states in its own comment: shadows to Evergreen, highlights to Pearl. */
+  --hmm-duo-shadow:    var(--hmm-evergreen);   /* shadow end of the duotone ramp */
+  --hmm-duo-highlight: var(--hmm-pearl-beige);   /* highlight end. Swap to hmm-accent for a Tomato grade */
+
+  /* ---------- Plate metrics (the numbers a drawing is held to) ---------- */
+  /* Every one of these was discovered by a plate failing and then lived in whichever module noticed. design_guards.py held the type floor, which made the checker its own source. They are declared here so a drawing, a checker and a document all read the same number. */
+  --hmm-plate-frame:      800;   /* The viewBox width a plate is drawn in. Everything below is a ratio of it, so a plate at another width scales rather than re-rules. */
+  --hmm-plate-print-mm:   180;   /* What that frame prints across: a 210mm page less 16mm inner and 14mm outer margins, with the rail under the figure rather than beside it. At eight of twelve columns it was 118.7mm and a 7-unit label printed at 2.9pt. */
+  --hmm-plate-type-floor: 10;   /* The smallest type a plate may set. 10 units across 180mm is 6.4pt, which is the size the memorandum already sets its own page footer at. A floor matched to a decision the document has made is easier to hold than one chosen for it. */
+  --hmm-plate-leading:    1.2;   /* Line height as a multiple of type size. A wrapped label that leads on a constant sits inside itself the first time the type changes, which is how fault_tree came to overlap its own second line at 11 units under 12.2 type. */
+  --hmm-ident-fill:       0.78;   /* Fill opacity for a mark that IS a market or a Necessity. One weight everywhere, because full saturation over twenty large squares is a different decision from full saturation over ten thin bars, and it should not be. */
+  --hmm-char-width:       0.55;   /* Mean advance of the mono face as a fraction of its size, used to measure a label before placing it. Two plates placed labels by counting characters at a fixed pitch and both broke when the type grew. */
+  --hmm-sep-within:       20;   /* dE00 floor between two identity colours of the SAME taxonomy. Three markets appear together and a reader compares them. */
+  --hmm-sep-cross:        12;   /* dE00 floor across taxonomies. A market and a Necessity answer different questions and each carries its own label. */
+  --hmm-sep-accent:       20;   /* dE00 floor against the accent, strict for everything. An accented mark means under discussion, so a colour mistaken for it carries a claim nobody made. */
+  --hmm-sep-greyscale:    1.5;   /* Luminance ratio between two untextured marks in one plot. Below it they are the same mark on a greyscale print. Eat against Heal is 1.35 and Australia against New Zealand is 1.03, which is why touching identity fills carry a division at structural weight. */
+  --hmm-contrast-visible: 2.0;   /* Contrast an identity colour owes the paper to be perceivable. Not 3:1, which is WCAG's floor for a graphical object REQUIRED to understand content: a swatch beside its own label is not that. */
+  --hmm-contrast-text:    4.5;   /* Contrast anything set as text owes its ground. The -ink variant carries it on paper and the -dark variant on the near-black. */
+  --hmm-accent-max-share: 0.5;   /* The most of a plot's marks the accent may carry. An accent that covers most of a plate is not an accent, whatever the count. */
+}
+
+
+/* ---------- Theme axis: light rebinds the roles ----------
+   Three scopes, one list. The page asks via data-theme or the system
+   preference; a panel asks via its own surface attribute. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --hmm-bg:               var(--hmm-bg-light);
+    --hmm-bg-alt:           var(--hmm-bg-alt-light);
+    --hmm-surface:          var(--hmm-surface-light);
+    --hmm-surface-2:        var(--hmm-surface-2-light);
+    --hmm-surface-solid:    var(--hmm-surface-light-solid);
+    --hmm-surface-2-solid:  var(--hmm-surface-2-light-solid);
+    --hmm-text:             var(--hmm-text-dark);
+    --hmm-text-muted:       var(--hmm-text-dark-muted);
+    --hmm-text-faint:       var(--hmm-text-dark-faint);
+    --hmm-text-muted-solid: var(--hmm-text-dark-muted-solid);
+    --hmm-text-faint-solid: var(--hmm-text-dark-faint-solid);
+    --hmm-border:           var(--hmm-border-light);
+    --hmm-border-hover:     var(--hmm-border-light-hover);
+    --hmm-caption:          var(--hmm-caption-light);
+    --hmm-accent-text:      var(--hmm-accent-ink);
+  }
+}
+
+:root[data-theme="light"] {
+  --hmm-bg:               var(--hmm-bg-light);
+  --hmm-bg-alt:           var(--hmm-bg-alt-light);
+  --hmm-surface:          var(--hmm-surface-light);
+  --hmm-surface-2:        var(--hmm-surface-2-light);
+  --hmm-surface-solid:    var(--hmm-surface-light-solid);
+  --hmm-surface-2-solid:  var(--hmm-surface-2-light-solid);
+  --hmm-text:             var(--hmm-text-dark);
+  --hmm-text-muted:       var(--hmm-text-dark-muted);
+  --hmm-text-faint:       var(--hmm-text-dark-faint);
+  --hmm-text-muted-solid: var(--hmm-text-dark-muted-solid);
+  --hmm-text-faint-solid: var(--hmm-text-dark-faint-solid);
+  --hmm-border:           var(--hmm-border-light);
+  --hmm-border-hover:     var(--hmm-border-light-hover);
+  --hmm-caption:          var(--hmm-caption-light);
+  --hmm-accent-text:      var(--hmm-accent-ink);
+}
+
+[data-hmm-surface="light"],
+.hmm-field--pearl,
+.hmm-field--light-tint {
+  --hmm-bg:               var(--hmm-bg-light);
+  --hmm-bg-alt:           var(--hmm-bg-alt-light);
+  --hmm-surface:          var(--hmm-surface-light);
+  --hmm-surface-2:        var(--hmm-surface-2-light);
+  --hmm-surface-solid:    var(--hmm-surface-light-solid);
+  --hmm-surface-2-solid:  var(--hmm-surface-2-light-solid);
+  --hmm-text:             var(--hmm-text-dark);
+  --hmm-text-muted:       var(--hmm-text-dark-muted);
+  --hmm-text-faint:       var(--hmm-text-dark-faint);
+  --hmm-text-muted-solid: var(--hmm-text-dark-muted-solid);
+  --hmm-text-faint-solid: var(--hmm-text-dark-faint-solid);
+  --hmm-border:           var(--hmm-border-light);
+  --hmm-border-hover:     var(--hmm-border-light-hover);
+  --hmm-caption:          var(--hmm-caption-light);
+  --hmm-accent-text:      var(--hmm-accent-ink);
+}

@@ -9,21 +9,21 @@
 <link rel="manifest" href="/site.webmanifest"/>
 <link rel="stylesheet" href="styles.css"/>
 <style>
-  html{background:#141414;}
-  body{margin:0;padding:0;font-family:var(--hmm-font-body,'Raela Grotesque','Helvetica Neue',sans-serif);color:var(--hmm-pearl,#F2ECC9);
+  html{background:var(--hmm-evergreen);}
+  body{margin:0;padding:0;font-family:var(--hmm-font-body,'Raela Grotesque','Helvetica Neue',sans-serif);color:var(--hmm-pearl,var(--hmm-pearl-beige));
        min-height:100vh;display:flex;flex-direction:column;}
   a{color:inherit;}
   .bio-top{padding:26px 30px;}
-  .bio-logo{color:var(--hmm-pearl,#F2ECC9);display:inline-block;}
+  .bio-logo{color:var(--hmm-pearl,var(--hmm-pearl-beige));display:inline-block;}
   .bio-logo svg{height:26px;width:auto;display:block;}
-  .bio-logo:hover{color:var(--hmm-accent,#C44539);}
+  .bio-logo:hover{color:var(--hmm-accent,var(--hmm-tomato-jam));}
   .bio-main{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 30px 60px;}
   .bio-card{width:100%;max-width:620px;}
   .bio-eyebrow{font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--hmm-text-muted,rgba(242,236,201,.6));margin:0 0 14px;}
   .bio-name{font-family:var(--hmm-font-display,'Kufam',sans-serif);font-weight:700;font-size:34px;line-height:1.05;margin:0 0 22px;}
   .bio-body{font-size:15px;line-height:1.62;color:var(--hmm-text-muted,rgba(242,236,201,.72));max-width:60ch;}
   .bio-body p{margin:0 0 14px;}
-  .bio-body b{color:var(--hmm-pearl,#F2ECC9);font-weight:600;}
+  .bio-body b{color:var(--hmm-pearl,var(--hmm-pearl-beige));font-weight:600;}
   .bio-cv{list-style:none;margin:22px 0 18px;padding:0;counter-reset:cv;}
   .bio-cv li{position:relative;padding:0 0 18px 0;margin:0 0 18px;border-bottom:1px solid var(--hmm-border,rgba(242,236,201,.14));}
   .bio-cv li:last-child{border-bottom:none;}
@@ -36,7 +36,7 @@
             font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
             color:var(--hmm-text-muted,rgba(242,236,201,.7));text-decoration:none;transition:color .15s ease,border-color .15s ease;}
   .bio-mark span{color:var(--hmm-text-faint,rgba(242,236,201,.4));margin-left:8px;font-size:9.5px;letter-spacing:.1em;}
-  .bio-mark:hover{color:var(--hmm-accent,#C44539);border-color:var(--hmm-accent,#C44539);}
+  .bio-mark:hover{color:var(--hmm-accent,var(--hmm-tomato-jam));border-color:var(--hmm-accent,var(--hmm-tomato-jam));}
   .bio-mark--logo{flex-direction:column;align-items:center;justify-content:center;gap:12px;width:152px;height:96px;padding:0;box-sizing:border-box;}
   .bio-logoslot{height:26px;display:flex;align-items:center;justify-content:center;width:100%;}
   .bio-mark--logo svg{height:15px;max-width:112px;width:auto;display:block;}
@@ -46,10 +46,10 @@
   .bio-mark--logo[aria-label="GoodFit"] svg{height:11px;}
   .bio-mark--logo span{margin-left:0;}
   .bio-contact{font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:12px;letter-spacing:.06em;color:var(--hmm-text-muted,rgba(242,236,201,.6));}
-  .bio-contact a{color:var(--hmm-accent,#C44539);text-decoration:none;}
+  .bio-contact a{color:var(--hmm-accent,var(--hmm-tomato-jam));text-decoration:none;}
   .bio-contact a:hover{text-decoration:underline;text-underline-offset:3px;}
   .bio-back{font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--hmm-text-faint,rgba(242,236,201,.4));text-decoration:none;}
-  .bio-back:hover{color:var(--hmm-pearl,#F2ECC9);}
+  .bio-back:hover{color:var(--hmm-pearl,var(--hmm-pearl-beige));}
   @media(max-width:560px){.bio-name{font-size:27px;}}
 </style>
 </head>

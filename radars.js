@@ -1,3 +1,10 @@
+/* Tokens, read at paint time. These figures hardcoded colour because
+   nothing handed it to them; reading the custom property also means a theme
+   change reaches the canvas, which a frozen hex never could. */
+function __T(n, fallback) {
+  var v = getComputedStyle(document.documentElement).getPropertyValue(n);
+  return (v && v.trim()) || fallback;
+}
 /* hmm site - THREE hexagon radar charts (Australia, New Zealand, Japan).
    One panel per market. Six spokes 60 degrees apart, same axis order and rotation
    across all three panels: AI · HARDWARE · REGULATION · STARTUP · EXIT · TRADE.
@@ -12,7 +19,7 @@
   var AXES = ["AI", "HARDWARE", "REGULATION", "STARTUP", "EXIT", "TRADE"];
 
   // Necessity palette (exact hues, matched to the rest of the site).
-  var HUES = { Power: "#F0902F", Eat: "#5FB873", Heal: "#4FA3DC" };
+  var HUES = { Power: __T("--hmm-nec-power-dark", "#FF9732"), Eat: __T("--hmm-nec-eat-dark", "#508B5C"), Heal: __T("--hmm-nec-heal-dark", "#9E69BE") };
   var SERIES = ["Power", "Eat", "Heal"];
 
   // dots render on <canvas> using the DWG-NEC machine-flock physics; PANELS collects them per panel.
@@ -87,25 +94,25 @@
 
   function css() {
     return [
-      "#radars{--rad-surface:#141414;--rad-power:" + HUES.Power + ";--rad-eat:" + HUES.Eat + ";--rad-heal:" + HUES.Heal + ";",
-      "  font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);color:var(--hmm-pearl,#F2ECC9);position:relative;}",
-      "@media (prefers-color-scheme:light){#radars{--rad-surface:#ffffff;}}",
-      "#radars[data-theme='light'],:root[data-theme='light'] #radars{--rad-surface:#ffffff;}",
-      "#radars[data-theme='dark'],:root[data-theme='dark'] #radars{--rad-surface:#141414;}",
+      "#radars{--rad-surface:var(--hmm-evergreen);--rad-power:" + HUES.Power + ";--rad-eat:" + HUES.Eat + ";--rad-heal:" + HUES.Heal + ";",
+      "  font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);color:var(--hmm-pearl);position:relative;}",
+      "@media (prefers-color-scheme:light){#radars{--rad-surface:var(--hmm-white);}}",
+      "#radars[data-theme='light'],:root[data-theme='light'] #radars{--rad-surface:var(--hmm-white);}",
+      "#radars[data-theme='dark'],:root[data-theme='dark'] #radars{--rad-surface:var(--hmm-evergreen);}",
       "#radars .radar-wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;width:100%;max-width:100%;box-sizing:border-box;}",
       "#radars .radar-panel{position:relative;min-width:0;padding:14px 12px 16px;border:1px solid var(--hmm-border,rgba(242,236,201,.12));box-sizing:border-box;}",
       "#radars .radar-corner{position:absolute;width:9px;height:9px;pointer-events:none;}",
       "#radars .radar-corner svg{display:block;overflow:visible;}",
       "#radars .rc-tl{top:5px;left:5px;} #radars .rc-tr{top:5px;right:5px;} #radars .rc-bl{bottom:5px;left:5px;} #radars .rc-br{bottom:5px;right:5px;}",
-      "#radars .radar-title{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-pearl,#F2ECC9);margin:0;}",
+      "#radars .radar-title{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-pearl);margin:0;}",
       "#radars .radar-sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint,rgba(242,236,201,.35));margin:3px 0 8px;}",
       "#radars svg.radar-svg{display:block;width:100%;height:auto;overflow:visible;}",
       "#radars .radar-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;margin-top:10px;padding:0;list-style:none;}",
       "#radars .radar-chip{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--hmm-border,rgba(242,236,201,.12));",
       "  padding:3px 8px;cursor:pointer;font:inherit;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--hmm-text-muted,rgba(242,236,201,.6));}",
       "#radars .radar-chip .swatch{width:9px;height:9px;flex:0 0 auto;border-radius:1px;}",
-      "#radars .radar-chip:hover,#radars .radar-chip:focus-visible{color:var(--hmm-pearl,#F2ECC9);border-color:var(--hmm-text-faint,rgba(242,236,201,.35));}",
-      "#radars .radar-chip:focus-visible{outline:2px solid var(--hmm-accent,#C44539);outline-offset:2px;}",
+      "#radars .radar-chip:hover,#radars .radar-chip:focus-visible{color:var(--hmm-pearl);border-color:var(--hmm-text-faint,rgba(242,236,201,.35));}",
+      "#radars .radar-chip:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}",
       "#radars .radar-panel[data-focus] .series:not(.is-active){opacity:.12;}",
       "#radars .radar-panel[data-focus] .series.is-active .radar-fill{fill-opacity:.24;}",
       "#radars .radar-panel[data-focus] .series.is-active .radar-line{stroke-width:2.6;}",
@@ -114,19 +121,19 @@
       "#radars .radar-stage{position:relative;}",
       "#radars .radar-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;}",
       "#radars .axis-lbl{cursor:help;transition:fill .15s ease;}",
-      "#radars .axis-lbl:hover,#radars .axis-lbl:focus{fill:var(--hmm-pearl,#F2ECC9);outline:none;}",
-      "#radars .axis-lbl:focus-visible{outline:2px solid var(--hmm-accent,#C44539);outline-offset:2px;}",
+      "#radars .axis-lbl:hover,#radars .axis-lbl:focus{fill:var(--hmm-pearl);outline:none;}",
+      "#radars .axis-lbl:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}",
       "#radars .radar-tip{position:fixed;z-index:60;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s ease,transform .15s ease;",
-      "  background:#1a1a19;border:1px solid var(--hmm-border,rgba(242,236,201,.18));border-top:2px solid var(--hmm-accent,#C44539);padding:9px 12px;box-sizing:border-box;",
+      "  background:var(--hmm-surface-solid);border:1px solid var(--hmm-border,rgba(242,236,201,.18));border-top:2px solid var(--hmm-accent);padding:9px 12px;box-sizing:border-box;",
       "  font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);font-size:11px;line-height:1.5;color:var(--hmm-text-muted,rgba(242,236,201,.72));max-width:260px;}",
       "#radars .radar-tip.on{opacity:1;transform:none;}",
       "@media (prefers-reduced-motion:reduce){#radars .radar-tip{transition:none;}}",
-      "#radars .radar-title--click{cursor:pointer;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--hmm-accent,#C44539);padding-bottom:3px;transition:color .15s ease;}",
-      "#radars .radar-title--click::after{content:'read \\2192';font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-accent,#C44539);border:1px solid var(--hmm-accent,#C44539);padding:2px 6px;transition:background .15s ease,color .15s ease;}",
-      "#radars .radar-title--click:hover,#radars .radar-title--click:focus-visible{color:var(--hmm-accent,#C44539);outline:none;}",
-      "#radars .radar-title--click:hover::after,#radars .radar-title--click:focus-visible::after{background:var(--hmm-accent,#C44539);color:var(--hmm-pearl,#F2ECC9);}",
-      "#radars .radar-title--click.is-open{color:var(--hmm-accent,#C44539);}",
-      "#radars .radar-title--click.is-open::after{content:'close \\00D7';background:var(--hmm-accent,#C44539);color:var(--hmm-pearl,#F2ECC9);}",
+      "#radars .radar-title--click{cursor:pointer;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--hmm-accent);padding-bottom:3px;transition:color .15s ease;}",
+      "#radars .radar-title--click::after{content:'read \\2192';font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-accent);border:1px solid var(--hmm-accent);padding:2px 6px;transition:background .15s ease,color .15s ease;}",
+      "#radars .radar-title--click:hover,#radars .radar-title--click:focus-visible{color:var(--hmm-accent);outline:none;}",
+      "#radars .radar-title--click:hover::after,#radars .radar-title--click:focus-visible::after{background:var(--hmm-accent);color:var(--hmm-pearl);}",
+      "#radars .radar-title--click.is-open{color:var(--hmm-accent);}",
+      "#radars .radar-title--click.is-open::after{content:'close \\00D7';background:var(--hmm-accent);color:var(--hmm-pearl);}",
       "#radars .radar-drill{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:22px;box-sizing:border-box;",
       "  background:rgba(10,10,10,.74);opacity:0;visibility:hidden;transition:opacity .25s ease;}",
       "#radars .radar-drill.on{opacity:1;visibility:visible;}",
@@ -137,7 +144,7 @@
       "#radars .radar-drill-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}",
       "#radars .radar-drill-name{font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--c,#C44539);}",
       "#radars .radar-drill-x{background:none;border:0;color:var(--hmm-text-faint,rgba(242,236,201,.4));font-size:14px;line-height:1;cursor:pointer;padding:2px 6px;}",
-      "#radars .radar-drill-x:hover,#radars .radar-drill-x:focus-visible{color:var(--hmm-pearl,#F2ECC9);outline:none;}",
+      "#radars .radar-drill-x:hover,#radars .radar-drill-x:focus-visible{color:var(--hmm-pearl);outline:none;}",
       "#radars .radar-drill p{margin:0;font-size:13.5px;line-height:1.6;color:var(--hmm-text-muted,rgba(242,236,201,.72));}",
       "@media (prefers-reduced-motion:reduce){#radars .radar-drill{transition:none;}}",
       "@media (max-width:860px){#radars .radar-wrap{grid-template-columns:1fr;}}"
@@ -155,7 +162,7 @@
     else if (pos === "bl") { horiz = "M0 9 H9"; vert = "M0 9 V0"; }
     else { horiz = "M9 9 H0"; vert = "M9 9 V0"; }
     [horiz, vert].forEach(function (d) {
-      s.appendChild(el("path", { d: d, stroke: "var(--hmm-accent,#C44539)", "stroke-width": "1", fill: "none" }));
+      s.appendChild(el("path", { d: d, stroke: "var(--hmm-accent)", "stroke-width": "1", fill: "none" }));
     });
     w.appendChild(s);
     return w;
@@ -166,7 +173,7 @@
     "NEW ZEALAND": "New Zealand, the standard-setting market. One house of parliament and top-of-table trust let it move a rule fast, and its food-safety regime is among the strongest. The gene-technology reform reopens the Eat biological-input gate. Hardware runs global at the top end through Fisher and Paykel Healthcare and Rocket Lab, and through Halter in animal agriculture. The venture base is small and global from the first customer. Exits go offshore to Australian and US acquirers.",
     "JAPAN": "Japan, the hardware market under demand stress. It imports roughly 90% of its energy, which makes Power a national-security question, and it holds the world's oldest population, which makes Heal a structural demand. The PMDA is a rigorous medical gate with a fast track for novel devices, and the AI regime is among the most permissive, with copyright law broadly allowing training on protected data. Hardware leads the world in robotics, semiconductor materials, image sensors and batteries. The venture base is thin but rising on a government startup plan, and Tokyo Growth gives it an early IPO exit. Examples include Preferred Networks, Sakana, Spiber and SmartHR."
   };
-  var COUNTRY_ACCENT = { "AUSTRALIA": "#B65C40", "NEW ZEALAND": "#0E93A6", "JAPAN": "#3E6DA6" };
+  var COUNTRY_ACCENT = { "AUSTRALIA": __T("--hmm-mkt-au-dark", "#A77900"), "NEW ZEALAND": __T("--hmm-mkt-nz-dark", "#C0C0C0"), "JAPAN": __T("--hmm-mkt-jp-dark", "#687DB8") };
 
   var AXIS_DEFS = {
     "AI": "AI competence. The market's ability to build and apply modern AI, from research base to deployed product.",
@@ -377,7 +384,7 @@
     function openDrill(name) {
       if (open === name) { closeDrill(); return; }
       open = name;
-      drill.style.setProperty("--c", COUNTRY_ACCENT[name] || "#C44539");
+      drill.style.setProperty("--c", COUNTRY_ACCENT[name] || __T("--hmm-tomato-jam", "#C44539"));
       drill.innerHTML = "";
       var card = document.createElement("div"); card.className = "radar-drill-card";
       var hd = document.createElement("div"); hd.className = "radar-drill-hd";
