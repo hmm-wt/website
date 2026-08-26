@@ -1,7 +1,7 @@
 /* GENERATED FILE. DO NOT EDIT.
    Source: Internal/Design/tokens/hmm.tokens.json
    Build:  python3 Internal/Design/tokens/build_tokens.py
-   Tokens: 204   Source digest: 3552c60c37a50b12
+   Tokens: 204   Source digest: 9cc0b1e1ecbba8fe
    Guard 25 fails the build if this file drifts from the source.
 */
 
@@ -113,9 +113,9 @@
   /* ---------- Necessity identity colours ---------- */
   /* Use ONLY when a surface is specifically about a Necessity (machine accent, strength radar, cascade node, necessity section coding). Otherwise --hmm-accent (Tomato) holds. The -ink variants darken for contrast on Pearl / paper. */
   --hmm-nec-power:     #FF730B;   /* Power, the energy system including critical-minerals innovation. Heat: molten metal, a filament, an arc, the orange of a high-voltage warning. Australia's gold is a metal and this is what happens to metal, so the two sit in different halves of the warm range: 22.6 dE00 apart, against 15.9 for a peru-toned orange. It reads as darkorange at 8.3 and as coral at 8.5, which is the closest any identity colour comes to a red word, and it is still 22.7 from the accent itself. 2.35:1 on paper is the lowest in the palette, and every orange that names clear of both red and gold measures lower still while sitting 9 dE00 nearer Australia. */
-  --hmm-nec-power-ink: #B34B00;   /* Small text. 4.61:1 on paper. */
+  --hmm-nec-power-ink: #A55300;   /* Power on a light ground. The base is 2.29 on Pearl, under the 3.0 graphical floor, so a light variant is not optional. No orange this dark has an orange name: CSS darkorange is 1.96 on Pearl and the 4.5 text floor needs a third of that luminance, so every readable dark orange is named for the earth it burns to. 4.59 on Pearl, reads chocolate, 13.7 from Australia and 16.9 from the accent. */
   --hmm-nec-eat:       #4F8A5B;   /* Eat, the food and agricultural system from seed to mouth. Green is the strongest and most exclusive association in the palette: chlorophyll, crop, produce. Reads as seagreen. */
-  --hmm-nec-eat-ink:   #3C7749;   /* Small text. 4.61:1 on paper. */
+  --hmm-nec-eat-ink:   #3A7748;   /* Eat on a light ground. Two units darker than it was, because 4.49 on Pearl misses the 4.5 text floor by 0.01 and an ink variant exists to carry text. 4.50, reads seagreen. */
   --hmm-nec-heal:      #8752A5;   /* Heal, the healthcare system from preventative through to death. Violet, because the room leaves it: green belongs to Eat on any page where both appear, and blue is Japan. Haematology tubes cap in lavender and life sciences branding reaches for violet, so the association is available without being owned. Reads as darkorchid. */
   --hmm-nec-heal-ink:  #8752A5;   /* 4.78:1 on paper, so the base carries. */
 
