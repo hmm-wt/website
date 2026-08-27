@@ -3,9 +3,11 @@
    Raela Grotesque = EVERYTHING else. Body, data, chart finding-titles, and
    notation/labels (rendered uppercase + letter-spaced for the label look).
    Layering comes from weight / case / size / colour, not extra faces.
-   Beiruti and Instrument Serif are RETIRED. Their @font-face blocks are kept
-   below ONLY so the legacy type-study demos (_demo/fonts*.html, decisions.html)
-   still render; no system component references them. Do not use in new work. */
+   Beiruti and Instrument Serif are RETIRED and their @font-face blocks are gone
+   as of 2026-08-27. They were kept only so the legacy type-study demos
+   (_demo/fonts*.html, decisions.html) would still render. Those pages are no
+   longer in the repo and return 404 on the live site, and no HTML references
+   either family, so the reason expired. Two faces, and only two, are declared. */
 @font-face {
   font-family: "Raela Grotesque";
   src: url("./RaelaGrotesque-Regular.ttf") format("truetype");
@@ -38,27 +40,6 @@
   font-family: "Kufam";
   src: url("./Kufam-Italic-VariableFont.ttf") format("truetype");
   font-weight: 400 900;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Beiruti";
-  src: url("./Beiruti-VariableFont.ttf") format("truetype");
-  font-weight: 200 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("./InstrumentSerif-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Instrument Serif";
-  src: url("./InstrumentSerif-Italic.ttf") format("truetype");
-  font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
