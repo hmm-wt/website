@@ -1,4 +1,4 @@
-/* hmm design system — dot-field motion engine.
+/* hmm design system. Dot-field motion engine.
    Makes EVERY dot in a dotted visual movable: breath (idle pulse), school
    (coherent heavy drift), click impulse, and reconfigure transitions. Reads the
    <circle> dots of any bare dotted SVG (NecessityMachine bare, dot charts).
@@ -64,7 +64,7 @@
     }
     var span = Math.max(1, Math.hypot(bbox.x1 - bbox.x0, bbox.y1 - bbox.y0));
     var impulses = [];      // {x,y,t0}
-    var morph = null;       // {t0} — reconfigure in flight
+    var morph = null;       // {t0}. Reconfigure in flight
     var scrollAmp = 1;      // 0..~1.4, set via setScroll
     var running = false, raf = 0, last = 0, t0 = now();
 

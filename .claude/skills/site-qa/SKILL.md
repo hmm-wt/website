@@ -1,10 +1,9 @@
 ---
 name: site-qa
-description: QA the hmm-site Astro build — capture Core Web Vitals and resource weight, run the mobile responsiveness audit, diff against a baseline, and turn any bug found into a regression test. Ported from gstack /benchmark + /qa, scoped to this site. Use before a deploy, after a layout/asset change, or when checking site performance.
-trigger: "audit the site", "core web vitals", "site performance", "is the site fast", "check mobile", "LCP/CLS", "before/after the site change", "qa the site".
+description: QA the hmm-site Astro build. Capture Core Web Vitals and resource weight, run the mobile responsiveness audit, diff against a baseline, and turn any bug found into a regression test. Ported from gstack /benchmark + /qa, scoped to this site. Use before a deploy, after a layout/asset change, or when checking site performance. Trigger: "audit the site", "core web vitals", "site performance", "is the site fast", "check mobile", "LCP/CLS", "before/after the site change", "qa the site".
 ---
 
-# site-qa — performance + responsiveness QA
+# site-qa: performance + responsiveness QA
 
 This is the one real frontend codebase in the workspace. gstack's web QA loop
 applies as-designed here. Two audits, both Playwright-backed.
@@ -22,7 +21,7 @@ npm run audit:cwv                                    # capture LCP/CLS/TTFB/tran
   the output, not faked).
 - **Before/after a change:** keep the pre-change JSON, then
   `node scripts/cwv-audit.mjs --baseline _cwv-audit/<pre>.json` prints ΔLCP / ΔKB
-  per route. Always measure the production build (`preview`), never `dev` — dev
+  per route. Always measure the production build (`preview`), never `dev`. Dev
   ships unminified and inflates every number.
 
 ## Mobile responsiveness
@@ -31,7 +30,7 @@ npm run audit:mobile     # Playwright across iPhone SE / 15 Pro / Pixel 8 / Gala
 ```
 Existing suite at `scripts/mobile-audit.ts`; report in `_mobile-audit/`.
 
-## The /qa loop — bug found → regression test
+## The /qa loop: bug found → regression test
 When an audit (or a manual pass) surfaces a real defect:
 1. Reproduce it deterministically (note the route, viewport, and step).
 2. Fix it.
@@ -42,7 +41,7 @@ When an audit (or a manual pass) surfaces a real defect:
 
 ## Notes
 - This repo is the canonical site source (`~/Work/hmm-site`); the Google Drive
-  copy is stale — never QA or edit that one (project_hmm_site_canonical_repo).
+  copy is stale. Never QA or edit that one (project_hmm_site_canonical_repo).
 - Astro preview serves on :4321 (matches `playwright.config.ts` BASE_URL).
-- Design/brand correctness is a separate axis — for visual/brand-system review
+- Design/brand correctness is a separate axis. For visual/brand-system review
   use the `figma-designer` skill, not this one.
