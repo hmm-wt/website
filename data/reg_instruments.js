@@ -26,7 +26,7 @@ var REG_INSTRUMENTS = [
   {c:"JP",name:"Food Labelling Act",body:"Consumer Affairs Agency",date:"2015",yr:2015,type:"enforceable",status:"effective",src:"https://laws.e-gov.go.jp/law/425AC0000000070",src_title:"Food Labelling Act (70/2013)"},
   {c:"NZ",name:"Food Act 2014",body:"MPI",date:"2016",yr:2016,type:"enforceable",status:"effective",src:"https://www.legislation.govt.nz/act/public/2014/32/en/latest/",src_title:"Food Act 2014"},
   {c:"AU",name:"TG priority + provisional approval pathways",body:"TGA",date:"2018",yr:2018,type:"enforceable",status:"effective"},
-  {c:"AU",name:"AI Ethics Principles",body:"DISR",date:"2019",yr:2019,type:"framework",status:"effective"},
+  {c:"AU",name:"AI Ethics Principles",body:"DISR",date:"2019",yr:2019,type:"framework",status:"effective",src:"https://www.industry.gov.au/publications/australias-ai-ethics-principles",src_title:"Australia's AI Ethics Principles"},
   {c:"AU",name:"National Electricity Rules",body:"AEMC / AEMO",date:"standing",yr:2019,type:"enforceable",status:"effective",src:"https://www.aemc.gov.au/regulation/energy-rules/national-electricity-rules",src_title:"National Electricity Rules"},
   // ---- the net-new tick (2020+) ----
   {c:"JP",name:"PMD Act IDATEN + conditional early approval",body:"PMDA",date:"Sep 2020",yr:2020,type:"enforceable",status:"effective",src:"https://www.pmda.go.jp/review-services/drug-reviews/about-reviews/devices/0039.html",src_title:"PMD Act 2019 amendment · IDATEN / conditional early approval"},
