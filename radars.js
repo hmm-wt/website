@@ -108,7 +108,7 @@ function __T(n, fallback) {
       "#radars .radar-sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint,rgba(242,236,201,.35));margin:3px 0 8px;}",
       "#radars svg.radar-svg{display:block;width:100%;height:auto;overflow:visible;}",
       "#radars .radar-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;margin-top:10px;padding:0;list-style:none;}",
-      "#radars .radar-chip{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--hmm-border,rgba(242,236,201,.12));",
+      "#radars .radar-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(242,236,201,.03);border:1px solid var(--hmm-border-hover,rgba(242,236,201,.25));",
       "  padding:3px 8px;cursor:pointer;font:inherit;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--hmm-text-muted,rgba(242,236,201,.6));}",
       "#radars .radar-chip .swatch{width:9px;height:9px;flex:0 0 auto;border-radius:1px;}",
       "#radars .radar-chip:hover,#radars .radar-chip:focus-visible{color:var(--hmm-pearl);border-color:var(--hmm-text-faint,rgba(242,236,201,.35));}",
