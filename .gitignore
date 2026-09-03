@@ -1,3 +1,22 @@
+# Netlify CLI / build system state — generated, machine-specific, never commit.
+# These are recreated on every `netlify` invocation and deploy. A stale committed
+# copy of .netlify/plugins (the extension-managed build plugin cache) or of the
+# resolved .netlify/netlify.toml can conflict with config/extension resolution.
+# NOTE: intentionally scoped rather than ignoring all of `.netlify/`.
+.netlify/netlify.toml
+.netlify/state.json
+.netlify/plugins/
+.netlify/functions/
+.netlify/functions-serve/
+.netlify/functions-internal/
+.netlify/edge-functions/
+.netlify/edge-functions-dist/
+.netlify/blobs/
+.netlify/blobs-serve/
+.netlify/build/
+.netlify/cache/
+.netlify/deploy/
+
 # Build output
 dist/
 .astro/
