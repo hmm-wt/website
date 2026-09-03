@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="msvalidate.01" content="E3E2BEAF6EB58BCD0574A2E6B7A3F909"/>
 <title>hmm ventures · Necessity is the thesis · regulated seed venture</title>
 <meta name="description" content="hmm ventures Fund I: a seed fund backing the regulated technology behind the energy, food and healthcare systems across Australia, Japan and New Zealand."/>
@@ -33,7 +33,7 @@ function __T(n, fallback) {
 <link rel="preload" href="fonts/RaelaGrotesque-Regular.ttf" as="font" type="font/ttf" crossorigin/>
 <link rel="stylesheet" href="styles.css"/>
 <style>
-  html{background:var(--hmm-evergreen);}
+  html{background:var(--hmm-evergreen);color-scheme:dark;}
   body{margin:0;padding:0;scroll-behavior:smooth;font-family:var(--hmm-font-body);color:var(--hmm-pearl);}
   #dotfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
   /* ---------- global chrome ---------- */
@@ -78,23 +78,41 @@ function __T(n, fallback) {
   .box--power{--accent:var(--hmm-nec-power);}.box--eat{--accent:var(--hmm-nec-eat);}.box--heal{--accent:var(--hmm-nec-heal);}
   .box::before{content:"";position:absolute;left:12px;top:12px;width:9px;height:1px;background:var(--accent);z-index:2;}
   .box::after{content:"";position:absolute;left:12px;top:12px;width:1px;height:9px;background:var(--accent);z-index:2;}
-  .hero-row:hover .box:not(:hover){flex:.62;opacity:.55;}
-  .box:hover{flex:2.5;flex-direction:row;background:rgba(242,236,201,.05);}
-  .box--power:hover{border-color:var(--hmm-nec-power);}.box--eat:hover{border-color:var(--hmm-nec-eat);}.box--heal:hover{border-color:var(--hmm-nec-heal);}
   .box-stage{flex:1;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;}
   .machine{width:78%;height:70%;display:flex;align-items:center;justify-content:center;transition:transform .5s var(--hmm-ease);}
-  .box:hover .box-stage{flex:1.15;}.box:hover .machine{transform:scale(1.06);}
   .box-info{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 22px;text-align:center;transition:flex .5s var(--hmm-ease);}
-  .box:hover .box-info{flex:1;align-items:flex-start;justify-content:center;text-align:left;padding:26px 30px 26px 6px;border-left:1px solid var(--hmm-border);}
   .box-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.18em;font-size:13px;color:var(--accent);}
-  .commentary{max-width:34ch;margin-top:12px;font-family:var(--hmm-font-body);font-size:13px;line-height:1.5;color:var(--hmm-text-muted);opacity:0;max-height:0;overflow:hidden;transition:opacity .4s var(--hmm-ease),max-height .4s var(--hmm-ease);}
-  .box:hover .commentary{opacity:1;max-height:120px;}
-  .ledger{list-style:none;margin:0;padding:0;width:100%;opacity:0;max-height:0;overflow:hidden;transition:opacity .45s var(--hmm-ease),max-height .45s var(--hmm-ease);}
-  .box:hover .ledger{opacity:1;max-height:280px;margin-top:16px;}
+  .commentary{max-width:34ch;margin-top:12px;font-family:var(--hmm-font-body);font-size:13px;line-height:1.5;color:var(--hmm-text-muted);overflow:hidden;transition:opacity .4s var(--hmm-ease),max-height .4s var(--hmm-ease);}
+  .ledger{list-style:none;margin:0;padding:0;width:100%;margin-top:16px;overflow:hidden;transition:opacity .45s var(--hmm-ease),max-height .45s var(--hmm-ease);}
   .ledger li{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--hmm-border);font-family:var(--hmm-font-body);font-size:12.5px;color:var(--hmm-pearl);}
   .ledger li .cls{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.12em;color:var(--accent);flex:0 0 auto;}
-  .ledger-cap{margin-top:12px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);opacity:0;transition:opacity .45s var(--hmm-ease);}
-  .box:hover .ledger-cap{opacity:1;}
+  .ledger-cap{margin-top:12px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);transition:opacity .45s var(--hmm-ease);}
+  /* Coarse pointers get the copy revealed at all times, so the card must size to
+     it rather than squeeze the machine out of the stage. Width-scoped rules below
+     (<=640px) still override this for phones. */
+  @media (hover:none),(pointer:coarse){
+    .hero-row{height:auto;}
+    .hero-row .box{min-height:340px;}
+    .hero-row .box-stage{flex:0 0 132px;}
+    .hero-row .machine{width:70%;height:100%;}
+    .hero-row .box-info{justify-content:flex-start;padding:0 18px 20px;}
+  }
+  /* Hover is an enhancement, not the only way in. Gated on a real pointer so a
+     touch device never inherits a sticky :hover — which used to leave whichever
+     card was tapped last bright and the other two dimmed to .55 permanently. */
+  @media (hover:hover) and (pointer:fine){
+    .commentary{opacity:0;max-height:0;}
+    .ledger{opacity:0;max-height:0;margin-top:0;}
+    .ledger-cap{opacity:0;}
+    .hero-row:hover .box:not(:hover){flex:.62;opacity:.78;}
+    .box:hover{flex:2.5;flex-direction:row;background:rgba(242,236,201,.05);}
+    .box--power:hover{border-color:var(--hmm-nec-power);}.box--eat:hover{border-color:var(--hmm-nec-eat);}.box--heal:hover{border-color:var(--hmm-nec-heal);}
+    .box:hover .box-stage{flex:1.15;}.box:hover .machine{transform:scale(1.06);}
+    .box:hover .box-info{flex:1;align-items:flex-start;justify-content:center;text-align:left;padding:26px 30px 26px 6px;border-left:1px solid var(--hmm-border);}
+    .box:hover .commentary{opacity:1;max-height:120px;}
+    .box:hover .ledger{opacity:1;max-height:280px;margin-top:16px;}
+    .box:hover .ledger-cap{opacity:1;}
+  }
   .scroll-hint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-text-faint);}
 
   /* ---------- necessity sections ---------- */
@@ -464,7 +482,8 @@ function __T(n, fallback) {
   @media(max-width:640px){
     .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl{padding-left:20px;padding-right:20px;}
     .ai,.mkt,.dens,.rec{padding-top:64px;padding-bottom:64px;}
-    /* hero: no hover on touch, so reveal the ledger + commentary permanently */
+    /* hero copy is revealed by default now (see the pointer-gated block above);
+       a narrow desktop window still gets it, at mobile type sizes */
     .box .commentary,.box .ledger,.box .ledger-cap{opacity:1;max-height:none;}
     .box .commentary{margin-top:11px;font-size:15px;line-height:1.55;}
     /* Power/Eat/Heal: shrink the machine graphic + tighten the list so the stacked boxes are compact */
