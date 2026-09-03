@@ -35,6 +35,7 @@ function __T(n, fallback) {
 <style>
   html{background:var(--hmm-evergreen);color-scheme:dark;}
   html{scroll-behavior:smooth;}
+  #power,#eat,#heal,#s5,#s6,#s7,#s9,#sfoot{scroll-margin-top:16px;}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
   body{margin:0;padding:0;font-family:var(--hmm-font-body);color:var(--hmm-pearl);}
   #dotfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
@@ -129,6 +130,47 @@ function __T(n, fallback) {
     .box:hover .ledger-cap{opacity:1;}
   }
   .scroll-hint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-text-faint);}
+
+
+  /* ---------- section rail: fixed right-edge wayfinding ---------- */
+  /* The page had one navigational gesture (the hero cards) reaching three of nine
+     destinations, with no way back up. This is the index and the breadcrumb: it
+     names every section, marks the one you are in, and is one tap from any of them. */
+  .railnav{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:9;display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:12px 14px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s var(--hmm-ease),visibility .35s var(--hmm-ease);}
+  .railnav.is-on{opacity:1;visibility:visible;pointer-events:auto;}
+  .rail-item{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-height:44px;padding:0 2px;text-decoration:none;color:var(--hmm-text-muted);font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:color .25s var(--hmm-ease);}
+  .rail-item:hover,.rail-item:focus-visible{color:var(--hmm-pearl);}
+  .rail-item:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
+  .rail-label,.rail-label-s{display:block;}
+  .rail-label-s{display:none;}
+  .rail-mark{width:7px;height:7px;flex:0 0 auto;border:1px solid var(--hmm-text-faint);background:transparent;transition:background .25s var(--hmm-ease),border-color .25s var(--hmm-ease),transform .25s var(--hmm-ease);}
+  .rail-item:hover .rail-mark{border-color:var(--rail-accent,var(--hmm-accent));}
+  .rail-item.is-active{color:var(--hmm-pearl);}
+  .rail-item.is-active .rail-mark{background:var(--rail-accent,var(--hmm-accent));border-color:var(--rail-accent,var(--hmm-accent));transform:scale(1.28);}
+  .rail-item[data-sec="power"]{--rail-accent:var(--hmm-nec-power);}
+  .rail-item[data-sec="eat"]{--rail-accent:var(--hmm-nec-eat);}
+  .rail-item[data-sec="heal"]{--rail-accent:var(--hmm-nec-heal);}
+  .rail-top{margin-bottom:6px;border-bottom:1px solid var(--hmm-border);}
+  .rail-top .rail-mark{border:0;display:flex;align-items:center;justify-content:center;width:9px;height:9px;}
+  .rail-top svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:1.6;}
+  /* Where a real pointer exists the rail rides collapsed to its markers, so it
+     never crowds the layout, and names itself on hover or keyboard focus. The
+     filled, scaled marker is the you-are-here signal in that state. */
+  @media (hover:hover) and (pointer:fine){
+    .rail-label{max-width:0;opacity:0;overflow:hidden;transition:max-width .3s var(--hmm-ease),opacity .3s var(--hmm-ease);}
+    .railnav:hover .rail-label,.railnav:focus-within .rail-label{max-width:140px;opacity:1;}
+    .railnav:hover,.railnav:focus-within{background:linear-gradient(to left,var(--hmm-evergreen) 70%,rgba(20,20,20,0));}
+  }
+  @media (prefers-reduced-motion:reduce){.railnav,.rail-item,.rail-mark,.rail-label{transition:none;}}
+  /* Phones have no hover to reveal anything, so the labels are permanent — a
+     marker with no name is a dot, not navigation — and the sections give back
+     the width the rail occupies. Short forms keep it inside that allowance. */
+  @media(max-width:640px){
+    .railnav{padding:10px 8px 10px 10px;gap:0;background:linear-gradient(to left,var(--hmm-evergreen) 62%,rgba(20,20,20,0));}
+    .rail-item{min-height:44px;font-size:9px;letter-spacing:.08em;gap:7px;}
+    .rail-label{display:none;}
+    .rail-label-s{display:block;}
+  }
 
   /* ---------- necessity sections ---------- */
   .nec{min-height:100vh;display:flex;align-items:stretch;color:var(--hmm-pearl);font-family:var(--hmm-font-body);}
@@ -501,7 +543,9 @@ function __T(n, fallback) {
     #radars .radar-sub{font-size:11px;}
   }
   @media(max-width:640px){
-    .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl{padding-left:20px;padding-right:20px;}
+    .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl{padding-left:20px;padding-right:66px;}
+    .site-footer{padding-right:66px;}
+    .hero-row{width:calc(100vw - 86px);}
     .ai,.mkt,.dens,.rec{padding-top:64px;padding-bottom:64px;}
     /* hero copy is revealed by default now (see the pointer-gated block above);
        a narrow desktop window still gets it, at mobile type sizes */
@@ -551,6 +595,17 @@ function __T(n, fallback) {
 <body id="top">
 
   <canvas id="dotfield" aria-hidden="true"></canvas>
+  <nav class="railnav" id="railnav" aria-label="Section navigation">
+    <a class="rail-item rail-top" href="#top" data-sec="top"><span class="rail-label">Top</span><span class="rail-label-s">Top</span><span class="rail-mark"><svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 9V2M2 5l3-3 3 3"/></svg></span></a>
+    <a class="rail-item" href="#power" data-sec="power"><span class="rail-label">Power</span><span class="rail-label-s">Power</span><span class="rail-mark"></span></a>
+    <a class="rail-item" href="#eat" data-sec="eat"><span class="rail-label">Eat</span><span class="rail-label-s">Eat</span><span class="rail-mark"></span></a>
+    <a class="rail-item" href="#heal" data-sec="heal"><span class="rail-label">Heal</span><span class="rail-label-s">Heal</span><span class="rail-mark"></span></a>
+    <a class="rail-item" href="#s5" data-sec="s5"><span class="rail-label">AI</span><span class="rail-label-s">AI</span><span class="rail-mark"></span></a>
+    <a class="rail-item" href="#s6" data-sec="s6"><span class="rail-label">Regulation</span><span class="rail-label-s">Reg</span><span class="rail-mark"></span></a>
+    <a class="rail-item" href="#s7" data-sec="s7"><span class="rail-label">Markets</span><span class="rail-label-s">Mkts</span><span class="rail-mark"></span></a>
+    <a class="rail-item" href="#s9" data-sec="s9"><span class="rail-label">Sourcing</span><span class="rail-label-s">Src</span><span class="rail-mark"></span></a>
+  </nav>
+
   <!-- S1 hero -->
   <section class="hero">
     <a href="#top" class="hero-logo" id="heroLogo" aria-label="hmm home">
@@ -951,6 +1006,42 @@ function __T(n, fallback) {
         if(window.__layoutSpine)window.__layoutSpine();
       }
       if(fbar){FILTERS.forEach(function(fl){if(fl[0]==='all'||fl[0]==='inmarket'||present[fl[0]]){var b=document.createElement('button');b.type='button';b.textContent=fl[1];b.setAttribute('data-f',fl[0]);b.setAttribute('aria-pressed','false');b.onclick=function(){applyFilter(fl[0]);};fbar.appendChild(b);}});applyFilter('all');}
+    })();
+  </script>
+  <script>
+
+    /* ---------- section rail: active marking + reveal ---------- */
+    (function(){
+      var rail=document.getElementById('railnav'); if(!rail) return;
+      var items=[].slice.call(rail.querySelectorAll('.rail-item[data-sec]:not(.rail-top)'));
+      var pairs=items.map(function(a){return {a:a,el:document.getElementById(a.getAttribute('data-sec'))};})
+                     .filter(function(p){return p.el;});
+      var hero=document.querySelector('.hero'), cur=null, tick=false;
+
+      function update(){
+        tick=false;
+        // Rank by how much of the viewport each section actually occupies. Ratio
+        // is the wrong measure: a short section fully in view scores 1.0 while a
+        // section taller than the screen never can, so the tall ones never win.
+        var best=null, bv=0, vh=innerHeight;
+        for(var i=0;i<pairs.length;i++){
+          var r=pairs[i].el.getBoundingClientRect();
+          var seen=Math.min(r.bottom,vh)-Math.max(r.top,0);
+          if(seen>bv){bv=seen;best=pairs[i];}
+        }
+        if(best&&bv>0&&best!==cur){
+          if(cur){cur.a.classList.remove('is-active');cur.a.removeAttribute('aria-current');}
+          best.a.classList.add('is-active');best.a.setAttribute('aria-current','true');
+          cur=best;
+        }
+        // Reveal past the hero. A ratio threshold is wrong here too: the hero
+        // stacks taller than the viewport on a phone, so it never reaches one.
+        var past=hero?(hero.getBoundingClientRect().bottom<vh*0.4):(scrollY>vh*0.6);
+        rail.classList.toggle('is-on',past);
+      }
+      addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update);}},{passive:true});
+      addEventListener('resize',function(){if(!tick){tick=true;requestAnimationFrame(update);}});
+      update();
     })();
   </script>
   <script src="transitions.js?v=13"></script>
