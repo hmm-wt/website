@@ -543,9 +543,12 @@ function __T(n, fallback) {
     #radars .radar-sub{font-size:11px;}
   }
   @media(max-width:640px){
-    .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl{padding-left:20px;padding-right:66px;}
+    .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl,.nec{padding-left:20px;padding-right:66px;}
     .site-footer{padding-right:66px;}
     .hero-row{width:calc(100vw - 86px);}
+    /* These are sized in vw, which ignores the section padding the rail needs,
+       so they have to be clamped to the content box explicitly. */
+    .ai>*,.mkt>*,.dens>*,.rec>*,.ai-body,.reg-plates,.reg-cases,.reg-close,.tl-body{max-width:100%;}
     .ai,.mkt,.dens,.rec{padding-top:64px;padding-bottom:64px;}
     /* hero copy is revealed by default now (see the pointer-gated block above);
        a narrow desktop window still gets it, at mobile type sizes */
@@ -1034,9 +1037,11 @@ function __T(n, fallback) {
           best.a.classList.add('is-active');best.a.setAttribute('aria-current','true');
           cur=best;
         }
-        // Reveal past the hero. A ratio threshold is wrong here too: the hero
-        // stacks taller than the viewport on a phone, so it never reaches one.
-        var past=hero?(hero.getBoundingClientRect().bottom<vh*0.4):(scrollY>vh*0.6);
+        // Reveal only once the hero is fully behind us. A ratio threshold is wrong
+        // here — the hero stacks taller than the viewport on a phone, so it never
+        // reaches one — and revealing part-way puts the rail over the last card,
+        // which is full-bleed and has no gutter to give back.
+        var past=hero?(hero.getBoundingClientRect().bottom<=0):(scrollY>vh*0.9);
         rail.classList.toggle('is-on',past);
       }
       addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update);}},{passive:true});

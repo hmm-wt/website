@@ -1,0 +1,12 @@
+{
+  "name": "hmm-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 8791",
+    "audit:mobile": "node scripts/mobile-audit.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
