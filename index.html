@@ -67,6 +67,10 @@ function __T(n, fallback) {
   .hero-row{display:flex;gap:22px;width:min(1160px,94vw);height:360px;}
   /* ---- mobile (≤640px): stack the hero machines, wrap the timeline rows ---- */
   @media(max-width:640px){
+    /* The hero stacks taller than the viewport on a phone, and centring overflow
+       pushed the kicker off the top edge and under the logo. Flow from the top
+       instead, with enough headroom for the absolutely-positioned logo. */
+    .hero{min-height:auto;justify-content:flex-start;padding:88px 0 56px;gap:28px;}
     .hero-row{flex-direction:column;height:auto;width:92vw;gap:16px;}
     .hero-row .box{min-height:260px;}
     .tl-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px;padding:8px 10px;}
@@ -425,7 +429,7 @@ function __T(n, fallback) {
   .tl-legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 28px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);}
   .tl-legend b{color:var(--hmm-text-muted);font-weight:400;}
   .tl-body{width:min(1140px,96vw);position:relative;}
-  .tl-spine{position:absolute;left:-7px;top:0;pointer-events:none;z-index:0;}
+  .tl-spine{position:absolute;left:calc(-1 * (var(--spine-w) + 4px));top:0;pointer-events:none;z-index:0;--spine-w:14px;}
   .tl-year{display:flex;position:relative;transition:opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);}
   .tl-year.pre{opacity:0;transform:translateY(30px);}
   .tl-year.show{opacity:1;transform:none;}
@@ -896,16 +900,23 @@ function __T(n, fallback) {
       var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
       if(!reduce&&'IntersectionObserver' in window){
         years.forEach(function(y){y.classList.add('pre');});
-        var io=new IntersectionObserver(function(ents){ents.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('pre');en.target.classList.add('show');io.unobserve(en.target);}});},{rootMargin:'0px 0px -14% 0px',threshold:0.12});
+        var io=new IntersectionObserver(function(ents){ents.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('pre');en.target.classList.add('show');io.unobserve(en.target);if(window.__layoutSpine)window.__layoutSpine();}});},{rootMargin:'0px 0px -14% 0px',threshold:0.12});
         years.forEach(function(y){io.observe(y);});
       }
       // dotted spine, built here; the flock (morph.js) flies the AI dots in and lands them as this vertical axis
       var NS='http://www.w3.org/2000/svg', spine=document.createElementNS(NS,'svg');
       spine.setAttribute('class','tl-spine'); spine.setAttribute('aria-hidden','true');
       body.style.position='relative'; body.appendChild(spine);
-      function layoutSpine(){var h=body.scrollHeight,w=14,g=15,s='';for(var y=7;y<h;y+=g){s+='<circle cx="'+(w/2)+'" cy="'+y+'" r="1.4" fill="rgba(242,236,201,0.5)"/>';}
+      // offsetHeight, not scrollHeight: scrollHeight counts the spine's own box and the
+      // translateY(30px) that .tl-year.pre carries before it reveals, so measuring it
+      // left the rail hanging past the end of the timeline it annotates.
+      function layoutSpine(){var h=body.offsetHeight,w=14,g=15,s='';for(var y=7;y<h;y+=g){s+='<circle cx="'+(w/2)+'" cy="'+y+'" r="1.4" fill="rgba(242,236,201,0.5)"/>';}
         spine.setAttribute('width',w);spine.setAttribute('height',h);spine.setAttribute('viewBox','0 0 '+w+' '+h);spine.style.width=w+'px';spine.style.height=h+'px';spine.innerHTML=s;}
-      layoutSpine(); setTimeout(layoutSpine,400); addEventListener('resize',function(){clearTimeout(window.__spineRT);window.__spineRT=setTimeout(layoutSpine,200);});
+      window.__layoutSpine=layoutSpine;
+      layoutSpine();
+      if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layoutSpine);
+      addEventListener('load',layoutSpine);
+      addEventListener('resize',function(){clearTimeout(window.__spineRT);window.__spineRT=setTimeout(layoutSpine,200);});
       var mkt=REG_INSTRUMENTS.filter(function(r){return !r.global;}).length, glb=REG_INSTRUMENTS.length-mkt;
       var note=document.querySelector('#s6 .tl-note');if(note)note.innerHTML='<b>'+mkt+' in-market · '+glb+' global</b>';
       var FILTERS=[['all','All'],['inmarket','In-market'],['AU','AU'],['JP','JP'],['NZ','NZ'],['AMER','AMER'],['CA','Canada'],['GCC','GCC'],['EU','EU'],['UKI','UKI'],['GL','Global']];
@@ -915,6 +926,7 @@ function __T(n, fallback) {
         document.querySelectorAll('#s6 .tl-row, #s6 .tl-stand-item').forEach(function(el){var c=el.getAttribute('data-c');var show=f==='all'||(f==='inmarket'?(c==='AU'||c==='JP'||c==='NZ'):c===f);el.classList.toggle('tl-hidden',!show);});
         document.querySelectorAll('#s6 .tl-year').forEach(function(y){var vis=y.querySelectorAll('.tl-row:not(.tl-hidden), .tl-stand-item:not(.tl-hidden)').length;y.classList.toggle('tl-hidden',f!=='all'&&vis===0);});
         fbar.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-f')===f);});
+        if(window.__layoutSpine)window.__layoutSpine();
       }
       if(fbar){FILTERS.forEach(function(fl){if(fl[0]==='all'||fl[0]==='inmarket'||present[fl[0]]){var b=document.createElement('button');b.textContent=fl[1];b.setAttribute('data-f',fl[0]);b.onclick=function(){applyFilter(fl[0]);};fbar.appendChild(b);}});applyFilter('all');}
     })();
