@@ -290,7 +290,7 @@ function __T(n, fallback) {
       var li = document.createElement("li");
       var chip = document.createElement("button");
       chip.type = "button";
-      chip.className = "radar-chip";
+      chip.className = "radar-chip u-control";
       chip.setAttribute("data-series", name);
       chip.setAttribute("aria-label", "Highlight " + name + " on " + market.name);
       var sw = document.createElement("span");

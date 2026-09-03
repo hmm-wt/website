@@ -60,6 +60,27 @@ function __T(n, fallback) {
   .footer-tag{font-family:var(--hmm-font-display,'Kufam',sans-serif);font-size:15px;letter-spacing:.01em;color:var(--hmm-text-muted);}
   .footer-tag .hk-nec{color:var(--hmm-accent);}
 
+
+  /* ---------- box tiers: appearance follows behaviour ----------
+     Every bordered box on this page belongs to exactly one tier, and nothing
+     wears a cue from a tier it is not in. That rule is the whole point: the
+     page previously used one look (bordered panel + corner brackets) for
+     things that navigate, things that filter, and things that just sit there.
+
+       u-nav      navigates somewhere        pointer, focus ring, action row
+       u-control  changes what is shown      pointer, focus ring, pressed state
+       u-panel    shows, and does not respond   no pointer, not focusable
+
+     Adding a box? Pick the tier by what it DOES, then apply that class. Do not
+     copy a neighbour's styling — that is how the inconsistency arose. Corner
+     brackets (.tk) are decoration and carry no meaning: they appear in every
+     tier and must never be the only thing telling a reader something is live. */
+  .u-nav,.u-control{cursor:pointer;}
+  .u-nav:focus-visible{outline:2px solid var(--accent,var(--hmm-accent));outline-offset:3px;}
+  .u-control:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
+  .u-panel{cursor:auto;}
+  .u-panel a,.u-panel button{cursor:pointer;}
+
   /* ---------- hero ---------- */
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;position:relative;}
   .hero-logo{position:absolute;top:26px;left:30px;z-index:8;color:var(--hmm-pearl);display:block;transition:opacity .3s var(--hmm-ease),color .2s var(--hmm-ease);}
@@ -599,14 +620,14 @@ function __T(n, fallback) {
 
   <canvas id="dotfield" aria-hidden="true"></canvas>
   <nav class="railnav" id="railnav" aria-label="Section navigation">
-    <a class="rail-item rail-top" href="#top" data-sec="top"><span class="rail-label">Top</span><span class="rail-label-s">Top</span><span class="rail-mark"><svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 9V2M2 5l3-3 3 3"/></svg></span></a>
-    <a class="rail-item" href="#power" data-sec="power"><span class="rail-label">Power</span><span class="rail-label-s">Power</span><span class="rail-mark"></span></a>
-    <a class="rail-item" href="#eat" data-sec="eat"><span class="rail-label">Eat</span><span class="rail-label-s">Eat</span><span class="rail-mark"></span></a>
-    <a class="rail-item" href="#heal" data-sec="heal"><span class="rail-label">Heal</span><span class="rail-label-s">Heal</span><span class="rail-mark"></span></a>
-    <a class="rail-item" href="#s5" data-sec="s5"><span class="rail-label">AI</span><span class="rail-label-s">AI</span><span class="rail-mark"></span></a>
-    <a class="rail-item" href="#s6" data-sec="s6"><span class="rail-label">Regulation</span><span class="rail-label-s">Reg</span><span class="rail-mark"></span></a>
-    <a class="rail-item" href="#s7" data-sec="s7"><span class="rail-label">Markets</span><span class="rail-label-s">Mkts</span><span class="rail-mark"></span></a>
-    <a class="rail-item" href="#s9" data-sec="s9"><span class="rail-label">Sourcing</span><span class="rail-label-s">Src</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav rail-top" href="#top" data-sec="top"><span class="rail-label">Top</span><span class="rail-label-s">Top</span><span class="rail-mark"><svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 9V2M2 5l3-3 3 3"/></svg></span></a>
+    <a class="rail-item u-nav" href="#power" data-sec="power"><span class="rail-label">Power</span><span class="rail-label-s">Power</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#eat" data-sec="eat"><span class="rail-label">Eat</span><span class="rail-label-s">Eat</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#heal" data-sec="heal"><span class="rail-label">Heal</span><span class="rail-label-s">Heal</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s5" data-sec="s5"><span class="rail-label">AI</span><span class="rail-label-s">AI</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s6" data-sec="s6"><span class="rail-label">Regulation</span><span class="rail-label-s">Reg</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s7" data-sec="s7"><span class="rail-label">Markets</span><span class="rail-label-s">Mkts</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s9" data-sec="s9"><span class="rail-label">Sourcing</span><span class="rail-label-s">Src</span><span class="rail-mark"></span></a>
   </nav>
 
   <!-- S1 hero -->
@@ -621,21 +642,21 @@ function __T(n, fallback) {
     </a>
     <h1 class="hero-kicker"><span class="hk-nec">Necessity</span> is the thesis</h1>
     <div class="hero-row" id="heroRow">
-      <a class="box box--power" data-nec="power" href="#power">
+      <a class="box box--power u-nav" data-nec="power" href="#power">
         <div class="box-stage"><div class="machine" data-machine="power"></div></div>
         <div class="box-info"><div class="box-label">Power</div>
           <div class="commentary">The energy system: fuel and critical minerals, generation, storage, and the grid to end use. Demand is universal and rising, and a failure stops industry and daily life. The returnable innovation sits in the critical-minerals layer that constrains the chain.</div>
           <ul class="ledger" data-ledger="power"></ul>
           <span class="box-go">Read the Power system<svg class="box-go-arrow" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><path d="M0 4h18M15 1l3 3-3 3"/></svg></span></div>
       </a>
-      <a class="box box--eat" data-nec="eat" href="#eat">
+      <a class="box box--eat u-nav" data-nec="eat" href="#eat">
         <div class="box-stage"><div class="machine" data-machine="eat"></div></div>
         <div class="box-info"><div class="box-label">Eat</div>
           <div class="commentary">The food system: crops and livestock, from field inputs through processing to distribution. Demand is daily and land is fixed, so a shortfall shows up fast in price. The advance that pays back sits in the field-autonomy layer.</div>
           <ul class="ledger" data-ledger="eat"></ul>
           <span class="box-go">Read the Eat system<svg class="box-go-arrow" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><path d="M0 4h18M15 1l3 3-3 3"/></svg></span></div>
       </a>
-      <a class="box box--heal" data-nec="heal" href="#heal">
+      <a class="box box--heal u-nav" data-nec="heal" href="#heal">
         <div class="box-stage"><div class="machine" data-machine="heal"></div></div>
         <div class="box-info"><div class="box-label">Heal</div>
           <div class="commentary">The healthcare system: prevention, diagnosis, treatment, and care to end of life. Demand is universal and rises with age, and capacity sets how much care is delivered. Value concentrates at the diagnostic read-out, upstream where a returned life-year costs least.</div>
@@ -685,20 +706,20 @@ function __T(n, fallback) {
     <div class="reg-split">
       <div class="reg-left">
         <div class="reg-jobs">
-          <div class="reg-plate">
+          <div class="reg-plate u-panel">
             <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
             <div class="reg-hdr"><span class="reg-id">06.A</span><span class="reg-label">For the fund · a locator</span></div>
             <p>A necessity system runs to as many as ten stages. The gate marks the stage whose value is hardest to compete away, and points hmm's capital there.</p>
             <div class="reg-foot"><span>hmm-REG-06.A</span></div>
           </div>
-          <div class="reg-plate">
+          <div class="reg-plate u-panel">
             <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
             <div class="reg-hdr"><span class="reg-id">06.B</span><span class="reg-label">For the company · the moat</span></div>
             <p>The same gate is what a rival cannot cheaply copy, and what an acquirer pays a premium for. It also delays the company clearing it, and can shelter an incumbent as readily as a challenger.</p>
             <div class="reg-foot"><span>hmm-REG-06.B</span></div>
           </div>
         </div>
-        <div class="reg-plate reg-plate--wide">
+        <div class="reg-plate reg-plate--wide u-panel">
           <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
           <div class="reg-hdr"><span class="reg-id">06.C</span><span class="reg-label">For the underwriter · the data</span></div>
           <p>The data that locates a company also shows what its approval will cost, in time and in evidence. Every deal is read four ways against the instrument that gates it: which instrument it must clear, what evidence that demands, how far the field has already moved, and where the company sits on that path today. An AI diagnostic clears Japan's PMDA conditional-approval pathway, or Australia's software-as-a-medical-device rule, on clinical evidence, and annual authorisations of AI-enabled devices rose from a maximum of six a year before 2016 to 331 in 2025, the most in the agency&rsquo;s history. hmm underwrites a company by where it sits on that path.</p>
@@ -934,11 +955,11 @@ function __T(n, fallback) {
       (function(){var W=['zero','one','two','three','four','five','six','seven','eight','nine','ten'];var inf={AU:0,JP:0,NZ:0},s20=0,sched=0;REG_INSTRUMENTS.forEach(function(r){if(r.global)return;if(r.c!=='AU'&&r.c!=='JP'&&r.c!=='NZ')return;if(r.type!=='enforceable')return;if(r.status==='effective'||r.status==='transitional'){inf[r.c]++;if(r.yr>=2020)s20++;}else if(r.status==='expected'){sched++;}});var tot=inf.AU+inf.JP+inf.NZ,sub=document.querySelector('.tl-sub');if(sub&&tot)sub.textContent='hmm maps '+tot+' enforceable instruments in force across the three markets: '+inf.AU+' in Australia, '+inf.JP+' in Japan, '+inf.NZ+' in New Zealand, '+s20+' of them since 2020, with '+(W[sched]||sched)+' more scheduled between 2027 and 2030. This is the regulatory surface the fund tracks. The global rows are the same rules re-pricing the space elsewhere.';})();
       var byYear={};REG_INSTRUMENTS.forEach(function(r){(byYear[r.yr]=byYear[r.yr]||[]).push(r);});
       function cTag(r){return '<span class="tl-c'+(r.global?' tl-c--global':'')+'">'+e2(r.c)+'</span>';}
-      function row(r){return '<div class="tl-row tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+'<span class="tl-date">'+e2(r.date)+'</span><span class="tl-name">'+e2(r.name)+'</span><span class="tl-org">'+e2(r.body)+'</span><span class="tl-status tl-st--'+r.status+'">'+e2(r.status)+'</span></div>';}
+      function row(r){return '<div class="tl-row u-panel tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+'<span class="tl-date">'+e2(r.date)+'</span><span class="tl-name">'+e2(r.name)+'</span><span class="tl-org">'+e2(r.body)+'</span><span class="tl-status tl-st--'+r.status+'">'+e2(r.status)+'</span></div>';}
       var html='';
       // standing base (pre-2020), compact
       var standing=REG_INSTRUMENTS.filter(function(r){return r.yr<2020;}).sort(function(a,b){return a.yr-b.yr;});
-      if(standing.length){var items=standing.map(function(r){return '<span class="tl-stand-item tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+e2(r.name)+'</span>';}).join('');
+      if(standing.length){var items=standing.map(function(r){return '<span class="tl-stand-item u-panel tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+e2(r.name)+'</span>';}).join('');
         html+='<div class="tl-year tl-standing"><div class="tl-axis"><span class="tl-node"></span><span class="tl-y">pre-2020</span></div><div class="tl-rows"><div class="tl-stand-label">Standing · the established base</div><div class="tl-stand-wrap">'+items+'</div></div></div>';}
       // the net-new tick, 2020-2030
       for(var y=2020;y<=2030;y++){var future=y>=2027,rows=(byYear[y]||[]).slice().sort(function(a,b){return (a.global?1:0)-(b.global?1:0);});
@@ -961,7 +982,9 @@ function __T(n, fallback) {
           if(active){ requestAnimationFrame(frame); }
           else { for(var j=0;j<nodes.length;j++){var e=nodes[j];e.n.style.transform='';e.n.style.animation='';e.x=e.y=e.vx=e.vy=0;} running=false; }
         }
-        body.style.cursor='pointer';
+        // Deliberately no cursor:pointer on the body. This handler scatters the
+        // year nodes for delight; it is not a promise the 58 rows inside can be
+        // clicked, and setting the cursor here told every one of them otherwise.
         body.addEventListener('click',function(ev){
           for(var i=0;i<nodes.length;i++){var d=nodes[i];
             d.n.style.animation='none';                       // CSS pulse would override our transform; pause it
@@ -1008,7 +1031,7 @@ function __T(n, fallback) {
         fbar.querySelectorAll('button').forEach(function(b){var on=b.getAttribute('data-f')===f;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});
         if(window.__layoutSpine)window.__layoutSpine();
       }
-      if(fbar){FILTERS.forEach(function(fl){if(fl[0]==='all'||fl[0]==='inmarket'||present[fl[0]]){var b=document.createElement('button');b.type='button';b.textContent=fl[1];b.setAttribute('data-f',fl[0]);b.setAttribute('aria-pressed','false');b.onclick=function(){applyFilter(fl[0]);};fbar.appendChild(b);}});applyFilter('all');}
+      if(fbar){FILTERS.forEach(function(fl){if(fl[0]==='all'||fl[0]==='inmarket'||present[fl[0]]){var b=document.createElement('button');b.type='button';b.className='u-control';b.textContent=fl[1];b.setAttribute('data-f',fl[0]);b.setAttribute('aria-pressed','false');b.onclick=function(){applyFilter(fl[0]);};fbar.appendChild(b);}});applyFilter('all');}
     })();
   </script>
   <script>
