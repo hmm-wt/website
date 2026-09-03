@@ -2,7 +2,7 @@
    SOURCED 2026-07-20/21 to primary legislation (research agent), from:
      internal regulatory source pass,JP,NZ}_2026-07-20.md + Frameworks_and_Guidelines_2026-07-21.md.
     Names shortened for display; full titles + primary-source URLs in the source files.
-   NOTE: BIOSECURE / FDA AI-device (6→295) / ICH Q13 / CMS waiver are US-global "why-now" evidence
+   NOTE: BIOSECURE / FDA AI-device (6→331) / ICH Q13 / CMS waiver are US-global "why-now" evidence
    (internal canon/§3), NOT part of this register - kept separate to preserve the 14/11/8 arithmetic.
    yr places the row on the axis; yr<2020 = the standing base. Forecast rows (status "expected") are
    real phased/expected milestones flagged by the sourcing pass, shown dashed in 2027+. */
@@ -55,7 +55,7 @@ var REG_INSTRUMENTS = [
   //      (internal canon/§3 net-new + line 62 reliance pathways; CONTEXT, NOT part of the AU/JP/NZ 33) ----
   {c:"AMER",name:"CMS hospital-at-home reimbursement waiver",body:"CMS",date:"2020",yr:2020,type:"enforceable",status:"effective",global:true},
   {c:"AMER",name:"IRA Section 45X (domestic-content)",body:"US Treasury / IRS",date:"2022",yr:2022,type:"enforceable",status:"effective",global:true},
-  {c:"AMER",name:"FDA AI-device authorisations (6 → 295)",body:"FDA",date:"2015→2025",yr:2025,type:"enforceable",status:"effective",global:true},
+  {c:"AMER",name:"FDA AI-device authorisations (6 → 331)",body:"FDA",date:"2015→2025",yr:2025,type:"enforceable",status:"effective",global:true},
   {c:"AMER",name:"BIOSECURE Act",body:"US Congress",date:"Dec 2025",yr:2025,type:"enforceable",status:"enacted",global:true},
   {c:"CA",name:"Access Consortium reliance (Health Canada)",body:"Access Consortium",date:"2020",yr:2020,type:"framework",status:"effective",global:true},
   {c:"UKI",name:"UK MHRA reliance (Access Consortium)",body:"MHRA",date:"2020",yr:2020,type:"framework",status:"effective",global:true},
