@@ -7,7 +7,24 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 <link rel="manifest" href="/site.webmanifest"/>
-<link rel="stylesheet" href="styles.css"/>
+<meta name="theme-color" content="#141414"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="hmm ventures"/>
+<meta property="og:title" content="hmm · the GP"/>
+<meta property="og:description" content="Wahid Tashkandi, general partner of hmm ventures Fund I."/>
+<meta property="og:url" content="https://hmm.ventures/bio.html"/>
+<meta property="og:image" content="https://hmm.ventures/og-default.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="hmm · the GP"/>
+<meta name="twitter:description" content="Wahid Tashkandi, general partner of hmm ventures Fund I."/>
+<meta name="twitter:image" content="https://hmm.ventures/og-default.png"/>
+<link rel="preload" href="fonts/raela-400.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="fonts/kufam-var.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="stylesheet" href="fonts/fonts.css"/>
+<link rel="stylesheet" href="hmm-tokens.css"/>
+<link rel="stylesheet" href="site.css"/>
 <style>
   html{background:var(--hmm-evergreen);color-scheme:dark;}
   body{margin:0;padding:0;font-family:var(--hmm-font-body,'Raela Grotesque','Helvetica Neue',sans-serif);color:var(--hmm-pearl,var(--hmm-pearl-beige));
@@ -28,13 +45,13 @@
   .bio-cv li{position:relative;padding:0 0 18px 0;margin:0 0 18px;border-bottom:1px solid var(--hmm-border,rgba(242,236,201,.14));}
   .bio-cv li:last-child{border-bottom:none;}
   .bio-cv-head{margin:0 0 6px;}
-  .bio-cv-meta{display:block;font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:11.5px;letter-spacing:.06em;color:var(--hmm-text-faint,rgba(242,236,201,.42));margin-top:3px;}
+  .bio-cv-meta{display:block;font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:11.5px;letter-spacing:.06em;color:var(--hmm-caption,rgba(242,236,201,.72));margin-top:3px;}
   .bio-cv p{margin:0;}
   .bio-marks{display:flex;flex-wrap:wrap;gap:10px 12px;margin:30px 0 26px;padding:0;list-style:none;}
   .bio-mark{display:inline-flex;align-items:center;border:1px solid var(--hmm-border,rgba(242,236,201,.16));padding:9px 14px;
             font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
             color:var(--hmm-text-muted,rgba(242,236,201,.7));text-decoration:none;transition:color .15s ease,border-color .15s ease;}
-  .bio-mark span{color:var(--hmm-text-faint,rgba(242,236,201,.4));margin-left:8px;font-size:9.5px;letter-spacing:.1em;}
+  .bio-mark span{color:var(--hmm-caption,rgba(242,236,201,.72));margin-left:8px;font-size:9.5px;letter-spacing:.1em;}
   .bio-mark:hover{color:var(--hmm-accent,var(--hmm-tomato-jam));border-color:var(--hmm-accent,var(--hmm-tomato-jam));}
   .bio-mark--logo{flex-direction:column;align-items:center;justify-content:center;gap:12px;width:152px;height:96px;padding:0;box-sizing:border-box;}
   .bio-logoslot{height:26px;display:flex;align-items:center;justify-content:center;width:100%;}
@@ -45,14 +62,15 @@
   .bio-mark--logo[aria-label="GoodFit"] svg{height:11px;}
   .bio-mark--logo span{margin-left:0;}
   .bio-contact{font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:12px;letter-spacing:.06em;color:var(--hmm-text-muted,rgba(242,236,201,.6));}
-  .bio-contact a{color:var(--hmm-accent,var(--hmm-tomato-jam));text-decoration:none;}
+  .bio-contact a{color:var(--hmm-accent-text,#A5382C);text-decoration:none;}
   .bio-contact a:hover{text-decoration:underline;text-underline-offset:3px;}
-  .bio-back{font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--hmm-text-faint,rgba(242,236,201,.4));text-decoration:none;}
+  .bio-back{font-family:var(--hmm-font-mono,'Raela Grotesque',monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--hmm-caption,rgba(242,236,201,.72));text-decoration:none;}
   .bio-back:hover{color:var(--hmm-pearl,var(--hmm-pearl-beige));}
   @media(max-width:560px){.bio-name{font-size:27px;}}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
   <div class="bio-top">
     <a href="index.html" class="bio-logo" aria-label="hmm home">
       <svg viewBox="0 0 208 119" role="img" aria-label="hmm"><g fill="currentColor">
@@ -63,7 +81,7 @@
       </g><circle cx="201.5" cy="112.5" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
     </a>
   </div>
-  <main class="bio-main">
+  <main class="bio-main" id="main">
     <div class="bio-card">
       <p class="bio-eyebrow">The GP</p>
       <h1 class="bio-name">Wahid Tashkandi</h1>

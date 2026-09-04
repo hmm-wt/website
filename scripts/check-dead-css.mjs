@@ -46,11 +46,18 @@ const probe = () => {
   const selectors = [];
   const walk = list => { for (let i = 0; i < list.length; i++) {
     const r = list[i];
+    // an @import carries its rules on .styleSheet, not .cssRules; the first
+    // version of this guard never looked there and so never saw the imported sheets
+    if (r.styleSheet) { try { walk(r.styleSheet.cssRules); } catch { /* cross-origin */ } continue; }
     if (r.cssRules && r.cssRules.length) walk(r.cssRules);
     if (r.selectorText) selectors.push(r.selectorText);
   }};
   for (let i = 0; i < document.styleSheets.length; i++) {
-    try { walk(document.styleSheets[i].cssRules); } catch { /* cross-origin */ }
+    const sheet = document.styleSheets[i];
+    // hmm-tokens.css is a generated design-system export shared beyond this site;
+    // unused entries there are expected and are not this site's dead code
+    if (sheet.href && /hmm-tokens\.css/.test(sheet.href)) continue;
+    try { walk(sheet.cssRules); } catch { /* cross-origin */ }
   }
   const PSEUDO = /::?[a-zA-Z-]+(\([^()]*(\([^()]*\))?[^()]*\))?/g;
   const unmatched = [], seen = new Set();

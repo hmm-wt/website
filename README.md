@@ -9,6 +9,21 @@ Static HTML/CSS/JS. There is no build step: Netlify publishes the repository roo
 - `index.html`. The thesis (single scroll)
 - `bio.html`. The GP
 - `sources.html`. Primary and first-party sources
+- `for-llms.html`. Canonical framing for language models, and the misattributions to avoid
+- `404.html`. Not found
+
+## Stylesheets
+Every page links three files in parallel: `fonts/fonts.css` (the two brand faces as
+subsetted WOFF2, plus metric-matched fallbacks), `hmm-tokens.css` (generated from the
+design tokens, never hand-edited) and `site.css` (the live site's overrides, edited here).
+Page-specific styles are inline in each page.
+
+## Checks
+All Playwright, all against a local server (`npm run serve`, then in another shell):
+- `npm run audit:mobile`. Layout across 320 to 1280px, touch and pointer: overflow, the rail, tap targets
+- `npm run check:affordances`. Every `cursor:pointer` responds to a click, and every click handler shows one
+- `npm run check:deadcss`. No rule without an element or a reference that can create one
+- `npm run check:figures`. The enacted-record figures in the copy match `data/reg_instruments.js`
 
 ## Search / crawlers
 `robots.txt`, `sitemap.xml`, `llms.txt` and per-page canonical tags live at the root.

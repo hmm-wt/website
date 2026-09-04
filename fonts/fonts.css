@@ -3,43 +3,66 @@
    Raela Grotesque = EVERYTHING else. Body, data, chart finding-titles, and
    notation/labels (rendered uppercase + letter-spaced for the label look).
    Layering comes from weight / case / size / colour, not extra faces.
-   Beiruti and Instrument Serif are RETIRED and their @font-face blocks are gone
-   as of 2026-08-27. They were kept only so the legacy type-study demos
-   (_demo/fonts*.html, decisions.html) would still render. Those pages are no
-   longer in the repo and return 404 on the live site, and no HTML references
-   either family, so the reason expired. Two faces, and only two, are declared. */
+
+   Delivery (2026-09-04): WOFF2, subset to Latin + Latin-1 + Latin Extended-A
+   and the punctuation the site uses. The desktop TTFs were 1,474 KB across the
+   five files and 75% of the index page's transfer; these are 202 KB. Kufam
+   Italic sets thirteen characters on the whole site and is only fetched by a
+   page that renders them, which is index alone.
+
+   The two *-Fallback faces are metric-matched Arial: size-adjust from
+   OS/2.xAvgCharWidth (Raela 576/1000, Kufam 619/1000, Arial 1187/2048), the
+   overrides from hhea. They hold the layout while the real face loads, so the
+   swap no longer reflows the page. That reflow measured CLS 0.1011 on
+   for-llms.html and was the site's one Core Web Vitals failure. */
 @font-face {
   font-family: "Raela Grotesque";
-  src: url("./RaelaGrotesque-Regular.ttf") format("truetype");
+  src: url("./raela-400.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Raela Grotesque";
-  src: url("./RaelaGrotesque-Medium.ttf") format("truetype");
+  src: url("./raela-500.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Raela Grotesque";
-  src: url("./RaelaGrotesque-Bold.ttf") format("truetype");
+  src: url("./raela-700.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Kufam";
-  src: url("./Kufam-VariableFont.ttf") format("truetype");
+  src: url("./kufam-var.woff2") format("woff2");
   font-weight: 400 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Kufam";
-  src: url("./Kufam-Italic-VariableFont.ttf") format("truetype");
+  src: url("./kufam-var-italic.woff2") format("woff2");
   font-weight: 400 900;
   font-style: italic;
   font-display: swap;
+}
+@font-face {
+  font-family: "Raela Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 99.4%;
+  ascent-override: 104.4%;
+  descent-override: 25.2%;
+  line-gap-override: 10.1%;
+}
+@font-face {
+  font-family: "Kufam Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 106.8%;
+  ascent-override: 84.3%;
+  descent-override: 37.5%;
+  line-gap-override: 0%;
 }

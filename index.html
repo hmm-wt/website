@@ -30,8 +30,12 @@ function __T(n, fallback) {
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 <link rel="manifest" href="/site.webmanifest"/>
-<link rel="preload" href="fonts/RaelaGrotesque-Regular.ttf" as="font" type="font/ttf" crossorigin/>
-<link rel="stylesheet" href="styles.css"/>
+<meta name="theme-color" content="#141414"/>
+<link rel="preload" href="fonts/raela-400.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="fonts/kufam-var.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="stylesheet" href="fonts/fonts.css"/>
+<link rel="stylesheet" href="hmm-tokens.css"/>
+<link rel="stylesheet" href="site.css"/>
 <style>
   html{background:var(--hmm-evergreen);color-scheme:dark;}
   html{scroll-behavior:smooth;}
@@ -51,7 +55,7 @@ function __T(n, fallback) {
   .footer-contact{font-family:var(--hmm-font-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--hmm-text-muted);text-decoration:none;transition:var(--hmm-transition);}
   .footer-contact:hover{color:var(--hmm-accent);}
   .footer-tag{font-family:var(--hmm-font-display,'Kufam',sans-serif);font-size:15px;letter-spacing:.01em;color:var(--hmm-text-muted);}
-  .footer-tag .hk-nec{color:var(--hmm-accent);}
+  .footer-tag .hk-nec{color:var(--hmm-accent-text);}
 
   /* ---------- box tiers: appearance follows behaviour ----------
      Every bordered box on this page belongs to exactly one tier, and nothing
@@ -79,7 +83,7 @@ function __T(n, fallback) {
   .hero-logo svg{height:26px;width:auto;display:block;}
   .hero-logo:hover{color:var(--hmm-accent);}
   .hero-kicker{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:400;margin:0;color:var(--hmm-text-muted);}
-  .hero-kicker .hk-nec{color:var(--hmm-accent);}
+  .hero-kicker .hk-nec{color:var(--hmm-accent-text);}
   .hero-row{display:flex;gap:22px;width:min(1160px,94vw);height:360px;}
   /* ---- mobile (≤640px): stack the hero machines, wrap the timeline rows ---- */
   @media(max-width:640px){
@@ -91,7 +95,7 @@ function __T(n, fallback) {
     .hero-row .box{min-height:260px;}
     .tl-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px;padding:8px 10px;}
     .tl-row .tl-name{flex:1 1 100%;order:3;}
-    .tl-row .tl-org{flex:1 1 100%;order:4;font-size:10px;color:var(--hmm-text-faint);}
+    .tl-row .tl-org{flex:1 1 100%;order:4;font-size:10px;color:var(--hmm-caption);}
     .tl-row .tl-c{order:1;} .tl-row .tl-date{order:2;} .tl-row .tl-status{order:5;}
   }
   .box{position:relative;flex:1;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;border:1px solid var(--hmm-border);background:rgba(242,236,201,.02);color:inherit;text-decoration:none;transition:flex .5s var(--hmm-ease),background .3s var(--hmm-ease),border-color .3s var(--hmm-ease),opacity .4s var(--hmm-ease);}
@@ -203,13 +207,13 @@ function __T(n, fallback) {
   .machine-wrap svg .callout--R{transform-box:fill-box;transform-origin:0% 50%;}
   .machine-wrap svg .callout:hover,.machine-wrap svg .callout:focus-within{transform:scale(2.15);}
   .machine-wrap svg .callout:focus{outline:none;}
-  .stage-foot{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.12em;color:var(--hmm-text-faint);}
+  .stage-foot{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.12em;color:var(--hmm-caption);}
   .nec[data-flip="1"] .stage-foot{text-align:right;}
   .panel{flex:1.42;display:flex;flex-direction:column;gap:22px;padding:56px 56px;justify-content:center;min-width:0;order:2;}
   .nec[data-flip="1"] .panel{order:1;}
   .card{border:1px solid var(--hmm-border);padding:26px 28px;position:relative;background:rgba(242,236,201,.02);}
   .card-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.18em;font-size:11px;color:var(--hmm-text-muted);margin-bottom:12px;}
-  .card h3{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-lg);margin:0 0 10px;}
+  .card h2{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-lg);margin:0 0 10px;}
   .card p{margin:0;font-size:14px;line-height:1.6;color:var(--hmm-text-muted);}
   .card p b{color:var(--hmm-pearl);font-weight:600;}
   .schematic-wrap{margin:6px 0 14px;}
@@ -230,7 +234,7 @@ function __T(n, fallback) {
   .sp-name{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:10px;}
   .sp-facet{margin-bottom:9px;}
   .sp-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);}
-  .sp-facet .none{font-size:12px;color:var(--hmm-text-faint);font-style:italic;}
+  .sp-facet .none{font-size:12px;color:var(--hmm-caption);font-style:italic;}
   .sp-def{font-size:12.5px;line-height:1.5;color:var(--hmm-text-muted);margin:0 0 13px;}
   .sp-facet p{font-size:12.5px;line-height:1.46;color:var(--hmm-pearl);margin:3px 0 0;}
   .stage-panel>*:nth-child(5){animation-delay:.32s;}
@@ -239,7 +243,7 @@ function __T(n, fallback) {
   .sec-eat   .stage-eyebrow,.sec-eat   .sp-name{color:var(--hmm-nec-eat);}
   .sec-heal  .stage-eyebrow,.sec-heal  .sp-name{color:var(--hmm-nec-heal);}
   /* ---------- lens intro + through-line ---------- */
-  .through-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
+  .through-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
   .through p b{color:var(--hmm-pearl);font-weight:600;}
   .through{padding:84px 48px;border-top:1px solid var(--hmm-border);color:var(--hmm-pearl);}
   .through p{font-size:18px;line-height:1.6;color:var(--hmm-text-muted);max-width:80ch;margin:14px 0 0;}
@@ -257,7 +261,7 @@ function __T(n, fallback) {
      it sits in, so every one of these blocks bled ~30px past its own content box on
      both sides below 1208px and ran under the fixed rail on the right. */
   .ai>*{width:min(1160px,100%);}
-  .ai-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
+  .ai-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
   .ai-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;line-height:1.06;}
   /* ---------- S5 rebuilt: flow, figures, reading key ---------- */
   .ai-flow{display:flex;flex-direction:column;gap:44px;margin:4px 0 44px;}
@@ -267,15 +271,15 @@ function __T(n, fallback) {
   .ai-flow--split .ai-fig--hero canvas{height:420px;flex:none;min-height:0;width:100%;}
   @media(max-width:860px){.ai-flow--split{grid-template-columns:1fr;gap:32px;}.ai-flow--split .ai-fig--hero canvas{flex:none;height:300px;}}
   .ai-step-hdr{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-  .ai-step-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent);padding:2px 8px;flex:0 0 auto;}
+  .ai-step-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent-text);padding:2px 8px;flex:0 0 auto;}
   .ai-step-label{font-family:var(--hmm-font-display);font-weight:700;font-size:20px;line-height:1.1;}
   .ai-step p{font-size:14.5px;line-height:1.62;color:var(--hmm-text-muted);max-width:66ch;margin:0 0 11px;}
   .ai-fig{margin:0;border:1px solid var(--hmm-border);background:rgba(242,236,201,.02);position:relative;}
   .ai-fig canvas{display:block;width:100%;height:280px;}
   .ai-fig--hero canvas{height:320px;}
-  .ai-fig figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);padding:10px 14px;border-top:1px solid var(--hmm-border);}
-  .fig-note{display:block;margin-top:5px;text-transform:none;letter-spacing:.01em;font-size:10px;line-height:1.5;color:var(--hmm-text-faint);opacity:.85;}
-  .ai-pull .k{display:block;font-family:var(--hmm-font-mono);font-weight:400;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hmm-text-faint);margin-bottom:12px;}
+  .ai-fig figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);padding:10px 14px;border-top:1px solid var(--hmm-border);}
+  .fig-note{display:block;margin-top:5px;text-transform:none;letter-spacing:.01em;font-size:10px;line-height:1.5;color:var(--hmm-caption);}
+  .ai-pull .k{display:block;font-family:var(--hmm-font-mono);font-weight:400;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hmm-caption);margin-bottom:12px;}
   .src-split{display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start;margin-top:14px;}
   .src-prose{min-width:0;}
   .src-q{font-family:var(--hmm-font-display);font-weight:700;font-size:25px;line-height:1.22;color:var(--hmm-pearl);margin:14px 0 16px;}
@@ -297,18 +301,18 @@ function __T(n, fallback) {
   /* ---------- S7 markets + S8 density ---------- */
   .mkt{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
   .mkt>*{width:min(1180px,100%);}
-  .mkt-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
+  .mkt-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
   .mkt-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;line-height:1.06;}
   .mkt-lead{font-size:15px;line-height:1.6;color:var(--hmm-text-muted);max-width:82ch;margin:0 0 14px;}
-  #radars{margin:6px 0 14px;width:100%;}  #densityChart{width:100%;margin-top:10px;min-height:440px;}
+  #radars{margin:6px 0 14px;width:100%;}
   /* ---------- S10 the record (infinite scroll) ---------- */
   .rec-title .hk-nec{color:var(--hmm-accent);}
   .rec-track{position:absolute;top:0;left:0;right:0;will-change:transform;}
   .rec-row{display:flex;flex-wrap:wrap;gap:5px 12px;align-items:baseline;padding:7px 8px;border-bottom:1px solid rgba(242,236,201,.06);}
   .rec-m{flex:0 0 24px;font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.06em;}
   .rec-m--AU{color:var(--hmm-mkt-au-dark);}.rec-m--JP{color:var(--hmm-mkt-jp-dark);}.rec-m--NZ{color:var(--hmm-mkt-nz-dark);}
-  .rec-tag{flex:0 0 auto;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);}
-  .rec-nec--Power{color:var(--hmm-nec-power);}.rec-nec--Eat{color:var(--hmm-nec-eat);}.rec-nec--Heal{color:var(--hmm-nec-heal);}.rec-nec--DeepTech{color:var(--hmm-text-faint);}
+  .rec-tag{flex:0 0 auto;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);}
+  .rec-nec--Power{color:var(--hmm-nec-power);}.rec-nec--Eat{color:var(--hmm-nec-eat);}.rec-nec--Heal{color:var(--hmm-nec-heal);}.rec-nec--DeepTech{color:var(--hmm-caption);}
   .rec-name{font-size:13.5px;color:var(--hmm-pearl);}
   .rec-name sup{color:var(--hmm-accent);font-size:9px;margin-left:1px;}
   .rec-meta{font-family:var(--hmm-font-mono);font-size:10.5px;color:var(--hmm-text-muted);letter-spacing:.02em;}
@@ -337,38 +341,38 @@ function __T(n, fallback) {
   .sec-eat .card-id{color:var(--hmm-nec-eat);border-color:var(--hmm-nec-eat);}
   .sec-heal .card-id{color:var(--hmm-nec-heal);border-color:var(--hmm-nec-heal);}
   .card-foot{display:flex;margin-top:16px;border-top:1px solid var(--hmm-border);}
-  .card-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-text-faint);padding:8px 10px;border-right:1px solid var(--hmm-border);}
+  .card-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-caption);padding:8px 10px;border-right:1px solid var(--hmm-border);}
   .card-foot span:last-child{border-right:0;text-align:right;}
   .ai-arm p{margin:0;font-size:13.5px;line-height:1.6;color:var(--hmm-text-muted);}
   .ai-arm p b{color:var(--hmm-pearl);font-weight:600;}
   /* ---------- S6 regulation lens ---------- */
   .reg{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 48px;border-top:1px solid var(--hmm-border);color:var(--hmm-pearl);}
-  .reg-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
+  .reg-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
   .reg-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;}
   .reg-title em{font-style:italic;color:var(--hmm-accent);}
   .reg-plate{position:relative;flex:1;border:1px solid var(--hmm-border);border-top:2px solid var(--hmm-accent);padding:22px 26px 0;background:rgba(242,236,201,.02);}
   .reg-plate .tk{border-color:var(--hmm-accent);}
   .reg-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-  .reg-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent);padding:2px 8px;flex:0 0 auto;}
-  .reg-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--hmm-accent);}
+  .reg-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent-text);padding:2px 8px;flex:0 0 auto;}
+  .reg-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--hmm-accent-text);}
   .reg-plate p{margin:0;font-size:13.5px;line-height:1.62;color:var(--hmm-text-muted);}
   .reg-plate--wide{padding-bottom:18px;}
   .reg-plate p b{color:var(--hmm-pearl);font-weight:600;}
   .reg-foot{display:flex;margin-top:16px;border-top:1px solid var(--hmm-border);}
-  .reg-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-text-faint);padding:8px 10px;border-right:1px solid var(--hmm-border);}
+  .reg-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-caption);padding:8px 10px;border-right:1px solid var(--hmm-border);}
   .reg-foot span:last-child{border-right:0;text-align:right;}
   .reg-split{display:flex;gap:40px;width:100%;align-items:flex-start;}
   .reg-left{flex:0 0 clamp(440px,40%,560px);display:flex;flex-direction:column;gap:16px;}
   .reg-glyph{margin:0;border:1px solid var(--hmm-border);background:rgba(242,236,201,.02);position:relative;}
   .reg-glyph canvas{display:block;width:100%;height:172px;}
-  .reg-glyph figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);padding:9px 14px;border-top:1px solid var(--hmm-border);}
+  .reg-glyph figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);padding:9px 14px;border-top:1px solid var(--hmm-border);}
   .reg-jobs{display:flex;flex-direction:row;gap:14px;align-items:stretch;}
   .reg-jobs .reg-plate{padding-bottom:16px;}
   .reg-left .reg-close{width:auto;margin-top:2px;}
   .reg-right{flex:1;min-width:0;margin-left:auto;}
   .reg-right .tl-body{width:100%;margin-left:auto;}
   .reg-tl-head{margin-bottom:14px;}
-  .reg-tl-head .reg-label{color:var(--hmm-accent);}
+  .reg-tl-head .reg-label{color:var(--hmm-accent-text);}
   .reg-tl-head .tl-sub{margin:8px 0 12px;max-width:none;}
   .tl-filter-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0 0 16px;}
   .tl-filter-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);}
@@ -383,7 +387,7 @@ function __T(n, fallback) {
   .tl-hidden{display:none!important;}
   /* ---------- S7 regulatory timeline ---------- */
   .tl-sub{font-size:14px;line-height:1.6;color:var(--hmm-text-muted);max-width:66ch;margin:0 0 18px;}
-  .tl-legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 28px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);}
+  .tl-legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 28px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);}
   .tl-legend b{color:var(--hmm-text-muted);font-weight:400;}
   .tl-body{width:min(1140px,100%);position:relative;}
   .tl-spine{position:absolute;left:calc(-1 * (var(--spine-w) + 4px));top:0;pointer-events:none;z-index:0;--spine-w:14px;}
@@ -402,23 +406,23 @@ function __T(n, fallback) {
   .tl-y{font-family:var(--hmm-font-mono);font-size:14px;color:var(--hmm-pearl);letter-spacing:.06em;}
   .tl-future .tl-y{color:var(--hmm-text-muted);}
   .tl-rows{flex:1;padding:8px 0;display:flex;flex-direction:column;gap:6px;justify-content:center;}
-  .tl-empty{color:var(--hmm-text-faint);font-family:var(--hmm-font-mono);font-size:11px;padding:2px 0;}
+  .tl-empty{color:var(--hmm-caption);font-family:var(--hmm-font-mono);font-size:11px;padding:2px 0;}
   .tl-row{display:grid;grid-template-columns:46px 82px 1fr auto auto;align-items:center;gap:14px;border:1px solid var(--hmm-border);padding:9px 14px;background:rgba(242,236,201,.02);}
   .tl-future .tl-row{border-style:dashed;opacity:.82;}
   .tl-c{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.08em;text-align:center;border:1px solid var(--hmm-border);padding:2px 0;color:var(--hmm-text-muted);}
   .tl-date{font-family:var(--hmm-font-mono);font-size:11px;color:var(--hmm-text-muted);letter-spacing:.04em;}
   .tl-name{font-size:13.5px;color:var(--hmm-pearl);font-weight:600;}
-  .tl-org{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.08em;color:var(--hmm-text-faint);text-transform:uppercase;}
+  .tl-org{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.08em;color:var(--hmm-caption);text-transform:uppercase;}
   .tl-status{font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--hmm-border);color:var(--hmm-text-muted);white-space:nowrap;}
   .tl-st--transitional{color:var(--hmm-thesis);border-color:var(--hmm-thesis);}
-  .tl-st--expected,.tl-st--proposed{color:var(--hmm-text-faint);border-color:var(--hmm-text-faint);border-style:dashed;}
+  .tl-st--expected,.tl-st--proposed{color:var(--hmm-caption);border-color:var(--hmm-text-faint);border-style:dashed;}
   .tl-framework .tl-name{font-weight:400;color:var(--hmm-text-muted);}
   .tl-standing .tl-y{color:var(--hmm-text-muted);font-size:12px;}
-  .tl-stand-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);margin-bottom:8px;}
+  .tl-stand-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-caption);margin-bottom:8px;}
   .tl-stand-wrap{display:flex;flex-wrap:wrap;gap:6px;}
   .tl-stand-item{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--hmm-text-muted);border:1px solid var(--hmm-border);padding:4px 8px;}
   .tl-stand-item .tl-c{padding:1px 5px;font-size:9px;}
-  .tl-c--global{border-style:dashed;color:var(--hmm-text-faint);}
+  .tl-c--global{border-style:dashed;color:var(--hmm-caption);}
   .tl-global .tl-name{color:var(--hmm-text-muted);}
   /* ===== mobile UX pass (UX/perf audit) ===== */
   /* The regulation split needs more room than it was asking for. .reg-left floors at
@@ -503,6 +507,7 @@ function __T(n, fallback) {
 </style>
 </head>
 <body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
 
   <canvas id="dotfield" aria-hidden="true"></canvas>
   <nav class="railnav" id="railnav" aria-label="Section navigation">
@@ -518,6 +523,7 @@ function __T(n, fallback) {
   </nav>
 
   <!-- S1 hero -->
+  <main id="main">
   <section class="hero">
     <a href="#top" class="hero-logo" id="heroLogo" aria-label="hmm home">
       <svg viewBox="0 0 208 119" role="img" aria-label="hmm"><g fill="currentColor">
@@ -662,6 +668,7 @@ function __T(n, fallback) {
     </div>
   </section>
 
+  </main>
   <footer class="site-footer" id="sfoot">
     <a href="#top" class="site-logo" aria-label="hmm home">
       <svg viewBox="0 0 208 119" role="img" aria-label="hmm"><g fill="currentColor">
@@ -675,9 +682,6 @@ function __T(n, fallback) {
     <nav class="footer-nav"><a class="footer-contact" href="bio.html">The GP</a><a class="footer-contact" href="sources.html">Sources</a><a class="footer-contact" href="mailto:wt@hmm.ventures">Contact us</a></nav>
   </footer>
 
-  <script src="data/energy_stage_facets.js"></script>
-  <script src="data/agri_stage_facets.js"></script>
-  <script src="data/health_stage_facets.js"></script>
   <script src="data/reg_instruments.js"></script>
   <script src="data/power_steps.js"></script>
   <script src="data/eat_steps.js"></script>
@@ -704,23 +708,17 @@ function __T(n, fallback) {
         exEyebrow:"Why Power is a necessity",exTitle:"The energy system",
         exHTML:"The energy system is the process chain, or a subset of it, from the extraction of primary energy to the use of final energy to supply services and goods. hmm's mandate extends it to the critical-minerals layer that constrains that chain, because that is where the returnable innovation in energy materials sits.",
         sysEyebrow:"The power system · end to end",
-        sysIntro:"One chain, resource to end use and back to recovery. hmm backs the whole system and picks no single stage of it; the return in energy materials concentrates in the critical-minerals layer beneath the chain.",
-        data:ENERGY_STAGE_FACETS,
-        stages:[{n:["Resource","discovery"],key:"Resource discovery"},{n:["Extraction"],key:"Extraction",note:"critical minerals, fuel"},{n:["Refining /","conversion"],key:"Refining / conversion"},{n:["Component","manufacture"],key:"Component manufacture"},{n:["Generation"],key:"Generation"},{n:["Storage"],key:"Storage"},{n:["Transmission"],key:"Transmission",note:"grid connection"},{n:["Distribution"],key:"Distribution",note:"the transformer"},{n:["End use"],key:"End use"},{n:["Recovery"],key:"Recovery"}]},
+        sysIntro:"One chain, resource to end use and back to recovery. hmm backs the whole system and picks no single stage of it; the return in energy materials concentrates in the critical-minerals layer beneath the chain.",},
       eat:{eyebrow:"Necessity 02 · Eat",sub:"Harvest mechanism · pickup reel",title:'The reel, in <em>blow-out</em>',dwg:"hmm-NEC-02-D5",
         exEyebrow:"Why Eat is a necessity",exTitle:"The food system",
         exHTML:"The food system gathers all the elements and activities relating to the production, processing, distribution, preparation and consumption of food, and the outputs of those activities. Its three constituent elements are <b>food supply chains, food environments and consumer behaviour</b>.",
         sysEyebrow:"The food system · end to end",
-        sysIntro:"Seed to mouth, and back to the soil as nutrient. The advance that pays back sits in the field-autonomy layer, not in any one link of the chain.",
-        data:AGRI_STAGE_FACETS,
-        stages:[{n:["Genetics /","inputs"],key:"Genetics / inputs",note:"biological crop inputs"},{n:["Soil / water","prep"],key:"Soil / water prep"},{n:["Planting"],key:"Planting"},{n:["Production"],key:"Production"},{n:["Protection"],key:"Protection"},{n:["Harvest"],key:"Harvest",note:"the pickup reel"},{n:["Processing"],key:"Processing"},{n:["Storage"],key:"Storage"},{n:["Distribution"],key:"Distribution"},{n:["Nutrient","recovery"],key:"Nutrient recovery"}]},
+        sysIntro:"Seed to mouth, and back to the soil as nutrient. The advance that pays back sits in the field-autonomy layer, not in any one link of the chain.",},
       heal:{eyebrow:"Necessity 03 · Heal",sub:"Auto-injector · exploded",title:'The needle, in <em>blow-out</em>',dwg:"hmm-NEC-03-D5",
         exEyebrow:"Why Heal is a necessity",exTitle:"The health system",
         exHTML:"The health system is all <b>organizations, people and actions whose primary intent is to promote, restore or maintain health</b>. It is defined by intent rather than by chain, so it sits downstream of its determinants rather than containing them.",
         sysEyebrow:"The health system · end to end",
-        sysIntro:"Discovery to recovery, one chain of care. Value concentrates at the diagnostic read-out, upstream where a returned life-year costs least.",
-        data:HEALTH_STAGE_FACETS,
-        stages:[{n:["Biological","discovery"],key:"Biological discovery"},{n:["Diagnostics"],key:"Diagnostics",note:"the read-out"},{n:["Product","manufacture"],key:"Product manufacture"},{n:["Clinical","infrastructure"],key:"Clinical infrastructure"},{n:["Intervention"],key:"Intervention",note:"the auto-injector"},{n:["Monitoring"],key:"Monitoring"},{n:["Rehabilitation"],key:"Rehabilitation"},{n:["Waste /","recovery"],key:"Waste / recovery"}]}
+        sysIntro:"Discovery to recovery, one chain of care. Value concentrates at the diagnostic read-out, upstream where a returned life-year costs least.",}
     };
 
     function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
@@ -805,7 +803,7 @@ function __T(n, fallback) {
         +'<div class="stage"><div class="stage-head"><span class="stage-eyebrow">'+cfg.eyebrow+'</span></div>'
         +'<div class="machine-wrap"></div><div class="stage-foot">DWG '+cfg.dwg+'</div></div>'
         +'<div class="panel">'
-        +'<div class="card">'+TK+'<div class="card-hdr"><span class="card-id">FIG '+fig+'.A</span><span class="card-eyebrow">'+cfg.exEyebrow+'</span></div><h3>'+cfg.exTitle+'</h3><p>'+cfg.exHTML+'</p><div class="card-foot"><span>'+cfg.dwg+'</span></div></div>'
+        +'<div class="card">'+TK+'<div class="card-hdr"><span class="card-id">FIG '+fig+'.A</span><span class="card-eyebrow">'+cfg.exEyebrow+'</span></div><h2>'+cfg.exTitle+'</h2><p>'+cfg.exHTML+'</p><div class="card-foot"><span>'+cfg.dwg+'</span></div></div>'
         +'<div class="card">'+TK+'<div class="card-hdr"><span class="card-id">FIG '+fig+'.B</span><span class="card-eyebrow">'+cfg.sysEyebrow+'</span></div><div class="schematic-wrap"></div>'
         +'<div class="stage-panel" aria-live="polite"></div></div>'
         +'</div>';

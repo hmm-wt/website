@@ -29,47 +29,13 @@
    architecture. 75% machine, 25% hand. One accent.
    ============================================================= */
 
-/* ---------- Brand @font-face (self-hosted, authoritative) ----------
-   url() in a stylesheet resolves against THAT stylesheet's own location,
-   not the importing document, so these are relative to this file. The
-   v2.0 header claimed "repo-relative from project root" and used
-   ../fonts/, which never resolved from anywhere. Fixed 2026-08-23.
-   For other mount points, rewrite the url() prefix at build time. */
-@font-face {
-  font-family: 'Kufam';
-  src: url('fonts/Kufam-VariableFont.ttf') format('truetype');
-  font-weight: 400 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Kufam';
-  src: url('fonts/Kufam-Italic-VariableFont.ttf') format('truetype');
-  font-weight: 400 900;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Raela Grotesque';
-  src: url('fonts/RaelaGrotesque-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Raela Grotesque';
-  src: url('fonts/RaelaGrotesque-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Raela Grotesque';
-  src: url('fonts/RaelaGrotesque-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* ---------- Brand @font-face ----------
+   Declared in fonts/fonts.css, not here, since 2026-09-04. This file used to carry
+   five @font-face rules pointing at the desktop TTFs; fonts.css now serves the
+   same faces as subsetted WOFF2 with metric-matched fallbacks, and the TTFs are
+   gone from the repo. Two declarations of one family made the browser fetch both,
+   and the TTF set 404ed on every page. The token generator (build_tokens.py) must
+   stop emitting this block, or the next regeneration brings the 404s back. */
 
 :root {
 

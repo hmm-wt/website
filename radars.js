@@ -70,11 +70,6 @@ function __T(n, fallback) {
     return n;
   }
 
-  function hexPath(radius) {
-    var d = "";
-    for (var i = 0; i < 6; i++) d += (i === 0 ? "M" : "L") + px(i, radius).toFixed(2) + " " + py(i, radius).toFixed(2);
-    return d + "Z";
-  }
 
   function scorePath(scores) {
     var d = "";
@@ -106,7 +101,7 @@ function __T(n, fallback) {
       "#radars .radar-corner svg{display:block;overflow:visible;}",
       "#radars .rc-tl{top:5px;left:5px;} #radars .rc-tr{top:5px;right:5px;} #radars .rc-bl{bottom:5px;left:5px;} #radars .rc-br{bottom:5px;right:5px;}",
       "#radars .radar-title{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-pearl);margin:0;transition:color .3s var(--hmm-ease);}",
-      "#radars .radar-sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint,rgba(242,236,201,.35));margin:3px 0 8px;}",
+      "#radars .radar-sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption,rgba(242,236,201,.72));margin:3px 0 8px;}",
       "#radars svg.radar-svg{display:block;width:100%;height:auto;overflow:visible;}",
       "#radars .radar-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;margin-top:10px;padding:0;list-style:none;}",
       "#radars .radar-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(242,236,201,.03);border:1px solid var(--hmm-border-hover,rgba(242,236,201,.25));",
