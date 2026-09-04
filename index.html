@@ -687,11 +687,10 @@ function __T(n, fallback) {
   <script src="data/eat_steps.js"></script>
   <script src="data/heal_steps.js"></script>
   <script src="scripts/hmm-motion.js"></script>
-  <script crossorigin src="_demo/vendor/react.production.min.js"></script>
-  <script crossorigin src="_demo/vendor/react-dom.production.min.js"></script>
-  <script src="machines.js?v=13"></script>
+  <script src="scripts/hmm-svg.js"></script>
+  <script src="machines.js?v=14"></script>
   <script>
-    var h=React.createElement;
+    var h=window.hmmH;
     /* ---------- hero: machines + ledgers + interactions ---------- */
     var LEDGERS={
       power:[["Methane-pyrolysis reactors","F"],["Electrolysers (alkaline/PEM/SOEC)","F"],["Switchable multi-feedstock refinery reactors","N"],["Perovskite-silicon tandem cells","F"]],
@@ -808,7 +807,7 @@ function __T(n, fallback) {
         +'<div class="stage-panel" aria-live="polite"></div></div>'
         +'</div>';
       HMM.renderBlowout(sec.querySelector('.machine-wrap'),kind);
-      ReactDOM.createRoot(sec.querySelector('.schematic-wrap')).render(Schematic(kind));
+      hmmRender(sec.querySelector('.schematic-wrap'),Schematic(kind));
     });
 
     /* ---------- S5 bifurcation: animated triple-helix of dots, necessity colours ---------- */

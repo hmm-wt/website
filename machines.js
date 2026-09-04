@@ -10,9 +10,9 @@ function __T(n, fallback) {
    Heal = needle / auto-injector (buildInjector). Geometry lifted verbatim from the demos
    (_demo/transformer-blowout.html, eat.html, heal-blowout.html). Each builder is closured so its
    helper names never collide. Layers are tagged col in {PEARL, ACC (verb-part), FAINT, AXIS}.
-   Necessity accent colours: power #FF730B, eat #4F8A5B, heal #8752A5. Requires window.React. */
+   Necessity accent colours: power #FF730B, eat #4F8A5B, heal #8752A5. Requires scripts/hmm-svg.js (hmmH, hmmRender). */
 var HMM = (function(){
-  var h = React.createElement, PEARL=__T("--hmm-pearl-beige", "#F2ECC9");
+  var h = window.hmmH, PEARL=__T("--hmm-pearl-beige", "#F2ECC9");
   function seededRnd(s){s=s||1;return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};}
 
   /* ===================== transformer ===================== */
@@ -133,8 +133,8 @@ var HMM = (function(){
   }
 
   function breathe(mount){setTimeout(function(){var svg=mount.querySelector('svg');if(svg&&window.hmmAnimateDots)window.hmmAnimateDots(svg,{motion:"breath"});},300);}
-  function renderIcon(mount,kind){ReactDOM.createRoot(mount).render(Icon(kind));breathe(mount);}
-  function renderBlowout(mount,kind){ReactDOM.createRoot(mount).render(Blowout(kind));breathe(mount);}
+  function renderIcon(mount,kind){hmmRender(mount,Icon(kind));breathe(mount);}
+  function renderBlowout(mount,kind){hmmRender(mount,Blowout(kind));breathe(mount);}
 
   return {renderIcon:renderIcon, renderBlowout:renderBlowout, accent:function(k){return MACH[k].accent;}};
 })();
