@@ -183,6 +183,17 @@ function __T(n, fallback) {
     .railnav:hover,.railnav:focus-within{background:linear-gradient(to left,var(--hmm-evergreen) 70%,rgba(20,20,20,0));}
   }
   @media (prefers-reduced-motion:reduce){.railnav,.rail-item,.rail-mark,.rail-label{transition:none;}}
+  /* A coarse pointer cannot hover, so the rail can never ride collapsed there and
+     shows its labels permanently. That was gated on width, not on the pointer, so
+     tablets got the long labels - a 114px rail - against sections clearing 48px,
+     and up to 66px of every section ran underneath it. The compact form belongs to
+     the pointer, which is what decides whether a label can hide; the matching
+     section clearance is further down, after the padding shorthands it overrides. */
+  @media (hover:none),(pointer:coarse){
+    .railnav{padding:10px 8px 10px 10px;gap:0;background:linear-gradient(to left,var(--hmm-evergreen) 62%,rgba(20,20,20,0));}
+    .rail-label{display:none;}
+    .rail-label-s{display:block;}
+  }
   /* Phones have no hover to reveal anything, so the labels are permanent — a
      marker with no name is a dot, not navigation — and the sections give back
      the width the rail occupies. Short forms keep it inside that allowance. */
@@ -283,7 +294,10 @@ function __T(n, fallback) {
   .sec-heal  .blk--active rect{stroke:var(--hmm-nec-heal)!important;}
   /* ---------- S5 AI impact ---------- */
   .ai{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
-  .ai>*{width:min(1160px,96vw);}
+  /* min(px,100%), never min(px,96vw): 96vw ignores the 48px padding of the section
+     it sits in, so every one of these blocks bled ~30px past its own content box on
+     both sides below 1208px and ran under the fixed rail on the right. */
+  .ai>*{width:min(1160px,100%);}
   .ai-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
   .ai-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;line-height:1.06;}
   .ai-sub{font-size:15px;line-height:1.6;color:var(--hmm-text-muted);margin:0 0 44px;max-width:76ch;}
@@ -345,7 +359,7 @@ function __T(n, fallback) {
   @media(max-width:860px){.src-split{grid-template-columns:1fr;}.src-reccol{position:static;top:0;}.src-stream{height:min(60vh,480px);}.src-reccol .src-after{margin-top:14px;}}
   /* ---------- S7 markets + S8 density ---------- */
   .mkt,.dens{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
-  .mkt>*,.dens>*{width:min(1180px,96vw);}
+  .mkt>*,.dens>*{width:min(1180px,100%);}
   .mkt-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
   .mkt-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;line-height:1.06;}
   .mkt-lead{font-size:15px;line-height:1.6;color:var(--hmm-text-muted);max-width:82ch;margin:0 0 14px;}
@@ -374,7 +388,7 @@ function __T(n, fallback) {
   @media(max-width:860px){.mkt-grid{grid-template-columns:1fr;}}
   /* ---------- S10 the record (infinite scroll) ---------- */
   .rec{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
-  .rec>*{width:min(1160px,96vw);}
+  .rec>*{width:min(1160px,100%);}
   .rec-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
   .rec-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 12px;line-height:1.06;}
   .rec-title .hk-nec{color:var(--hmm-accent);}
@@ -393,7 +407,7 @@ function __T(n, fallback) {
   .rec-what{font-size:12.5px;line-height:1.4;color:var(--hmm-text-muted);flex-basis:100%;padding-left:36px;}
   .rec-note{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.03em;color:var(--hmm-text-faint);margin-top:16px;max-width:96ch;line-height:1.55;}
   @media(prefers-reduced-motion:reduce){.rec-stream{height:auto;max-height:560px;overflow-y:auto;}.rec-track{position:static;}}
-  .ai-body{display:flex;align-items:stretch;gap:0;width:min(1240px,96vw);}
+  .ai-body{display:flex;align-items:stretch;gap:0;width:min(1240px,100%);}
   .ai-models{flex:1;border:1px solid var(--hmm-border);padding:22px 24px;background:rgba(242,236,201,.02);}
   .ai-col-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--hmm-text-muted);margin-bottom:16px;}
   .ai-group{margin-bottom:16px;}
@@ -453,7 +467,7 @@ function __T(n, fallback) {
   .reg-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;}
   .reg-title em{font-style:italic;color:var(--hmm-accent);}
   .reg-sub{font-size:14px;line-height:1.6;color:var(--hmm-text-muted);max-width:64ch;margin:0 0 36px;}
-  .reg-plates{display:flex;gap:22px;width:min(1180px,96vw);}
+  .reg-plates{display:flex;gap:22px;width:min(1180px,100%);}
   .reg-plate{position:relative;flex:1;border:1px solid var(--hmm-border);border-top:2px solid var(--hmm-accent);padding:22px 26px 0;background:rgba(242,236,201,.02);}
   .reg-plate .tk{border-color:var(--hmm-accent);}
   .reg-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
@@ -465,14 +479,14 @@ function __T(n, fallback) {
   .reg-foot{display:flex;margin-top:16px;border-top:1px solid var(--hmm-border);}
   .reg-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-text-faint);padding:8px 10px;border-right:1px solid var(--hmm-border);}
   .reg-foot span:last-child{border-right:0;text-align:right;}
-  .reg-cases{display:flex;gap:22px;width:min(1180px,96vw);margin-top:22px;}
+  .reg-cases{display:flex;gap:22px;width:min(1180px,100%);margin-top:22px;}
   .reg-kind{flex:1;border:1px solid var(--hmm-border);padding:16px 20px;}
   .reg-kind .k-label{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);margin-bottom:6px;}
   .reg-kind p{margin:0;font-size:13px;line-height:1.5;color:var(--hmm-text-muted);}
   .reg-case{flex:1.3;border:1px solid var(--hmm-border);border-left:2px solid var(--hmm-thesis);padding:16px 20px;}
   .reg-case .k-label{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-thesis);margin-bottom:6px;}
   .reg-case p{margin:0;font-size:13px;line-height:1.55;color:var(--hmm-text-muted);}
-  .reg-close{width:min(1180px,96vw);margin-top:26px;font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.06em;color:var(--hmm-text-muted);}
+  .reg-close{width:min(1180px,100%);margin-top:26px;font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.06em;color:var(--hmm-text-muted);}
   .reg-close b{color:var(--hmm-accent);font-weight:400;}
   .reg-split{display:flex;gap:40px;width:100%;align-items:flex-start;}
   .reg-left{flex:0 0 clamp(440px,40%,560px);display:flex;flex-direction:column;gap:16px;}
@@ -512,7 +526,7 @@ function __T(n, fallback) {
   .tl-sub{font-size:14px;line-height:1.6;color:var(--hmm-text-muted);max-width:66ch;margin:0 0 18px;}
   .tl-legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 28px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);}
   .tl-legend b{color:var(--hmm-text-muted);font-weight:400;}
-  .tl-body{width:min(1140px,96vw);position:relative;}
+  .tl-body{width:min(1140px,100%);position:relative;}
   .tl-spine{position:absolute;left:calc(-1 * (var(--spine-w) + 4px));top:0;pointer-events:none;z-index:0;--spine-w:14px;}
   .tl-year{display:flex;position:relative;transition:opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);}
   .tl-year.pre{opacity:0;transform:translateY(30px);}
@@ -549,18 +563,33 @@ function __T(n, fallback) {
   .tl-global .tl-name{color:var(--hmm-text-muted);}
   .placeholder{min-height:60vh;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--hmm-border);font-family:var(--hmm-font-mono);letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:var(--hmm-text-faint);}
   /* ===== mobile UX pass (UX/perf audit) ===== */
+  /* The regulation split needs more room than it was asking for. .reg-left floors at
+     440px, so between 861 and 1040px the right column fell to 285-425px while a
+     .tl-row cannot render below ~420px: 46px + 82px columns, four 14px gaps, padding,
+     plus the org and status columns, which have no smaller form. The page scrolled
+     sideways by up to 171px. Measured to zero at 1041px, so the split stacks below
+     that and the timeline gets the full width. */
+  /* Clearance for the compact rail above: it measures 76px on a coarse pointer, so
+     the 48px these sections carry left 28px of every one of them underneath it. The
+     640px block below keeps its own 66px, tuned to the 68px the rail is down there. */
+  @media (hover:none),(pointer:coarse){
+    .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl,.nec{padding-right:78px;}
+    .site-footer{padding-right:78px;}
+  }
+  @media(max-width:1040px){
+    .reg-split{flex-direction:column;gap:24px;}
+    .reg-left{flex:auto;}
+    .reg-right{margin-left:0;}
+  }
   @media(max-width:860px){
-    /* necessity sections: stack the machine over the panel (was side-by-side, unreadable sliver) */
-    .nec{flex-direction:column;}
+    /* necessity sections: stack the machine over the panel (was side-by-side, unreadable sliver)
+       and clear the rail, which the stacked panel's own 20px padding does not. */
+    .nec{flex-direction:column;padding-right:78px;}
     .nec .stage,.nec[data-flip="1"] .stage{flex:auto;order:1;border-right:none;border-left:none;border-bottom:1px solid var(--hmm-border);padding:34px 20px 20px;}
     .nec .panel,.nec[data-flip="1"] .panel{flex:auto;order:2;padding:30px 20px 40px;gap:16px;}
     .stage .machine-wrap{min-height:44vh;}
     .stage .machine-wrap svg{max-height:56vh;}
-    /* regulation: stack and remove the 440px flex-basis floor that overflowed every phone */
-    .reg-split{flex-direction:column;gap:24px;}
-    .reg-left{flex:auto;}
     .reg-plates,.reg-cases,.reg-jobs{flex-direction:column;}
-    .reg-right{margin-left:0;}
     /* touch targets >= 44px */
     .tl-filters button,#radars .radar-chip{min-height:44px;padding:11px 14px;}
     #radars .radar-sub{font-size:11px;}
@@ -569,9 +598,6 @@ function __T(n, fallback) {
     .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl,.nec{padding-left:20px;padding-right:66px;}
     .site-footer{padding-right:66px;}
     .hero-row{width:calc(100vw - 86px);}
-    /* These are sized in vw, which ignores the section padding the rail needs,
-       so they have to be clamped to the content box explicitly. */
-    .ai>*,.mkt>*,.dens>*,.rec>*,.ai-body,.reg-plates,.reg-cases,.reg-close,.tl-body{max-width:100%;}
     .ai,.mkt,.dens,.rec{padding-top:64px;padding-bottom:64px;}
     /* hero copy is revealed by default now (see the pointer-gated block above);
        a narrow desktop window still gets it, at mobile type sizes */
