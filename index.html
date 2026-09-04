@@ -35,7 +35,7 @@ function __T(n, fallback) {
 <style>
   html{background:var(--hmm-evergreen);color-scheme:dark;}
   html{scroll-behavior:smooth;}
-  #power,#eat,#heal,#s5,#s6,#s7,#s9,#sfoot{scroll-margin-top:16px;}
+  #mandate,#power,#eat,#heal,#s5,#s6,#s7,#s9,#sfoot{scroll-margin-top:16px;}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
   body{margin:0;padding:0;font-family:var(--hmm-font-body);color:var(--hmm-pearl);}
   #dotfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
@@ -621,6 +621,7 @@ function __T(n, fallback) {
   <canvas id="dotfield" aria-hidden="true"></canvas>
   <nav class="railnav" id="railnav" aria-label="Section navigation">
     <a class="rail-item u-nav rail-top" href="#top" data-sec="top"><span class="rail-label">Top</span><span class="rail-label-s">Top</span><span class="rail-mark"><svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 9V2M2 5l3-3 3 3"/></svg></span></a>
+    <a class="rail-item u-nav" href="#mandate" data-sec="mandate"><span class="rail-label">Mandate</span><span class="rail-label-s">Mndt</span><span class="rail-mark"></span></a>
     <a class="rail-item u-nav" href="#power" data-sec="power"><span class="rail-label">Power</span><span class="rail-label-s">Power</span><span class="rail-mark"></span></a>
     <a class="rail-item u-nav" href="#eat" data-sec="eat"><span class="rail-label">Eat</span><span class="rail-label-s">Eat</span><span class="rail-mark"></span></a>
     <a class="rail-item u-nav" href="#heal" data-sec="heal"><span class="rail-label">Heal</span><span class="rail-label-s">Heal</span><span class="rail-mark"></span></a>
@@ -664,6 +665,13 @@ function __T(n, fallback) {
           <span class="box-go">Read the Heal system<svg class="box-go-arrow" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><path d="M0 4h18M15 1l3 3-3 3"/></svg></span></div>
       </a>
     </div>
+  </section>
+
+  <!-- S1b the mandate: what hmm backs, and the gate every one of them sells through -->
+  <section class="through" id="mandate">
+    <span class="through-eyebrow">The mandate</span>
+    <p>hmm backs seed companies in the three systems a population cannot do without: how it is powered, how it is fed, how it is healed. What changes most over the next two decades sits inside those three. Demand for them holds through every cycle, and each of them sells only on <b>a regulator&rsquo;s approval</b>.</p>
+    <p>Artificial intelligence now runs through all three. <b>The regulation that governs them was written before it.</b></p>
   </section>
 
   <!-- S2/S3/S4 necessity sections (composed by script) -->
