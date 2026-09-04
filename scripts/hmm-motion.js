@@ -134,7 +134,9 @@
       return [ox + (evt.clientX - rect.left) / rect.width * vw, oy + (evt.clientY - rect.top) / rect.height * vh];
     }
     function onDown(evt) { var p = svgPoint(evt); impulses.push({ x: p[0], y: p[1], t0: now() }); if (!running) start(); }
-    if (doClick) { root.style.cursor = "pointer"; root.addEventListener("pointerdown", onDown); }
+    // No cursor:pointer here. The impulse is a decorative ripple, not a
+    // destination: setting the cursor made the whole diagram claim it was a link.
+    if (doClick) { root.addEventListener("pointerdown", onDown); }
 
     if (prefersReduced()) { /* leave static resting frame */ }
 

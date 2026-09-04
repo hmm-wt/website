@@ -204,7 +204,7 @@ function __T(n, fallback) {
   .stage-title em{font-style:italic;}
   .stage .machine-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;}
   .stage .machine-wrap svg{width:100%;height:100%;max-height:82vh;overflow:visible;}
-  .machine-wrap svg .callout{transition:transform .28s var(--hmm-ease);cursor:pointer;}
+  .machine-wrap svg .callout{transition:transform .28s var(--hmm-ease);cursor:zoom-in;}
   .machine-wrap svg .callout--L{transform-box:fill-box;transform-origin:100% 50%;}
   .machine-wrap svg .callout--R{transform-box:fill-box;transform-origin:0% 50%;}
   .machine-wrap svg .callout:hover,.machine-wrap svg .callout:focus-within{transform:scale(2.15);}
@@ -225,6 +225,8 @@ function __T(n, fallback) {
   .blk rect{transition:stroke .2s var(--hmm-ease),stroke-width .2s var(--hmm-ease);}
   .blk:focus{outline:none;}
   .blk rect{transition:stroke .18s var(--hmm-ease),stroke-width .18s var(--hmm-ease),fill .18s var(--hmm-ease);}
+  .blk{cursor:pointer;}
+  .blk:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
   .blk:hover rect,.blk:focus rect{stroke-width:2.6;}
   .blk--active rect{stroke-width:2.6;}
   @keyframes spIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
