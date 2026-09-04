@@ -1,7 +1,0 @@
-/* hmm Ventures Design System. Single stylesheet entry.
-   Link this one file; it pulls the brand faces and the compiled tokens + chrome. */
-@import "./fonts/fonts.css";
-/* Tokens first: the chrome below resolves against them. Generated
-   from Internal/Design/tokens/hmm.tokens.json, never hand-edited. */
-@import "./hmm-tokens.css";
-@import "./_ds_bundle.css";

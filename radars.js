@@ -70,11 +70,6 @@ function __T(n, fallback) {
     return n;
   }
 
-  function hexPath(radius) {
-    var d = "";
-    for (var i = 0; i < 6; i++) d += (i === 0 ? "M" : "L") + px(i, radius).toFixed(2) + " " + py(i, radius).toFixed(2);
-    return d + "Z";
-  }
 
   function scorePath(scores) {
     var d = "";
@@ -94,21 +89,22 @@ function __T(n, fallback) {
 
   function css() {
     return [
-      "#radars{--rad-surface:var(--hmm-evergreen);--rad-power:" + HUES.Power + ";--rad-eat:" + HUES.Eat + ";--rad-heal:" + HUES.Heal + ";",
-      "  font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);color:var(--hmm-pearl);position:relative;}",
-      "@media (prefers-color-scheme:light){#radars{--rad-surface:var(--hmm-white);}}",
-      "#radars[data-theme='light'],:root[data-theme='light'] #radars{--rad-surface:var(--hmm-white);}",
-      "#radars[data-theme='dark'],:root[data-theme='dark'] #radars{--rad-surface:var(--hmm-evergreen);}",
-      "#radars .radar-wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;width:100%;max-width:100%;box-sizing:border-box;}",
-      "#radars .radar-panel{position:relative;min-width:0;padding:14px 12px 16px;border:1px solid var(--hmm-border,rgba(242,236,201,.12));box-sizing:border-box;}",
+      "#radars{font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);color:var(--hmm-pearl);position:relative;}",
+      "#radars .radar-wrap{display:flex;gap:22px;width:100%;max-width:100%;box-sizing:border-box;align-items:stretch;}",
+      "#radars .radar-panel{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;padding:14px 12px 16px;border:1px solid var(--hmm-border,rgba(242,236,201,.12));box-sizing:border-box;",
+      "  transition:flex .5s var(--hmm-ease),opacity .4s var(--hmm-ease),background .3s var(--hmm-ease),border-color .3s var(--hmm-ease);}",
+      "#radars .radar-body{flex:1;display:flex;flex-direction:column;min-width:0;transition:gap .5s var(--hmm-ease);}",
+      "#radars .radar-viz{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;}",
+      "#radars .radar-read{min-width:0;overflow:hidden;transition:opacity .45s var(--hmm-ease),max-height .45s var(--hmm-ease),padding .5s var(--hmm-ease);}",
+      "#radars .radar-read p{margin:0;font-family:var(--hmm-font-body,inherit);font-size:13px;line-height:1.55;color:var(--hmm-text-muted,rgba(242,236,201,.72));}",
       "#radars .radar-corner{position:absolute;width:9px;height:9px;pointer-events:none;}",
       "#radars .radar-corner svg{display:block;overflow:visible;}",
       "#radars .rc-tl{top:5px;left:5px;} #radars .rc-tr{top:5px;right:5px;} #radars .rc-bl{bottom:5px;left:5px;} #radars .rc-br{bottom:5px;right:5px;}",
-      "#radars .radar-title{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-pearl);margin:0;}",
-      "#radars .radar-sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint,rgba(242,236,201,.35));margin:3px 0 8px;}",
+      "#radars .radar-title{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-pearl);margin:0;transition:color .3s var(--hmm-ease);}",
+      "#radars .radar-sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption,rgba(242,236,201,.72));margin:3px 0 8px;}",
       "#radars svg.radar-svg{display:block;width:100%;height:auto;overflow:visible;}",
       "#radars .radar-legend{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 10px;margin-top:10px;padding:0;list-style:none;}",
-      "#radars .radar-chip{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--hmm-border,rgba(242,236,201,.12));",
+      "#radars .radar-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(242,236,201,.03);border:1px solid var(--hmm-border-hover,rgba(242,236,201,.25));",
       "  padding:3px 8px;cursor:pointer;font:inherit;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--hmm-text-muted,rgba(242,236,201,.6));}",
       "#radars .radar-chip .swatch{width:9px;height:9px;flex:0 0 auto;border-radius:1px;}",
       "#radars .radar-chip:hover,#radars .radar-chip:focus-visible{color:var(--hmm-pearl);border-color:var(--hmm-text-faint,rgba(242,236,201,.35));}",
@@ -116,8 +112,6 @@ function __T(n, fallback) {
       "#radars .radar-panel[data-focus] .series:not(.is-active){opacity:.12;}",
       "#radars .radar-panel[data-focus] .series.is-active .radar-fill{fill-opacity:.24;}",
       "#radars .radar-panel[data-focus] .series.is-active .radar-line{stroke-width:2.6;}",
-      "#radars .radar-caption{max-width:70ch;margin:20px auto 0;font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);",
-      "  font-size:10px;line-height:1.55;letter-spacing:.02em;color:var(--hmm-text-muted,rgba(242,236,201,.6));text-align:center;}",
       "#radars .radar-stage{position:relative;}",
       "#radars .radar-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;}",
       "#radars .axis-lbl{cursor:help;transition:fill .15s ease;}",
@@ -128,26 +122,27 @@ function __T(n, fallback) {
       "  font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);font-size:11px;line-height:1.5;color:var(--hmm-text-muted,rgba(242,236,201,.72));max-width:260px;}",
       "#radars .radar-tip.on{opacity:1;transform:none;}",
       "@media (prefers-reduced-motion:reduce){#radars .radar-tip{transition:none;}}",
-      "#radars .radar-title--click{cursor:pointer;display:inline-flex;align-items:center;gap:8px;border-bottom:1px solid var(--hmm-accent);padding-bottom:3px;transition:color .15s ease;}",
-      "#radars .radar-title--click::after{content:'read \\2192';font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-accent);border:1px solid var(--hmm-accent);padding:2px 6px;transition:background .15s ease,color .15s ease;}",
-      "#radars .radar-title--click:hover,#radars .radar-title--click:focus-visible{color:var(--hmm-accent);outline:none;}",
-      "#radars .radar-title--click:hover::after,#radars .radar-title--click:focus-visible::after{background:var(--hmm-accent);color:var(--hmm-pearl);}",
-      "#radars .radar-title--click.is-open{color:var(--hmm-accent);}",
-      "#radars .radar-title--click.is-open::after{content:'close \\00D7';background:var(--hmm-accent);color:var(--hmm-pearl);}",
-      "#radars .radar-drill{position:absolute;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:22px;box-sizing:border-box;",
-      "  background:rgba(20,20,20,.74);opacity:0;visibility:hidden;transition:opacity .25s ease;}",
-      "#radars .radar-drill.on{opacity:1;visibility:visible;}",
-      "#radars .radar-drill-card{width:100%;max-width:620px;max-height:100%;overflow:auto;box-sizing:border-box;background:var(--rad-surface,#141414);",
-      "  border:1px solid var(--hmm-border,rgba(242,236,201,.16));border-top:2px solid var(--c,#C44539);padding:18px 22px;box-shadow:0 24px 64px rgba(0,0,0,.55);",
-      "  transform:translateY(8px);transition:transform .25s ease;}",
-      "#radars .radar-drill.on .radar-drill-card{transform:none;}",
-      "#radars .radar-drill-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}",
-      "#radars .radar-drill-name{font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--c,#C44539);}",
-      "#radars .radar-drill-x{background:none;border:0;color:var(--hmm-text-faint,rgba(242,236,201,.4));font-size:14px;line-height:1;cursor:pointer;padding:2px 6px;}",
-      "#radars .radar-drill-x:hover,#radars .radar-drill-x:focus-visible{color:var(--hmm-pearl);outline:none;}",
-      "#radars .radar-drill p{margin:0;font-size:13.5px;line-height:1.6;color:var(--hmm-text-muted,rgba(242,236,201,.72));}",
-      "@media (prefers-reduced-motion:reduce){#radars .radar-drill{transition:none;}}",
-      "@media (max-width:860px){#radars .radar-wrap{grid-template-columns:1fr;}}"
+      "@media (max-width:860px){#radars .radar-wrap{flex-direction:column;}}",
+      /* Same treatment as the three necessity cards: hover expands the panel and
+         opens its prose beside the chart, siblings give up width and dim. Gated on
+         a real pointer for the same reason the hero is - :hover sticks on touch, so
+         a phone would keep whichever panel was tapped last expanded for good.
+         :focus-within carries it for the keyboard: the legend chips inside each
+         panel are focusable, so tabbing in opens that panel's prose.
+         Unlike the hero, the shrinking siblings hold labelled charts rather than a
+         drawing, so they get a 210px floor and the whole gesture is held back until
+         1100px - below that the prose simply sits under its chart, always readable,
+         which is what touch gets too. */
+      "@media (hover:hover) and (pointer:fine) and (min-width:1100px){",
+      "  #radars .radar-read{opacity:0;max-height:0;}",
+      "  #radars .radar-wrap:hover .radar-panel:not(:hover),#radars .radar-wrap:focus-within .radar-panel:not(:focus-within){flex:.72;opacity:.78;min-width:210px;}",
+      "  #radars .radar-panel:hover,#radars .radar-panel:focus-within{flex:2.2;background:rgba(242,236,201,.05);border-color:var(--c,var(--hmm-accent));}",
+      "  #radars .radar-panel:hover .radar-title,#radars .radar-panel:focus-within .radar-title{color:var(--c,var(--hmm-pearl));}",
+      "  #radars .radar-panel:hover .radar-body,#radars .radar-panel:focus-within .radar-body{flex-direction:row;align-items:center;gap:22px;}",
+      "  #radars .radar-panel:hover .radar-viz,#radars .radar-panel:focus-within .radar-viz{flex:1.15;}",
+      "  #radars .radar-panel:hover .radar-read,#radars .radar-panel:focus-within .radar-read{flex:1;opacity:1;max-height:420px;padding-left:22px;border-left:1px solid var(--hmm-border,rgba(242,236,201,.12));}",
+      "}",
+      "@media (prefers-reduced-motion:reduce){#radars .radar-panel,#radars .radar-body,#radars .radar-read{transition:none;}}"
     ].join("\n");
   }
 
@@ -258,19 +253,25 @@ function __T(n, fallback) {
 
     ["tl", "tr", "bl", "br"].forEach(function (p) { panel.appendChild(cornerTick(p)); });
 
+    panel.style.setProperty("--c", COUNTRY_ACCENT[market.name] || __T("--hmm-accent", "#C44539"));
+
     var title = document.createElement("h3");
-    title.className = "radar-title radar-title--click";
+    title.className = "radar-title";
     title.textContent = market.name;
-    title.setAttribute("data-market", market.name);
-    title.setAttribute("tabindex", "0");
-    title.setAttribute("role", "button");
-    title.setAttribute("aria-label", "Read about " + market.name);
     panel.appendChild(title);
 
     var sub = document.createElement("p");
     sub.className = "radar-sub";
     sub.textContent = market.sub;
     panel.appendChild(sub);
+
+    // body: chart on the left, prose on the right once the panel opens
+    var body = document.createElement("div");
+    body.className = "radar-body";
+    var viz = document.createElement("div");
+    viz.className = "radar-viz";
+    body.appendChild(viz);
+    panel.appendChild(body);
 
     var dotsOut = [];
     var svg = buildSVG(market, dotsOut);
@@ -280,7 +281,7 @@ function __T(n, fallback) {
     var cv = document.createElement("canvas");
     cv.className = "radar-canvas";
     stage.appendChild(cv);
-    panel.appendChild(stage);
+    viz.appendChild(stage);
     PANELS.push({ panel: panel, svg: svg, cv: cv, dots: dotsOut });
 
     // legend chips (identity never rests on colour alone)
@@ -290,7 +291,7 @@ function __T(n, fallback) {
       var li = document.createElement("li");
       var chip = document.createElement("button");
       chip.type = "button";
-      chip.className = "radar-chip";
+      chip.className = "radar-chip u-control";
       chip.setAttribute("data-series", name);
       chip.setAttribute("aria-label", "Highlight " + name + " on " + market.name);
       var sw = document.createElement("span");
@@ -318,7 +319,15 @@ function __T(n, fallback) {
       chip.addEventListener("focus", raise);
       chip.addEventListener("blur", restore);
     });
-    panel.appendChild(legend);
+    viz.appendChild(legend);
+
+    // the prose the modal used to hold, now read in place
+    var read = document.createElement("div");
+    read.className = "radar-read";
+    var prose = document.createElement("p");
+    prose.textContent = COUNTRY_PROSE[market.name] || "";
+    read.appendChild(prose);
+    body.appendChild(read);
 
     return panel;
   }
@@ -373,37 +382,18 @@ function __T(n, fallback) {
     }
     sizeAll(); setTimeout(sizeAll, 300);
     var rrt = null; addEventListener("resize", function () { clearTimeout(rrt); rrt = setTimeout(sizeAll, 180); });
-    requestAnimationFrame(frame);
-
-    // click a market name to open its prose
-    var drill = document.createElement("div");
-    drill.className = "radar-drill"; drill.setAttribute("aria-live", "polite");
-    root.appendChild(drill);
-    var open = null;
-    function closeDrill() { open = null; drill.classList.remove("on"); root.querySelectorAll(".radar-title--click").forEach(function (t) { t.classList.remove("is-open"); }); }
-    function openDrill(name) {
-      if (open === name) { closeDrill(); return; }
-      open = name;
-      drill.style.setProperty("--c", COUNTRY_ACCENT[name] || __T("--hmm-tomato-jam", "#C44539"));
-      drill.innerHTML = "";
-      var card = document.createElement("div"); card.className = "radar-drill-card";
-      var hd = document.createElement("div"); hd.className = "radar-drill-hd";
-      var nm = document.createElement("span"); nm.className = "radar-drill-name"; nm.textContent = name;
-      var x = document.createElement("button"); x.className = "radar-drill-x"; x.setAttribute("aria-label", "Close"); x.textContent = "✕";
-      x.addEventListener("click", closeDrill);
-      hd.appendChild(nm); hd.appendChild(x);
-      var p = document.createElement("p"); p.textContent = COUNTRY_PROSE[name] || "";
-      card.appendChild(hd); card.appendChild(p);
-      drill.appendChild(card);
-      drill.classList.add("on");
-      root.querySelectorAll(".radar-title--click").forEach(function (t) { t.classList.toggle("is-open", t.getAttribute("data-market") === name); });
+    // The panels now change width mid-animation as one expands, so the canvas has
+    // to re-measure on every frame of that transition, not just on window resize.
+    // Home positions move with it and the dots ease across, which is the effect.
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          for (var j = 0; j < PANELS.length; j++) if (PANELS[j].cv === entries[i].target) sizePanel(PANELS[j]);
+        }
+      });
+      for (var pi2 = 0; pi2 < PANELS.length; pi2++) ro.observe(PANELS[pi2].cv);
     }
-    // click the dimmed backdrop (outside the card) to close
-    drill.addEventListener("click", function (e) { if (e.target === drill) closeDrill(); });
-    // Escape closes the overlay
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && open) closeDrill(); });
-    root.addEventListener("click", function (e) { var t = e.target && e.target.closest ? e.target.closest(".radar-title--click") : null; if (t) openDrill(t.getAttribute("data-market")); });
-    root.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("radar-title--click")) { e.preventDefault(); openDrill(e.target.getAttribute("data-market")); } });
+    requestAnimationFrame(frame);
 
     // axis-definition popups (hover or keyboard-focus an axis label)
     var tip = document.createElement("div");

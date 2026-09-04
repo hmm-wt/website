@@ -1,0 +1,17 @@
+/* Cross-page overrides. hmm-tokens.css is generated and never hand-edited, so
+   anything the live site needs to say differently is said here, after it. */
+
+/* The metric-matched fallback faces are declared in fonts/fonts.css; the token
+   stacks have to name them for the fallback to be the one that paints first. */
+:root{
+  --hmm-font-display:'Kufam','Kufam Fallback','Helvetica Neue',sans-serif;
+  --hmm-font-figures:'Kufam','Kufam Fallback','Helvetica Neue',sans-serif;
+  --hmm-font-body:'Raela Grotesque','Raela Fallback','Helvetica Neue',sans-serif;
+  --hmm-font-mono:'Raela Grotesque','Raela Fallback','Helvetica Neue',sans-serif;
+  --hmm-font-serif:'Raela Grotesque','Raela Fallback','Helvetica Neue',sans-serif;
+  --hmm-font-print:'Raela Grotesque','Raela Fallback','Helvetica Neue',sans-serif;
+}
+
+/* Keyboard users get a way past the fixed rail and straight to the content. */
+.skip-link{position:absolute;left:-9999px;top:10px;z-index:100;padding:10px 14px;background:var(--hmm-pearl,#F2ECC9);color:var(--hmm-evergreen,#141414);font-family:var(--hmm-font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;}
+.skip-link:focus{left:10px;outline:2px solid var(--hmm-accent,#C44539);outline-offset:2px;}

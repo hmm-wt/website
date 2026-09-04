@@ -10,9 +10,9 @@ function __T(n, fallback) {
    Heal = needle / auto-injector (buildInjector). Geometry lifted verbatim from the demos
    (_demo/transformer-blowout.html, eat.html, heal-blowout.html). Each builder is closured so its
    helper names never collide. Layers are tagged col in {PEARL, ACC (verb-part), FAINT, AXIS}.
-   Necessity accent colours: power #FF730B, eat #4F8A5B, heal #8752A5. Requires window.React. */
+   Necessity accent colours: power #FF730B, eat #4F8A5B, heal #8752A5. Requires scripts/hmm-svg.js (hmmH, hmmRender). */
 var HMM = (function(){
-  var h = React.createElement, PEARL=__T("--hmm-pearl-beige", "#F2ECC9");
+  var h = window.hmmH, PEARL=__T("--hmm-pearl-beige", "#F2ECC9");
   function seededRnd(s){s=s||1;return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};}
 
   /* ===================== transformer ===================== */
@@ -129,12 +129,12 @@ var HMM = (function(){
       c[2].forEach(function(ln,k){box.push(h("text",{key:"nt"+k,x:bx+13,y:by+50+k*17,fontFamily:"Raela Grotesque",fontSize:12.5,fill:"rgba(242,236,201,.82)"},ln));});
       els.push(h("g",{key:"c"+i,className:"callout callout--"+(left?"L":"R"),tabIndex:0},box));});
     [[16,16,12,12],[spec.ch1,16,-12,12],[16,spec.chy,12,-12],[spec.ch1,spec.chy,-12,-12]].forEach(function(t,i){els.push(h("line",{key:"ca"+i,x1:t[0],y1:t[1],x2:t[0]+t[2],y2:t[1],stroke:A,strokeWidth:1}));els.push(h("line",{key:"cb"+i,x1:t[0],y1:t[1],x2:t[0],y2:t[1]+t[3],stroke:A,strokeWidth:1}));});
-    return h("svg",{viewBox:vb.join(" "),style:{width:"100%",height:"100%",overflow:"visible"}}, dotsOf(kind), els);
+    return h("svg",{viewBox:vb.join(" "),role:"img","aria-label":kind+" machine, blow-out drawing",style:{width:"100%",height:"100%",overflow:"visible"}}, dotsOf(kind), els);
   }
 
   function breathe(mount){setTimeout(function(){var svg=mount.querySelector('svg');if(svg&&window.hmmAnimateDots)window.hmmAnimateDots(svg,{motion:"breath"});},300);}
-  function renderIcon(mount,kind){ReactDOM.createRoot(mount).render(Icon(kind));breathe(mount);}
-  function renderBlowout(mount,kind){ReactDOM.createRoot(mount).render(Blowout(kind));breathe(mount);}
+  function renderIcon(mount,kind){hmmRender(mount,Icon(kind));breathe(mount);}
+  function renderBlowout(mount,kind){hmmRender(mount,Blowout(kind));breathe(mount);}
 
   return {renderIcon:renderIcon, renderBlowout:renderBlowout, accent:function(k){return MACH[k].accent;}};
 })();

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="msvalidate.01" content="E3E2BEAF6EB58BCD0574A2E6B7A3F909"/>
 <title>hmm ventures · Necessity is the thesis · regulated seed venture</title>
 <meta name="description" content="hmm ventures Fund I: a seed fund backing the regulated technology behind the energy, food and healthcare systems across Australia, Japan and New Zealand."/>
@@ -30,32 +30,52 @@ function __T(n, fallback) {
 <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 <link rel="manifest" href="/site.webmanifest"/>
-<link rel="preload" href="fonts/RaelaGrotesque-Regular.ttf" as="font" type="font/ttf" crossorigin/>
-<link rel="stylesheet" href="styles.css"/>
+<meta name="theme-color" content="#141414"/>
+<link rel="preload" href="fonts/raela-400.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="fonts/kufam-var.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="stylesheet" href="fonts/fonts.css"/>
+<link rel="stylesheet" href="hmm-tokens.css"/>
+<link rel="stylesheet" href="site.css"/>
 <style>
-  html{background:var(--hmm-evergreen);}
-  body{margin:0;padding:0;scroll-behavior:smooth;font-family:var(--hmm-font-body);color:var(--hmm-pearl);}
+  html{background:var(--hmm-evergreen);color-scheme:dark;}
+  html{scroll-behavior:smooth;}
+  #mandate,#power,#eat,#heal,#s5,#s6,#s7,#s9,#sfoot{scroll-margin-top:16px;}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}}
+  body{margin:0;padding:0;font-family:var(--hmm-font-body);color:var(--hmm-pearl);}
   #dotfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
   /* ---------- global chrome ---------- */
   .site-logo{color:var(--hmm-pearl);display:block;}
   .site-logo svg{height:24px;width:auto;display:block;}
   .site-logo:hover{color:var(--hmm-accent);}
   .site-footer{position:relative;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:40px 30px;border-top:1px solid var(--hmm-border);}
-  .convert{max-width:900px;margin:0 auto;padding:78px 30px 66px;text-align:center;border-top:1px solid var(--hmm-border);}
   .convert .k{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--hmm-text-muted);margin-bottom:18px;}
-  .convert h2{font-family:var(--hmm-font-display);font-weight:700;font-size:26px;line-height:1.3;margin:0 auto 14px;max-width:26ch;color:var(--hmm-pearl);}
-  .convert p{font-size:14.5px;line-height:1.6;color:var(--hmm-text-muted);max-width:56ch;margin:0 auto 26px;}
-  .convert-cta{display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center;}
-  .convert-cta a{font-family:var(--hmm-font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:13px 22px;border:1px solid var(--hmm-border);color:var(--hmm-pearl);transition:var(--hmm-transition);}
   .convert-cta a.primary{background:var(--hmm-accent);border-color:var(--hmm-accent);}
-  .convert-cta a:hover{border-color:var(--hmm-accent);color:var(--hmm-accent);}
   .convert-cta a.primary:hover{color:var(--hmm-pearl);opacity:.9;}
-  @media(max-width:640px){.convert h2{font-size:21px;}}
   .footer-nav{display:flex;gap:26px;align-items:center;}
   .footer-contact{font-family:var(--hmm-font-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--hmm-text-muted);text-decoration:none;transition:var(--hmm-transition);}
   .footer-contact:hover{color:var(--hmm-accent);}
   .footer-tag{font-family:var(--hmm-font-display,'Kufam',sans-serif);font-size:15px;letter-spacing:.01em;color:var(--hmm-text-muted);}
-  .footer-tag .hk-nec{color:var(--hmm-accent);}
+  .footer-tag .hk-nec{color:var(--hmm-accent-text);}
+
+  /* ---------- box tiers: appearance follows behaviour ----------
+     Every bordered box on this page belongs to exactly one tier, and nothing
+     wears a cue from a tier it is not in. That rule is the whole point: the
+     page previously used one look (bordered panel + corner brackets) for
+     things that navigate, things that filter, and things that just sit there.
+
+       u-nav      navigates somewhere        pointer, focus ring, action row
+       u-control  changes what is shown      pointer, focus ring, pressed state
+       u-panel    shows, and does not respond   no pointer, not focusable
+
+     Adding a box? Pick the tier by what it DOES, then apply that class. Do not
+     copy a neighbour's styling — that is how the inconsistency arose. Corner
+     brackets (.tk) are decoration and carry no meaning: they appear in every
+     tier and must never be the only thing telling a reader something is live. */
+  .u-nav,.u-control{cursor:pointer;}
+  .u-nav:focus-visible{outline:2px solid var(--accent,var(--hmm-accent));outline-offset:3px;}
+  .u-control:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
+  .u-panel{cursor:auto;}
+  .u-panel a,.u-panel button{cursor:pointer;}
 
   /* ---------- hero ---------- */
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;position:relative;}
@@ -63,39 +83,116 @@ function __T(n, fallback) {
   .hero-logo svg{height:26px;width:auto;display:block;}
   .hero-logo:hover{color:var(--hmm-accent);}
   .hero-kicker{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:400;margin:0;color:var(--hmm-text-muted);}
-  .hero-kicker .hk-nec{color:var(--hmm-accent);}
+  .hero-kicker .hk-nec{color:var(--hmm-accent-text);}
   .hero-row{display:flex;gap:22px;width:min(1160px,94vw);height:360px;}
   /* ---- mobile (≤640px): stack the hero machines, wrap the timeline rows ---- */
   @media(max-width:640px){
+    /* The hero stacks taller than the viewport on a phone, and centring overflow
+       pushed the kicker off the top edge and under the logo. Flow from the top
+       instead, with enough headroom for the absolutely-positioned logo. */
+    .hero{min-height:auto;justify-content:flex-start;padding:88px 0 56px;gap:28px;}
     .hero-row{flex-direction:column;height:auto;width:92vw;gap:16px;}
     .hero-row .box{min-height:260px;}
     .tl-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px;padding:8px 10px;}
     .tl-row .tl-name{flex:1 1 100%;order:3;}
-    .tl-row .tl-org{flex:1 1 100%;order:4;font-size:10px;color:var(--hmm-text-faint);}
+    .tl-row .tl-org{flex:1 1 100%;order:4;font-size:10px;color:var(--hmm-caption);}
     .tl-row .tl-c{order:1;} .tl-row .tl-date{order:2;} .tl-row .tl-status{order:5;}
   }
-  .box{position:relative;flex:1;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;border:1px solid var(--hmm-border);background:rgba(242,236,201,.02);transition:flex .5s var(--hmm-ease),background .3s var(--hmm-ease),border-color .3s var(--hmm-ease),opacity .4s var(--hmm-ease);}
+  .box{position:relative;flex:1;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;border:1px solid var(--hmm-border);background:rgba(242,236,201,.02);color:inherit;text-decoration:none;transition:flex .5s var(--hmm-ease),background .3s var(--hmm-ease),border-color .3s var(--hmm-ease),opacity .4s var(--hmm-ease);}
+  .box:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  /* The one token that means "this navigates". Nothing static on the page carries it. */
+  /* Pearl label, accent arrow: the accents are the card identity, but eat green and
+     heal purple measure 4.32:1 and 3.19:1 on this ground — below AA at 10.5px. */
+  .box-go{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-family:var(--hmm-font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-pearl);white-space:nowrap;}
+  .box-go-arrow{width:22px;height:8px;flex:0 0 auto;fill:none;stroke:var(--accent);stroke-width:1.4;transition:transform .3s var(--hmm-ease);}
+  .box:hover .box-go-arrow,.box:focus-visible .box-go-arrow{transform:translateX(4px);}
   .box--power{--accent:var(--hmm-nec-power);}.box--eat{--accent:var(--hmm-nec-eat);}.box--heal{--accent:var(--hmm-nec-heal);}
   .box::before{content:"";position:absolute;left:12px;top:12px;width:9px;height:1px;background:var(--accent);z-index:2;}
   .box::after{content:"";position:absolute;left:12px;top:12px;width:1px;height:9px;background:var(--accent);z-index:2;}
-  .hero-row:hover .box:not(:hover){flex:.62;opacity:.55;}
-  .box:hover{flex:2.5;flex-direction:row;background:rgba(242,236,201,.05);}
-  .box--power:hover{border-color:var(--hmm-nec-power);}.box--eat:hover{border-color:var(--hmm-nec-eat);}.box--heal:hover{border-color:var(--hmm-nec-heal);}
   .box-stage{flex:1;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;}
   .machine{width:78%;height:70%;display:flex;align-items:center;justify-content:center;transition:transform .5s var(--hmm-ease);}
-  .box:hover .box-stage{flex:1.15;}.box:hover .machine{transform:scale(1.06);}
   .box-info{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 22px;text-align:center;transition:flex .5s var(--hmm-ease);}
-  .box:hover .box-info{flex:1;align-items:flex-start;justify-content:center;text-align:left;padding:26px 30px 26px 6px;border-left:1px solid var(--hmm-border);}
   .box-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.18em;font-size:13px;color:var(--accent);}
-  .commentary{max-width:34ch;margin-top:12px;font-family:var(--hmm-font-body);font-size:13px;line-height:1.5;color:var(--hmm-text-muted);opacity:0;max-height:0;overflow:hidden;transition:opacity .4s var(--hmm-ease),max-height .4s var(--hmm-ease);}
-  .box:hover .commentary{opacity:1;max-height:120px;}
-  .ledger{list-style:none;margin:0;padding:0;width:100%;opacity:0;max-height:0;overflow:hidden;transition:opacity .45s var(--hmm-ease),max-height .45s var(--hmm-ease);}
-  .box:hover .ledger{opacity:1;max-height:280px;margin-top:16px;}
+  .commentary{max-width:34ch;margin-top:12px;font-family:var(--hmm-font-body);font-size:13px;line-height:1.5;color:var(--hmm-text-muted);overflow:hidden;transition:opacity .4s var(--hmm-ease),max-height .4s var(--hmm-ease);}
+  .ledger{list-style:none;margin:0;padding:0;width:100%;margin-top:16px;overflow:hidden;transition:opacity .45s var(--hmm-ease),max-height .45s var(--hmm-ease);}
   .ledger li{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--hmm-border);font-family:var(--hmm-font-body);font-size:12.5px;color:var(--hmm-pearl);}
-  .ledger li .cls{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.12em;color:var(--accent);flex:0 0 auto;}
-  .ledger-cap{margin-top:12px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);opacity:0;transition:opacity .45s var(--hmm-ease);}
-  .box:hover .ledger-cap{opacity:1;}
-  .scroll-hint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--hmm-text-faint);}
+  /* Coarse pointers get the copy revealed at all times, so the card must size to
+     it rather than squeeze the machine out of the stage. Width-scoped rules below
+     (<=640px) still override this for phones. */
+  @media (hover:none),(pointer:coarse){
+    .hero-row{height:auto;}
+    .hero-row .box{min-height:340px;}
+    .hero-row .box-stage{flex:0 0 132px;}
+    .hero-row .machine{width:70%;height:100%;}
+    .hero-row .box-info{justify-content:flex-start;padding:0 18px 20px;}
+  }
+  /* Hover is an enhancement, not the only way in. Gated on a real pointer so a
+     touch device never inherits a sticky :hover — which used to leave whichever
+     card was tapped last bright and the other two dimmed to .55 permanently. */
+  @media (hover:hover) and (pointer:fine){
+    .commentary{opacity:0;max-height:0;}
+    .ledger{opacity:0;max-height:0;margin-top:0;}
+    .box-go{opacity:0;max-height:0;margin-top:0;transition:opacity .45s var(--hmm-ease);}
+    .box:hover .box-go{opacity:1;max-height:40px;margin-top:16px;}
+    .hero-row:hover .box:not(:hover){flex:.62;opacity:.78;}
+    .box:hover{flex:2.5;flex-direction:row;background:rgba(242,236,201,.05);}
+    .box--power:hover{border-color:var(--hmm-nec-power);}.box--eat:hover{border-color:var(--hmm-nec-eat);}.box--heal:hover{border-color:var(--hmm-nec-heal);}
+    .box:hover .box-stage{flex:1.15;}.box:hover .machine{transform:scale(1.06);}
+    .box:hover .box-info{flex:1;align-items:flex-start;justify-content:center;text-align:left;padding:26px 30px 26px 6px;border-left:1px solid var(--hmm-border);}
+    .box:hover .commentary{opacity:1;max-height:180px;}
+    .box:hover .ledger{opacity:1;max-height:280px;margin-top:16px;}
+  }
+
+  /* ---------- section rail: fixed right-edge wayfinding ---------- */
+  /* The page had one navigational gesture (the hero cards) reaching three of nine
+     destinations, with no way back up. This is the index and the breadcrumb: it
+     names every section, marks the one you are in, and is one tap from any of them. */
+  .railnav{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:9;display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:12px 14px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s var(--hmm-ease),visibility .35s var(--hmm-ease);}
+  .railnav.is-on{opacity:1;visibility:visible;pointer-events:auto;}
+  .rail-item{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-height:44px;padding:0 2px;text-decoration:none;color:var(--hmm-text-muted);font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:color .25s var(--hmm-ease);}
+  .rail-item:hover,.rail-item:focus-visible{color:var(--hmm-pearl);}
+  .rail-item:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
+  .rail-label,.rail-label-s{display:block;}
+  .rail-label-s{display:none;}
+  .rail-mark{width:7px;height:7px;flex:0 0 auto;border:1px solid var(--hmm-text-faint);background:transparent;transition:background .25s var(--hmm-ease),border-color .25s var(--hmm-ease),transform .25s var(--hmm-ease);}
+  .rail-item:hover .rail-mark{border-color:var(--rail-accent,var(--hmm-accent));}
+  .rail-item.is-active{color:var(--hmm-pearl);}
+  .rail-item.is-active .rail-mark{background:var(--rail-accent,var(--hmm-accent));border-color:var(--rail-accent,var(--hmm-accent));transform:scale(1.28);}
+  .rail-item[data-sec="power"]{--rail-accent:var(--hmm-nec-power);}
+  .rail-item[data-sec="eat"]{--rail-accent:var(--hmm-nec-eat);}
+  .rail-item[data-sec="heal"]{--rail-accent:var(--hmm-nec-heal);}
+  .rail-top{margin-bottom:6px;border-bottom:1px solid var(--hmm-border);}
+  .rail-top .rail-mark{border:0;display:flex;align-items:center;justify-content:center;width:9px;height:9px;}
+  .rail-top svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:1.6;}
+  /* Where a real pointer exists the rail rides collapsed to its markers, so it
+     never crowds the layout, and names itself on hover or keyboard focus. The
+     filled, scaled marker is the you-are-here signal in that state. */
+  @media (hover:hover) and (pointer:fine){
+    .rail-label{max-width:0;opacity:0;overflow:hidden;transition:max-width .3s var(--hmm-ease),opacity .3s var(--hmm-ease);}
+    .railnav:hover .rail-label,.railnav:focus-within .rail-label{max-width:140px;opacity:1;}
+    .railnav:hover,.railnav:focus-within{background:linear-gradient(to left,var(--hmm-evergreen) 70%,rgba(20,20,20,0));}
+  }
+  @media (prefers-reduced-motion:reduce){.railnav,.rail-item,.rail-mark,.rail-label{transition:none;}}
+  /* A coarse pointer cannot hover, so the rail can never ride collapsed there and
+     shows its labels permanently. That was gated on width, not on the pointer, so
+     tablets got the long labels - a 114px rail - against sections clearing 48px,
+     and up to 66px of every section ran underneath it. The compact form belongs to
+     the pointer, which is what decides whether a label can hide; the matching
+     section clearance is further down, after the padding shorthands it overrides. */
+  @media (hover:none),(pointer:coarse){
+    .railnav{padding:10px 8px 10px 10px;gap:0;background:linear-gradient(to left,var(--hmm-evergreen) 62%,rgba(20,20,20,0));}
+    .rail-label{display:none;}
+    .rail-label-s{display:block;}
+  }
+  /* Phones have no hover to reveal anything, so the labels are permanent — a
+     marker with no name is a dot, not navigation — and the sections give back
+     the width the rail occupies. Short forms keep it inside that allowance. */
+  @media(max-width:640px){
+    .railnav{padding:10px 8px 10px 10px;gap:0;background:linear-gradient(to left,var(--hmm-evergreen) 62%,rgba(20,20,20,0));}
+    .rail-item{min-height:44px;font-size:9px;letter-spacing:.08em;gap:7px;}
+    .rail-label{display:none;}
+    .rail-label-s{display:block;}
+  }
 
   /* ---------- necessity sections ---------- */
   .nec{min-height:100vh;display:flex;align-items:stretch;color:var(--hmm-pearl);font-family:var(--hmm-font-body);}
@@ -103,32 +200,29 @@ function __T(n, fallback) {
   .nec[data-flip="1"] .stage{order:2;border-right:none;border-left:1px solid var(--hmm-border);padding:40px 44px 28px 28px;}
   .stage-head{display:flex;gap:14px;align-items:baseline;margin-bottom:6px;}
   .stage-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:700;}
-  .stage-sub{font-family:var(--hmm-font-mono);letter-spacing:.14em;font-size:11px;color:var(--hmm-text-faint);}
-  .stage-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-xl);margin:2px 0 0;}
-  .stage-title em{font-style:italic;}
   .stage .machine-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;}
   .stage .machine-wrap svg{width:100%;height:100%;max-height:82vh;overflow:visible;}
-  .machine-wrap svg .callout{transition:transform .28s var(--hmm-ease);cursor:pointer;}
+  .machine-wrap svg .callout{transition:transform .28s var(--hmm-ease);cursor:zoom-in;}
   .machine-wrap svg .callout--L{transform-box:fill-box;transform-origin:100% 50%;}
   .machine-wrap svg .callout--R{transform-box:fill-box;transform-origin:0% 50%;}
   .machine-wrap svg .callout:hover,.machine-wrap svg .callout:focus-within{transform:scale(2.15);}
   .machine-wrap svg .callout:focus{outline:none;}
-  .stage-foot{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.12em;color:var(--hmm-text-faint);}
+  .stage-foot{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.12em;color:var(--hmm-caption);}
   .nec[data-flip="1"] .stage-foot{text-align:right;}
   .panel{flex:1.42;display:flex;flex-direction:column;gap:22px;padding:56px 56px;justify-content:center;min-width:0;order:2;}
   .nec[data-flip="1"] .panel{order:1;}
   .card{border:1px solid var(--hmm-border);padding:26px 28px;position:relative;background:rgba(242,236,201,.02);}
   .card-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.18em;font-size:11px;color:var(--hmm-text-muted);margin-bottom:12px;}
-  .card h3{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-lg);margin:0 0 10px;}
+  .card h2{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-lg);margin:0 0 10px;}
   .card p{margin:0;font-size:14px;line-height:1.6;color:var(--hmm-text-muted);}
   .card p b{color:var(--hmm-pearl);font-weight:600;}
-  .sys-intro{font-size:13px;line-height:1.55;color:var(--hmm-text-muted);margin:0 0 14px;}
-  .sys-intro b{color:var(--hmm-pearl);font-weight:600;}
   .schematic-wrap{margin:6px 0 14px;}
   .schematic-wrap svg{width:100%;max-width:528px;height:auto;overflow:visible;display:block;margin:0 auto;}
   .blk rect{transition:stroke .2s var(--hmm-ease),stroke-width .2s var(--hmm-ease);}
   .blk:focus{outline:none;}
   .blk rect{transition:stroke .18s var(--hmm-ease),stroke-width .18s var(--hmm-ease),fill .18s var(--hmm-ease);}
+  .blk{cursor:pointer;}
+  .blk:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
   .blk:hover rect,.blk:focus rect{stroke-width:2.6;}
   .blk--active rect{stroke-width:2.6;}
   @keyframes spIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
@@ -136,45 +230,25 @@ function __T(n, fallback) {
   .stage-panel>*:nth-child(2){animation-delay:.08s;}
   .stage-panel>*:nth-child(3){animation-delay:.16s;}
   .stage-panel>*:nth-child(4){animation-delay:.24s;}
-  .stage-hint{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);}
   .stage-panel{margin-top:12px;}
   .sp-name{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:10px;}
   .sp-facet{margin-bottom:9px;}
   .sp-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);}
-  .sp-facet ul{list-style:none;margin:3px 0 0;padding:0;}
-  .sp-facet li{font-size:12.5px;color:var(--hmm-pearl);padding:2px 0;line-height:1.35;}
-  .sp-facet .none{font-size:12px;color:var(--hmm-text-faint);font-style:italic;}
-  .sp-link{display:inline-block;margin-top:8px;font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;}
-  .sp-link:hover{text-decoration:underline;}
+  .sp-facet .none{font-size:12px;color:var(--hmm-caption);font-style:italic;}
   .sp-def{font-size:12.5px;line-height:1.5;color:var(--hmm-text-muted);margin:0 0 13px;}
-  .sp-tags{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 6px;}
-  .sp-tag{font-family:var(--hmm-font-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--hmm-border);color:var(--hmm-text-muted);padding:2px 6px;}
-  .sp-tag--layer{color:var(--hmm-pearl);border-color:var(--hmm-text-faint);}
-  .sp-tag--tense{border-style:dashed;}
   .sp-facet p{font-size:12.5px;line-height:1.46;color:var(--hmm-pearl);margin:3px 0 0;}
   .stage-panel>*:nth-child(5){animation-delay:.32s;}
   /* per-necessity accent */
-  .sec-power .stage-eyebrow,.sec-power .stage-title em,.sec-power .sp-name,.sec-power .sp-link,.sec-power .sp-tag--action{color:var(--hmm-nec-power);}
-  .sec-eat   .stage-eyebrow,.sec-eat   .stage-title em,.sec-eat   .sp-name,.sec-eat   .sp-link,.sec-eat   .sp-tag--action{color:var(--hmm-nec-eat);}
-  .sec-heal  .stage-eyebrow,.sec-heal  .stage-title em,.sec-heal  .sp-name,.sec-heal  .sp-link,.sec-heal  .sp-tag--action{color:var(--hmm-nec-heal);}
-  .sec-power .sp-tag--action{border-color:var(--hmm-nec-power);}
-  .sec-eat   .sp-tag--action{border-color:var(--hmm-nec-eat);}
-  .sec-heal  .sp-tag--action{border-color:var(--hmm-nec-heal);}
+  .sec-power .stage-eyebrow,.sec-power .sp-name{color:var(--hmm-nec-power);}
+  .sec-eat   .stage-eyebrow,.sec-eat   .sp-name{color:var(--hmm-nec-eat);}
+  .sec-heal  .stage-eyebrow,.sec-heal  .sp-name{color:var(--hmm-nec-heal);}
   /* ---------- lens intro + through-line ---------- */
-  .lens{padding:96px 48px;border-top:1px solid var(--hmm-border);color:var(--hmm-pearl);}
-  .lens-eyebrow,.through-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
-  .lens-lead{font-size:17px;line-height:1.55;color:var(--hmm-text-muted);max-width:72ch;margin:14px 0 34px;}
-  .lens-lead b,.through p b{color:var(--hmm-pearl);font-weight:600;}
-  .lens-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1120px;}
-  .lens-col{border:1px solid var(--hmm-border);border-top:2px solid var(--hmm-accent);padding:18px 20px;}
-  .lens-h{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--hmm-accent);margin-bottom:10px;}
-  .lens-col ul{list-style:none;margin:0;padding:0;}
-  .lens-col li{font-size:13px;line-height:1.45;color:var(--hmm-text-muted);padding:5px 0;border-bottom:1px solid rgba(242,236,201,.06);}
-  .lens-col li:last-child{border-bottom:0;}
-  .lens-col li b{color:var(--hmm-pearl);font-weight:600;}
+  .through-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
+  .through p b{color:var(--hmm-pearl);font-weight:600;}
   .through{padding:84px 48px;border-top:1px solid var(--hmm-border);color:var(--hmm-pearl);}
   .through p{font-size:18px;line-height:1.6;color:var(--hmm-text-muted);max-width:80ch;margin:14px 0 0;}
-  @media(max-width:820px){.lens-grid{grid-template-columns:1fr;}}
+  #mandate{text-align:center;}
+  #mandate p{margin:14px auto 0;}
   .sec-power .blk:hover rect,.sec-power .blk:focus rect{stroke:rgba(255,115,11,1);fill:rgba(255,115,11,.12);}
   .sec-eat   .blk:hover rect,.sec-eat   .blk:focus rect{stroke:rgba(79,138,91,1);fill:rgba(79,138,91,.12);}
   .sec-heal  .blk:hover rect,.sec-heal  .blk:focus rect{stroke:rgba(135,82,165,1);fill:rgba(135,82,165,.12);}
@@ -183,10 +257,12 @@ function __T(n, fallback) {
   .sec-heal  .blk--active rect{stroke:var(--hmm-nec-heal)!important;}
   /* ---------- S5 AI impact ---------- */
   .ai{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
-  .ai>*{width:min(1160px,96vw);}
-  .ai-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
+  /* min(px,100%), never min(px,96vw): 96vw ignores the 48px padding of the section
+     it sits in, so every one of these blocks bled ~30px past its own content box on
+     both sides below 1208px and ran under the fixed rail on the right. */
+  .ai>*{width:min(1160px,100%);}
+  .ai-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
   .ai-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;line-height:1.06;}
-  .ai-sub{font-size:15px;line-height:1.6;color:var(--hmm-text-muted);margin:0 0 44px;max-width:76ch;}
   /* ---------- S5 rebuilt: flow, figures, reading key ---------- */
   .ai-flow{display:flex;flex-direction:column;gap:44px;margin:4px 0 44px;}
   .ai-flow--split{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:center;}
@@ -195,43 +271,22 @@ function __T(n, fallback) {
   .ai-flow--split .ai-fig--hero canvas{height:420px;flex:none;min-height:0;width:100%;}
   @media(max-width:860px){.ai-flow--split{grid-template-columns:1fr;gap:32px;}.ai-flow--split .ai-fig--hero canvas{flex:none;height:300px;}}
   .ai-step-hdr{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-  .ai-step-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent);padding:2px 8px;flex:0 0 auto;}
+  .ai-step-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent-text);padding:2px 8px;flex:0 0 auto;}
   .ai-step-label{font-family:var(--hmm-font-display);font-weight:700;font-size:20px;line-height:1.1;}
   .ai-step p{font-size:14.5px;line-height:1.62;color:var(--hmm-text-muted);max-width:66ch;margin:0 0 11px;}
-  .ai-step-note{color:var(--hmm-text-faint)!important;}
-  .ai-sign{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.1em;font-size:11px;margin-right:4px;}
-  .ai-sign--add{color:var(--hmm-thesis);}
-  .ai-sign--sub{color:var(--hmm-c08);}
-  .ai-step--split{display:grid;grid-template-columns:1fr 420px;gap:38px;align-items:center;}
-  .ai-step--hero{grid-template-columns:1fr 540px;}
-  .ai-step--split .ai-step-body{min-width:0;}
   .ai-fig{margin:0;border:1px solid var(--hmm-border);background:rgba(242,236,201,.02);position:relative;}
   .ai-fig canvas{display:block;width:100%;height:280px;}
   .ai-fig--hero canvas{height:320px;}
-  .ai-fig--center{align-self:center;width:100%;max-width:780px;margin:0 auto;}
-  .ai-fig figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);padding:10px 14px;border-top:1px solid var(--hmm-border);}
-  .fig-note{display:block;margin-top:5px;text-transform:none;letter-spacing:.01em;font-size:10px;line-height:1.5;color:var(--hmm-text-faint);opacity:.85;}
-  .ai-pull{max-width:900px;margin:40px auto 0;padding:24px 0 0;border-top:1px solid var(--hmm-border);font-family:var(--hmm-font-display);font-weight:700;font-size:23px;line-height:1.3;color:var(--hmm-pearl);}
-  .ai-pull em{color:var(--hmm-accent);font-style:normal;}
-  .ai-pull .k{display:block;font-family:var(--hmm-font-mono);font-weight:400;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hmm-text-faint);margin-bottom:12px;}
-  @media(max-width:640px){.ai-pull{font-size:19px;}}
-  .ai-key{border:1px solid var(--hmm-border);border-top:2px solid var(--hmm-accent);padding:22px 24px;margin-bottom:22px;background:rgba(242,236,201,.02);}
-  .ai-key-lead{font-size:13.5px;line-height:1.55;color:var(--hmm-text-muted);max-width:80ch;margin:6px 0 18px;}
-  .ai-key-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-  .ai-key-col ul{list-style:none;margin:8px 0 0;padding:0;}
-  .ai-key-col li{font-size:13px;line-height:1.5;color:var(--hmm-text-muted);padding:4px 0;border-bottom:1px solid rgba(242,236,201,.06);}
-  .ai-key-col li:last-child{border-bottom:0;}
-  @media(max-width:860px){.ai-step--split,.ai-step--hero{grid-template-columns:1fr;}.ai-key-grid{grid-template-columns:1fr;}}
+  .ai-fig figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);padding:10px 14px;border-top:1px solid var(--hmm-border);}
+  .fig-note{display:block;margin-top:5px;text-transform:none;letter-spacing:.01em;font-size:10px;line-height:1.5;color:var(--hmm-caption);}
+  .ai-pull .k{display:block;font-family:var(--hmm-font-mono);font-weight:400;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hmm-caption);margin-bottom:12px;}
   .src-split{display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start;margin-top:14px;}
   .src-prose{min-width:0;}
-  .src-setup{font-size:13.5px;color:var(--hmm-text-muted);margin:8px 0 0;}
   .src-q{font-family:var(--hmm-font-display);font-weight:700;font-size:25px;line-height:1.22;color:var(--hmm-pearl);margin:14px 0 16px;}
   .src-after{font-size:13.5px;line-height:1.6;color:var(--hmm-text-muted);margin:0;}
   .src-q{max-width:24ch;}
-  .src-after,.src-denom{max-width:56ch;}
+  .src-after{max-width:56ch;}
   .src-move-body p{max-width:62ch;}
-  .src-denom{font-size:12px;line-height:1.58;color:var(--hmm-text-faint);margin:12px 0 0;padding-left:12px;border-left:1px solid var(--hmm-border);}
-  .src-answer-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--hmm-accent);margin:40px 0 2px;}
   .src-moves{border-left:1px solid var(--hmm-border);}
   .src-move{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:20px 0;align-items:start;}
   .src-move+.src-move{border-top:1px solid rgba(242,236,201,.07);}
@@ -244,71 +299,27 @@ function __T(n, fallback) {
   .src-reccol .src-after{margin-top:18px;}
   @media(max-width:860px){.src-split{grid-template-columns:1fr;}.src-reccol{position:static;top:0;}.src-stream{height:min(60vh,480px);}.src-reccol .src-after{margin-top:14px;}}
   /* ---------- S7 markets + S8 density ---------- */
-  .mkt,.dens{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
-  .mkt>*,.dens>*{width:min(1180px,96vw);}
-  .mkt-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
+  .mkt{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
+  .mkt>*{width:min(1180px,100%);}
+  .mkt-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
   .mkt-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;line-height:1.06;}
   .mkt-lead{font-size:15px;line-height:1.6;color:var(--hmm-text-muted);max-width:82ch;margin:0 0 14px;}
-  .mkt-table-wrap{overflow-x:auto;margin-bottom:16px;}
-  .mkt-table{border-collapse:collapse;width:100%;font-size:12.5px;}
-  .mkt-table th,.mkt-table td{border:1px solid var(--hmm-border);padding:9px 12px;text-align:left;vertical-align:top;color:var(--hmm-text-muted);}
-  .mkt-table thead th{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--hmm-accent);}
-  .mkt-table tbody th{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--hmm-pearl);white-space:nowrap;}
-  .mkt-note,.mkt-radars-hd p{font-size:14px;line-height:1.6;color:var(--hmm-text-muted);max-width:84ch;margin:6px 0 28px;}
-  .mkt-sub-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--hmm-text-muted);}
-  .mkt-radars-hd{margin-top:12px;}
   #radars{margin:6px 0 14px;width:100%;}
-  .mkt-hint{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);text-align:center;margin:0;}
-  .mkt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;}
-  .mkt-card{border:1px solid var(--hmm-border);border-top:2px solid var(--hmm-border);padding:18px 20px;background:rgba(242,236,201,.02);}
-  .mkt-card--au{border-top-color:var(--hmm-mkt-au-dark);}.mkt-card--nz{border-top-color:var(--hmm-mkt-nz-dark);}.mkt-card--jp{border-top-color:var(--hmm-mkt-jp-dark);}
-  .mkt-card-hd{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-  .mkt-flag{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.1em;border:1px solid var(--hmm-border);padding:2px 7px;}
-  .mkt-card--au .mkt-flag{color:var(--hmm-mkt-au-dark);border-color:var(--hmm-mkt-au-dark);}.mkt-card--nz .mkt-flag{color:var(--hmm-mkt-nz-dark);border-color:var(--hmm-mkt-nz-dark);}.mkt-card--jp .mkt-flag{color:var(--hmm-mkt-jp-dark);border-color:var(--hmm-mkt-jp-dark);}
-  .mkt-name{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--hmm-pearl);}
-  .mkt-card p{font-size:13px;line-height:1.55;color:var(--hmm-text-muted);margin:0;}
-  .mkt-exit,.mkt-synth{border:1px solid var(--hmm-border);border-left:2px solid var(--hmm-accent);padding:16px 20px;margin-bottom:16px;}
-  .mkt-exit .k-label,.mkt-synth .k-label{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);margin-bottom:6px;}
-  .mkt-exit p,.mkt-synth p{font-size:13.5px;line-height:1.58;color:var(--hmm-text-muted);margin:0;}
-  #densityChart{width:100%;margin-top:10px;min-height:440px;}
-  @media(max-width:860px){.mkt-grid{grid-template-columns:1fr;}}
   /* ---------- S10 the record (infinite scroll) ---------- */
-  .rec{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:96px 48px;color:var(--hmm-pearl);border-top:1px solid var(--hmm-border);}
-  .rec>*{width:min(1160px,96vw);}
-  .rec-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
-  .rec-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 12px;line-height:1.06;}
   .rec-title .hk-nec{color:var(--hmm-accent);}
-  .rec-playback{font-size:16px;line-height:1.62;color:var(--hmm-text-muted);max-width:80ch;margin:0 0 28px;}
-  .rec-stream{position:relative;height:min(64vh,560px);overflow:hidden;border-top:1px solid var(--hmm-border);border-bottom:1px solid var(--hmm-border);
-    -webkit-mask-image:linear-gradient(180deg,transparent,#000 11%,#000 89%,transparent);mask-image:linear-gradient(180deg,transparent,#000 11%,#000 89%,transparent);}
   .rec-track{position:absolute;top:0;left:0;right:0;will-change:transform;}
   .rec-row{display:flex;flex-wrap:wrap;gap:5px 12px;align-items:baseline;padding:7px 8px;border-bottom:1px solid rgba(242,236,201,.06);}
   .rec-m{flex:0 0 24px;font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.06em;}
   .rec-m--AU{color:var(--hmm-mkt-au-dark);}.rec-m--JP{color:var(--hmm-mkt-jp-dark);}.rec-m--NZ{color:var(--hmm-mkt-nz-dark);}
-  .rec-tag{flex:0 0 auto;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);}
-  .rec-nec--Power{color:var(--hmm-nec-power);}.rec-nec--Eat{color:var(--hmm-nec-eat);}.rec-nec--Heal{color:var(--hmm-nec-heal);}.rec-nec--DeepTech{color:var(--hmm-text-faint);}
+  .rec-tag{flex:0 0 auto;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);}
+  .rec-nec--Power{color:var(--hmm-nec-power);}.rec-nec--Eat{color:var(--hmm-nec-eat);}.rec-nec--Heal{color:var(--hmm-nec-heal);}.rec-nec--DeepTech{color:var(--hmm-caption);}
   .rec-name{font-size:13.5px;color:var(--hmm-pearl);}
   .rec-name sup{color:var(--hmm-accent);font-size:9px;margin-left:1px;}
   .rec-meta{font-family:var(--hmm-font-mono);font-size:10.5px;color:var(--hmm-text-muted);letter-spacing:.02em;}
   .rec-what{font-size:12.5px;line-height:1.4;color:var(--hmm-text-muted);flex-basis:100%;padding-left:36px;}
-  .rec-note{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.03em;color:var(--hmm-text-faint);margin-top:16px;max-width:96ch;line-height:1.55;}
-  @media(prefers-reduced-motion:reduce){.rec-stream{height:auto;max-height:560px;overflow-y:auto;}.rec-track{position:static;}}
-  .ai-body{display:flex;align-items:stretch;gap:0;width:min(1240px,96vw);}
-  .ai-models{flex:1;border:1px solid var(--hmm-border);padding:22px 24px;background:rgba(242,236,201,.02);}
-  .ai-col-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--hmm-text-muted);margin-bottom:16px;}
-  .ai-group{margin-bottom:16px;}
-  .ai-g-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:10px;color:var(--hmm-accent);}
-  .ai-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
-  .ai-chips span{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.03em;color:var(--hmm-pearl);border:1px solid var(--hmm-border);padding:4px 9px;transition:var(--hmm-transition);cursor:default;}
-  .ai-chips span:hover{border-color:var(--hmm-accent);color:var(--hmm-accent);background:rgba(196,69,57,.06);}
-  .ai-ref{font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--hmm-text-faint);margin-top:14px;}
-  .ai-split{flex:0 0 190px;display:flex;align-items:center;justify-content:center;}
-  .ai-split svg{width:100%;height:300px;overflow:visible;}
-  .ai-arms{flex:1.12;display:flex;flex-direction:column;gap:22px;justify-content:center;}
+  @media(prefers-reduced-motion:reduce){.rec-track{position:static;}}
   .ai-arm{position:relative;border:1px solid var(--hmm-border);padding:22px 26px 0;background:rgba(242,236,201,.02);cursor:pointer;transition:background .3s var(--hmm-ease);}
   .ai-arm:hover{background:rgba(242,236,201,.05);}
-  .ai-arm--opp{border-top:2px solid var(--hmm-thesis);}
-  .ai-arm--threat{border-top:2px solid var(--hmm-c08);}
   .tk{position:absolute;width:9px;height:9px;pointer-events:none;}
   .tk--tl{left:6px;top:6px;border-top:1px solid;border-left:1px solid;}
   .tk--tr{right:6px;top:6px;border-top:1px solid;border-right:1px solid;}
@@ -330,84 +341,56 @@ function __T(n, fallback) {
   .sec-eat .card-id{color:var(--hmm-nec-eat);border-color:var(--hmm-nec-eat);}
   .sec-heal .card-id{color:var(--hmm-nec-heal);border-color:var(--hmm-nec-heal);}
   .card-foot{display:flex;margin-top:16px;border-top:1px solid var(--hmm-border);}
-  .card-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-text-faint);padding:8px 10px;border-right:1px solid var(--hmm-border);}
+  .card-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-caption);padding:8px 10px;border-right:1px solid var(--hmm-border);}
   .card-foot span:last-child{border-right:0;text-align:right;}
-  .ai-arm-hdr{display:flex;align-items:center;gap:12px;}
-  .ai-arm-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-border);padding:2px 8px;flex:0 0 auto;}
-  .ai-arm--opp .ai-arm-id{color:var(--hmm-thesis);border-color:var(--hmm-thesis);}
-  .ai-arm--threat .ai-arm-id{color:var(--hmm-c08);border-color:var(--hmm-c08);}
-  .ai-arm-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;flex:1;}
-  .ai-arm--opp .ai-arm-label{color:var(--hmm-thesis);}
-  .ai-arm--threat .ai-arm-label{color:var(--hmm-c08);}
-  .ai-arm-viz{flex:0 0 90px;height:32px;}
-  .ai-arm-viz svg{width:100%;height:100%;overflow:visible;display:block;}
-  .ai-arm-rule{border-top:1px solid var(--hmm-border);margin:13px 0 14px;}
   .ai-arm p{margin:0;font-size:13.5px;line-height:1.6;color:var(--hmm-text-muted);}
   .ai-arm p b{color:var(--hmm-pearl);font-weight:600;}
-  .ai-arm-foot{display:flex;margin-top:18px;border-top:1px solid var(--hmm-border);}
-  .ai-arm-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);padding:8px 10px;border-right:1px solid var(--hmm-border);}
-  .ai-arm-foot span:last-child{border-right:0;text-align:right;}
   /* ---------- S6 regulation lens ---------- */
   .reg{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 48px;border-top:1px solid var(--hmm-border);color:var(--hmm-pearl);}
-  .reg-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
+  .reg-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent-text);}
   .reg-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;}
   .reg-title em{font-style:italic;color:var(--hmm-accent);}
-  .reg-sub{font-size:14px;line-height:1.6;color:var(--hmm-text-muted);max-width:64ch;margin:0 0 36px;}
-  .reg-plates{display:flex;gap:22px;width:min(1180px,96vw);}
   .reg-plate{position:relative;flex:1;border:1px solid var(--hmm-border);border-top:2px solid var(--hmm-accent);padding:22px 26px 0;background:rgba(242,236,201,.02);}
   .reg-plate .tk{border-color:var(--hmm-accent);}
   .reg-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-  .reg-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent);padding:2px 8px;flex:0 0 auto;}
-  .reg-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--hmm-accent);}
+  .reg-id{font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.12em;border:1px solid var(--hmm-accent);color:var(--hmm-accent-text);padding:2px 8px;flex:0 0 auto;}
+  .reg-label{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--hmm-accent-text);}
   .reg-plate p{margin:0;font-size:13.5px;line-height:1.62;color:var(--hmm-text-muted);}
   .reg-plate--wide{padding-bottom:18px;}
   .reg-plate p b{color:var(--hmm-pearl);font-weight:600;}
   .reg-foot{display:flex;margin-top:16px;border-top:1px solid var(--hmm-border);}
-  .reg-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-text-faint);padding:8px 10px;border-right:1px solid var(--hmm-border);}
+  .reg-foot span{flex:1;font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;color:var(--hmm-caption);padding:8px 10px;border-right:1px solid var(--hmm-border);}
   .reg-foot span:last-child{border-right:0;text-align:right;}
-  .reg-cases{display:flex;gap:22px;width:min(1180px,96vw);margin-top:22px;}
-  .reg-kind{flex:1;border:1px solid var(--hmm-border);padding:16px 20px;}
-  .reg-kind .k-label{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);margin-bottom:6px;}
-  .reg-kind p{margin:0;font-size:13px;line-height:1.5;color:var(--hmm-text-muted);}
-  .reg-case{flex:1.3;border:1px solid var(--hmm-border);border-left:2px solid var(--hmm-thesis);padding:16px 20px;}
-  .reg-case .k-label{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-thesis);margin-bottom:6px;}
-  .reg-case p{margin:0;font-size:13px;line-height:1.55;color:var(--hmm-text-muted);}
-  .reg-close{width:min(1180px,96vw);margin-top:26px;font-family:var(--hmm-font-mono);font-size:11px;letter-spacing:.06em;color:var(--hmm-text-muted);}
-  .reg-close b{color:var(--hmm-accent);font-weight:400;}
   .reg-split{display:flex;gap:40px;width:100%;align-items:flex-start;}
   .reg-left{flex:0 0 clamp(440px,40%,560px);display:flex;flex-direction:column;gap:16px;}
   .reg-glyph{margin:0;border:1px solid var(--hmm-border);background:rgba(242,236,201,.02);position:relative;}
   .reg-glyph canvas{display:block;width:100%;height:172px;}
-  .reg-glyph figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);padding:9px 14px;border-top:1px solid var(--hmm-border);}
+  .reg-glyph figcaption{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);padding:9px 14px;border-top:1px solid var(--hmm-border);}
   .reg-jobs{display:flex;flex-direction:row;gap:14px;align-items:stretch;}
   .reg-jobs .reg-plate{padding-bottom:16px;}
   .reg-left .reg-close{width:auto;margin-top:2px;}
   .reg-right{flex:1;min-width:0;margin-left:auto;}
   .reg-right .tl-body{width:100%;margin-left:auto;}
-  .reg-machine,.reg-test{border:1px solid var(--hmm-border);padding:16px 20px;}
-  .reg-machine{border-left:2px solid var(--hmm-accent);}
-  .reg-machine .k-label,.reg-test .k-label{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);margin-bottom:6px;}
-  .reg-machine p{margin:0;font-size:13px;line-height:1.56;color:var(--hmm-text-muted);}
-  .reg-machine p b,.reg-kind p b,.reg-test li b,.reg-case p b{color:var(--hmm-pearl);font-weight:600;}
-  .reg-test ol{margin:6px 0 0;padding-left:18px;}
-  .reg-test li{font-size:13px;line-height:1.5;color:var(--hmm-text-muted);padding:3px 0;}
   .reg-tl-head{margin-bottom:14px;}
-  .reg-tl-head .reg-label{color:var(--hmm-accent);}
+  .reg-tl-head .reg-label{color:var(--hmm-accent-text);}
   .reg-tl-head .tl-sub{margin:8px 0 12px;max-width:none;}
-  .tl-filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px;}
-  .tl-filters button{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.1em;font-size:9.5px;background:none;border:1px solid var(--hmm-border);color:var(--hmm-text-muted);padding:5px 10px;cursor:pointer;transition:var(--hmm-transition);}
-  .tl-filters button:hover{border-color:var(--hmm-accent);color:var(--hmm-pearl);}
-  .tl-filters button.on{border-color:var(--hmm-accent);color:var(--hmm-accent);background:rgba(196,69,57,.06);}
+  .tl-filter-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:0 0 16px;}
+  .tl-filter-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-muted);}
+  .tl-filters{display:flex;flex-wrap:wrap;gap:6px;}
+  /* Resting border sits at border-hover, not border: at .12 alpha these read as
+     labels rather than controls. The selected chip carries fill + border, and
+     keeps a pearl label — accent-on-dark measured 3.58:1, below AA at this size. */
+  .tl-filters button{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.1em;font-size:9.5px;background:rgba(242,236,201,.03);border:1px solid var(--hmm-border-hover);color:var(--hmm-text-muted);padding:5px 10px;cursor:pointer;transition:var(--hmm-transition);}
+  .tl-filters button:hover{border-color:var(--hmm-accent);color:var(--hmm-pearl);background:rgba(242,236,201,.07);}
+  .tl-filters button:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
+  .tl-filters button.on{border-color:var(--hmm-accent);color:var(--hmm-pearl);background:rgba(196,69,57,.22);}
   .tl-hidden{display:none!important;}
   /* ---------- S7 regulatory timeline ---------- */
-  .tl{min-height:100vh;padding:80px 48px;border-top:1px solid var(--hmm-border);color:var(--hmm-pearl);}
-  .tl-eyebrow{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.2em;font-size:12px;color:var(--hmm-accent);}
-  .tl-title{font-family:var(--hmm-font-display);font-weight:700;font-size:var(--hmm-text-2xl);margin:10px 0 8px;max-width:22ch;line-height:1.06;}
   .tl-sub{font-size:14px;line-height:1.6;color:var(--hmm-text-muted);max-width:66ch;margin:0 0 18px;}
-  .tl-legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 28px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-text-faint);}
+  .tl-legend{display:flex;flex-wrap:wrap;gap:16px;margin:0 0 28px;font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--hmm-caption);}
   .tl-legend b{color:var(--hmm-text-muted);font-weight:400;}
-  .tl-body{width:min(1140px,96vw);position:relative;}
-  .tl-spine{position:absolute;left:-7px;top:0;pointer-events:none;z-index:0;}
+  .tl-body{width:min(1140px,100%);position:relative;}
+  .tl-spine{position:absolute;left:calc(-1 * (var(--spine-w) + 4px));top:0;pointer-events:none;z-index:0;--spine-w:14px;}
   .tl-year{display:flex;position:relative;transition:opacity .75s ease, transform .75s cubic-bezier(.2,.7,.2,1);}
   .tl-year.pre{opacity:0;transform:translateY(30px);}
   .tl-year.show{opacity:1;transform:none;}
@@ -423,49 +406,64 @@ function __T(n, fallback) {
   .tl-y{font-family:var(--hmm-font-mono);font-size:14px;color:var(--hmm-pearl);letter-spacing:.06em;}
   .tl-future .tl-y{color:var(--hmm-text-muted);}
   .tl-rows{flex:1;padding:8px 0;display:flex;flex-direction:column;gap:6px;justify-content:center;}
-  .tl-empty{color:var(--hmm-text-faint);font-family:var(--hmm-font-mono);font-size:11px;padding:2px 0;}
+  .tl-empty{color:var(--hmm-caption);font-family:var(--hmm-font-mono);font-size:11px;padding:2px 0;}
   .tl-row{display:grid;grid-template-columns:46px 82px 1fr auto auto;align-items:center;gap:14px;border:1px solid var(--hmm-border);padding:9px 14px;background:rgba(242,236,201,.02);}
   .tl-future .tl-row{border-style:dashed;opacity:.82;}
   .tl-c{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.08em;text-align:center;border:1px solid var(--hmm-border);padding:2px 0;color:var(--hmm-text-muted);}
   .tl-date{font-family:var(--hmm-font-mono);font-size:11px;color:var(--hmm-text-muted);letter-spacing:.04em;}
   .tl-name{font-size:13.5px;color:var(--hmm-pearl);font-weight:600;}
-  .tl-org{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.08em;color:var(--hmm-text-faint);text-transform:uppercase;}
+  .tl-org{font-family:var(--hmm-font-mono);font-size:10px;letter-spacing:.08em;color:var(--hmm-caption);text-transform:uppercase;}
   .tl-status{font-family:var(--hmm-font-mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid var(--hmm-border);color:var(--hmm-text-muted);white-space:nowrap;}
   .tl-st--transitional{color:var(--hmm-thesis);border-color:var(--hmm-thesis);}
-  .tl-st--expected,.tl-st--proposed{color:var(--hmm-text-faint);border-color:var(--hmm-text-faint);border-style:dashed;}
+  .tl-st--expected,.tl-st--proposed{color:var(--hmm-caption);border-color:var(--hmm-text-faint);border-style:dashed;}
   .tl-framework .tl-name{font-weight:400;color:var(--hmm-text-muted);}
   .tl-standing .tl-y{color:var(--hmm-text-muted);font-size:12px;}
-  .tl-stand-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-text-faint);margin-bottom:8px;}
+  .tl-stand-label{font-family:var(--hmm-font-mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-caption);margin-bottom:8px;}
   .tl-stand-wrap{display:flex;flex-wrap:wrap;gap:6px;}
   .tl-stand-item{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--hmm-text-muted);border:1px solid var(--hmm-border);padding:4px 8px;}
   .tl-stand-item .tl-c{padding:1px 5px;font-size:9px;}
-  .tl-c--global{border-style:dashed;color:var(--hmm-text-faint);}
+  .tl-c--global{border-style:dashed;color:var(--hmm-caption);}
   .tl-global .tl-name{color:var(--hmm-text-muted);}
-  .placeholder{min-height:60vh;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--hmm-border);font-family:var(--hmm-font-mono);letter-spacing:.16em;text-transform:uppercase;font-size:12px;color:var(--hmm-text-faint);}
   /* ===== mobile UX pass (UX/perf audit) ===== */
+  /* The regulation split needs more room than it was asking for. .reg-left floors at
+     440px, so between 861 and 1040px the right column fell to 285-425px while a
+     .tl-row cannot render below ~420px: 46px + 82px columns, four 14px gaps, padding,
+     plus the org and status columns, which have no smaller form. The page scrolled
+     sideways by up to 171px. Measured to zero at 1041px, so the split stacks below
+     that and the timeline gets the full width. */
+  /* Clearance for the compact rail above: it measures 76px on a coarse pointer, so
+     the 48px these sections carry left 28px of every one of them underneath it. The
+     640px block below keeps its own 66px, tuned to the 68px the rail is down there. */
+  @media (hover:none),(pointer:coarse){
+    .through,.ai,.mkt,.reg,.nec{padding-right:78px;}
+    .site-footer{padding-right:78px;}
+  }
+  @media(max-width:1040px){
+    .reg-split{flex-direction:column;gap:24px;}
+    .reg-left{flex:auto;}
+    .reg-right{margin-left:0;}
+  }
   @media(max-width:860px){
-    /* necessity sections: stack the machine over the panel (was side-by-side, unreadable sliver) */
-    .nec{flex-direction:column;}
+    /* necessity sections: stack the machine over the panel (was side-by-side, unreadable sliver)
+       and clear the rail, which the stacked panel's own 20px padding does not. */
+    .nec{flex-direction:column;padding-right:78px;}
     .nec .stage,.nec[data-flip="1"] .stage{flex:auto;order:1;border-right:none;border-left:none;border-bottom:1px solid var(--hmm-border);padding:34px 20px 20px;}
     .nec .panel,.nec[data-flip="1"] .panel{flex:auto;order:2;padding:30px 20px 40px;gap:16px;}
     .stage .machine-wrap{min-height:44vh;}
     .stage .machine-wrap svg{max-height:56vh;}
-    /* regulation: stack and remove the 440px flex-basis floor that overflowed every phone */
-    .reg-split{flex-direction:column;gap:24px;}
-    .reg-left{flex:auto;}
-    .reg-plates,.reg-cases,.reg-jobs{flex-direction:column;}
-    .reg-right{margin-left:0;}
+    .reg-jobs{flex-direction:column;}
     /* touch targets >= 44px */
     .tl-filters button,#radars .radar-chip{min-height:44px;padding:11px 14px;}
-    #radars .radar-drill-x{min-width:44px;min-height:44px;}
-    #radars .radar-title--click{min-height:44px;padding:11px 0;box-sizing:border-box;}
     #radars .radar-sub{font-size:11px;}
   }
   @media(max-width:640px){
-    .lens,.through,.ai,.mkt,.dens,.rec,.reg,.tl{padding-left:20px;padding-right:20px;}
-    .ai,.mkt,.dens,.rec{padding-top:64px;padding-bottom:64px;}
-    /* hero: no hover on touch, so reveal the ledger + commentary permanently */
-    .box .commentary,.box .ledger,.box .ledger-cap{opacity:1;max-height:none;}
+    .through,.ai,.mkt,.reg,.nec{padding-left:20px;padding-right:66px;}
+    .site-footer{padding-right:66px;}
+    .hero-row{width:calc(100vw - 86px);}
+    .ai,.mkt{padding-top:64px;padding-bottom:64px;}
+    /* hero copy is revealed by default now (see the pointer-gated block above);
+       a narrow desktop window still gets it, at mobile type sizes */
+    .box .commentary,.box .ledger,.box .box-go{opacity:1;max-height:none;}
     .box .commentary{margin-top:11px;font-size:15px;line-height:1.55;}
     /* Power/Eat/Heal: shrink the machine graphic + tighten the list so the stacked boxes are compact */
     .hero-row .box{min-height:auto;}
@@ -502,16 +500,30 @@ function __T(n, fallback) {
     .nec{justify-content:center;}
     .nec .stage,.nec[data-flip="1"] .stage{flex:0 1 640px;max-width:640px;}
     .nec .panel,.nec[data-flip="1"] .panel{flex:0 1 740px;max-width:740px;}
-    .reg-eyebrow,.reg-title,.reg-sub,.reg-split{max-width:1440px;width:100%;box-sizing:border-box;margin-left:auto;margin-right:auto;}
-    .lens>*,.through>*,.rec .src-split{max-width:1360px;margin-left:auto;margin-right:auto;}
+    .reg-eyebrow,.reg-title,.reg-split{max-width:1440px;width:100%;box-sizing:border-box;margin-left:auto;margin-right:auto;}
+    .through>*{max-width:1360px;margin-left:auto;margin-right:auto;}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
 </style>
 </head>
 <body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
 
   <canvas id="dotfield" aria-hidden="true"></canvas>
+  <nav class="railnav" id="railnav" aria-label="Section navigation">
+    <a class="rail-item u-nav rail-top" href="#top" data-sec="top"><span class="rail-label">Top</span><span class="rail-label-s">Top</span><span class="rail-mark"><svg viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M5 9V2M2 5l3-3 3 3"/></svg></span></a>
+    <a class="rail-item u-nav" href="#mandate" data-sec="mandate"><span class="rail-label">Mandate</span><span class="rail-label-s">Mndt</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#power" data-sec="power"><span class="rail-label">Power</span><span class="rail-label-s">Power</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#eat" data-sec="eat"><span class="rail-label">Eat</span><span class="rail-label-s">Eat</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#heal" data-sec="heal"><span class="rail-label">Heal</span><span class="rail-label-s">Heal</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s5" data-sec="s5"><span class="rail-label">AI</span><span class="rail-label-s">AI</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s6" data-sec="s6"><span class="rail-label">Regulation</span><span class="rail-label-s">Reg</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s7" data-sec="s7"><span class="rail-label">Markets</span><span class="rail-label-s">Mkts</span><span class="rail-mark"></span></a>
+    <a class="rail-item u-nav" href="#s9" data-sec="s9"><span class="rail-label">Sourcing</span><span class="rail-label-s">Src</span><span class="rail-mark"></span></a>
+  </nav>
+
   <!-- S1 hero -->
+  <main id="main">
   <section class="hero">
     <a href="#top" class="hero-logo" id="heroLogo" aria-label="hmm home">
       <svg viewBox="0 0 208 119" role="img" aria-label="hmm"><g fill="currentColor">
@@ -523,25 +535,35 @@ function __T(n, fallback) {
     </a>
     <h1 class="hero-kicker"><span class="hk-nec">Necessity</span> is the thesis</h1>
     <div class="hero-row" id="heroRow">
-      <div class="box box--power" data-nec="power" data-target="power">
+      <a class="box box--power u-nav" data-nec="power" href="#power">
         <div class="box-stage"><div class="machine" data-machine="power"></div></div>
         <div class="box-info"><div class="box-label">Power</div>
           <div class="commentary">The energy system: fuel and critical minerals, generation, storage, and the grid to end use. Demand is universal and rising, and a failure stops industry and daily life. The returnable innovation sits in the critical-minerals layer that constrains the chain.</div>
-          <ul class="ledger" data-ledger="power"></ul></div>
-      </div>
-      <div class="box box--eat" data-nec="eat" data-target="eat">
+          <ul class="ledger" data-ledger="power"></ul>
+          <span class="box-go">Read the Power system<svg class="box-go-arrow" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><path d="M0 4h18M15 1l3 3-3 3"/></svg></span></div>
+      </a>
+      <a class="box box--eat u-nav" data-nec="eat" href="#eat">
         <div class="box-stage"><div class="machine" data-machine="eat"></div></div>
         <div class="box-info"><div class="box-label">Eat</div>
           <div class="commentary">The food system: crops and livestock, from field inputs through processing to distribution. Demand is daily and land is fixed, so a shortfall shows up fast in price. The advance that pays back sits in the field-autonomy layer.</div>
-          <ul class="ledger" data-ledger="eat"></ul></div>
-      </div>
-      <div class="box box--heal" data-nec="heal" data-target="heal">
+          <ul class="ledger" data-ledger="eat"></ul>
+          <span class="box-go">Read the Eat system<svg class="box-go-arrow" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><path d="M0 4h18M15 1l3 3-3 3"/></svg></span></div>
+      </a>
+      <a class="box box--heal u-nav" data-nec="heal" href="#heal">
         <div class="box-stage"><div class="machine" data-machine="heal"></div></div>
         <div class="box-info"><div class="box-label">Heal</div>
           <div class="commentary">The healthcare system: prevention, diagnosis, treatment, and care to end of life. Demand is universal and rises with age, and capacity sets how much care is delivered. Value concentrates at the diagnostic read-out, upstream where a returned life-year costs least.</div>
-          <ul class="ledger" data-ledger="heal"></ul></div>
-      </div>
+          <ul class="ledger" data-ledger="heal"></ul>
+          <span class="box-go">Read the Heal system<svg class="box-go-arrow" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><path d="M0 4h18M15 1l3 3-3 3"/></svg></span></div>
+      </a>
     </div>
+  </section>
+
+  <!-- S1b the mandate: what hmm backs, and the gate every one of them sells through -->
+  <section class="through" id="mandate">
+    <span class="through-eyebrow">The mandate</span>
+    <p>hmm backs seed companies in the three systems a population cannot do without: how it is powered, how it is fed, how it is healed. What changes most over the next two decades sits inside those three. Demand for them holds through every cycle, but only with a regulator's approval.</p>
+    <p>Regulators who aren't ready for the next wave of innovation brought by physical AI and World Models.</p>
   </section>
 
   <!-- S2/S3/S4 necessity sections (composed by script) -->
@@ -584,23 +606,23 @@ function __T(n, fallback) {
     <div class="reg-split">
       <div class="reg-left">
         <div class="reg-jobs">
-          <div class="reg-plate">
+          <div class="reg-plate u-panel">
             <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
             <div class="reg-hdr"><span class="reg-id">06.A</span><span class="reg-label">For the fund · a locator</span></div>
             <p>A necessity system runs to as many as ten stages. The gate marks the stage whose value is hardest to compete away, and points hmm's capital there.</p>
             <div class="reg-foot"><span>hmm-REG-06.A</span></div>
           </div>
-          <div class="reg-plate">
+          <div class="reg-plate u-panel">
             <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
             <div class="reg-hdr"><span class="reg-id">06.B</span><span class="reg-label">For the company · the moat</span></div>
             <p>The same gate is what a rival cannot cheaply copy, and what an acquirer pays a premium for. It also delays the company clearing it, and can shelter an incumbent as readily as a challenger.</p>
             <div class="reg-foot"><span>hmm-REG-06.B</span></div>
           </div>
         </div>
-        <div class="reg-plate reg-plate--wide">
+        <div class="reg-plate reg-plate--wide u-panel">
           <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
           <div class="reg-hdr"><span class="reg-id">06.C</span><span class="reg-label">For the underwriter · the data</span></div>
-          <p>The data that locates a company also shows what its approval will cost, in time and in evidence. Every deal is read four ways against the instrument that gates it: which instrument it must clear, what evidence that demands, how far the field has already moved, and where the company sits on that path today. An AI diagnostic clears Japan's PMDA conditional-approval pathway, or Australia's software-as-a-medical-device rule, on clinical evidence, and annual authorisations of AI-enabled devices rose from a maximum of six a year before 2016 to 331 in 2025, the most in the agency&rsquo;s history. hmm underwrites a company by where it sits on that path.</p>
+          <p>The data that locates a company also shows what its approval will cost, in time and in evidence. Every deal is read four ways against the instrument that gates it: which instrument it must clear, what evidence that demands, how far the field has already moved, and where the company sits on that path today. An AI diagnostic clears Japan's PMDA conditional-approval pathway, or Australia's software-as-a-medical-device rule, on clinical evidence. The direction of travel is visible in the United States, where annual FDA authorisations of AI-enabled devices rose from a maximum of six a year before 2016 to 331 in 2025, the most in that agency's history. hmm underwrites a company by where it sits on that path.</p>
           <div class="reg-foot"><span>hmm-REG-06.C</span></div>
         </div>
         <figure class="reg-glyph" id="regGate"><figcaption>Fig hmm-REG-06 · Value pools behind the gate.</figcaption></figure>
@@ -609,7 +631,10 @@ function __T(n, fallback) {
         <div class="reg-tl-head"><span class="reg-label">The enacted record</span>
           <p class="tl-sub">hmm maps 33 enforceable instruments in force across the three markets: 14 in Australia, 11 in Japan, 8 in New Zealand, 14 of them since 2020, with four more scheduled between 2027 and 2030. This is the regulatory surface the fund tracks. The global rows are the same rules re-pricing the space elsewhere.</p>
           <div class="tl-legend"><span><b>AU·JP·NZ</b> in-market</span><span><b>AMER·CA·GCC·EU·UKI·GL</b> global · dashed</span></div>
-          <div class="tl-filters" id="tlFilters"></div>
+          <div class="tl-filter-row">
+            <span class="tl-filter-label" id="tlFilterLabel">Filter by market</span>
+            <div class="tl-filters" id="tlFilters" role="group" aria-labelledby="tlFilterLabel"></div>
+          </div>
         </div>
         <div class="tl-body" id="tlBody"></div>
       </div>
@@ -643,6 +668,7 @@ function __T(n, fallback) {
     </div>
   </section>
 
+  </main>
   <footer class="site-footer" id="sfoot">
     <a href="#top" class="site-logo" aria-label="hmm home">
       <svg viewBox="0 0 208 119" role="img" aria-label="hmm"><g fill="currentColor">
@@ -656,19 +682,15 @@ function __T(n, fallback) {
     <nav class="footer-nav"><a class="footer-contact" href="bio.html">The GP</a><a class="footer-contact" href="sources.html">Sources</a><a class="footer-contact" href="mailto:wt@hmm.ventures">Contact us</a></nav>
   </footer>
 
-  <script src="data/energy_stage_facets.js"></script>
-  <script src="data/agri_stage_facets.js"></script>
-  <script src="data/health_stage_facets.js"></script>
   <script src="data/reg_instruments.js"></script>
   <script src="data/power_steps.js"></script>
   <script src="data/eat_steps.js"></script>
   <script src="data/heal_steps.js"></script>
   <script src="scripts/hmm-motion.js"></script>
-  <script crossorigin src="_demo/vendor/react.production.min.js"></script>
-  <script crossorigin src="_demo/vendor/react-dom.production.min.js"></script>
-  <script src="machines.js?v=13"></script>
+  <script src="scripts/hmm-svg.js"></script>
+  <script src="machines.js?v=14"></script>
   <script>
-    var h=React.createElement;
+    var h=window.hmmH;
     /* ---------- hero: machines + ledgers + interactions ---------- */
     var LEDGERS={
       power:[["Methane-pyrolysis reactors","F"],["Electrolysers (alkaline/PEM/SOEC)","F"],["Switchable multi-feedstock refinery reactors","N"],["Perovskite-silicon tandem cells","F"]],
@@ -677,7 +699,6 @@ function __T(n, fallback) {
     };
     Object.keys(LEDGERS).forEach(function(nec){var ul=document.querySelector('.ledger[data-ledger="'+nec+'"]');LEDGERS[nec].forEach(function(r){var li=document.createElement('li');li.innerHTML='<span>'+r[0]+'</span>';ul.appendChild(li);});});
     ["power","eat","heal"].forEach(function(nec){HMM.renderIcon(document.querySelector('.machine[data-machine="'+nec+'"]'),nec);});
-    document.querySelectorAll('.box').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById(b.getAttribute('data-target'));if(t)t.scrollIntoView({behavior:'smooth'});});});
 
     /* ---------- necessity section content ---------- */
     var ACCENT={power:__T("--hmm-nec-power", "#FF730B"),eat:__T("--hmm-nec-eat", "#4F8A5B"),heal:__T("--hmm-nec-heal", "#8752A5")};
@@ -686,23 +707,17 @@ function __T(n, fallback) {
         exEyebrow:"Why Power is a necessity",exTitle:"The energy system",
         exHTML:"The energy system is the process chain, or a subset of it, from the extraction of primary energy to the use of final energy to supply services and goods. hmm's mandate extends it to the critical-minerals layer that constrains that chain, because that is where the returnable innovation in energy materials sits.",
         sysEyebrow:"The power system · end to end",
-        sysIntro:"One chain, resource to end use and back to recovery. hmm backs the whole system and picks no single stage of it; the return in energy materials concentrates in the critical-minerals layer beneath the chain.",
-        data:ENERGY_STAGE_FACETS,
-        stages:[{n:["Resource","discovery"],key:"Resource discovery"},{n:["Extraction"],key:"Extraction",note:"critical minerals, fuel"},{n:["Refining /","conversion"],key:"Refining / conversion"},{n:["Component","manufacture"],key:"Component manufacture"},{n:["Generation"],key:"Generation"},{n:["Storage"],key:"Storage"},{n:["Transmission"],key:"Transmission",note:"grid connection"},{n:["Distribution"],key:"Distribution",note:"the transformer"},{n:["End use"],key:"End use"},{n:["Recovery"],key:"Recovery"}]},
+        sysIntro:"One chain, resource to end use and back to recovery. hmm backs the whole system and picks no single stage of it; the return in energy materials concentrates in the critical-minerals layer beneath the chain.",},
       eat:{eyebrow:"Necessity 02 · Eat",sub:"Harvest mechanism · pickup reel",title:'The reel, in <em>blow-out</em>',dwg:"hmm-NEC-02-D5",
         exEyebrow:"Why Eat is a necessity",exTitle:"The food system",
         exHTML:"The food system gathers all the elements and activities relating to the production, processing, distribution, preparation and consumption of food, and the outputs of those activities. Its three constituent elements are <b>food supply chains, food environments and consumer behaviour</b>.",
         sysEyebrow:"The food system · end to end",
-        sysIntro:"Seed to mouth, and back to the soil as nutrient. The advance that pays back sits in the field-autonomy layer, not in any one link of the chain.",
-        data:AGRI_STAGE_FACETS,
-        stages:[{n:["Genetics /","inputs"],key:"Genetics / inputs",note:"biological crop inputs"},{n:["Soil / water","prep"],key:"Soil / water prep"},{n:["Planting"],key:"Planting"},{n:["Production"],key:"Production"},{n:["Protection"],key:"Protection"},{n:["Harvest"],key:"Harvest",note:"the pickup reel"},{n:["Processing"],key:"Processing"},{n:["Storage"],key:"Storage"},{n:["Distribution"],key:"Distribution"},{n:["Nutrient","recovery"],key:"Nutrient recovery"}]},
+        sysIntro:"Seed to mouth, and back to the soil as nutrient. The advance that pays back sits in the field-autonomy layer, not in any one link of the chain.",},
       heal:{eyebrow:"Necessity 03 · Heal",sub:"Auto-injector · exploded",title:'The needle, in <em>blow-out</em>',dwg:"hmm-NEC-03-D5",
         exEyebrow:"Why Heal is a necessity",exTitle:"The health system",
         exHTML:"The health system is all <b>organizations, people and actions whose primary intent is to promote, restore or maintain health</b>. It is defined by intent rather than by chain, so it sits downstream of its determinants rather than containing them.",
         sysEyebrow:"The health system · end to end",
-        sysIntro:"Discovery to recovery, one chain of care. Value concentrates at the diagnostic read-out, upstream where a returned life-year costs least.",
-        data:HEALTH_STAGE_FACETS,
-        stages:[{n:["Biological","discovery"],key:"Biological discovery"},{n:["Diagnostics"],key:"Diagnostics",note:"the read-out"},{n:["Product","manufacture"],key:"Product manufacture"},{n:["Clinical","infrastructure"],key:"Clinical infrastructure"},{n:["Intervention"],key:"Intervention",note:"the auto-injector"},{n:["Monitoring"],key:"Monitoring"},{n:["Rehabilitation"],key:"Rehabilitation"},{n:["Waste /","recovery"],key:"Waste / recovery"}]}
+        sysIntro:"Discovery to recovery, one chain of care. Value concentrates at the diagnostic read-out, upstream where a returned life-year costs least.",}
     };
 
     function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
@@ -714,9 +729,7 @@ function __T(n, fallback) {
     // plain-language definitions: name the system, where hmm invests, where returns concentrate. No shared template, fewer absolutes, conclusions attributed to hmm.
     if(SECCFG.power) SECCFG.power.exHTML="Power is the energy system: a resource extracted, refined, generated, carried across the grid, used, and its materials recovered. hmm works one layer down, on the storage and the critical minerals that constrain every stage. That is where the returns have concentrated.";
     if(SECCFG.eat) SECCFG.eat.exHTML="Eat is the food and farming system, crop and livestock in one cycle: grain feeds animals, manure feeds the soil. The cost pressure sits on nitrogen for crops and feed conversion for livestock. hmm backs the field-autonomy layer that bears on both.";
-    if(SECCFG.heal) SECCFG.heal.exHTML="Heal is the healthcare system, from prevention through diagnosis and treatment to end-of-life care. What limits it is not physics but regulation and reimbursement. hmm's read is that the value sits upstream, at detection, where disease caught early costs least to treat.";
-    function aiTags(ai){return '';}
-    function facetBlock(label,items,linkText,href){var body=items&&items.length?'<ul>'+items.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>':'<div class="none">not surfaced</div>';var link=items&&items.length&&href?'<a class="sp-link" href="'+href+'">'+linkText+'</a>':'';return '<div class="sp-facet"><div class="sp-label">'+label+'</div>'+body+link+'</div>';}
+    if(SECCFG.heal) SECCFG.heal.exHTML="Heal is the healthcare system, from prevention through diagnosis and treatment to end-of-life care. Its limits are regulatory and financial: what a regulator approves and what a payer reimburses. hmm's read is that the value sits upstream, at detection, where disease caught early costs least to treat.";
 
     function Schematic(kind){var cfg=SECCFG[kind],S=cfg.stages,acc=ACCENT[kind];
       var LAB="rgba(242,236,201,.85)",LINE="rgba(242,236,201,.4)",BRD="rgba(242,236,201,.22)";
@@ -770,16 +783,15 @@ function __T(n, fallback) {
     function showStage(kind,name){var cfg=SECCFG[kind],st=(cfg.data||{})[name];
       var sec=document.getElementById(kind);
       sec.querySelectorAll('.blk').forEach(function(g){g.classList.toggle('blk--active',g.getAttribute('data-key')===name);});
-      var hint=sec.querySelector('.stage-hint'),panel=sec.querySelector('.stage-panel');
-      if(hint)hint.style.display='none';
+      var panel=sec.querySelector('.stage-panel');
       if(!st){panel.innerHTML='<div class="sp-name">'+esc(name)+'</div><div class="sp-facet"><div class="none">not surfaced</div></div>';return;}
       var ai=st.ai||{};
       panel.innerHTML='<div class="sp-name">'+esc((st.id?st.id+' · ':'')+st.name)+'</div>'
         +'<div class="sp-def">'+esc(st.def||'')+'</div>'
-        +'<div class="sp-facet sp-ai"><div class="sp-label">AI</div>'+aiTags(ai)+'<p>'+esc(ai.detail||'')+'</p></div>'
+        +'<div class="sp-facet sp-ai"><div class="sp-label">AI</div><p>'+esc(ai.detail||'')+'</p></div>'
         +'<div class="sp-facet sp-reg"><div class="sp-label">Regulation · the gate</div><p>'+esc(st.reg||'')+'</p></div>';
     }
-    function closeAll(){document.querySelectorAll('.nec').forEach(function(sec){sec.querySelectorAll('.blk--active').forEach(function(g){g.classList.remove('blk--active');});var p=sec.querySelector('.stage-panel'),hn=sec.querySelector('.stage-hint');if(p)p.innerHTML='';if(hn)hn.style.display='';});}
+    function closeAll(){document.querySelectorAll('.nec').forEach(function(sec){sec.querySelectorAll('.blk--active').forEach(function(g){g.classList.remove('blk--active');});var p=sec.querySelector('.stage-panel');if(p)p.innerHTML='';});}
     document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeAll();});
     document.addEventListener('click',function(ev){if(!ev.target.closest('.blk')&&!ev.target.closest('.stage-panel'))closeAll();});
 
@@ -790,12 +802,12 @@ function __T(n, fallback) {
         +'<div class="stage"><div class="stage-head"><span class="stage-eyebrow">'+cfg.eyebrow+'</span></div>'
         +'<div class="machine-wrap"></div><div class="stage-foot">DWG '+cfg.dwg+'</div></div>'
         +'<div class="panel">'
-        +'<div class="card">'+TK+'<div class="card-hdr"><span class="card-id">FIG '+fig+'.A</span><span class="card-eyebrow">'+cfg.exEyebrow+'</span></div><h3>'+cfg.exTitle+'</h3><p>'+cfg.exHTML+'</p><div class="card-foot"><span>'+cfg.dwg+'</span></div></div>'
+        +'<div class="card">'+TK+'<div class="card-hdr"><span class="card-id">FIG '+fig+'.A</span><span class="card-eyebrow">'+cfg.exEyebrow+'</span></div><h2>'+cfg.exTitle+'</h2><p>'+cfg.exHTML+'</p><div class="card-foot"><span>'+cfg.dwg+'</span></div></div>'
         +'<div class="card">'+TK+'<div class="card-hdr"><span class="card-id">FIG '+fig+'.B</span><span class="card-eyebrow">'+cfg.sysEyebrow+'</span></div><div class="schematic-wrap"></div>'
         +'<div class="stage-panel" aria-live="polite"></div></div>'
         +'</div>';
       HMM.renderBlowout(sec.querySelector('.machine-wrap'),kind);
-      ReactDOM.createRoot(sec.querySelector('.schematic-wrap')).render(Schematic(kind));
+      hmmRender(sec.querySelector('.schematic-wrap'),Schematic(kind));
     });
 
     /* ---------- S5 bifurcation: animated triple-helix of dots, necessity colours ---------- */
@@ -831,11 +843,11 @@ function __T(n, fallback) {
       (function(){var W=['zero','one','two','three','four','five','six','seven','eight','nine','ten'];var inf={AU:0,JP:0,NZ:0},s20=0,sched=0;REG_INSTRUMENTS.forEach(function(r){if(r.global)return;if(r.c!=='AU'&&r.c!=='JP'&&r.c!=='NZ')return;if(r.type!=='enforceable')return;if(r.status==='effective'||r.status==='transitional'){inf[r.c]++;if(r.yr>=2020)s20++;}else if(r.status==='expected'){sched++;}});var tot=inf.AU+inf.JP+inf.NZ,sub=document.querySelector('.tl-sub');if(sub&&tot)sub.textContent='hmm maps '+tot+' enforceable instruments in force across the three markets: '+inf.AU+' in Australia, '+inf.JP+' in Japan, '+inf.NZ+' in New Zealand, '+s20+' of them since 2020, with '+(W[sched]||sched)+' more scheduled between 2027 and 2030. This is the regulatory surface the fund tracks. The global rows are the same rules re-pricing the space elsewhere.';})();
       var byYear={};REG_INSTRUMENTS.forEach(function(r){(byYear[r.yr]=byYear[r.yr]||[]).push(r);});
       function cTag(r){return '<span class="tl-c'+(r.global?' tl-c--global':'')+'">'+e2(r.c)+'</span>';}
-      function row(r){return '<div class="tl-row tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+'<span class="tl-date">'+e2(r.date)+'</span><span class="tl-name">'+e2(r.name)+'</span><span class="tl-org">'+e2(r.body)+'</span><span class="tl-status tl-st--'+r.status+'">'+e2(r.status)+'</span></div>';}
+      function row(r){return '<div class="tl-row u-panel tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+'<span class="tl-date">'+e2(r.date)+'</span><span class="tl-name">'+e2(r.name)+'</span><span class="tl-org">'+e2(r.body)+'</span><span class="tl-status tl-st--'+r.status+'">'+e2(r.status)+'</span></div>';}
       var html='';
       // standing base (pre-2020), compact
       var standing=REG_INSTRUMENTS.filter(function(r){return r.yr<2020;}).sort(function(a,b){return a.yr-b.yr;});
-      if(standing.length){var items=standing.map(function(r){return '<span class="tl-stand-item tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+e2(r.name)+'</span>';}).join('');
+      if(standing.length){var items=standing.map(function(r){return '<span class="tl-stand-item u-panel tl-'+r.type+(r.global?' tl-global':'')+'" data-c="'+e2(r.c)+'">'+cTag(r)+e2(r.name)+'</span>';}).join('');
         html+='<div class="tl-year tl-standing"><div class="tl-axis"><span class="tl-node"></span><span class="tl-y">pre-2020</span></div><div class="tl-rows"><div class="tl-stand-label">Standing · the established base</div><div class="tl-stand-wrap">'+items+'</div></div></div>';}
       // the net-new tick, 2020-2030
       for(var y=2020;y<=2030;y++){var future=y>=2027,rows=(byYear[y]||[]).slice().sort(function(a,b){return (a.global?1:0)-(b.global?1:0);});
@@ -858,7 +870,9 @@ function __T(n, fallback) {
           if(active){ requestAnimationFrame(frame); }
           else { for(var j=0;j<nodes.length;j++){var e=nodes[j];e.n.style.transform='';e.n.style.animation='';e.x=e.y=e.vx=e.vy=0;} running=false; }
         }
-        body.style.cursor='pointer';
+        // Deliberately no cursor:pointer on the body. This handler scatters the
+        // year nodes for delight; it is not a promise the 58 rows inside can be
+        // clicked, and setting the cursor here told every one of them otherwise.
         body.addEventListener('click',function(ev){
           for(var i=0;i<nodes.length;i++){var d=nodes[i];
             d.n.style.animation='none';                       // CSS pulse would override our transform; pause it
@@ -877,32 +891,76 @@ function __T(n, fallback) {
       var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
       if(!reduce&&'IntersectionObserver' in window){
         years.forEach(function(y){y.classList.add('pre');});
-        var io=new IntersectionObserver(function(ents){ents.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('pre');en.target.classList.add('show');io.unobserve(en.target);}});},{rootMargin:'0px 0px -14% 0px',threshold:0.12});
+        var io=new IntersectionObserver(function(ents){ents.forEach(function(en){if(en.isIntersecting){en.target.classList.remove('pre');en.target.classList.add('show');io.unobserve(en.target);if(window.__layoutSpine)window.__layoutSpine();}});},{rootMargin:'0px 0px -14% 0px',threshold:0.12});
         years.forEach(function(y){io.observe(y);});
       }
       // dotted spine, built here; the flock (morph.js) flies the AI dots in and lands them as this vertical axis
       var NS='http://www.w3.org/2000/svg', spine=document.createElementNS(NS,'svg');
       spine.setAttribute('class','tl-spine'); spine.setAttribute('aria-hidden','true');
       body.style.position='relative'; body.appendChild(spine);
-      function layoutSpine(){var h=body.scrollHeight,w=14,g=15,s='';for(var y=7;y<h;y+=g){s+='<circle cx="'+(w/2)+'" cy="'+y+'" r="1.4" fill="rgba(242,236,201,0.5)"/>';}
+      // offsetHeight, not scrollHeight: scrollHeight counts the spine's own box and the
+      // translateY(30px) that .tl-year.pre carries before it reveals, so measuring it
+      // left the rail hanging past the end of the timeline it annotates.
+      function layoutSpine(){var h=body.offsetHeight,w=14,g=15,s='';for(var y=7;y<h;y+=g){s+='<circle cx="'+(w/2)+'" cy="'+y+'" r="1.4" fill="rgba(242,236,201,0.5)"/>';}
         spine.setAttribute('width',w);spine.setAttribute('height',h);spine.setAttribute('viewBox','0 0 '+w+' '+h);spine.style.width=w+'px';spine.style.height=h+'px';spine.innerHTML=s;}
-      layoutSpine(); setTimeout(layoutSpine,400); addEventListener('resize',function(){clearTimeout(window.__spineRT);window.__spineRT=setTimeout(layoutSpine,200);});
-      var mkt=REG_INSTRUMENTS.filter(function(r){return !r.global;}).length, glb=REG_INSTRUMENTS.length-mkt;
-      var note=document.querySelector('#s6 .tl-note');if(note)note.innerHTML='<b>'+mkt+' in-market · '+glb+' global</b>';
+      window.__layoutSpine=layoutSpine;
+      layoutSpine();
+      if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layoutSpine);
+      addEventListener('load',layoutSpine);
+      addEventListener('resize',function(){clearTimeout(window.__spineRT);window.__spineRT=setTimeout(layoutSpine,200);});
       var FILTERS=[['all','All'],['inmarket','In-market'],['AU','AU'],['JP','JP'],['NZ','NZ'],['AMER','AMER'],['CA','Canada'],['GCC','GCC'],['EU','EU'],['UKI','UKI'],['GL','Global']];
       var present={};REG_INSTRUMENTS.forEach(function(r){present[r.c]=1;});
       var fbar=document.getElementById('tlFilters');
       function applyFilter(f){
         document.querySelectorAll('#s6 .tl-row, #s6 .tl-stand-item').forEach(function(el){var c=el.getAttribute('data-c');var show=f==='all'||(f==='inmarket'?(c==='AU'||c==='JP'||c==='NZ'):c===f);el.classList.toggle('tl-hidden',!show);});
         document.querySelectorAll('#s6 .tl-year').forEach(function(y){var vis=y.querySelectorAll('.tl-row:not(.tl-hidden), .tl-stand-item:not(.tl-hidden)').length;y.classList.toggle('tl-hidden',f!=='all'&&vis===0);});
-        fbar.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-f')===f);});
+        fbar.querySelectorAll('button').forEach(function(b){var on=b.getAttribute('data-f')===f;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});
+        if(window.__layoutSpine)window.__layoutSpine();
       }
-      if(fbar){FILTERS.forEach(function(fl){if(fl[0]==='all'||fl[0]==='inmarket'||present[fl[0]]){var b=document.createElement('button');b.textContent=fl[1];b.setAttribute('data-f',fl[0]);b.onclick=function(){applyFilter(fl[0]);};fbar.appendChild(b);}});applyFilter('all');}
+      if(fbar){FILTERS.forEach(function(fl){if(fl[0]==='all'||fl[0]==='inmarket'||present[fl[0]]){var b=document.createElement('button');b.type='button';b.className='u-control';b.textContent=fl[1];b.setAttribute('data-f',fl[0]);b.setAttribute('aria-pressed','false');b.onclick=function(){applyFilter(fl[0]);};fbar.appendChild(b);}});applyFilter('all');}
+    })();
+  </script>
+  <script>
+
+    /* ---------- section rail: active marking + reveal ---------- */
+    (function(){
+      var rail=document.getElementById('railnav'); if(!rail) return;
+      var items=[].slice.call(rail.querySelectorAll('.rail-item[data-sec]:not(.rail-top)'));
+      var pairs=items.map(function(a){return {a:a,el:document.getElementById(a.getAttribute('data-sec'))};})
+                     .filter(function(p){return p.el;});
+      var hero=document.querySelector('.hero'), cur=null, tick=false;
+
+      function update(){
+        tick=false;
+        // Rank by how much of the viewport each section actually occupies. Ratio
+        // is the wrong measure: a short section fully in view scores 1.0 while a
+        // section taller than the screen never can, so the tall ones never win.
+        var best=null, bv=0, vh=innerHeight;
+        for(var i=0;i<pairs.length;i++){
+          var r=pairs[i].el.getBoundingClientRect();
+          var seen=Math.min(r.bottom,vh)-Math.max(r.top,0);
+          if(seen>bv){bv=seen;best=pairs[i];}
+        }
+        if(best&&bv>0&&best!==cur){
+          if(cur){cur.a.classList.remove('is-active');cur.a.removeAttribute('aria-current');}
+          best.a.classList.add('is-active');best.a.setAttribute('aria-current','true');
+          cur=best;
+        }
+        // Reveal only once the hero is fully behind us. A ratio threshold is wrong
+        // here — the hero stacks taller than the viewport on a phone, so it never
+        // reaches one — and revealing part-way puts the rail over the last card,
+        // which is full-bleed and has no gutter to give back.
+        var past=hero?(hero.getBoundingClientRect().bottom<=0):(scrollY>vh*0.9);
+        rail.classList.toggle('is-on',past);
+      }
+      addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(update);}},{passive:true});
+      addEventListener('resize',function(){if(!tick){tick=true;requestAnimationFrame(update);}});
+      update();
     })();
   </script>
   <script src="transitions.js?v=13"></script>
   <script src="ai-figures.js?v=13"></script>
-  <script src="radars.js?v=27"></script>
+  <script src="radars.js?v=32"></script>
   <script src="catalogue.js?v=13"></script>
   <script src="catalogue_scroll.js?v=13"></script>
   <script src="morph.js?v=13"></script>
