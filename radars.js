@@ -117,8 +117,6 @@ function __T(n, fallback) {
       "#radars .radar-panel[data-focus] .series:not(.is-active){opacity:.12;}",
       "#radars .radar-panel[data-focus] .series.is-active .radar-fill{fill-opacity:.24;}",
       "#radars .radar-panel[data-focus] .series.is-active .radar-line{stroke-width:2.6;}",
-      "#radars .radar-caption{max-width:70ch;margin:20px auto 0;font-family:var(--hmm-font-mono,'Raela Grotesque','Helvetica Neue',sans-serif);",
-      "  font-size:10px;line-height:1.55;letter-spacing:.02em;color:var(--hmm-text-muted,rgba(242,236,201,.6));text-align:center;}",
       "#radars .radar-stage{position:relative;}",
       "#radars .radar-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;}",
       "#radars .axis-lbl{cursor:help;transition:fill .15s ease;}",
