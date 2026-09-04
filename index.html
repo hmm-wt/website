@@ -672,8 +672,8 @@ function __T(n, fallback) {
   <!-- S1b the mandate: what hmm backs, and the gate every one of them sells through -->
   <section class="through" id="mandate">
     <span class="through-eyebrow">The mandate</span>
-    <p>hmm backs seed companies in the three systems a population cannot do without: how it is powered, how it is fed, how it is healed. What changes most over the next two decades sits inside those three. Demand for them holds through every cycle, but only with a regulator&rsquo;s approval.</p>
-    <p>Regulators who aren&rsquo;t ready for the next wave of innovation brought by physical AI and World Models.</p>
+    <p>hmm backs seed companies in the three systems a population cannot do without: how it is powered, how it is fed, how it is healed. What changes most over the next two decades sits inside those three. Demand for them holds through every cycle, but only with a regulator's approval.</p>
+    <p>Regulators who aren't ready for the next wave of innovation brought by physical AI and World Models.</p>
   </section>
 
   <!-- S2/S3/S4 necessity sections (composed by script) -->
@@ -732,7 +732,7 @@ function __T(n, fallback) {
         <div class="reg-plate reg-plate--wide u-panel">
           <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
           <div class="reg-hdr"><span class="reg-id">06.C</span><span class="reg-label">For the underwriter · the data</span></div>
-          <p>The data that locates a company also shows what its approval will cost, in time and in evidence. Every deal is read four ways against the instrument that gates it: which instrument it must clear, what evidence that demands, how far the field has already moved, and where the company sits on that path today. An AI diagnostic clears Japan's PMDA conditional-approval pathway, or Australia's software-as-a-medical-device rule, on clinical evidence, and annual authorisations of AI-enabled devices rose from a maximum of six a year before 2016 to 331 in 2025, the most in the agency&rsquo;s history. hmm underwrites a company by where it sits on that path.</p>
+          <p>The data that locates a company also shows what its approval will cost, in time and in evidence. Every deal is read four ways against the instrument that gates it: which instrument it must clear, what evidence that demands, how far the field has already moved, and where the company sits on that path today. An AI diagnostic clears Japan's PMDA conditional-approval pathway, or Australia's software-as-a-medical-device rule, on clinical evidence. The direction of travel is visible in the United States, where annual FDA authorisations of AI-enabled devices rose from a maximum of six a year before 2016 to 331 in 2025, the most in that agency's history. hmm underwrites a company by where it sits on that path.</p>
           <div class="reg-foot"><span>hmm-REG-06.C</span></div>
         </div>
         <figure class="reg-glyph" id="regGate"><figcaption>Fig hmm-REG-06 · Value pools behind the gate.</figcaption></figure>
@@ -848,7 +848,7 @@ function __T(n, fallback) {
     // plain-language definitions: name the system, where hmm invests, where returns concentrate. No shared template, fewer absolutes, conclusions attributed to hmm.
     if(SECCFG.power) SECCFG.power.exHTML="Power is the energy system: a resource extracted, refined, generated, carried across the grid, used, and its materials recovered. hmm works one layer down, on the storage and the critical minerals that constrain every stage. That is where the returns have concentrated.";
     if(SECCFG.eat) SECCFG.eat.exHTML="Eat is the food and farming system, crop and livestock in one cycle: grain feeds animals, manure feeds the soil. The cost pressure sits on nitrogen for crops and feed conversion for livestock. hmm backs the field-autonomy layer that bears on both.";
-    if(SECCFG.heal) SECCFG.heal.exHTML="Heal is the healthcare system, from prevention through diagnosis and treatment to end-of-life care. What limits it is not physics but regulation and reimbursement. hmm's read is that the value sits upstream, at detection, where disease caught early costs least to treat.";
+    if(SECCFG.heal) SECCFG.heal.exHTML="Heal is the healthcare system, from prevention through diagnosis and treatment to end-of-life care. Its limits are regulatory and financial: what a regulator approves and what a payer reimburses. hmm's read is that the value sits upstream, at detection, where disease caught early costs least to treat.";
     function aiTags(ai){return '';}
     function facetBlock(label,items,linkText,href){var body=items&&items.length?'<ul>'+items.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>':'<div class="none">not surfaced</div>';var link=items&&items.length&&href?'<a class="sp-link" href="'+href+'">'+linkText+'</a>':'';return '<div class="sp-facet"><div class="sp-label">'+label+'</div>'+body+link+'</div>';}
 
@@ -1030,8 +1030,6 @@ function __T(n, fallback) {
       if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layoutSpine);
       addEventListener('load',layoutSpine);
       addEventListener('resize',function(){clearTimeout(window.__spineRT);window.__spineRT=setTimeout(layoutSpine,200);});
-      var mkt=REG_INSTRUMENTS.filter(function(r){return !r.global;}).length, glb=REG_INSTRUMENTS.length-mkt;
-      var note=document.querySelector('#s6 .tl-note');if(note)note.innerHTML='<b>'+mkt+' in-market · '+glb+' global</b>';
       var FILTERS=[['all','All'],['inmarket','In-market'],['AU','AU'],['JP','JP'],['NZ','NZ'],['AMER','AMER'],['CA','Canada'],['GCC','GCC'],['EU','EU'],['UKI','UKI'],['GL','Global']];
       var present={};REG_INSTRUMENTS.forEach(function(r){present[r.c]=1;});
       var fbar=document.getElementById('tlFilters');
