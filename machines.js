@@ -13,7 +13,7 @@ function __T(n, fallback) {
    Necessity accent colours: power #FF730B, eat #4F8A5B, heal #8752A5. Requires scripts/hmm-svg.js (hmmH, hmmRender). */
 var HMM = (function(){
   var h = window.hmmH, PEARL=__T("--hmm-pearl-beige", "#F2ECC9");
-  function seededRnd(s){s=s||1;return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff;};}
+  function seededRnd(s){s=s||1;return function(){s=(Math.imul(s,1103515245)+12345)&0x7fffffff;return s/0x7fffffff;};}
 
   /* ===================== transformer ===================== */
   var buildXfmr = (function(){
