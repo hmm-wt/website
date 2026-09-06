@@ -25,7 +25,7 @@ var HEAL_STEPS = {
   definition: "Heal is the healthcare system underwritten from preventative care through to death: detecting biological disorder, intervening to reverse or slow it, and managing the arc to its end. It is a necessity because demand is universal, lifelong, and rising with age structure, rationed by capacity rather than want, and failure is counted in mortality. Its binding constraint is not thermodynamic but a regulatory and reimbursement throttle, and value migrates upstream to detection, where the cost of a returned life-year is lowest.",
   chartNote: "The chain of care is the necessity. The read-out at step 02 is where value concentrates and where AI lands hardest.",
   readoutLabel: "the read-out, where AI lands hardest",
-  throughLine: "Read the three together and one lesson repeats. AI's leverage lands wherever the binding constraint is perception, design, or control, and in each system that is a specific layer: critical minerals in Power, biological inputs and field autonomy in Food, the diagnostic read-out in Health. In every case that same layer is where regulation binds hardest, because export control, GMO and machinery law, and device approval all sit exactly there. The co-location is the point. AI erodes moats everywhere it touches; the regulated gate is what stops that erosion from commoditising the winner. The chain is the necessity, AI decides which layer of it compounds, and regulation decides who keeps the compounding.",
+  throughLine: "Read the three together and one lesson repeats. AI's gain concentrates wherever the binding constraint is perception, design or control, and in each system that is one specific layer: critical minerals in Power, biological inputs and field autonomy in Food, the diagnostic read-out in Health. That same layer is where regulation binds hardest, because export control, GMO and machinery law, and device approval all sit exactly there. AI wears down barriers everywhere it touches, so the layer it makes valuable is also the layer a competitor can copy fastest, and the regulated gate is what stops that copying from commoditising the winner. The necessity sets the chain, AI decides which layer of it compounds, and regulation decides who keeps the compounding.",
   steps: [
     {
       id: "01",
@@ -49,7 +49,7 @@ var HEAL_STEPS = {
         tense: "deployed",
         detail: "Imaging and pathology are ideal for CNNs and vision transformers; self-supervised foundation models pretrain on vast unlabelled scans; federated learning trains across hospitals without moving patient data. Deployed and expanding. It accelerates the read, opens detection too early or subtle for the eye, and erodes the specialist's informational monopoly. Value migrates to whoever owns the read-out."
       },
-      reg: "Software-as-a-medical-device approval (FDA 510(k), De Novo, PMA; EU IVDR for diagnostics), clinical validation, algorithmic-bias rules, patient-data privacy (HIPAA, GDPR). This is the hard gate and therefore the moat."
+      reg: "Software-as-a-medical-device approval (FDA 510(k), De Novo, PMA; EU IVDR for diagnostics), clinical validation, algorithmic-bias rules, patient-data privacy (HIPAA, GDPR). This is the hard gate, and because the clinical validation behind an approval is earned against a specific device and cannot be transferred, it is also the barrier."
     },
     {
       id: "03",

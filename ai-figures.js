@@ -31,7 +31,7 @@
 
   // ---- 05 · Fig hmm-AI-05 · the record the next entrant must rebuild ----
   // One metric (accumulated real-world evidence) vs time. Leader's dotted curve rises to Today;
-  // challenger sits at zero until Today, then a Tomato record just begins. The moat is the horizontal
+  // challenger sits at zero until Today, then a Tomato record just begins. The barrier is the horizontal
   // time-gap below the plot: years of record the model can't skip. One accent (Tomato), used twice only.
   var m1=mount('figRecord',320);
   if(m1){
@@ -79,7 +79,7 @@
       mono(ctx,8.5);ctx.textAlign='center';ctx.fillStyle=LBL;ctx.fillText('challenger enters · matches the model',xMid,baseY+15);
       // challenger head label
       mono(ctx,10.5);ctx.textAlign='left';ctx.fillStyle=rgba(C08,0.95);ctx.fillText('CHALLENGER',xT-4,yC-10);
-      // the moat: horizontal gap at equal evidence, leader reached yC years earlier (accent use 2 of 2)
+      // the barrier: horizontal gap at equal evidence, leader reached yC years earlier (accent use 2 of 2)
       var lead=Math.min(1,csweep/1.0);   // reveal the dimension line with the challenger
       // anchor points at the shared evidence level
       ctx.beginPath();ctx.arc(xLead,yC,2.2,0,6.28);ctx.fillStyle=rgba(PEARL,0.85);ctx.fill();
@@ -88,7 +88,7 @@
       ctx.fillStyle=ACC;
       ctx.beginPath();ctx.moveTo(xLead,yC);ctx.lineTo(xLead+8,yC-3);ctx.lineTo(xLead+8,yC+3);ctx.closePath();ctx.fill();
       ctx.beginPath();ctx.moveTo(xT,yC);ctx.lineTo(xT-8,yC-3);ctx.lineTo(xT-8,yC+3);ctx.closePath();ctx.fill();
-      mono(ctx,10);ctx.textAlign='center';ctx.fillStyle=rgba(C08,0.95);ctx.fillText("the moat · years of record the model can't skip",(xLead+xT)/2,yC-9);
+      mono(ctx,10);ctx.textAlign='center';ctx.fillStyle=rgba(C08,0.95);ctx.fillText("the barrier · years of record the model can't skip",(xLead+xT)/2,yC-9);
       mono(ctx,8);ctx.fillStyle=LBL;ctx.fillText('same evidence, reached years apart',(xLead+xT)/2,yC+16);
       // DWG stamp + Rev
       mono(ctx,7.5);ctx.fillStyle=LBL;ctx.textAlign='left';ctx.fillText('DWG hmm-AI-05-D5',padL,H-12);

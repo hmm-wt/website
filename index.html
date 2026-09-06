@@ -68,7 +68,7 @@ function __T(n, fallback) {
        u-panel    shows, and does not respond   no pointer, not focusable
 
      Adding a box? Pick the tier by what it DOES, then apply that class. Do not
-     copy a neighbour's styling — that is how the inconsistency arose. Corner
+     copy a neighbour's styling. That is how the inconsistency arose. Corner
      brackets (.tk) are decoration and carry no meaning: they appear in every
      tier and must never be the only thing telling a reader something is live. */
   .u-nav,.u-control{cursor:pointer;}
@@ -102,7 +102,7 @@ function __T(n, fallback) {
   .box:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
   /* The one token that means "this navigates". Nothing static on the page carries it. */
   /* Pearl label, accent arrow: the accents are the card identity, but eat green and
-     heal purple measure 4.32:1 and 3.19:1 on this ground — below AA at 10.5px. */
+     heal purple measure 4.32:1 and 3.19:1 on this ground, below AA at 10.5px. */
   .box-go{display:inline-flex;align-items:center;gap:8px;margin-top:16px;font-family:var(--hmm-font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--hmm-pearl);white-space:nowrap;}
   .box-go-arrow{width:22px;height:8px;flex:0 0 auto;fill:none;stroke:var(--accent);stroke-width:1.4;transition:transform .3s var(--hmm-ease);}
   .box:hover .box-go-arrow,.box:focus-visible .box-go-arrow{transform:translateX(4px);}
@@ -127,7 +127,7 @@ function __T(n, fallback) {
     .hero-row .box-info{justify-content:flex-start;padding:0 18px 20px;}
   }
   /* Hover is an enhancement, not the only way in. Gated on a real pointer so a
-     touch device never inherits a sticky :hover — which used to leave whichever
+     touch device never inherits a sticky :hover, which used to leave whichever
      card was tapped last bright and the other two dimmed to .55 permanently. */
   @media (hover:hover) and (pointer:fine){
     .commentary{opacity:0;max-height:0;}
@@ -184,8 +184,8 @@ function __T(n, fallback) {
     .rail-label{display:none;}
     .rail-label-s{display:block;}
   }
-  /* Phones have no hover to reveal anything, so the labels are permanent — a
-     marker with no name is a dot, not navigation — and the sections give back
+  /* Phones have no hover to reveal anything, so the labels are permanent (a
+     marker with no name is a dot rather than navigation) and the sections give back
      the width the rail occupies. Short forms keep it inside that allowance. */
   @media(max-width:640px){
     .railnav{padding:10px 8px 10px 10px;gap:0;background:linear-gradient(to left,var(--hmm-evergreen) 62%,rgba(20,20,20,0));}
@@ -379,7 +379,7 @@ function __T(n, fallback) {
   .tl-filters{display:flex;flex-wrap:wrap;gap:6px;}
   /* Resting border sits at border-hover, not border: at .12 alpha these read as
      labels rather than controls. The selected chip carries fill + border, and
-     keeps a pearl label — accent-on-dark measured 3.58:1, below AA at this size. */
+     keeps a pearl label. Accent-on-dark measured 3.58:1, below AA at this size. */
   .tl-filters button{font-family:var(--hmm-font-mono);text-transform:uppercase;letter-spacing:.1em;font-size:9.5px;background:rgba(242,236,201,.03);border:1px solid var(--hmm-border-hover);color:var(--hmm-text-muted);padding:5px 10px;cursor:pointer;transition:var(--hmm-transition);}
   .tl-filters button:hover{border-color:var(--hmm-accent);color:var(--hmm-pearl);background:rgba(242,236,201,.07);}
   .tl-filters button:focus-visible{outline:2px solid var(--hmm-accent);outline-offset:2px;}
@@ -579,7 +579,7 @@ function __T(n, fallback) {
       <div class="ai-col-text">
         <div class="ai-step">
           <div class="ai-step-body">
-            <div class="ai-step-hdr"><span class="ai-step-id">05.1</span><span class="ai-step-label">The moat is the record</span></div>
+            <div class="ai-step-hdr"><span class="ai-step-id">05.1</span><span class="ai-step-label">The barrier is the record</span></div>
             <p>In an open market, AI compresses the technical lead. It cannot copy the evidence behind an approved product: clinical validation, regulatory history and real-world performance accumulated over time. A newcomer may match the leader's scan-reading accuracy and still lack the record on which regulators, clinicians and buyers rely. The model can be rebuilt. The evidence must be earned again.</p>
           </div>
         </div>
@@ -596,7 +596,7 @@ function __T(n, fallback) {
           </div>
         </div>
       </div>
-      <figure class="ai-fig ai-fig--hero" id="figRecord"><figcaption>Fig hmm-AI-05 · The record the next entrant must rebuild.<span class="fig-note">The challenger catches the leader on performance but stays years behind on evidence. The time to close that second gap is the moat.</span></figcaption></figure>
+      <figure class="ai-fig ai-fig--hero" id="figRecord"><figcaption>Fig hmm-AI-05 · The record the next entrant must rebuild.<span class="fig-note">The challenger catches the leader on performance but stays years behind on evidence, and those years are the barrier.</span></figcaption></figure>
     </div>
   </section>
   <!-- S6 regulation: the lens (left) + the enacted record (right), together -->
@@ -614,7 +614,7 @@ function __T(n, fallback) {
           </div>
           <div class="reg-plate u-panel">
             <span class="tk tk--tl"></span><span class="tk tk--tr"></span><span class="tk tk--bl"></span><span class="tk tk--br"></span>
-            <div class="reg-hdr"><span class="reg-id">06.B</span><span class="reg-label">For the company · the moat</span></div>
+            <div class="reg-hdr"><span class="reg-id">06.B</span><span class="reg-label">For the company · the barrier</span></div>
             <p>The same gate is what a rival cannot cheaply copy, and what an acquirer pays a premium for. It also delays the company clearing it, and can shelter an incumbent as readily as a challenger.</p>
             <div class="reg-foot"><span>hmm-REG-06.B</span></div>
           </div>
@@ -947,8 +947,8 @@ function __T(n, fallback) {
           cur=best;
         }
         // Reveal only once the hero is fully behind us. A ratio threshold is wrong
-        // here — the hero stacks taller than the viewport on a phone, so it never
-        // reaches one — and revealing part-way puts the rail over the last card,
+        // here, because the hero stacks taller than the viewport on a phone, so it never
+        // reaches one, and revealing part-way puts the rail over the last card,
         // which is full-bleed and has no gutter to give back.
         var past=hero?(hero.getBoundingClientRect().bottom<=0):(scrollY>vh*0.9);
         rail.classList.toggle('is-on',past);
